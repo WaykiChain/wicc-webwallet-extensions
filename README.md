@@ -1,0 +1,1 @@
+# wicc-webwallet-plugins
