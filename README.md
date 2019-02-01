@@ -1,1 +1,1 @@
-# wicc-webwallet-plugins
+## WaykiChain Wallet Browser Extensions
