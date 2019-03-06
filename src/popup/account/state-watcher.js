@@ -14,6 +14,33 @@ export default {
   },
 
   methods: {
+    validateAddress (address) {
+      const from = this.activeAddress || ''
+      const network = from[0] === 'w' ? 'testnet' : 'mainnet'
+      address = address || ''
+
+      let valid = true
+      if (network === 'testnet') {
+        valid = address[0] === 'w'
+      } else if (network === 'mainnet') {
+        valid = address[0] === 'W'
+      }
+
+      if (valid) {
+        valid = address.length === 34
+      }
+
+      if (!valid) {
+        this.$toast(network === 'testnet'
+          ? this.$t('account.send.testnetAddressInvalid')
+          : this.$t('account.send.addressInvalid'), {
+          type: 'center'
+        })
+      }
+
+      return valid
+    },
+
     handleNetworkChange (network) {
       this.network = network
 

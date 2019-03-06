@@ -84,6 +84,8 @@ export default {
       valueLabel: 'Amount',
       valuePlaceHolder: 'Please input send amount',
       descLabel: 'Comment（Optional）',
+      addressInvalid: 'Please input the correct WICC mainnet address, ',
+      testnetAddressInvalid: 'Please input the correct WICC testnet address',
       confirmButton: 'Confirm Send',
       confirmLoading: 'Submitting...',
       sendSuccess: 'Submit send success',

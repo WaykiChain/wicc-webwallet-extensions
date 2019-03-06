@@ -84,6 +84,8 @@ export default {
       valueLabel: '转账金额',
       valuePlaceHolder: '请输入转账金额',
       descLabel: '备注（选填）',
+      addressInvalid: '请输入正确的WICC主网地址',
+      testnetAddressInvalid: '请输入正确的WICC测试网地址',
       confirmButton: '确认转账',
       confirmLoading: '提交中...',
       sendSuccess: '转账提交成功',
