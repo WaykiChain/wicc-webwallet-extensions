@@ -1,0 +1,40 @@
+.wallet-container {
+  position: relative;
+  width: 375px;
+  height: 600px;
+  box-sizing: border-box;
+}
+
+.display-block {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button.btn-primary {
+  background: linear-gradient(to right, #3c78ea 0%, #004eec 100%);
+  border: none;
+  color: #fff;
+
+  &:hover, &:active {
+    color: #fff;
+  }
+
+  &[disabled] {
+    background: linear-gradient(to right, rgba(0, 78, 236, .38) 0%, rgba(60, 120, 234, .38) 100%);
+  }
+}
+
+button.btn-text {
+  border: none;
+  height: 24px;
+  line-height: 24px;
+}
+
+@media (min-width: 550px) {
+  .wallet-container {
+    width: 375px;
+    border: 1px dashed #ccc;
+    margin: 0 auto;
+  }
+}

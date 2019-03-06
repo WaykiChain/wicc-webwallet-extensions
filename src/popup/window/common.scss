@@ -1,0 +1,83 @@
+.cells {
+  padding: 0 16px;
+}
+
+.cell {
+  border-bottom: 1px solid #E6E6E6;
+  padding: 16px 0 14px 0;
+  display: flex;
+  flex-direction: row;
+
+  &.no-border {
+    border-bottom: none;
+  }
+
+  > label {
+    font-weight: 400;
+    font-size: 14px;
+    color: #B4BCCC;
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  > span {
+    flex: 1 0 0;
+    text-align: right;
+    font-size: 13px;
+    color: #5B5F67;
+    word-break: break-all;
+  }
+
+  &.code-cell {
+    border-bottom: none;
+    display: block;
+
+    > label {
+      display: block;
+    }
+
+    > span {
+      text-align: left;
+      white-space: pre-line;
+    }
+  }
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  flex: 1 0 0;
+  overflow-y: auto;
+}
+
+.page-title {
+  border-bottom: 1px solid #E6E6E6;
+  color: #5B5F67;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  padding: 11px;
+}
+
+.footer {
+  border-top: 1px solid #E6E6E6;
+}
+
+.button-wrapper {
+  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > button {
+    &:first-child {
+      margin-right: 16px;
+    }
+    flex: 1 0 0;
+  }
+}

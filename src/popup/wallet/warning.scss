@@ -1,0 +1,31 @@
+.warning-container {
+  background-color: #F7F7F7;
+  height: 70px;
+  padding: 4px 16px;
+  box-sizing: border-box;
+  margin: 0 -16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.tip-title {
+  font-size: 14px;
+  color: #FF1010;
+
+  &::before {
+    content: ' ';
+    display: inline-block;
+    width: 24px;
+    height: 14px;
+    vertical-align: middle;
+    background: url('../static/warning-icon.svg') center center no-repeat;
+    background-size: 18px 14px;
+  }
+}
+
+.tip-content {
+  color: #5B5F67;
+  font-size: 13px;
+}
