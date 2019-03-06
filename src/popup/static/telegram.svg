@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #5b5f67;
+      }
+
+      .cls-2 {
+        fill: #b4bccc;
+        stroke: rgba(0,0,0,0);
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="组_19366" data-name="组 19366" transform="translate(-120 -501)">
+    <g id="椭圆_7304" data-name="椭圆 7304" class="cls-1" transform="translate(120 501)">
+      <circle class="cls-3" cx="18" cy="18" r="18"/>
+      <circle class="cls-4" cx="18" cy="18" r="17.5"/>
+    </g>
+    <path id="Telegram" class="cls-2" d="M2.6,6.61,20.283.126a.787.787,0,0,1,1.039.91L18.253,14.783a.9.9,0,0,1-1.407.54l-4.288-3.047L9.683,15.127a.436.436,0,0,1-.737-.389L9.775,10.3l8.174-7.2a.2.2,0,0,0-.232-.315L7.18,9.226l-4.564-1.5A.591.591,0,0,1,2.6,6.611Z" transform="translate(124.638 511.299)"/>
+  </g>
+</svg>
