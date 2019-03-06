@@ -7,6 +7,7 @@ export default {
     passwordError: 'The password entered are incorrect',
     passwordInConsistent: 'The passwords entered twice are inconsistent, please check',
     insufficientBalance: 'Insufficient balance',
+    accountNotActivated: 'Please activate you wallet first',
     fast: 'Fast',
     slow: 'Slow',
     minerFee: 'Fee',

@@ -244,9 +244,6 @@ export default {
     })
   },
 
-  async importWallet (password, mnemonic) {
-  },
-
   async unlock (password, vaultBlob) {
     state.vaultBlob = vaultBlob
     return passworder.decrypt(password, vaultBlob).then((value) => {

@@ -7,6 +7,7 @@ export default {
     passwordError: '密码错误',
     passwordInConsistent: '两次输入的密码不一致，请检查',
     insufficientBalance: '余额不足',
+    accountNotActivated: '请先激活钱包',
     fast: '快',
     slow: '慢',
     minerFee: '矿工费',
