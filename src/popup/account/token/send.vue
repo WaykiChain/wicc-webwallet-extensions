@@ -4,17 +4,21 @@
     <div class="content-body">
       <div class="from-title">{{ $t('account.sendToken.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
+
       <wallet-input
           v-model="destAddr"
           :label="$t('account.sendToken.destLabel')"
           :placeholder="$t('account.sendToken.destPlaceHolder')">
       </wallet-input>
+
       <wallet-input
           v-model="amount"
+          type="number"
           :postfix="name"
           :label="$t('account.sendToken.valueLabel')"
           :placeholder="$t('account.sendToken.valuePlaceHolder')">
       </wallet-input>
+
       <wallet-input
           v-model="desc"
           :label="$t('account.sendToken.descLabel')">
@@ -98,6 +102,8 @@
 
     methods: {
       confirmSend() {
+        if (!this.validateAddress(this.destAddr)) return
+
         this.$loading(this.$t('account.sendToken.confirmLoading'))
         // sendToken (network, address, name, regId, destAddress, amount, fees, desc)
         API.sendToken(this.network || 'testnet', this.activeAddress, this.name, this.regId, this.destAddr, parseFloat(this.amount), this.fees, this.desc)
