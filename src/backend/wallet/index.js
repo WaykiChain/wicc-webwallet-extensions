@@ -20,8 +20,28 @@ const getWiccApi = (network) => {
   return new WiccAPI(network)
 }
 
-const getMnemonic = (address) => {
-  return vaultStorage.getMnemonic(address)
+const getSignInfo = (network, address) => {
+  const baasApi = new BaasAPI(network)
+  let srcRegId = null
+
+  return baasApi.getAccountInfo(address).then((data) => {
+    srcRegId = data.regID
+
+    if (!srcRegId || !String(srcRegId).trim()) {
+      throw new Error('ADDRESS_NOT_ACTIVATED')
+    }
+
+    return baasApi.getBlockInfo()
+  }).then((data) => {
+    const height = data.syncheight
+    const privateKey = vaultStorage.getPrivateKey(address)
+
+    return {
+      srcRegId,
+      height,
+      privateKey
+    }
+  })
 }
 
 export default {
@@ -196,8 +216,8 @@ export default {
     vaultStorage.logout()
   },
 
-  async getMnemonic ({ network, address }) {
-    return getMnemonic(address)
+  async getMnemonic ({ address }) {
+    return vaultStorage.getMnemonic(address)
   },
 
   async getPrivateKey ({ network, address }) {
@@ -243,6 +263,12 @@ export default {
     }
   },
 
+  getTransHistory ({ network, address }) {
+    return transStorage.list(network, address).then((value) => {
+      return value || []
+    })
+  },
+
   registerAccount ({ address }) {
     const network = getAddressNetwork(address)
     const wiccApi = getWiccApi(network)
@@ -264,23 +290,11 @@ export default {
       })
   },
 
-  getTransHistory ({ network, address }) {
-    return transStorage.list(network, address).then((value) => {
-      return value || []
-    })
-  },
-
   callContract ({ network, address, destRegId, value, fees, contract }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    let srcRegId = null
 
-    return baasApi.getAccountInfo(address).then((data) => {
-      srcRegId = data.regID
-      return baasApi.getBlockInfo()
-    }).then((data) => {
-      const height = data.syncheight
-      const privateKey = vaultStorage.getPrivateKey(address)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       return wiccApi.createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
@@ -294,14 +308,8 @@ export default {
   publishContract ({ network, address, fees, script, scriptDesc }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    let srcRegId = null
 
-    return baasApi.getAccountInfo(address).then((data) => {
-      srcRegId = data.regID
-      return baasApi.getBlockInfo()
-    }).then((data) => {
-      const height = data.syncheight
-      const privateKey = vaultStorage.getPrivateKey(address)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       return wiccApi.createRegisterAppSign(privateKey, height, srcRegId, fees, script, scriptDesc)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
@@ -309,23 +317,14 @@ export default {
       transStorage.append(network, address, 5, value)
 
       return value
-    }).catch((error) => {
-      console.log('publish contract error:', error)
-      throw error
     })
   },
 
   send ({ network, address, destAddr, value, fees, desc }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    let srcRegId = null
 
-    return baasApi.getAccountInfo(address).then((data) => {
-      srcRegId = data.regID
-      return baasApi.getBlockInfo()
-    }).then((data) => {
-      const height = data.syncheight
-      const privateKey = vaultStorage.getPrivateKey(address)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
@@ -339,7 +338,6 @@ export default {
   async vote ({ network, address, votes, fees }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    let srcRegId = null
 
     votes = votes || []
     if (votes.length === 0) {
@@ -359,12 +357,7 @@ export default {
       })
     }))
 
-    return baasApi.getAccountInfo(address).then((data) => {
-      srcRegId = data.regID
-      return baasApi.getBlockInfo()
-    }).then((data) => {
-      const height = data.syncheight
-      const privateKey = vaultStorage.getPrivateKey(address)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       // createDelegateTxSign (privateKey, height, srcRegId, delegateData, fees)
       return wiccApi.createDelegateTxSign(privateKey, height, srcRegId, delegateData, fees)
     }).then((sign) => {
@@ -373,22 +366,15 @@ export default {
       transStorage.append(network, address, 6, value)
 
       return value
-    }).catch((error) => {
-      console.log('vote error:', error)
-      throw error
     })
   },
 
   getAccountInfo ({ network, address }) {
-    const baasApi = new BaasAPI(network)
-
-    return baasApi.getAccountInfo(address)
+    return new BaasAPI(network).getAccountInfo(address)
   },
 
   getTokenInfo ({ network, address, regId }) {
-    const baasApi = new BaasAPI(network)
-
-    return baasApi.getTokenInfo(regId, address)
+    return new BaasAPI(network).getTokenInfo(regId, address)
   },
 
   async addToken ({ accountId, network, name, regId, precision }) {
@@ -410,14 +396,8 @@ export default {
   async sendToken ({ network, address, regId, destAddress, amount, fees, desc, name }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    let srcRegId = null
 
-    return baasApi.getAccountInfo(address).then((data) => {
-      srcRegId = data.regID
-      return baasApi.getBlockInfo()
-    }).then((data) => {
-      const height = data.syncheight
-      const privateKey = vaultStorage.getPrivateKey(address)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       const contract = getSendTokenContract(destAddress, amount * Math.pow(10, 8))
       return wiccApi.createContractSign(privateKey, height, srcRegId, regId, 0, fees, contract)
     }).then((sign) => {
@@ -428,9 +408,6 @@ export default {
 
       tokenTransStorage.append(network, address, name, regId, destAddress, amount, desc, txObject)
       return txObject
-    }).catch((error) => {
-      console.log('send token error:', error)
-      throw error
     })
   },
 
@@ -444,7 +421,10 @@ export default {
     data = data || {}
     return new Promise((resolve, reject) => {
       if (typeof this[action] === 'function') {
-        this[action](data).then(resolve, reject)
+        this[action](data).then(resolve, (error) => {
+          console.log('action failed:', action, data, error)
+          reject(error)
+        })
       } else {
         reject(new Error('unknown action ' + action))
       }
