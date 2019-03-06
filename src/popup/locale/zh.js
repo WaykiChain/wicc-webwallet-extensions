@@ -6,6 +6,7 @@ export default {
     copySuccess: '复制成功',
     passwordError: '密码错误',
     passwordInConsistent: '两次输入的密码不一致，请检查',
+    insufficientBalance: '余额不足',
     fast: '快',
     slow: '慢',
     minerFee: '矿工费',

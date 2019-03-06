@@ -62,6 +62,12 @@
       },
 
       openRegisterConfirm () {
+        if (this.value === 0) {
+          this.$toast(this.$t('common.insufficientBalance'), {
+            type: 'center'
+          })
+          return
+        }
         openRegisterConfirmDialog(this.address)
       },
 
