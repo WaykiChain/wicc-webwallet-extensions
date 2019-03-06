@@ -22,10 +22,9 @@ import SendToken from './account/token/send'
 import TokenMain from './account/token/main'
 
 /**
- * Stage related page
+ * Splash related page
  */
-import Main from './main/index'
-import Welcome from './main/welcome'
+import Splash from './main/splash'
 
 /**
  * Setting Related page
@@ -46,7 +45,7 @@ const router = new VueRouter({
     {
       name: 'welcome',
       path: '/',
-      component: Welcome
+      component: Splash
     },
 
     {
@@ -131,13 +130,6 @@ const router = new VueRouter({
           }
         }
       }]
-    },
-
-    {
-      name: 'main',
-      path: '/main',
-      component: Main,
-      children: []
     },
 
     {

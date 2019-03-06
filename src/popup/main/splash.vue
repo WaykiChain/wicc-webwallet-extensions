@@ -59,8 +59,25 @@
         this.isLocked = state.isLocked
         this.vaultCreated = state.vaultCreated
 
-        if (!this.isLocked && this.vaultCreated) {
-          this.gotoMain()
+        if (!this.isLocked || !this.vaultCreated) {
+          const restoreConfigString = localStorage.getItem('WICC_RESTORE_PATH')
+
+          if (restoreConfigString) {
+            try {
+              const restoreConfig = JSON.parse(restoreConfigString)
+              if (restoreConfig) {
+                return this.$router.push(restoreConfig)
+              }
+            } catch (error) {
+              console.log('parse restore config error:', error)
+            } finally {
+              localStorage.setItem('WICC_RESTORE_PATH', null)
+            }
+          }
+
+          if (this.vaultCreated) {
+            this.gotoMain()
+          }
         }
       }, (error) => {
         this.loading = false

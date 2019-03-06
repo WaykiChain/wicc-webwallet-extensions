@@ -2,7 +2,7 @@
   <nav-layout :title="$t('wallet.create.validate.title')" class="u-full-height">
     <wallet-input
         style="margin-top: 16px;"
-        v-model="mnemonic"
+        v-model="inputMnemonic"
         :label="$t('wallet.create.validate.mnemonicLabel')"
         type="textarea"
         read-only></wallet-input>
@@ -28,11 +28,9 @@
   import WalletInput from '../../components/input'
   import MnemonicTags from '../../components/mnemonic-tags'
   import * as shuffle from 'shuffle-array'
-  import bus from './bus'
   import API from '../../api'
   import formatError from '../../api/format-error'
   import eventBus from '../../account/bus'
-  import mnemonic from './mnemonic'
 
   export default {
     name: 'validate-mnemonic',
@@ -55,9 +53,28 @@
 
       const route = this.$router.currentRoute
 
+      const { password, mnemonic } = route.query
+      if (password) {
+        this.password = password
+      }
+      if (mnemonic) {
+        this.mnemonic = mnemonic
+      }
+
       if (route && route.path) {
         this.isCreatingWallet = route.path.indexOf('wallet') !== -1
       }
+
+      window.onunload = () => {
+        localStorage.setItem('WICC_RESTORE_PATH', JSON.stringify({
+          name: route.name,
+          query: route.query
+        }))
+      }
+    },
+
+    destroyed () {
+      window.onunload = null
     },
 
     computed: {
@@ -74,9 +91,9 @@
           let promise
 
           if (this.isCreatingWallet) {
-            promise = API.createWallet(bus.password, bus.mnemonic)
+            promise = API.createWallet(this.password, this.mnemonic)
           } else {
-            promise = API.createAccount(bus.mnemonic)
+            promise = API.createAccount(this.mnemonic)
           }
 
           promise.then(() => {
@@ -88,8 +105,6 @@
             if (!this.isCreatingWallet) {
               eventBus.$emit('header:state:refresh')
             }
-
-            mnemonic.clear()
 
             this.$router.push({
               name: 'accountMain'
@@ -128,7 +143,7 @@
 
       handleInput (selection) {
         this.selection = selection
-        this.mnemonic = selection.join(' ')
+        this.inputMnemonic = selection.join(' ')
 
         this.isValid = this.validate()
       }
@@ -138,9 +153,11 @@
       return {
         isCreatingWallet: true,
         selection: [],
-        mnemonic: '',
+        inputMnemonic: '',
         shuffledMnemonics: [],
-        isValid: true
+        isValid: true,
+        mnemonic: '',
+        password: null
       }
     }
   }

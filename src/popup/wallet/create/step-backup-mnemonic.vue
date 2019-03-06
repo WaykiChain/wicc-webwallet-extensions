@@ -25,9 +25,8 @@
 <script type="text/jsx">
   import WalletInput from '../../components/input'
   import NavLayout from '../../components/nav-layout'
-  import bus from './bus'
   import download from '../../api/download'
-  import mnemonic from './mnemonic'
+  import API from '../../api'
 
   export default {
     name: 'backup-mnemonic',
@@ -39,12 +38,16 @@
 
     created () {
       const route = this.$router.currentRoute
+      const { password } = route.query
+      if (password) {
+        this.password = password
+      }
 
       if (route && route.path) {
         this.isCreatingWallet = route.path.indexOf('wallet') !== -1
       }
 
-      mnemonic.get().then((data) => {
+      API.createMnemonicCode().then((data) => {
         this.mnemonic = data
       }, (error) => {
         console.log('get mnemonic error:', error.message)
@@ -53,12 +56,12 @@
 
     methods: {
       validateWalletMnemonic () {
-        bus.mnemonic = this.mnemonic
         if (this.isCreatingWallet) {
           this.$router.push({
             name: 'validateWalletMnemonic',
             query: {
-              mnemonic: this.mnemonic
+              mnemonic: this.mnemonic,
+              password: this.password
             }
           })
         } else {
@@ -79,7 +82,8 @@
     data () {
       return {
         isCreatingWallet: true,
-        mnemonic: ''
+        mnemonic: '',
+        password: null
       }
     }
   }

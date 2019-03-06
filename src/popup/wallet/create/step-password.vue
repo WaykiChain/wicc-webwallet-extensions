@@ -40,7 +40,6 @@
 <script type="text/jsx">
   import WalletInput from '../../components/input'
   import NavLayout from '../../components/nav-layout'
-  import bus from './bus'
 
   export default {
     components: {
@@ -63,9 +62,13 @@
 
           return
         }
-        bus.password = this.password
+
         this.$router.push({
-          name: 'backupWalletMnemonic'
+          name: 'backupWalletMnemonic',
+
+          query: {
+            password: this.password
+          }
         })
       },
 
