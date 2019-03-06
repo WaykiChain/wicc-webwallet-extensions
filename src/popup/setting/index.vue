@@ -24,11 +24,13 @@
           <button class="display-block" @click="gotoPassword">{{ $t('setting.index.changePassword') }}</button>
         </div>
 
+        <!--
         <div class="section-title">{{ $t('setting.index.walletTitle') }}</div>
         <div class="section-content">
           <button class="display-block" @click="gotoCreateWallet">{{ $t('setting.index.createWallet') }}</button>
           <button class="display-block" @click="gotoImportWallet">{{ $t('setting.index.importWallet') }}</button>
         </div>
+        -->
       </template>
 
       <template v-if="tab === 'about'">
