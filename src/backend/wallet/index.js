@@ -229,7 +229,7 @@ export default {
   },
 
   async getState () {
-    const state = stateStore.getState()
+    const state = stateStore.getState() || {}
     let isLocked = !!state.isLocked
     if (!vaultStorage.isLogin()) {
       isLocked = true
