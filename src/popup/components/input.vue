@@ -100,7 +100,6 @@
     resize: none;
     font-size: 16px;
     line-height: 30px;
-    letter-spacing: 2px;
     height: 120px;
   }
 
