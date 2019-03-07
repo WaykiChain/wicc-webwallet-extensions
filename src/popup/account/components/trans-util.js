@@ -65,7 +65,7 @@ export default {
     return fecha.format(date, 'YYYY/MM/DD  HH:mm:ss')
   },
 
-  formatAmount (amount, precision = 2) {
+  formatAmount (amount, precision = 4) {
     return amount ? fixed(amount * Math.pow(10, -8), precision) : '0'
   },
 

@@ -83,7 +83,7 @@
         let value = event.target.value
 
         if (type === 'number') {
-          const parsed = Math.abs(parseFloat(value))
+          const parsed = parseFloat(value)
           if (!isNaN(parsed)) {
             value = parsed
           }

@@ -18,6 +18,7 @@ export default {
     passwordError: 'The password you entered is incorrect.',
     passwordInConsistent: 'Passwords do not match. Please check.',
     insufficientBalance: 'Insufficient balance',
+    amountLessThanLimit: 'The transferred amount should not less than 0.0001',
     accountNotActivated: 'Please activate your wallet first',
     accountAlreadyExists: 'Account already exists',
     passwordInvalid: 'The input current password is incorrect'
