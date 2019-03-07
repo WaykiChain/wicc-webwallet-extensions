@@ -272,8 +272,10 @@ export default {
     const data = state.data
     if (state.password && data) {
       return passworder.encrypt(newPassword, data).then((blob) => {
-        state.password = newPassword
-        state.data = data
+        state.password = null
+        state.data = null
+        state.vaultBlob = null
+        state.activeAccount = null
 
         return blob
       })

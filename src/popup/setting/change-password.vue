@@ -67,7 +67,9 @@
           this.$toast(this.$t('setting.password.changeSuccess'), {
             type: 'center'
           })
-          window.history.go(-1)
+          this.$router.push({
+            name: 'welcome'
+          })
         }, (error) => {
           this.$toast(this.$t('setting.password.changeFailure') + ' ' + formatError(error), {
             type: 'center',
