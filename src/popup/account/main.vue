@@ -133,7 +133,10 @@
 
       gotoSend () {
         this.$router.push({
-          name: 'send'
+          name: 'send',
+          query: {
+            balance: this.activeAccountInfo ? this.activeAccountInfo.balanceText : null
+          }
         })
       },
 

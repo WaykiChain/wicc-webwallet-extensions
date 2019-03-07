@@ -83,6 +83,13 @@
 
     mixins: [StateWatcher],
 
+    created () {
+      const { query } = this.$router.currentRoute
+      if (query.balance && !isNaN(parseFloat(query.balance))) {
+        this.balance = parseFloat(query.balance)
+      }
+    },
+
     computed: {
       valid() {
         return this.destAddr && this.value
@@ -95,6 +102,14 @@
 
         if (this.value < 0.0001) {
           this.$toast(this.$t('errors.amountLessThanLimit'), {
+            type: 'center'
+          })
+
+          return
+        }
+
+        if (this.balance && this.value > this.balance) {
+          this.$toast(this.$t('errors.insufficientBalance'), {
             type: 'center'
           })
 
@@ -124,6 +139,7 @@
 
     data() {
       return {
+        balance: null,
         destAddr: null,
         value: null,
         desc: null,
