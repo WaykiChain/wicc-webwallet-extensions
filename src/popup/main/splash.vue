@@ -96,7 +96,7 @@
         API.unlock(this.password).then(() => {
           this.gotoMain()
         }, (error) => {
-          this.$toast(this.$t('common.passwordError'), {
+          this.$toast(this.$t('errors.passwordError'), {
             type: 'center'
           })
           throw error

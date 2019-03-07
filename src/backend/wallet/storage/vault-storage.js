@@ -13,6 +13,8 @@ const state = {
   activeAccount: null
 }
 
+const ACCOUNT_ALREADY_EXISTS = 'ACCOUNT_ALREADY_EXISTS'
+
 const verifyExists = (type, value) => {
   const data = state.data
 
@@ -27,16 +29,16 @@ const verifyExists = (type, value) => {
     }
 
     if (pks.indexOf(value) !== -1) {
-      throw new Error('account already exists')
+      throw new Error(ACCOUNT_ALREADY_EXISTS)
     }
   }
 
   for (let item of data) {
     if (item.type === type) {
       if (type === 'mnemonic' && item.data.mnemonic === value) {
-        throw new Error('account already exists')
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
       } else if (type === 'privateKey' && item.data.privateKey === value) {
-        throw new Error('account already exists')
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
       }
     }
   }
@@ -264,7 +266,7 @@ export default {
   async changePassword (password, newPassword) {
     const valid = await this.validatePassword(password, state.vaultBlob)
     if (!valid) {
-      throw new Error('password is invalid')
+      throw new Error('PASSWORD_INVALID')
     }
 
     const data = state.data

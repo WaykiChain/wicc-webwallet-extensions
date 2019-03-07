@@ -3,14 +3,10 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel',
     activeAccount: 'Activate',
-    copySuccess: 'Copy success',
-    passwordError: 'The password entered are incorrect',
-    passwordInConsistent: 'The passwords entered twice are inconsistent, please check',
-    insufficientBalance: 'Insufficient balance',
-    accountNotActivated: 'Please activate you wallet first',
+    copySuccess: 'Copied',
     fast: 'Fast',
     slow: 'Slow',
-    minerFee: 'Fee',
+    minerFee: 'Gas fee',
     accountLabel: 'Account',
     copyAddress: 'Copy Address',
     unknownError: 'Unknown Error',
@@ -18,10 +14,19 @@ export default {
     loading: 'Loading...'
   },
 
+  errors: {
+    passwordError: 'The password you entered is incorrect.',
+    passwordInConsistent: 'Passwords do not match. Please check.',
+    insufficientBalance: 'Insufficient balance',
+    accountNotActivated: 'Please activate your wallet first',
+    accountAlreadyExists: 'Account already exists',
+    passwordInvalid: 'The input current password is incorrect'
+  },
+
   splash: {
-    passwordPlaceholder: 'Please input password',
-    unlockButton: 'Unlock',
-    restoreWalletButton: 'Recover wallet with mnemonic',
+    passwordPlaceholder: 'Input password',
+    unlockButton: 'Log in',
+    restoreWalletButton: 'Recover your wallet with mnemonics.',
     createWalletButton: 'Create Wallet',
     importWalletButton: 'Import Wallet'
   },
@@ -30,21 +35,21 @@ export default {
     import: {
       title: 'Import Account',
       typeLabel: 'Type',
-      mnemonicType: 'Mnemonic',
+      mnemonicType: 'Mnemonics',
       privateKeyType: 'Private Key',
-      mnemonicLabel: 'Mnemonic',
-      mnemonicPlaceholder: 'Place input mnemonic',
+      mnemonicLabel: 'Mnemonics',
+      mnemonicPlaceholder: 'Input mnemonics',
       privateKeyLabel: 'Private Key',
-      privateKeyPlaceholder: 'Please input private key',
+      privateKeyPlaceholder: 'Input private key',
       confirmLoading: 'Importing...',
-      importSuccess: 'Import Success',
-      importFailure: 'Import Failure'
+      importSuccess: 'Import successfully',
+      importFailure: 'Failed to import '
     },
     header: {
       network: 'Network',
-      defaultNetwork: 'Default network is main network',
+      defaultNetwork: 'The default network is MainNet',
       logout: 'Logout',
-      viewMnemonic: 'View Mnemonic',
+      viewMnemonic: 'View mnemonics',
       exportPrivateKey: 'Export Private Key',
       createAccount: 'Create Account',
       importAccount: 'Import Account',
@@ -54,83 +59,83 @@ export default {
       testnet: 'WICC TestNet'
     },
     addToken: {
-      title: 'Add token',
+      title: 'Add Token',
       regIdLabel: 'Contract RegID',
-      regIdPlaceholder: 'Please input contract RegID',
+      regIdPlaceholder: 'Input contract RegID',
       nameLabel: 'Token name',
-      namePlaceholder: 'Please input token name',
+      namePlaceholder: 'Input token name',
       precisionLabel: 'Token precision',
-      precisionPlaceholder: 'Please input token precision',
+      precisionPlaceholder: 'Input token precision',
       confirmLoading: 'Adding...',
-      addSuccess: 'Add token success',
-      addFailure: 'Add token failed'
+      addSuccess: 'Token added',
+      addFailure: 'Failed to add token'
     },
     sendToken: {
-      title: 'Send',
+      title: 'Transfer',
       fromLabel: 'From',
       destLabel: 'To',
-      destPlaceHolder: 'Recipient Address',
+      destPlaceHolder: 'Recipient address',
       valueLabel: 'Amount',
-      valuePlaceHolder: 'Please input send amount',
+      valuePlaceHolder: 'Input amount',
       descLabel: 'Comment（Optional）',
-      confirmButton: 'Confirm Send',
+      confirmButton: 'Confirm',
       confirmLoading: 'Submitting...',
-      sendSuccess: 'Submit send success',
-      sendFailure: 'Submit send failed'
+      sendSuccess: 'Submit successfully',
+      sendFailure: 'Failed to submit '
     },
     send: {
-      title: 'Send',
+      title: 'Transfer',
       fromLabel: 'From',
       destLabel: 'To',
       destPlaceHolder: 'Recipient Address',
       valueLabel: 'Amount',
-      valuePlaceHolder: 'Please input send amount',
+      valuePlaceHolder: 'Input amount',
       descLabel: 'Comment（Optional）',
-      addressInvalid: 'Please input the correct WICC mainnet address, ',
-      testnetAddressInvalid: 'Please input the correct WICC testnet address',
-      confirmButton: 'Confirm Send',
+      addressInvalid: 'Input WICC mainnet address, ',
+      testnetAddressInvalid: 'Input WICC testnet address',
+      confirmButton: 'Confirm',
       confirmLoading: 'Submitting...',
-      sendSuccess: 'Submit send success',
-      sendFailure: 'Submit send failed'
+      sendSuccess: 'Submit successfully',
+      sendFailure: 'Failed to submit'
     },
     main: {
       tokenList: 'Token List',
-      removeToken: 'Hide Token',
-      removeTokenSuccess: 'Hide success',
-      removeTokenFailed: 'Hide failed',
-      sendButton: 'Send',
+      removeToken: 'Hide token',
+      removeTokenSuccess: 'Hide successfully',
+      removeTokenFailed: 'Failed to hide',
+      sendButton: 'Transfer',
       receiveButton: 'Receive',
-      addTokenButton: 'Add Token'
+      addTokenButton: 'Add token'
     },
     dialog: {
-      passwordTitle: 'Please input password',
-      passwordPlaceHolder: 'Please input password',
-      viewMnemonicTitle: 'View mnemonic',
-      viewMnemonicTip: 'Having a mnemonic is equivalent to owning an asset, so be sure to keep it in a safe place.',
-      downloadMnemonicButton: 'Download',
+      passwordTitle: 'Input Password',
+      passwordPlaceHolder: 'Input password',
+      viewMnemonicTitle: 'View mnemonics',
+      viewMnemonicTip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
+      downloadMnemonicButton: 'Download private key',
       exportPkTitle: 'Export private key',
       exportPkTip: 'The private key is not encrypted and the risk of disclosure is extremely high. Please keep it in a safe place.',
       copyPkButton: 'Copy',
       registerTitle: 'Are you sure to activate the wallet? ',
-      registerTip: 'Activating the wallet requires 0.0001 WICC, and the activation wallet uses the WICC in the wallet.',
+      registerTip: 'Activating the wallet requires 0.0001 WICC, and the activation uses the WICC in the wallet.',
       registerLoading: 'Activating...',
-      registerSuccess: 'Activate Success',
-      registerFailed: 'Activate Failed'
+      registerSuccess: 'Activate successfully',
+      registerFailed: 'Failed to activate'
     },
     transDetail: {
       fromLabel: 'From',
       toLabel: 'To',
-      feesLabel: 'Fee',
-      hashLabel: 'Hash',
+      feesLabel: 'Gas fee',
+      hashLabel: 'Tx hash',
       commentLabel: 'Comment',
       txTypeLabel: 'Type',
-      confirmedTimeLabel: 'Confirmed Time'
+      confirmedTimeLabel: 'Confirmation time'
     },
     transHistory: {
       title: 'History',
       statusConfirmed: 'Completed',
-      statusPending: 'Pending',
-      emptyBlock: 'No History'
+      statusPending: 'Pending...',
+      emptyBlock: 'No history'
     }
   },
 
@@ -140,40 +145,40 @@ export default {
         title: 'Set Password',
         tip: 'WaykiChain doesn\'t store your wallet password and can\'t help you get it back, so keep it in mind.',
         password: 'Password',
-        passwordPlaceholder: 'Please input password',
+        passwordPlaceholder: 'Input password',
         password2: 'Confirm Password',
-        password2Placeholder: 'Please input password again',
+        password2Placeholder: 'Input password again',
         confirmButton: 'Create',
         importButton: 'Import'
       },
       backup: {
-        title: 'Backup mnemonic',
-        tip: 'Having a mnemonic is equivalent to owning an asset, so be sure to keep it in a safe place.',
-        mnemonicLabel: 'Please copy the following mnemonic, we will verify it in the next step.',
+        title: 'Backup Mnemonics',
+        tip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
+        mnemonicLabel: 'Please copy the following mnemonics. We will verify them in the next step.',
         nextButton: 'Next',
         downloadButton: 'Download'
       },
       validate: {
-        title: 'Verify Mnemonic',
-        mnemonicLabel: 'Please click on the mnemonic in order to confirm that your backup is correct.',
-        validateErrorTip: 'The mnemonic input is incorrect, please check!',
+        title: 'Verify Mnemonics',
+        mnemonicLabel: 'Please click on the mnemonics in order to verify that if your backup is correct.',
+        validateErrorTip: 'The mnemonics inputted are incorrect, please check!',
         confirmLoading: 'Creating...',
-        createSuccess: 'Create Success',
-        createFailure: 'Create Failed'
+        createSuccess: 'Create successfully',
+        createFailure: 'Failed to create'
       }
     },
     import: {
       title: 'Import Wallet',
-      tip: 'This action will overwrite all account info in wallet, please pay attention !',
-      mnemonic: 'Mnemonic',
-      mnemonicPlaceholder: 'Place input mnemonic',
+      tip: 'This action will overwrite all account info in wallet, please use with caution!',
+      mnemonic: 'Mnemonics',
+      mnemonicPlaceholder: 'Input mnemonics',
       password: 'Password',
-      passwordPlaceholder: 'Please input password',
+      passwordPlaceholder: 'Input password',
       password2: 'Confirm Password',
-      password2Placeholder: 'Please input password again',
+      password2Placeholder: 'Input password again',
       confirmLoading: 'Importing...',
-      importSuccess: 'Import Success',
-      importFailure: 'Import Failed'
+      importSuccess: 'Import successfully',
+      importFailure: 'Failed to import'
     }
   },
 
@@ -191,45 +196,45 @@ export default {
       name: 'WaykiMax',
       links: 'Links',
       homepage: 'WaykiChain Offical Website',
-      devCenter: 'WaykiChain Developer Center'
+      devCenter: 'WaykiChain Developer Portal'
     },
     password: {
       title: 'Change Password',
       currentPassword: 'Current password',
-      currentPasswordPlaceholder: 'Please input current password',
+      currentPasswordPlaceholder: 'Input current password',
       newPassword: 'New password',
-      newPasswordPlaceholder: 'Please input new password',
+      newPasswordPlaceholder: 'Input new password',
       newPassword2: 'Confirm new password',
-      newPassword2Placeholder: 'Please input new password again',
+      newPassword2Placeholder: 'Input new password again',
       confirmLoading: 'Loading...',
-      changeSuccess: 'Change password success',
-      changeFailure: 'Change password failed'
+      changeSuccess: 'Password has been changed',
+      changeFailure: 'Failed to change password'
     }
   },
 
   window: {
     contract: {
-      title: 'WICC Contract Create',
+      title: 'WICC Contract Call',
       addressLabel: 'Address:',
-      contractRegIdLabel: 'Contract regid:',
+      contractRegIdLabel: 'Contract RegID:',
       valueLabel: 'WICC amount:',
       contractLabel: 'Contract:',
       closeButton: 'Close',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Call contract success',
-      createFailure: 'Call contract failed'
+      createSuccess: 'Call contract successfully',
+      createFailure: 'Failed to call contract'
     },
     publishContract: {
       title: 'WICC Contract Publish',
       addressLabel: 'Address:',
-      scriptLabel: 'Contract Script:',
-      scriptDescLabel: 'Contract Description:',
+      scriptLabel: 'Contract script:',
+      scriptDescLabel: 'Contract description:',
       closeButton: 'Close',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Create contract success',
-      createFailure: 'Create contract failed'
+      createSuccess: 'Create contract successfully',
+      createFailure: 'Failed to create contract'
     },
     transfer: {
       title: 'WICC Transfer Confirm',
@@ -239,20 +244,20 @@ export default {
       closeButton: 'Close',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Submit success',
-      createFailure: 'Submit failed'
+      createSuccess: 'Submit successfully',
+      createFailure: 'Failed to submit'
     },
     vote: {
-      title: 'WICC Node Vote',
+      title: 'WICC Node Voting',
       addressLabel: 'Address:',
-      valueLabel: 'Vote Amount:',
-      withdrawValueLabel: 'Withdraw Amount:',
-      maxVoteLimit: 'The voted address count should not big than 11.',
+      valueLabel: 'Vote amount:',
+      withdrawValueLabel: 'Withdrawal amount:',
+      maxVoteLimit: 'The number of voted addresses should not exceed 11.',
       closeButton: 'Close',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Submit success',
-      createFailure: 'Submit failed'
+      createSuccess: 'Call successfully',
+      createFailure: 'Failed to call'
     }
   }
 }

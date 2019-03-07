@@ -2,7 +2,7 @@
   "name": "wayki-max",
   "version": "0.1.0",
   "description": "Wicc web wallet for chrome and firefox.",
-  "author": "lino.zhang@gmail.com",
+  "author": "coredev@waykichainhk.com",
   "license": "MIT",
   "private": false,
   "dependencies": {

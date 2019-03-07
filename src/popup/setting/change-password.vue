@@ -53,7 +53,7 @@
     methods: {
       changePassword () {
         if (this.newPassword !== this.newPassword2) {
-          this.$toast(this.$t('common.passwordInConsistent'), {
+          this.$toast(this.$t('errors.passwordInConsistent'), {
             type: 'center'
           })
 
