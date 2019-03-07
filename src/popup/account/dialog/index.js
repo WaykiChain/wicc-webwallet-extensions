@@ -6,14 +6,8 @@ import ConfirmPasswordDialog from './confirm-password-dialog'
 import RegisterConfirmDialog from './register-confirm-dialog'
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import i18nUtil from '../../api/i18n'
-import messages from '../../locale'
+import { i18n } from '../../locale'
 Vue.use(VueI18n)
-
-const i18n = new VueI18n({
-  locale: i18nUtil.getLanguage(),
-  messages
-})
 
 const getInstance = (Constructor, options) => {
   const instance = new Constructor({

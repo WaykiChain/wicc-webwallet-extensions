@@ -124,7 +124,7 @@
 
 <script type="text/jsx">
   import NavLayout from '../components/nav-layout'
-  import i18nUtil from '../api/i18n'
+  import { getLanguage, setLanguage } from '../locale'
 
   export default {
     name: 'setting',
@@ -134,7 +134,7 @@
       if (tab) {
         this.tab = tab
       }
-      this.language = i18nUtil.getLanguage()
+      this.language = getLanguage()
     },
 
     components: {
@@ -143,7 +143,7 @@
 
     methods: {
       handleLanguageChange () {
-        i18nUtil.setLanguage(this.language)
+        setLanguage(this.language)
 
         this.$i18n.locale = this.language
       },

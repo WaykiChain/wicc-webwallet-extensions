@@ -1,5 +1,4 @@
-import i18nUtil from './i18n'
-import locale from '../locale'
+import { getLanguage, messages } from '../locale'
 
 const ERRORS_MAP = {
   ADDRESS_NOT_ACTIVATED: 'accountNotActivated',
@@ -13,8 +12,8 @@ export default function (error) {
   const message = error.message
 
   if (message in ERRORS_MAP) {
-    const language = i18nUtil.getLanguage()
-    return locale[language].errors[ERRORS_MAP[message]] || message
+    const language = getLanguage()
+    return messages[language].errors[ERRORS_MAP[message]] || message
   } else if (message) {
     return message
   }

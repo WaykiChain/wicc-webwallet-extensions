@@ -112,7 +112,7 @@ export default {
       passwordPlaceHolder: 'Input password',
       viewMnemonicTitle: 'View mnemonics',
       viewMnemonicTip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
-      downloadMnemonicButton: 'Download private key',
+      downloadMnemonicButton: 'Download',
       exportPkTitle: 'Export private key',
       exportPkTip: 'The private key is not encrypted and the risk of disclosure is extremely high. Please keep it in a safe place.',
       copyPkButton: 'Copy',

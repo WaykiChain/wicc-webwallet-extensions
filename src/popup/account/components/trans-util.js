@@ -1,5 +1,5 @@
 import fecha from 'fecha'
-import i18nUtil from '../../api/i18n'
+import { getLanguage } from '../../locale'
 import fixed from '../../api/fixed'
 
 const TYPE_MAP = {
@@ -34,7 +34,7 @@ const STATUS_MAP_EN = {
 
 export default {
   formatType (type) {
-    const lang = i18nUtil.getLanguage()
+    const lang = getLanguage()
     if (lang && lang.indexOf('zh') !== -1) {
       return TYPE_MAP[type] || type
     } else {
@@ -43,7 +43,7 @@ export default {
   },
 
   formatStatus (trans) {
-    const lang = i18nUtil.getLanguage()
+    const lang = getLanguage()
     let status
     if (trans.confirmedHeight) {
       status = 'confirmed'

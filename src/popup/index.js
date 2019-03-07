@@ -10,12 +10,13 @@ import './scss/vodel.scss'
 import 'vodal/zoom.css'
 import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
-import messages from './locale'
-import i18nUtil from './api/i18n'
+import { i18n } from './locale'
 import fixed from './api/fixed'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
+Vue.use(VueI18n)
+
 Vue.component(Vodal.name, Vodal)
 
 Vue.use(Toast, {
@@ -23,13 +24,6 @@ Vue.use(Toast, {
   duration: 2500,
   wordWrap: false,
   width: 'auto'
-})
-
-Vue.use(VueI18n)
-
-const i18n = new VueI18n({
-  locale: i18nUtil.getLanguage(),
-  messages
 })
 
 Vue.filter('fixed', fixed)
