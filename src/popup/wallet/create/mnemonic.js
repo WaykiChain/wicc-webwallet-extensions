@@ -9,11 +9,12 @@ export default {
     if (lastSaved) {
       try {
         let status = JSON.parse(lastSaved)
-        if (Date.now() - status.createdAt < STORAGE_TIME) {
+
+        if (status && (Date.now() - status.createdAt < STORAGE_TIME)) {
           return Promise.resolve(status.data)
         }
-      } catch (e) {
-        console.log('parse saved mnemonic error', e)
+      } catch (error) {
+        console.log('parse saved mnemonic error:', error)
       }
     }
 

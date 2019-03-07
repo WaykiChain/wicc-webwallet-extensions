@@ -10,7 +10,7 @@
           :readonly="readOnly"
           @input="handleInput"></textarea>
       <input
-          v-if="type === 'text' || type === 'password'"
+          v-if="type === 'text' || type === 'password' || type === 'number'"
           class="wallet-input--input display-block"
           :placeholder="placeholder"
           :type="type"
@@ -58,7 +58,15 @@
 
     methods: {
       handleInput (event) {
-        this.$emit('input', event.target.value)
+        const type = this.type
+        let value = event.target.value
+        if (type === 'number') {
+          const parsed = parseFloat(value)
+          if (!isNaN(parsed)) {
+            value = parsed
+          }
+        }
+        this.$emit('input', value)
       }
     }
   }
@@ -92,7 +100,6 @@
     resize: none;
     font-size: 16px;
     line-height: 30px;
-    letter-spacing: 2px;
     height: 120px;
   }
 
