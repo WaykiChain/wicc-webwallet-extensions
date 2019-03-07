@@ -274,7 +274,17 @@ export default {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return baasApi.getBlockInfo()
+    return transStorage.list(network, address)
+      .then((trans) => {
+        if (trans) {
+          for (let item of trans) {
+            if (item.txType === 2) {
+              throw new Error('IN_ACTIVATING')
+            }
+          }
+        }
+        return baasApi.getBlockInfo()
+      })
       .then((data) => {
         const height = data.syncheight
         const privateKey = vaultStorage.getPrivateKey(address)

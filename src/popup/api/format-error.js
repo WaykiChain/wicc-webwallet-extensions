@@ -3,7 +3,8 @@ import { getLanguage, messages } from '../locale'
 const ERRORS_MAP = {
   ADDRESS_NOT_ACTIVATED: 'accountNotActivated',
   ACCOUNT_ALREADY_EXISTS: 'accountAlreadyExists',
-  PASSWORD_INVALID: 'passwordInvalid'
+  PASSWORD_INVALID: 'passwordInvalid',
+  IN_ACTIVATING: 'inActivating'
 }
 
 export default function (error) {

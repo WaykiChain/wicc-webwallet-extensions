@@ -21,7 +21,8 @@ export default {
     amountLessThanLimit: 'The transferred amount should not less than 0.0001',
     accountNotActivated: 'Please activate your wallet first',
     accountAlreadyExists: 'Account already exists',
-    passwordInvalid: 'The input current password is incorrect'
+    passwordInvalid: 'The input current password is incorrect',
+    inActivating: 'Activating, please wait'
   },
 
   splash: {

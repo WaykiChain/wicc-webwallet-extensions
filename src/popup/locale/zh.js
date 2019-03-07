@@ -21,7 +21,8 @@ export default {
     amountLessThanLimit: '转账金额不能小于 0.0001',
     accountNotActivated: '请先激活钱包',
     accountAlreadyExists: '账号已经存在',
-    passwordInvalid: '当前密码输入错误'
+    passwordInvalid: '当前密码输入错误',
+    inActivating: '激活中，请等待'
   },
 
   splash: {
