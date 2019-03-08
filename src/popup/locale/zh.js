@@ -4,10 +4,6 @@ export default {
     cancel: '取消',
     activeAccount: '激活',
     copySuccess: '复制成功',
-    passwordError: '密码错误',
-    passwordInConsistent: '两次输入的密码不一致，请检查',
-    insufficientBalance: '余额不足',
-    accountNotActivated: '请先激活钱包',
     fast: '快',
     slow: '慢',
     minerFee: '矿工费',
@@ -16,6 +12,17 @@ export default {
     unknownError: '发生错误',
     warning: '警告',
     loading: '加载中...'
+  },
+
+  errors: {
+    passwordError: '密码错误',
+    passwordInConsistent: '两次输入的密码不一致，请检查',
+    insufficientBalance: '余额不足',
+    amountLessThanLimit: '转账金额不能小于 0.0001',
+    accountNotActivated: '请先激活钱包',
+    accountAlreadyExists: '账号已经存在',
+    passwordInvalid: '当前密码输入错误',
+    inActivating: '激活中，请等待'
   },
 
   splash: {

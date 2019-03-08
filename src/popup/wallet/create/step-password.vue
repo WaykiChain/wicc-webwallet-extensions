@@ -56,7 +56,7 @@
     methods: {
       validatePassword () {
         if (this.password !== this.password2) {
-          this.$toast(this.$t('common.passwordInConsistent'), {
+          this.$toast(this.$t('errors.passwordInConsistent'), {
             type: 'center'
           })
 

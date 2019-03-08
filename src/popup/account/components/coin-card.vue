@@ -63,7 +63,7 @@
 
       openRegisterConfirm () {
         if (this.value === 0) {
-          this.$toast(this.$t('common.insufficientBalance'), {
+          this.$toast(this.$t('errors.insufficientBalance'), {
             type: 'center'
           })
           return

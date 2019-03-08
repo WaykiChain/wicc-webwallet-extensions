@@ -92,7 +92,7 @@
             this.$emit('confirm:success')
           } else {
             this.$emit('confirm:failure')
-            this.$toast(this.$t('common.passwordError'), {
+            this.$toast(this.$t('errors.passwordError'), {
               type: 'center'
             })
           }
