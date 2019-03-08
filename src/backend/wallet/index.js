@@ -305,6 +305,9 @@ export default {
     const baasApi = new BaasAPI(network)
 
     return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+      if (isNaN(parseFloat(value))) {
+        throw new Error('INVALID_VALUE')
+      }
       return wiccApi.createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
@@ -335,6 +338,9 @@ export default {
     const baasApi = new BaasAPI(network)
 
     return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+      if (isNaN(parseFloat(value))) {
+        throw new Error('INVALID_VALUE')
+      }
       return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)

@@ -1,5 +1,8 @@
 <template>
-  <nav-layout :title="$t('wallet.create.password.title')" class="u-full-height">
+  <nav-layout
+    :title="$t('wallet.create.password.title')"
+    :path="backPath"
+    class="u-full-height">
     <div class="tip">
       {{ $t('wallet.create.password.tip') }}
     </div>
@@ -50,6 +53,12 @@
     computed: {
       isValid () {
         return this.password && this.password2
+      },
+
+      backPath () {
+        return {
+          name: 'welcome'
+        }
       }
     },
 

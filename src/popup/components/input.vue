@@ -9,6 +9,7 @@
           :placeholder="placeholder"
           :readonly="readOnly"
           @input="handleInput"></textarea>
+
       <input
           ref="input"
           v-if="type === 'text' || type === 'password' || type === 'number'"
@@ -19,6 +20,7 @@
           :readonly="readOnly"
           @keydown="handleKeyDown"
           @input="handleInput" />
+
       <div v-if="postfix" class="wallet-input-postfix">{{ postfix }}</div>
 
       <slot></slot>
