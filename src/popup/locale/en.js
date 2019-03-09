@@ -26,7 +26,7 @@ export default {
   },
 
   splash: {
-    passwordPlaceholder: 'Input password',
+    passwordPlaceholder: 'Please enter 6~20 characters',
     unlockButton: 'Log in',
     restoreWalletButton: 'Recover your wallet with mnemonics.',
     createWalletButton: 'Create Wallet',
@@ -113,7 +113,7 @@ export default {
     },
     dialog: {
       passwordTitle: 'Input Password',
-      passwordPlaceHolder: 'Input password',
+      passwordPlaceHolder: 'Please enter 6~20 characters',
       viewMnemonicTitle: 'View mnemonics',
       viewMnemonicTip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
       downloadMnemonicButton: 'Download',
@@ -177,7 +177,7 @@ export default {
       mnemonic: 'Mnemonics',
       mnemonicPlaceholder: 'Input mnemonics',
       password: 'Password',
-      passwordPlaceholder: 'Input password',
+      passwordPlaceholder: 'Please enter 6~20 characters',
       password2: 'Confirm Password',
       password2Placeholder: 'Input password again',
       confirmLoading: 'Importing...',

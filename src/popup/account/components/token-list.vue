@@ -228,7 +228,7 @@
 
     methods: {
       gotoAddToken () {
-        return false;
+        //return false;
         this.$router.push({
           name: 'addToken'
         })
@@ -240,13 +240,11 @@
 
       handleItemClick (token) {
         this.activeToken = token
-
         this.$emit('active-token-change', token)
       },
 
       handleRemoveToken (token) {
         const index = token.index
-
         API.removeToken(this.activeAccount.id, index).then(() => {
           const token = this.tokens[index]
           this.tokens.splice(index, 1)

@@ -43,7 +43,7 @@ pageStream.on('data', function ({ status, error, data, callbackId }) {
 
 const send = (action, data) => {
   if (pendingPromise.resolve) {
-    throw new Error('one tsk has already running')
+    throw new Error('one task has already running')
   }
 
   pageStream.write({

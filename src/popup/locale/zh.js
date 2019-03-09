@@ -26,7 +26,7 @@ export default {
   },
 
   splash: {
-    passwordPlaceholder: '请输入密码',
+    passwordPlaceholder: '请输入6-20位字符',
     unlockButton: '登录',
     restoreWalletButton: '使用助记词恢复钱包',
     createWalletButton: '创建钱包',
@@ -113,7 +113,7 @@ export default {
     },
     dialog: {
       passwordTitle: '请输入钱包密码',
-      passwordPlaceHolder: '请输入密码',
+      passwordPlaceHolder: '请输入6-20位字符',
       viewMnemonicTitle: '查看助记词',
       viewMnemonicTip: '拥有助记词相当于拥有资产，请一定妥善保管在安全的地方。',
       downloadMnemonicButton: '下载助记词',
@@ -178,7 +178,7 @@ export default {
       mnemonic: '助记词',
       mnemonicPlaceholder: '请输入助记词',
       password: '密码',
-      passwordPlaceholder: '请输入密码',
+      passwordPlaceholder: '请输入6-20位字符',
       password2: '确认密码',
       password2Placeholder: '请重新输入密码',
       confirmLoading: '导入中...',
