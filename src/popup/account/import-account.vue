@@ -61,9 +61,24 @@
     },
 
     methods: {
-      confirm () {
+      checkMnemonicCode(){
+        API.checkMnemonicCode(this.mnemonic).then((data) => {
+          if(data===true){
+            this.commit();
+          }else{
+              this.$toast(this.$t('wallet.import.correctMnemonic'), {type: 'center',duration: 5000,wordWrap: true})
+          }
+        }, (error) => {
+          this.$loading.close()
+          this.$toast(this.$t('wallet.import.importFailure') + ' ' + formatError(error), {
+            type: 'center',
+            duration: 5000,
+            wordWrap: true
+          })
+        })
+      },
+      commit(){
         this.$loading(this.$t('account.import.confirmLoading'))
-
         setTimeout(() => {
           API.importAccount(this.mnemonic, this.privateKey).then(() => {
             this.$loading.close()
@@ -83,6 +98,13 @@
             })
           })
         }, 300)
+      },
+      confirm () {
+        if(this.type==='mnemonic'){
+          this.checkMnemonicCode()
+        }else{
+          this.commit();
+        }
       }
     },
 

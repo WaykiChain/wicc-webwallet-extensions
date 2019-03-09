@@ -183,7 +183,8 @@ export default {
       password2Placeholder: '请重新输入密码',
       confirmLoading: '导入中...',
       importSuccess: '导入成功',
-      importFailure: '导入失败'
+      importFailure: '导入失败',
+      correctMnemonic: '请输入正确的助记词'
     }
   },
 

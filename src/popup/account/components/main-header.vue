@@ -119,7 +119,6 @@
     computed: {
       visibleAccounts () {
         const { network, accounts } = this
-
         return accounts.filter((account) => {
           return !(account.type === 'privateKey' && account.network !== network)
         })

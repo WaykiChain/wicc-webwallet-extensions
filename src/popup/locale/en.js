@@ -182,7 +182,8 @@ export default {
       password2Placeholder: 'Input password again',
       confirmLoading: 'Importing...',
       importSuccess: 'Import successfully',
-      importFailure: 'Failed to import'
+      importFailure: 'Failed to import',
+      correctMnemonic: 'Please enter correct mnemonic'
     }
   },
 

@@ -228,7 +228,7 @@
 
     methods: {
       gotoAddToken () {
-        //return false;
+        return false;
         this.$router.push({
           name: 'addToken'
         })
@@ -257,7 +257,7 @@
             type: 'center'
           })
         }, (error) => {
-          console.log('remove token error:', error)
+          
           this.$toast(this.$t('account.main.removeTokenFailed'), {
             type: 'center'
           })

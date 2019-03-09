@@ -17,6 +17,11 @@ export default class {
   createWallet (mnemonic) {
     return this.api.createWallet(mnemonic, DEFAULT_PASSWORD)
   }
+  
+  checkMnemonicCode(mnemonic){
+    console.log(mnemonic)
+    return this.api.checkMnemonicCode(mnemonic) 
+  }
 
   getPrivateKeyFromMnemonic (mnemonic) {
     return bitcore.PrivateKey.fromWIF(this.api.getPriKeyFromMnemonicCode(mnemonic))
