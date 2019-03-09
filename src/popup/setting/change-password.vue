@@ -43,10 +43,10 @@
       NavLayout,
       WalletInput
     },
-
+  
     computed: {
       isValid () {
-        return this.password && this.newPassword && this.newPassword2
+        return this.password && this.newPassword.length>=6 && this.newPassword.length<=20 && this.newPassword2.length>=6 && this.newPassword2.length<=20
       }
     },
 

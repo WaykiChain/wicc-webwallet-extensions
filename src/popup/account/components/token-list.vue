@@ -38,7 +38,7 @@
     </div>
     <div class="token-list-bottom">
       <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-no-add-icon.svg" /> 
-      {{ $t('account.main.addTokenButton') }} <span style="font-size:10px;"> (¾´ÇëÆÚ´ý)</span>
+      {{ $t('account.main.addTokenButton') }} <span style="font-size:10px;"> ({{ $t('account.main.expect') }})</span>
       </button>
     </div>
   </div>

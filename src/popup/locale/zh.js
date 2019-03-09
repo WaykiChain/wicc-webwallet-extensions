@@ -108,7 +108,8 @@ export default {
       removeTokenFailed: '隐藏失败',
       sendButton: '转账',
       receiveButton: '收款',
-      addTokenButton: '添加代币'
+      addTokenButton: '添加代币',
+      expect: '尽请期待'
     },
     dialog: {
       passwordTitle: '请输入钱包密码',
@@ -148,7 +149,7 @@ export default {
         title: '设置密码',
         tip: 'WaykiChain 不存储钱包密码，也无法帮您找回，请务必牢记。',
         password: '密码',
-        passwordPlaceholder: '请输入密码',
+        passwordPlaceholder: '请输入6-20位字符',
         password2: '确认密码',
         password2Placeholder: '请重新输入密码',
         confirmButton: '创建钱包',
@@ -207,7 +208,7 @@ export default {
       currentPassword: '当前密码',
       currentPasswordPlaceholder: '请输入当前密码',
       newPassword: '新密码',
-      newPasswordPlaceholder: '请输入新密码',
+      newPasswordPlaceholder: '请输入6-20位字符',
       newPassword2: '重复输入新密码',
       newPassword2Placeholder: '请重新输入新密码',
       confirmLoading: '正在修改密码...',

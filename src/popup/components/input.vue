@@ -88,9 +88,9 @@
             value = parsed
           }
         }
-
         this.$emit('input', value)
       }
+        
     }
   }
 </script>

@@ -108,7 +108,8 @@ export default {
       removeTokenFailed: 'Failed to hide',
       sendButton: 'Transfer',
       receiveButton: 'Receive',
-      addTokenButton: 'Add token'
+      addTokenButton: 'Add token',
+      expect: 'Coming soon'
     },
     dialog: {
       passwordTitle: 'Input Password',
@@ -148,7 +149,7 @@ export default {
         title: 'Set Password',
         tip: 'WaykiChain doesn\'t store your wallet password and can\'t help you get it back, so keep it in mind.',
         password: 'Password',
-        passwordPlaceholder: 'Input password',
+        passwordPlaceholder: 'Please enter 6~20 characters',
         password2: 'Confirm Password',
         password2Placeholder: 'Input password again',
         confirmButton: 'Create',
@@ -206,7 +207,7 @@ export default {
       currentPassword: 'Current password',
       currentPasswordPlaceholder: 'Input current password',
       newPassword: 'New password',
-      newPasswordPlaceholder: 'Input new password',
+      newPasswordPlaceholder: 'Please enter 6~20 characters',
       newPassword2: 'Confirm new password',
       newPassword2Placeholder: 'Input new password again',
       confirmLoading: 'Loading...',

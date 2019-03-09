@@ -49,7 +49,7 @@
 
     computed: {
       isValid () {
-        return this.password && this.password2
+        return this.password.length>=6 && this.password.length<=20 && this.password2.length>=6 && this.password2.length<=20
       }
     },
 
