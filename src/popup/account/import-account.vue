@@ -63,10 +63,11 @@
     methods: {
       checkMnemonicCode(){
         API.checkMnemonicCode(this.mnemonic).then((data) => {
+          debugger
           if(data===true){
             this.commit();
           }else{
-              this.$toast(this.$t('wallet.import.correctMnemonic'), {type: 'center',duration: 5000,wordWrap: true})
+            this.$toast(this.$t('wallet.import.correctMnemonic'), {type: 'center',duration: 5000,wordWrap: true})
           }
         }, (error) => {
           this.$loading.close()
