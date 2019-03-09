@@ -78,6 +78,7 @@ export default {
       destLabel: 'To',
       destPlaceHolder: 'Recipient address',
       valueLabel: 'Amount',
+      limit: 'Transfer Limit：',
       valuePlaceHolder: 'Input amount',
       descLabel: 'Comment（Optional）',
       confirmButton: 'Confirm',

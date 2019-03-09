@@ -37,7 +37,9 @@
       </ul>
     </div>
     <div class="token-list-bottom">
-      <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-add-icon.svg" /> {{ $t('account.main.addTokenButton') }}</button>
+      <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-no-add-icon.svg" /> 
+      {{ $t('account.main.addTokenButton') }} <span style="font-size:10px;"> (¾´ÇëÆÚ´ý)</span>
+      </button>
     </div>
   </div>
 </template>
@@ -87,8 +89,9 @@
     color: #5B5F67;
     flex: 1 100%;
     text-overflow: ellipsis;
-    line-height: 46px;
+    line-height: 48px;
     overflow: hidden;
+    padding-left: 10px;
   }
 
   .address-btn-copy {
@@ -104,18 +107,22 @@
 
   .token-list-bottom {
     text-align: center;
+    height:63px;
+    line-height: 63px;
+    background:rgba(242,245,252,1);
   }
 
   .token-list-btn-add {
     border: none;
-    color: #3C78EA;
+   color:rgba(153,153,153,1);
+   font-size: 16px;
   }
 
   .token-list-btn-add img {
     position: relative;
-    width: 16px;
-    height: 16px;
-    top: 2px;
+    width: 15px;
+    height: 15px;
+    top: 3px;
   }
 
   .token-list {
@@ -221,6 +228,7 @@
 
     methods: {
       gotoAddToken () {
+        return false;
         this.$router.push({
           name: 'addToken'
         })

@@ -97,20 +97,16 @@
       fetchTokenInfo () {
         this.loading = true
         this.$loading(this.$t('common.loading'))
-
         API.getTokenInfo(this.network, this.activeAddress, this.regId).then((value) => {
-          // console.log('token info:', value)
           const tokenInfo = value.result
           if (tokenInfo && tokenInfo.FreeValues) {
             tokenInfo.FreeValues = tokenInfo.FreeValues * Math.pow(10, -8)
           }
           this.activeTokenInfo = tokenInfo
           this.$loading.close()
-
           this.loading = false
-        }, () => {
+        }, (error) => {
           this.$loading.close()
-
           this.loading = false
         })
 

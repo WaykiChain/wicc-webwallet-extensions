@@ -78,6 +78,7 @@ export default {
       destLabel: '收款地址',
       destPlaceHolder: '请输入收款地址',
       valueLabel: '转账金额',
+      limit: '可用额度：',
       valuePlaceHolder: '请输入转账金额',
       descLabel: '备注（选填）',
       confirmButton: '确认转账',
