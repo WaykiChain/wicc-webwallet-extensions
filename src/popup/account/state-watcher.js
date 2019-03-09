@@ -17,7 +17,7 @@ export default {
     validateAddress (address) {
       const from = this.activeAddress || ''
       const network = from[0] === 'w' ? 'testnet' : 'mainnet'
-      address = address || ''
+      address = (address || '').trim()
 
       let valid = true
       if (network === 'testnet') {
@@ -27,7 +27,7 @@ export default {
       }
 
       if (valid) {
-        valid = address.length === 34
+        valid = /^[wW][a-zA-Z0-9]{33}$/g.test(address)
       }
 
       if (!valid) {

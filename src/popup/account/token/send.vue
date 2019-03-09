@@ -104,6 +104,14 @@
       confirmSend() {
         if (!this.validateAddress(this.destAddr)) return
 
+        if (this.value < 0.0001) {
+          this.$toast(this.$t('errors.amountLessThanLimit'), {
+            type: 'center'
+          })
+
+          return
+        }
+
         this.$loading(this.$t('account.sendToken.confirmLoading'))
         // sendToken (network, address, name, regId, destAddress, amount, fees, desc)
         API.sendToken(this.network || 'testnet', this.activeAddress, this.name, this.regId, this.destAddr, parseFloat(this.amount), this.fees, this.desc)
