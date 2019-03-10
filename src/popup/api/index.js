@@ -82,6 +82,12 @@ export default {
     })
   },
 
+  async validateRegisterAccount (address) {
+    return callBackend('validateRegisterAccount', {
+      address
+    })
+  },
+
   async send (network, address, destAddr, value, fees, desc) {
     return callBackend('send', {
       network,

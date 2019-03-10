@@ -269,10 +269,8 @@ export default {
     })
   },
 
-  registerAccount ({ address }) {
+  validateRegisterAccount ({ address }) {
     const network = getAddressNetwork(address)
-    const wiccApi = getWiccApi(network)
-    const baasApi = new BaasAPI(network)
 
     return transStorage.list(network, address)
       .then((trans) => {
@@ -283,8 +281,15 @@ export default {
             }
           }
         }
-        return baasApi.getBlockInfo()
       })
+  },
+
+  registerAccount ({ address }) {
+    const network = getAddressNetwork(address)
+    const wiccApi = getWiccApi(network)
+    const baasApi = new BaasAPI(network)
+
+    return baasApi.getBlockInfo()
       .then((data) => {
         const height = data.syncheight
         const privateKey = vaultStorage.getPrivateKey(address)
