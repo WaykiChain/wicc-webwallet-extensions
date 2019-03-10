@@ -54,7 +54,11 @@ export default {
     }
 
     return {
-      account: activeAccount ? { address: activeAccount.address, id: activeAccount.id, testnetAddress: activeAccount.testnetAddress } : null,
+      account: activeAccount ? {
+        address: activeAccount.address,
+        id: activeAccount.id,
+        testnetAddress: activeAccount.testnetAddress
+      } : null,
       network,
       address: activeAddress
     }
@@ -72,11 +76,6 @@ export default {
   },
 
   async openContractWindow ({ destRegId, contract, value, callbackId }) {
-    const state = await wallet.getState()
-    if (state.isLocked) {
-      throw new Error('Please unlock wallet first')
-    }
-
     return openWindow('contract', {
       destRegId,
       contract,
@@ -86,11 +85,6 @@ export default {
   },
 
   async publishContract ({ script, scriptDesc, callbackId }) {
-    const state = await wallet.getState()
-    if (state.isLocked) {
-      throw new Error('Please unlock wallet first')
-    }
-
     return openWindow('publicContract', {
       script,
       scriptDesc,
@@ -99,11 +93,6 @@ export default {
   },
 
   async requestPay ({ destAddress, value, desc, callbackId }) {
-    const state = await wallet.getState()
-    if (state.isLocked) {
-      throw new Error('Please unlock wallet first')
-    }
-
     return openWindow('requestPay', {
       destAddress,
       value,
@@ -113,11 +102,6 @@ export default {
   },
 
   async requestVote ({ votes, callbackId }) {
-    const state = await wallet.getState()
-    if (state.isLocked) {
-      throw new Error('Please unlock wallet first')
-    }
-
     return openWindow('requestVote', {
       votes,
       callbackId

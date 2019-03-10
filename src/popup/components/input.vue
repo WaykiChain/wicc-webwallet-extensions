@@ -15,10 +15,9 @@
           v-if="type === 'text' || type === 'password' || type === 'number'"
           class="wallet-input--input display-block"
           :placeholder="placeholder"
-          :type="type === 'number' ? 'text' : type"
+          :type="type"
           :value="value"
           :readonly="readOnly"
-          @keydown="handleKeyDown"
           @input="handleInput" />
 
       <div v-if="postfix" class="wallet-input-postfix">{{ postfix }}</div>
@@ -31,9 +30,6 @@
 </template>
 
 <script>
-  const NUMBER_VALID_KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.',
-    'Tab', 'Delete', 'Backspace', 'ShiftLeft', 'ShiftRight', 'Escape', 'Shift', 'Meta']
-
   export default {
     name: 'WalletInput',
 
@@ -64,22 +60,6 @@
     },
 
     methods: {
-      handleKeyDown (event) {
-        const key = event.key
-        const type = this.type
-        const input = this.$refs.input
-
-        if (type === 'number' && input) {
-          if (key && NUMBER_VALID_KEYS.indexOf(key) === -1) {
-            event.preventDefault()
-          }
-
-          if (key === '.' && input.value.indexOf('.') !== -1) {
-            event.preventDefault()
-          }
-        }
-      },
-
       handleInput (event) {
         const type = this.type
         let value = event.target.value
