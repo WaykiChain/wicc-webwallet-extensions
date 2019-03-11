@@ -44,9 +44,12 @@
   import FeesSlider from '../components/fees-slider'
   import API from '../api'
   import formatError from '../api/format-error'
+  import WindowMixin from './mixin'
 
   export default {
     name: 'contract',
+
+    mixins: [WindowMixin],
 
     components: {
       Main,
@@ -60,31 +63,9 @@
       this.desc = query.desc
       this.callbackId = query.callbackId
       this.value = parseFloat(query.value) || 0
-
-      API.getState().then((state) => {
-        this.network = state.network
-        this.address = state.activeAddress
-        this.activeAccount = state.activeAccount
-      })
     },
 
     methods: {
-      handleNetworkChange (network, header) {
-        this.network = network
-
-        header.hideNetwork()
-
-        if (network === 'mainnet') {
-          this.address = this.activeAccount.address
-        } else {
-          this.address = this.activeAccount.testnetAddress
-        }
-      },
-
-      cancel () {
-        window.close()
-      },
-
       confirm () {
         this.$loading(this.$t('window.transfer.confirmLoading'))
 
@@ -120,13 +101,9 @@
 
     data () {
       return {
-        callbackId: null,
-        activeAccount: null,
-        address: null,
         destAddress: null,
         desc: null,
         value: 0,
-        network: null,
         fees: 0.0001
       }
     }

@@ -64,9 +64,11 @@
 
         API.changePassword(this.password, this.newPassword).then(() => {
           this.$loading.close()
+
           this.$toast(this.$t('setting.password.changeSuccess'), {
             type: 'center'
           })
+
           this.$router.push({
             name: 'welcome'
           })
@@ -76,6 +78,7 @@
             duration: 5000,
             wordWrap: true
           })
+
           this.$loading.close()
           console.log(error)
         })

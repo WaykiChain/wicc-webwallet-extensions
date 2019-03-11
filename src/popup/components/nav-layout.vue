@@ -1,7 +1,8 @@
 <template>
   <div class="layout">
     <nav-bar
-        :title.sync="title">
+        :title.sync="title"
+        :path="path">
       <slot name="title"></slot>
     </nav-bar>
     <div class="layout-body">
@@ -26,6 +27,9 @@
     props: {
       title: {
         type: String
+      },
+      path: {
+        type: Object
       }
     }
   }

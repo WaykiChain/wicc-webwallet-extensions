@@ -3,6 +3,7 @@
     <main-header
         @network-change="handleNetworkChange"
         :hide-menu-toggle="true"></main-header>
+
     <div class="content">
       <div class="page-title">{{ $t('window.vote.title') }}</div>
       <div class="cells">
@@ -19,6 +20,7 @@
         </template>
       </div>
     </div>
+
     <div class="footer">
       <fees-slider v-model="fees"></fees-slider>
       <div class="button-wrapper">
@@ -36,9 +38,12 @@
   import API from '../api'
   import fixed from '../api/fixed'
   import formatError from '../api/format-error'
+  import WindowMixin from './mixin'
 
   export default {
     name: 'contract',
+
+    mixins: [WindowMixin],
 
     components: {
       Main,
@@ -56,34 +61,13 @@
       }
 
       this.callbackId = query.callbackId
-
-      API.getState().then((state) => {
-        this.network = state.network
-        this.address = state.activeAddress
-        this.activeAccount = state.activeAccount
-      })
     },
 
     methods: {
-      handleNetworkChange (network, header) {
-        this.network = network
-
-        header.hideNetwork()
-
-        if (network === 'mainnet') {
-          this.address = this.activeAccount.address
-        } else {
-          this.address = this.activeAccount.testnetAddress
-        }
-      },
 
       formatVotes (votes) {
         votes = votes || 0
         return fixed(Math.abs(votes * Math.pow(10, -8)), 8)
-      },
-
-      cancel () {
-        window.close()
       },
 
       confirm () {
@@ -129,11 +113,7 @@
 
     data () {
       return {
-        callbackId: null,
-        activeAccount: null,
-        address: null,
         votes: [],
-        network: null,
         fees: 0.0001
       }
     }
