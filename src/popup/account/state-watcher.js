@@ -55,7 +55,7 @@ export default {
 
     refreshState () {
       return API.getState().then((state) => {
-        if (state.isLocked) {
+        if (state.isLocked && this.forceLogin) {
           return this.gotoWelcome()
         }
         this.network = state.network
@@ -75,6 +75,7 @@ export default {
 
   data () {
     return {
+      forceLogin: true,
       network: 'mainnet',
       accounts: [],
       tokens: [],

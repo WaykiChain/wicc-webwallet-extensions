@@ -1,17 +1,22 @@
 <template>
-  <nav-layout :title="$t('wallet.create.validate.title')" class="u-full-height">
+  <nav-layout
+    :title="$t('wallet.create.validate.title')"
+    :path="backPath"
+    class="u-full-height">
     <wallet-input
         style="margin-top: 16px;"
-        v-model="inputMnemonic"
+        v-model="currentMnemonic"
         :label="$t('wallet.create.validate.mnemonicLabel')"
         type="textarea"
         read-only></wallet-input>
 
     <div>
       <mnemonic-tags
+          :default-selection="defaultSelection"
           :mnemonics="shuffledMnemonics"
           @input="handleInput"></mnemonic-tags>
     </div>
+
     <template slot="footer">
       <button class="display-block btn-primary"
               :disabled="!isCompleted || !isValid"
@@ -31,6 +36,7 @@
   import API from '../../api'
   import formatError from '../../api/format-error'
   import eventBus from '../../account/bus'
+  import mnemonic from './mnemonic'
 
   export default {
     name: 'validate-mnemonic',
@@ -52,13 +58,18 @@
       this.shuffledMnemonics = shuffle(this.mnemonics.slice())
 
       const route = this.$router.currentRoute
-
-      const { password, mnemonic } = route.query
+      console.log('query:', route.query)
+      const { password, mnemonic, currentMnemonic } = route.query
       if (password) {
         this.password = password
       }
       if (mnemonic) {
         this.mnemonic = mnemonic
+      }
+      if (currentMnemonic) {
+        this.selection = currentMnemonic.split(' ')
+        this.currentMnemonic = currentMnemonic
+        this.defaultSelection = this.selection
       }
 
       if (route && route.path) {
@@ -68,7 +79,10 @@
       window.onunload = () => {
         localStorage.setItem('WICC_RESTORE_PATH', JSON.stringify({
           name: route.name,
-          query: route.query
+          query: {
+            ...(route.query || {}),
+            currentMnemonic: this.currentMnemonic
+          }
         }))
       }
     },
@@ -80,6 +94,18 @@
     computed: {
       isCompleted () {
         return (this.selection || []).length === 12
+      },
+
+      backPath () {
+        if (this.isCreatingWallet) {
+          return {
+            name: 'backupWalletMnemonic'
+          }
+        } else {
+          return {
+            name: 'createAccount'
+          }
+        }
       }
     },
 
@@ -105,6 +131,8 @@
             if (!this.isCreatingWallet) {
               eventBus.$emit('header:state:refresh')
             }
+
+            mnemonic.clear()
 
             this.$router.push({
               name: 'accountMain'
@@ -143,7 +171,7 @@
 
       handleInput (selection) {
         this.selection = selection
-        this.inputMnemonic = selection.join(' ')
+        this.currentMnemonic = selection.join(' ')
 
         this.isValid = this.validate()
       }
@@ -152,8 +180,9 @@
     data () {
       return {
         isCreatingWallet: true,
+        defaultSelection: null,
         selection: [],
-        inputMnemonic: '',
+        currentMnemonic: '',
         shuffledMnemonics: [],
         isValid: true,
         mnemonic: '',

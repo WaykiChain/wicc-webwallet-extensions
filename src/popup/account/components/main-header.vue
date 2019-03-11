@@ -112,7 +112,8 @@
     data () {
       return {
         showNetwork: false,
-        showMenu: false
+        showMenu: false,
+        forceLogin: false
       }
     },
 

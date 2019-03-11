@@ -20,6 +20,25 @@
       mnemonics: {
         type: Array,
         default: []
+      },
+
+      defaultSelection: {
+        type: Array // mnemonic word
+      }
+    },
+
+    created () {
+      const { mnemonics, defaultSelection, selection } = this
+
+      if (mnemonics && defaultSelection) {
+        const mnemonicsCloned = mnemonics.slice()
+        defaultSelection.forEach((item) => {
+          const index = mnemonicsCloned.indexOf(item)
+          if (index !== -1) {
+            selection.push(index)
+            mnemonicsCloned[index] = null
+          }
+        })
       }
     },
 

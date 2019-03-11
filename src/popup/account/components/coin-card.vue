@@ -26,6 +26,8 @@
 
 <script>
   import CopyMixin from '../../components/copy-mixin'
+  import API from '../../api'
+  import formatError from '../../api/format-error'
   import { openQrCodeDialog, openRegisterConfirmDialog } from '../dialog'
 
   export default {
@@ -68,7 +70,16 @@
           })
           return
         }
-        openRegisterConfirmDialog(this.address)
+
+        API.validateRegisterAccount(this.address).then(() => {
+          openRegisterConfirmDialog(this.address)
+        }, (error) => {
+          this.$toast(formatError(error), {
+            type: 'center',
+            duration: 5000,
+            wordWrap: true
+          })
+        })
       },
 
       getCopyText () {
