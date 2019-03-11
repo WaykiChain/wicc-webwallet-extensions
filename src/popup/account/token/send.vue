@@ -4,7 +4,8 @@
     <div class="content-body">
       <div class="from-title">{{ $t('account.sendToken.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
-
+      <label class="transfer-limit">{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;WICC</label>
+     
       <wallet-input
           v-model="destAddr"
           :label="$t('account.sendToken.destLabel')"
@@ -47,9 +48,20 @@
 
   .content-body {
     flex: 1 0 0;
-    padding: 0 16px 16px;
+    padding: 0 16px 7px;
+    position: relative;
   }
-
+   .transfer-limit{
+    position: absolute;
+    display: inline-block;
+    top:167px;
+    right: 17px;
+    z-index: 1000;
+    font-size:12px;
+    font-weight:400;
+    line-height:22px;
+    color:rgba(165,174,193,1);
+  }
   .content-footer {
     padding: 0 16px;
   }
@@ -61,7 +73,7 @@
   }
 
   .from-address {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 </style>
 
@@ -93,6 +105,12 @@
         type: String
       }
     },
+     created () {
+      const { query } = this.$router.currentRoute
+      if (query.balance && !isNaN(parseFloat(query.balance))) {
+        this.balance = parseFloat(query.balance)
+      }
+    },
 
     computed: {
       valid() {
@@ -103,12 +121,10 @@
     methods: {
       confirmSend() {
         if (!this.validateAddress(this.destAddr)) return
-
         if (this.value < 0.0001) {
           this.$toast(this.$t('errors.amountLessThanLimit'), {
             type: 'center'
           })
-
           return
         }
 
@@ -138,7 +154,8 @@
         destAddr: null,
         amount: null,
         desc: null,
-        fees: 0.01
+        fees: 0.01,
+        balance:''
       }
     }
   }

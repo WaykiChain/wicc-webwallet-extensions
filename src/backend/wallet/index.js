@@ -85,6 +85,10 @@ export default {
       }
     })
   },
+  //checkMnemonicCode
+  async checkMnemonicCode ({ mnemonic }) {
+    return getWiccApi(TESTNET).checkMnemonicCode(mnemonic)
+  },
 
   async createMnemonicCode ({ network }) {
     validateNetwork(network)

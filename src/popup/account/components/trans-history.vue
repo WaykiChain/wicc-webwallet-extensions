@@ -76,9 +76,6 @@
     text-align: center;
   }
 
-  .trans-history {
-  }
-
   .trans-history-title {
     font-size: 13px;
     color: #B4BCCC;

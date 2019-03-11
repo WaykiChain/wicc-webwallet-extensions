@@ -13,7 +13,6 @@
 
 <script>
   import API from '../api'
-
   export default {
     name: 'window-login',
 

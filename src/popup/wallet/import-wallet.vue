@@ -48,14 +48,13 @@
 
     computed: {
       isCompleted () {
-        return (this.password && this.password2 && this.mnemonic)
+        return this.mnemonic && this.password && this.password2 && this.password.length>=6 && this.password.length<=20 && this.password2.length>=6 && this.password2.length<=20
       }
     },
 
     methods: {
-      importWallet () {
+      importWalletAction(){
         this.$loading(this.$t('wallet.import.confirmLoading'))
-
         setTimeout(() => {
           API.importWallet(this.password, this.mnemonic).then(() => {
             this.$loading.close()
@@ -74,6 +73,27 @@
             })
           })
         }, 300)
+      },
+
+      importWallet () {
+        if(this.password!==this.password2){
+           this.$toast(this.$t('errors.passwordInConsistent'), {type: 'center',duration: 5000,wordWrap: true})
+          return false
+        }
+        API.checkMnemonicCode(this.mnemonic).then((data) => {
+          if(data===true){
+            this.importWalletAction();
+          }else{
+              this.$toast(this.$t('wallet.import.correctMnemonic'), {type: 'center',duration: 5000,wordWrap: true})
+          }
+        }, (error) => {
+          this.$loading.close()
+          this.$toast(this.$t('wallet.import.importFailure') + ' ' + formatError(error), {
+            type: 'center',
+            duration: 5000,
+            wordWrap: true
+          })
+        })
       }
     },
 

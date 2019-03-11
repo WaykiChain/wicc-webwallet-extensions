@@ -4,7 +4,7 @@
     <div class="content-body">
       <div class="from-title">{{ $t('account.send.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
-
+      <label class="transfer-limit">{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;WICC</label>
       <wallet-input
           v-model="destAddr"
           :label="$t('account.send.destLabel')"
@@ -48,9 +48,20 @@
 
   .content-body {
     flex: 1 0 0;
-    padding: 0 16px 16px;
+    padding: 0 16px 7px;
+    position: relative;
   }
-
+  .transfer-limit{
+    position: absolute;
+    display: inline-block;
+    top:167px;
+    right: 17px;
+    z-index: 1000;
+    font-size:12px;
+    font-weight:400;
+    line-height:22px;
+    color:rgba(165,174,193,1);
+  }
   .content-footer {
     padding: 0 16px;
   }
@@ -62,7 +73,7 @@
   }
 
   .from-address {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 </style>
 
@@ -124,7 +135,6 @@
               type: 'center'
             })
             this.$loading.close()
-
             window.history.go(-1)
           }, (error) => {
             this.$toast(this.$t('account.send.sendFailure') + ' ' + formatError(error), {

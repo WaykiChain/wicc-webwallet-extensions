@@ -76,8 +76,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .view-mnemonic-dialog {
-  }
 
   .dialog-title {
     margin: 16px 0;

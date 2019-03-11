@@ -26,7 +26,7 @@ export default {
   },
 
   splash: {
-    passwordPlaceholder: 'Input password',
+    passwordPlaceholder: 'Please enter 6~20 characters',
     unlockButton: 'Log in',
     restoreWalletButton: 'Recover your wallet with mnemonics.',
     createWalletButton: 'Create Wallet',
@@ -78,6 +78,7 @@ export default {
       destLabel: 'To',
       destPlaceHolder: 'Recipient address',
       valueLabel: 'Amount',
+      limit: 'Transfer Limit：',
       valuePlaceHolder: 'Input amount',
       descLabel: 'Comment（Optional）',
       confirmButton: 'Confirm',
@@ -107,11 +108,12 @@ export default {
       removeTokenFailed: 'Failed to hide',
       sendButton: 'Transfer',
       receiveButton: 'Receive',
-      addTokenButton: 'Add token'
+      addTokenButton: 'Add token',
+      expect: 'Coming soon'
     },
     dialog: {
       passwordTitle: 'Input Password',
-      passwordPlaceHolder: 'Input password',
+      passwordPlaceHolder: 'Please enter 6~20 characters',
       viewMnemonicTitle: 'View mnemonics',
       viewMnemonicTip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
       downloadMnemonicButton: 'Download',
@@ -147,7 +149,7 @@ export default {
         title: 'Set Password',
         tip: 'WaykiChain doesn\'t store your wallet password and can\'t help you get it back, so keep it in mind.',
         password: 'Password',
-        passwordPlaceholder: 'Input password',
+        passwordPlaceholder: 'Please enter 6~20 characters',
         password2: 'Confirm Password',
         password2Placeholder: 'Input password again',
         confirmButton: 'Create',
@@ -175,12 +177,13 @@ export default {
       mnemonic: 'Mnemonics',
       mnemonicPlaceholder: 'Input mnemonics',
       password: 'Password',
-      passwordPlaceholder: 'Input password',
+      passwordPlaceholder: 'Please enter 6~20 characters',
       password2: 'Confirm Password',
       password2Placeholder: 'Input password again',
       confirmLoading: 'Importing...',
       importSuccess: 'Import successfully',
-      importFailure: 'Failed to import'
+      importFailure: 'Failed to import',
+      correctMnemonic: 'Please enter correct mnemonic'
     }
   },
 
@@ -205,7 +208,7 @@ export default {
       currentPassword: 'Current password',
       currentPasswordPlaceholder: 'Input current password',
       newPassword: 'New password',
-      newPasswordPlaceholder: 'Input new password',
+      newPasswordPlaceholder: 'Please enter 6~20 characters',
       newPassword2: 'Confirm new password',
       newPassword2Placeholder: 'Input new password again',
       confirmLoading: 'Loading...',

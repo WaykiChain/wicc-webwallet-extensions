@@ -29,6 +29,11 @@ export default {
       network: 'testnet'
     })
   },
+  async checkMnemonicCode(mnemonic){
+    return callBackend('checkMnemonicCode', {
+      mnemonic
+    })
+  },
 
   async getState () {
     return callBackend('getState', {})

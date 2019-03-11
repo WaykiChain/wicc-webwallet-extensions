@@ -26,7 +26,7 @@ export default {
   },
 
   splash: {
-    passwordPlaceholder: '请输入密码',
+    passwordPlaceholder: '请输入6-20位字符',
     unlockButton: '登录',
     restoreWalletButton: '使用助记词恢复钱包',
     createWalletButton: '创建钱包',
@@ -78,6 +78,7 @@ export default {
       destLabel: '收款地址',
       destPlaceHolder: '请输入收款地址',
       valueLabel: '转账金额',
+      limit: '可用额度：',
       valuePlaceHolder: '请输入转账金额',
       descLabel: '备注（选填）',
       confirmButton: '确认转账',
@@ -107,11 +108,12 @@ export default {
       removeTokenFailed: '隐藏失败',
       sendButton: '转账',
       receiveButton: '收款',
-      addTokenButton: '添加代币'
+      addTokenButton: '添加代币',
+      expect: '尽请期待'
     },
     dialog: {
       passwordTitle: '请输入钱包密码',
-      passwordPlaceHolder: '请输入密码',
+      passwordPlaceHolder: '请输入6-20位字符',
       viewMnemonicTitle: '查看助记词',
       viewMnemonicTip: '拥有助记词相当于拥有资产，请一定妥善保管在安全的地方。',
       downloadMnemonicButton: '下载助记词',
@@ -147,7 +149,7 @@ export default {
         title: '设置密码',
         tip: 'WaykiChain 不存储钱包密码，也无法帮您找回，请务必牢记。',
         password: '密码',
-        passwordPlaceholder: '请输入密码',
+        passwordPlaceholder: '请输入6-20位字符',
         password2: '确认密码',
         password2Placeholder: '请重新输入密码',
         confirmButton: '创建钱包',
@@ -176,12 +178,13 @@ export default {
       mnemonic: '助记词',
       mnemonicPlaceholder: '请输入助记词',
       password: '密码',
-      passwordPlaceholder: '请输入密码',
+      passwordPlaceholder: '请输入6-20位字符',
       password2: '确认密码',
       password2Placeholder: '请重新输入密码',
       confirmLoading: '导入中...',
       importSuccess: '导入成功',
-      importFailure: '导入失败'
+      importFailure: '导入失败',
+      correctMnemonic: '请输入正确的助记词'
     }
   },
 
@@ -206,7 +209,7 @@ export default {
       currentPassword: '当前密码',
       currentPasswordPlaceholder: '请输入当前密码',
       newPassword: '新密码',
-      newPasswordPlaceholder: '请输入新密码',
+      newPasswordPlaceholder: '请输入6-20位字符',
       newPassword2: '重复输入新密码',
       newPassword2Placeholder: '请重新输入新密码',
       confirmLoading: '正在修改密码...',

@@ -2,7 +2,7 @@ module.exports = {
   name: 'WaykiMax',
   version: '1.0.0',
   description: 'WICC Wallet Extension',
-  author: 'lino.zhang@gmail.com',
+  author: 'coredev@waykichainhk.com',
   manifest_version: 2,
   icons: { '16': 'icons/16.png', '128': 'icons/128.png' },
   permissions: [
@@ -15,7 +15,7 @@ module.exports = {
     'storage'
   ],
   browser_action: {
-    default_title: 'title',
+    default_title: 'WaykiMax',
     default_popup: 'pages/popup.html'
   },
   background: {
