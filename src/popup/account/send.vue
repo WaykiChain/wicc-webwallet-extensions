@@ -56,7 +56,7 @@
     display: inline-block;
     top:167px;
     right: 17px;
-    z-index: 1000;
+    z-index:0;
     font-size:12px;
     font-weight:400;
     line-height:22px;
@@ -97,7 +97,9 @@
     created () {
       const { query } = this.$router.currentRoute
       if (query.balance && !isNaN(parseFloat(query.balance))) {
-        this.balance = parseFloat(query.balance)
+        this.balance = parseFloat(query.balance);
+      }else{
+        this.balance = 0;
       }
     },
 

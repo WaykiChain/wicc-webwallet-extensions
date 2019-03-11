@@ -48,7 +48,7 @@
           this.$toast(this.$t('errors.passwordError'), {
             type: 'center'
           })
-          throw error
+        //  throw error
         })
       }
     }
