@@ -1,5 +1,8 @@
 <template>
-  <nav-layout :title="$t('wallet.create.backup.title')" class="u-full-height">
+  <nav-layout
+    :title="$t('wallet.create.backup.title')"
+    :path="backPath"
+    class="u-full-height">
     <div class="warning-container">
       <div class="tip-title">{{ $t('common.warning') }}</div>
       <div class="tip-content">{{ $t('wallet.create.backup.tip') }}</div>
@@ -26,7 +29,7 @@
   import WalletInput from '../../components/input'
   import NavLayout from '../../components/nav-layout'
   import download from '../../api/download'
-  import API from '../../api'
+  import mnemonic from './mnemonic'
 
   export default {
     name: 'backup-mnemonic',
@@ -47,11 +50,25 @@
         this.isCreatingWallet = route.path.indexOf('wallet') !== -1
       }
 
-      API.createMnemonicCode().then((data) => {
+      mnemonic.get().then((data) => {
         this.mnemonic = data
       }, (error) => {
         console.log('get mnemonic error:', error.message)
       })
+    },
+
+    computed: {
+      backPath () {
+        if (this.isCreatingWallet) {
+          return {
+            name: 'createWallet'
+          }
+        } else {
+          return {
+            name: 'welcome'
+          }
+        }
+      }
     },
 
     methods: {

@@ -35,6 +35,7 @@ import Setting from './setting/index'
  * Window Related Page
  */
 import Window from './window/index'
+import LoginWindow from './window/login'
 import ContractWindow from './window/contract'
 import PublishContractWindow from './window/publish-contract'
 import PayWindow from './window/pay'
@@ -144,6 +145,10 @@ const router = new VueRouter({
       component: Window,
 
       children: [{
+        name: 'loginWindow',
+        path: 'login',
+        component: LoginWindow
+      }, {
         name: 'contractWindow',
         path: 'contract',
         component: ContractWindow

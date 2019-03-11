@@ -44,6 +44,10 @@
     props: {
       title: {
         type: String
+      },
+
+      path: {
+        type: Object
       }
     },
 
@@ -54,7 +58,11 @@
 
     methods: {
       goBack () {
-        history.go(-1)
+        if (this.path) {
+          this.$router.push(this.path)
+        } else {
+          history.go(-1)
+        }
       }
     }
   }
