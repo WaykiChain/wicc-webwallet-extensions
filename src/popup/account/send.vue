@@ -97,7 +97,9 @@
     created () {
       const { query } = this.$router.currentRoute
       if (query.balance && !isNaN(parseFloat(query.balance))) {
-        this.balance = parseFloat(query.balance)
+        this.balance = parseFloat(query.balance);
+      }else{
+        this.balance = 0;
       }
     },
 
