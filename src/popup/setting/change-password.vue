@@ -46,7 +46,7 @@
   
     computed: {
       isValid () {
-        return this.password && this.newPassword.length>=6 && this.newPassword.length<=20 && this.newPassword2.length>=6 && this.newPassword2.length<=20
+        return this.password && this.newPassword2 && this.newPassword.length>=6 && this.newPassword.length<=20 && this.newPassword2.length>=6 && this.newPassword2.length<=20
       }
     },
 
