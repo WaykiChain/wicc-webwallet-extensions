@@ -1,6 +1,6 @@
 {
   "name": "WaykiMax",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "WICC Wallet Extension",
   "author": "coredev@waykichainhk.com",
   "manifest_version": 2,
@@ -17,7 +17,7 @@
     "storage"
   ],
   "browser_action": {
-    "default_title": "title",
+    "default_title": "WaykiMax",
     "default_popup": "pages/popup.html"
   },
   "background": {

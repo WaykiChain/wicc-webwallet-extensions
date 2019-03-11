@@ -40,7 +40,7 @@
 
         <div class="name-container">
           <div class="name">{{ $t('setting.about.name') }}</div>
-          <div class="version">0.1.1</div>
+          <div class="version">1.0.0</div>
         </div>
 
         <div class="separator"></div>

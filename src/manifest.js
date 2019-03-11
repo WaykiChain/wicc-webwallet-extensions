@@ -15,7 +15,7 @@ module.exports = {
     'storage'
   ],
   browser_action: {
-    default_title: 'title',
+    default_title: 'WaykiMax',
     default_popup: 'pages/popup.html'
   },
   background: {
