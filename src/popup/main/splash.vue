@@ -81,7 +81,7 @@
         }
       }, (error) => {
         this.loading = false
-        throw error
+    //    throw error
       })
     },
 
@@ -99,7 +99,7 @@
           this.$toast(this.$t('errors.passwordError'), {
             type: 'center'
           })
-          throw error
+          // throw error
         })
       },
 
