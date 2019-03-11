@@ -109,7 +109,7 @@ export default {
       sendButton: '转账',
       receiveButton: '收款',
       addTokenButton: '添加代币',
-      expect: '尽请期待'
+      expect: '敬请期待'
     },
     dialog: {
       passwordTitle: '请输入钱包密码',
