@@ -351,7 +351,6 @@ export default {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
-      debugger
       return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)

@@ -63,7 +63,6 @@
     methods: {
       checkMnemonicCode(){
         API.checkMnemonicCode(this.mnemonic).then((data) => {
-          debugger
           if(data===true){
             this.commit();
           }else{
