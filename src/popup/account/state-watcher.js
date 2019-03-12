@@ -37,19 +37,16 @@ export default {
           type: 'center'
         })
       }
-
       return valid
     },
 
     handleNetworkChange (network) {
       this.network = network
-
       this.refreshState()
     },
 
     handleActiveAccountChange (account) {
       this.activeAccount = account
-
       this.refreshState()
     },
 
