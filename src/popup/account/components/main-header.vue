@@ -9,8 +9,8 @@
           <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
         </div>
         <ul class="account-list">
-          <li
-            v-for="account in visibleAccounts"
+          <li v-for="(account,index) in visibleAccounts" 
+            :key='index'
             class="account-item"
             @click="setActiveAccount(account)"
             :class="{
@@ -154,34 +154,26 @@
       setNetwork (network) {
         API.setNetwork(network).then(({ network, account }) => {
           this.network = network
-
           this.$emit('network-change', network, this)
           eventBus.$emit('network-change', network)
-
           if (account) {
             this.activeAccount = account
-
             eventBus.$emit('active-account-change', account)
           }
         })
-
         this.hideNetwork()
       },
 
       setActiveAccount (account) {
         API.setActiveAccount(account.id).then(({ network }) => {
           this.activeAccount = account
-
           eventBus.$emit('active-account-change', account)
-
           if (network) {
             this.network = network
-
             this.$emit('network-change', network, this)
             eventBus.$emit('network-change', network)
           }
         })
-
         this.hideMenu()
       },
 

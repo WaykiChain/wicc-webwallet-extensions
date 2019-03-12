@@ -27,13 +27,15 @@ export default class {
   }
 
   getBlockInfo () {
-    return axios.post(this.host + '/chain/WICC/getblockinfo')
-      .then(handleResponse, handleError)
+    return axios.post(this.host + '/chain/WICC/getblockinfo').then(handleResponse, handleError)
+  }
+
+  getblockcount(){
+    return axios.get(this.host + '/chain/WICC/getblockcount').then(handleResponse, handleError)
   }
 
   getAccountInfo (address) {
-    return axios.get(this.host + '/chain/account/' + address)
-      .then(handleResponse, handleError)
+    return axios.get(this.host + '/chain/account/' + address).then(handleResponse, handleError)
   }
 
   getTxDetail (tx) {

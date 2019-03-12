@@ -21,6 +21,7 @@ const getWiccApi = (network) => {
 }
 
 const getSignInfo = (network, address) => {
+ 
   const baasApi = new BaasAPI(network)
   let srcRegId = null
 
@@ -31,9 +32,9 @@ const getSignInfo = (network, address) => {
       throw new Error('ADDRESS_NOT_ACTIVATED')
     }
 
-    return baasApi.getBlockInfo()
+    return baasApi.getblockcount()
   }).then((data) => {
-    const height = data.syncheight
+    const height = data
     const privateKey = vaultStorage.getPrivateKey(address)
 
     return {
@@ -293,9 +294,10 @@ export default {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return baasApi.getBlockInfo()
+    
+    return baasApi.getblockcount()
       .then((data) => {
-        const height = data.syncheight
+        const height = data
         const privateKey = vaultStorage.getPrivateKey(address)
         return wiccApi.createRegisterSign(privateKey, height)
       })
@@ -345,17 +347,16 @@ export default {
   send ({ network, address, destAddr, value, fees, desc }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-
     return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
+      debugger
       return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
     }).then((value) => {
       transStorage.append(network, address, 3, value, desc)
-
       return value
     })
   },
