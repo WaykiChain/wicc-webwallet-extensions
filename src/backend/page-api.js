@@ -13,9 +13,9 @@ const getQueryString = (args) => {
     const value = args[key]
     let valueString
     if (typeof value === 'object') {
-      valueString = encodeURIComponent(JSON.stringify(value))
+      valueString = encodeURIComponent(escape(JSON.stringify(value)))
     } else {
-      valueString = encodeURIComponent(value)
+      valueString = encodeURIComponent(escape(value))
     }
     result.push(encodeURIComponent(key) + '=' + valueString)
   })
@@ -85,11 +85,7 @@ export default {
   },
 
   async publishContract ({ script, scriptDesc, callbackId }) {
-    return openWindow('publicContract', {
-      script,
-      scriptDesc,
-      callbackId
-    })
+    return openWindow('publicContract', {script, scriptDesc, callbackId})
   },
 
   async requestPay ({ destAddress, value, desc, callbackId }) {

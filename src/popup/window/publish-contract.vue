@@ -51,7 +51,7 @@
 
     created () {
       const query = this.$router.currentRoute.query
-      this.script = query.script
+      this.script = unescape(query.script)
       this.scriptDesc = query.scriptDesc
       this.callbackId = query.callbackId
     },
