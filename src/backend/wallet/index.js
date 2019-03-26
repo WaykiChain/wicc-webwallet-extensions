@@ -159,7 +159,7 @@ export default {
     if (!mnemonic) {
       throw new Error('mnemonic is required')
     }
-
+    //createWallet 保存state数据
     return vaultStorage.createWallet(password, mnemonic).then((blob) => {
       stateStore.updateState({
         vaultBlob: blob
