@@ -50,13 +50,32 @@
     },
 
     created () {
-      const query = this.$router.currentRoute.query
-      this.script = unescape(query.script)
+      const query = this.$route.query  //currentRoute
+      //const par = location.hash.split('?')[1].split('&');
+      this.script =  query.script
       this.scriptDesc = query.scriptDesc
       this.callbackId = query.callbackId
+     
     },
 
     methods: {
+      // urlParse(par) {
+      //   let obj = {}
+      //   if (par) {
+      //     par.forEach((item) => {
+      //       let tempArr = item.split('=');
+      //       let key = tempArr[0];
+      //       let val
+      //       if(key==='script'){
+      //         val = decodeURIComponent(decodeURI(tempArr[1]))
+      //       }else{
+      //         val = decodeURIComponent(tempArr[1]);
+      //       }
+      //       obj[key] = val;
+      //     })
+      //   }
+      //   return obj
+      // },
       confirm () {
         this.$loading(this.$t('window.publishContract.confirmLoading'))
 
