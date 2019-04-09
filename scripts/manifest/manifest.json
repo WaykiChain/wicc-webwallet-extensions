@@ -25,7 +25,8 @@
     "default_popup": "pages/popup.html"
   },
   "background": {
-    "page": "pages/background.html"
+    "page": "pages/background.html",
+    "persistent":true
   },
   "content_scripts": [
     {
