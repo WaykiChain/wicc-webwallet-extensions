@@ -27,7 +27,9 @@ export default {
       callbackId: null,
       activeAccount: null,
       address: null,
-      network: null
+      network: null,
+      test: 0,
+      onlyRaw: 0
     }
   },
 
