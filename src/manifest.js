@@ -1,7 +1,7 @@
 module.exports = {
   name: 'WaykiMax',
-  version: '1.0.0',
-  description: 'An WaykiChain Wallet in your Browser',
+  version: '1.0.1',
+  description: 'A WaykiChain Wallet in your Browser',
   author: 'coredev@waykichainhk.com',
   manifest_version: 2,
   icons: { '16': 'icons/16.png', '128': 'icons/128.png' },

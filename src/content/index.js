@@ -74,6 +74,17 @@ window.WiccWallet = {
     })
   },
 
+  genCallContractRaw (destRegId, contract, value, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('openContractWindowRaw', {
+      destRegId,
+      contract,
+      value: formatValue(value),
+      callbackId,
+      test: 1
+    })
+  },
   callContract (destRegId, contract, value, callback) {
     const callbackId = saveCallback(callback)
 
@@ -95,6 +106,17 @@ window.WiccWallet = {
     })
   },
 
+  genPublishContractRaw (script, scriptDesc, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('publishContractRaw', {
+      script,
+      scriptDesc,
+      callbackId,
+      onlyRaw: 1
+    })
+  },
+
   requestPay (destAddress, value, desc, callback) {
     const callbackId = saveCallback(callback)
 
@@ -103,6 +125,18 @@ window.WiccWallet = {
       value: formatValue(value),
       desc,
       callbackId
+    })
+  },
+
+  genRequestPayRaw (destAddress, value, desc, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('requestPayRaw', {
+      destAddress,
+      value: formatValue(value),
+      desc,
+      callbackId,
+      onlyRaw: 1
     })
   },
 

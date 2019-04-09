@@ -13,11 +13,15 @@ const getQueryString = (args) => {
     const value = args[key]
     let valueString
     if (typeof value === 'object') {
-      valueString = encodeURIComponent(escape(JSON.stringify(value)))
+      valueString = encodeURIComponent(JSON.stringify(value))
     } else {
-      valueString = encodeURIComponent(escape(value))
+      if(key==='script'){
+        valueString = encodeURIComponent(encodeURI(value));
+      }else{
+        valueString = encodeURIComponent(value);
+      }
     }
-    result.push(encodeURIComponent(key) + '=' + valueString)
+    result.push(key + '=' + valueString)
   })
   return result.join('&')
 }
@@ -25,8 +29,7 @@ const getQueryString = (args) => {
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
   const queryString = getQueryString(args)
-  const popupURL = chrome.extension.getURL('pages/popup.html#' + path + '?' + queryString)
-
+  const popupURL = chrome.extension.getURL(`pages/popup.html#${path}?${queryString}`)
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
@@ -84,8 +87,22 @@ export default {
     })
   },
 
+  async openContractWindowRaw ({ destRegId, contract, value, callbackId, test }) {
+    return openWindow('contract', {
+      destRegId,
+      contract,
+      value,
+      callbackId,
+      test
+    })
+  },
+
   async publishContract ({ script, scriptDesc, callbackId }) {
     return openWindow('publicContract', {script, scriptDesc, callbackId})
+  },
+
+  async publishContractRaw ({ script, scriptDesc, callbackId, onlyRaw }) {
+    return openWindow('publicContract', {script, scriptDesc, callbackId, onlyRaw})
   },
 
   async requestPay ({ destAddress, value, desc, callbackId }) {
@@ -94,6 +111,16 @@ export default {
       value,
       desc,
       callbackId
+    })
+  },
+
+  async requestPayRaw ({ destAddress, value, desc, callbackId, onlyRaw }) {
+    return openWindow('requestPay', {
+      destAddress,
+      value,
+      desc,
+      callbackId,
+      onlyRaw
     })
   },
 

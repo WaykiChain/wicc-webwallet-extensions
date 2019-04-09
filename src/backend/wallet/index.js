@@ -159,7 +159,7 @@ export default {
     if (!mnemonic) {
       throw new Error('mnemonic is required')
     }
-
+    //createWallet 保存state数据
     return vaultStorage.createWallet(password, mnemonic).then((blob) => {
       stateStore.updateState({
         vaultBlob: blob
@@ -311,6 +311,19 @@ export default {
       })
   },
 
+  genCallContractRaw ({ network, address, destRegId, value, fees, contract }) {
+    const wiccApi = getWiccApi(network)
+
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+      if (isNaN(parseFloat(value))) {
+        throw new Error('INVALID_VALUE')
+      }
+      return wiccApi.createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract)
+    }).then((sign) => {
+      return {rawtx: sign}
+    })
+  },
+
   callContract ({ network, address, destRegId, value, fees, contract }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
@@ -326,6 +339,17 @@ export default {
       transStorage.append(network, address, 4, value)
 
       return value
+    })
+  },
+
+  genPublishContractRaw ({ network, address, fees, script, scriptDesc }) {
+    const wiccApi = getWiccApi(network)
+    const baasApi = new BaasAPI(network)
+
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+      return wiccApi.createRegisterAppSign(privateKey, height, srcRegId, fees, script, scriptDesc)
+    }).then((sign) => {
+      return {rawtx: sign}
     })
   },
 
@@ -357,6 +381,19 @@ export default {
     }).then((value) => {
       transStorage.append(network, address, 3, value, desc)
       return value
+    })
+  },
+
+  sendRaw ({ network, address, destAddr, value, fees, desc }) {
+    const wiccApi = getWiccApi(network)
+    const baasApi = new BaasAPI(network)
+    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+      if (isNaN(parseFloat(value))) {
+        throw new Error('INVALID_VALUE')
+      }
+      return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
+    }).then((sign) => {
+      return {rawtx: sign}
     })
   },
 
