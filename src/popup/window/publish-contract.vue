@@ -50,8 +50,9 @@
     },
 
     created () {
-      const query = this.$router.currentRoute.query
-      this.script = unescape(query.script)
+      const query = this.$route.query  //currentRoute
+      //const par = location.hash.split('?')[1].split('&');
+      this.script =  query.script
       this.scriptDesc = query.scriptDesc
       this.callbackId = query.callbackId,
       this.onlyRaw = query.onlyRaw
@@ -60,7 +61,6 @@
     methods: {
       confirmRaw () {
         this.$loading(this.$t('window.publishContract.confirmLoading'))
-
         API.callRaw('genPublishContractRaw', {
           network: this.network,
           address: this.address,

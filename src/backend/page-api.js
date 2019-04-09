@@ -13,11 +13,15 @@ const getQueryString = (args) => {
     const value = args[key]
     let valueString
     if (typeof value === 'object') {
-      valueString = encodeURIComponent(escape(JSON.stringify(value)))
+      valueString = encodeURIComponent(JSON.stringify(value))
     } else {
-      valueString = encodeURIComponent(escape(value))
+      if(key==='script'){
+        valueString = encodeURIComponent(encodeURI(value));
+      }else{
+        valueString = encodeURIComponent(value);
+      }
     }
-    result.push(encodeURIComponent(key) + '=' + valueString)
+    result.push(key + '=' + valueString)
   })
   return result.join('&')
 }
@@ -25,8 +29,7 @@ const getQueryString = (args) => {
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
   const queryString = getQueryString(args)
-  const popupURL = chrome.extension.getURL('pages/popup.html#' + path + '?' + queryString)
-
+  const popupURL = chrome.extension.getURL(`pages/popup.html#${path}?${queryString}`)
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
