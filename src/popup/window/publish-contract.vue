@@ -24,7 +24,7 @@
       <fees-slider v-model="fees" type="publish-contract"></fees-slider>
       <div class="button-wrapper">
         <button @click="cancel">{{ $t('window.publishContract.closeButton') }}</button>
-        <button class="btn-primary" @click="confirm">{{ $t('window.publishContract.confirmButton') }}</button>
+        <button class="btn-primary" @click="onlyRaw ? confirmRaw() : confirm()">{{ $t('window.publishContract.confirmButton') }}</button>
       </div>
     </div>
   </div>
@@ -53,10 +53,48 @@
       const query = this.$router.currentRoute.query
       this.script = unescape(query.script)
       this.scriptDesc = query.scriptDesc
-      this.callbackId = query.callbackId
+      this.callbackId = query.callbackId,
+      this.onlyRaw = query.onlyRaw
     },
 
     methods: {
+      confirmRaw () {
+        this.$loading(this.$t('window.publishContract.confirmLoading'))
+
+        API.callRaw('genPublishContractRaw', {
+          network: this.network,
+          address: this.address,
+          fees: this.fees,
+          script: this.script,
+          scriptDesc: this.scriptDesc
+        }).then((value) => {
+          this.$loading.close()
+          this.$toast(this.$t('window.publishContract.createSuccess'), {
+            type: 'center'
+          })
+
+          if (this.callbackId) {
+            API.callPageCallback(this.callbackId, null, value)
+          }
+
+          setTimeout(() => {
+            window.close()
+          }, 300)
+        }, (error) => {
+          this.$loading.close()
+          this.$toast(this.$t('window.publishContract.createFailure') + ' ' + formatError(error), {
+            type: 'center',
+            duration: 5000,
+            wordWrap: true
+          })
+
+          if (this.callbackId) {
+            API.callPageCallback(this.callbackId, error, null)
+          }
+
+          console.log(error)
+        })
+      },
       confirm () {
         this.$loading(this.$t('window.publishContract.confirmLoading'))
 

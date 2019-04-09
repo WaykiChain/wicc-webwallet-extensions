@@ -84,8 +84,22 @@ export default {
     })
   },
 
+  async openContractWindowRaw ({ destRegId, contract, value, callbackId, test }) {
+    return openWindow('contract', {
+      destRegId,
+      contract,
+      value,
+      callbackId,
+      test
+    })
+  },
+
   async publishContract ({ script, scriptDesc, callbackId }) {
     return openWindow('publicContract', {script, scriptDesc, callbackId})
+  },
+
+  async publishContractRaw ({ script, scriptDesc, callbackId, onlyRaw }) {
+    return openWindow('publicContract', {script, scriptDesc, callbackId, onlyRaw})
   },
 
   async requestPay ({ destAddress, value, desc, callbackId }) {
@@ -94,6 +108,16 @@ export default {
       value,
       desc,
       callbackId
+    })
+  },
+
+  async requestPayRaw ({ destAddress, value, desc, callbackId, onlyRaw }) {
+    return openWindow('requestPay', {
+      destAddress,
+      value,
+      desc,
+      callbackId,
+      onlyRaw
     })
   },
 
