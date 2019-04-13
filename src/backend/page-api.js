@@ -4,7 +4,9 @@ const TYPE_PATH_MAP = {
   contract: '/window/contract',
   publicContract: '/window/publish-contract',
   requestPay: '/window/request-pay',
-  requestVote: '/window/request-vote'
+  requestVote: '/window/request-vote',
+  login: '/window/login',
+  walletCreate: '/'
 }
 
 const getQueryString = (args) => {
@@ -15,9 +17,9 @@ const getQueryString = (args) => {
     if (typeof value === 'object') {
       valueString = encodeURIComponent(JSON.stringify(value))
     } else {
-      if(key==='script'){
+      if (key === 'script') {
         valueString = encodeURIComponent(encodeURI(value));
-      }else{
+      } else {
         valueString = encodeURIComponent(value);
       }
     }
@@ -33,41 +35,38 @@ const openWindow = async (type, args) => {
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
-    height: 600,
-    width: 375
+    height: 640,
+    width: 392
   })
 }
 
 export default {
-  async getDefaultAccount () {
+  async getDefaultAccount({
+    callbackId,
+  }) {
     const state = await wallet.getState()
-    if (state.isLocked) {
-      throw new Error('Please unlock wallet first')
-    }
 
-    const {
-      activeAccount,
-      network,
-      activeAddress,
-      vaultCreated
-    } = state
-
-    if (!vaultCreated) {
+    if (!state.vaultCreated) {
+      openWindow('walletCreate', {
+        getDefaultAccount: 1,
+        callbackId
+      })
       throw new Error('Please create wallet first')
     }
 
-    return {
-      account: activeAccount ? {
-        address: activeAccount.address,
-        id: activeAccount.id,
-        testnetAddress: activeAccount.testnetAddress
-      } : null,
-      network,
-      address: activeAddress
+    if (state.isLocked) {
+      return openWindow('login', {
+        getDefaultAccount: 1,
+        callbackId
+      })
     }
+    return wallet.getDefaultAccount().then(account => ({
+      ...account,
+      locked: 1
+    }))
   },
 
-  async openWindow () {
+  async openWindow() {
     const popupURL = chrome.extension.getURL('pages/popup.html#/window/contract')
 
     return chrome.windows.create({
@@ -78,7 +77,12 @@ export default {
     })
   },
 
-  async openContractWindow ({ destRegId, contract, value, callbackId }) {
+  async openContractWindow({
+    destRegId,
+    contract,
+    value,
+    callbackId
+  }) {
     return openWindow('contract', {
       destRegId,
       contract,
@@ -87,7 +91,13 @@ export default {
     })
   },
 
-  async openContractWindowRaw ({ destRegId, contract, value, callbackId, test }) {
+  async openContractWindowRaw({
+    destRegId,
+    contract,
+    value,
+    callbackId,
+    test
+  }) {
     return openWindow('contract', {
       destRegId,
       contract,
@@ -97,15 +107,38 @@ export default {
     })
   },
 
-  async publishContract ({ script, scriptDesc, callbackId }) {
-    return openWindow('publicContract', {script, scriptDesc, callbackId})
+  async publishContract({
+    script,
+    scriptDesc,
+    callbackId
+  }) {
+    return openWindow('publicContract', {
+      script,
+      scriptDesc,
+      callbackId
+    })
   },
 
-  async publishContractRaw ({ script, scriptDesc, callbackId, onlyRaw }) {
-    return openWindow('publicContract', {script, scriptDesc, callbackId, onlyRaw})
+  async publishContractRaw({
+    script,
+    scriptDesc,
+    callbackId,
+    onlyRaw
+  }) {
+    return openWindow('publicContract', {
+      script,
+      scriptDesc,
+      callbackId,
+      onlyRaw
+    })
   },
 
-  async requestPay ({ destAddress, value, desc, callbackId }) {
+  async requestPay({
+    destAddress,
+    value,
+    desc,
+    callbackId
+  }) {
     return openWindow('requestPay', {
       destAddress,
       value,
@@ -114,7 +147,13 @@ export default {
     })
   },
 
-  async requestPayRaw ({ destAddress, value, desc, callbackId, onlyRaw }) {
+  async requestPayRaw({
+    destAddress,
+    value,
+    desc,
+    callbackId,
+    onlyRaw
+  }) {
     return openWindow('requestPay', {
       destAddress,
       value,
@@ -124,14 +163,17 @@ export default {
     })
   },
 
-  async requestVote ({ votes, callbackId }) {
+  async requestVote({
+    votes,
+    callbackId
+  }) {
     return openWindow('requestVote', {
       votes,
       callbackId
     })
   },
 
-  handleMessage (action, data) {
+  handleMessage(action, data) {
     data = data || {}
     return new Promise((resolve, reject) => {
       if (typeof this[action] === 'function') {

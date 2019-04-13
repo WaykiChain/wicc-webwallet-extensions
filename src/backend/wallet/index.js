@@ -5,7 +5,10 @@ import vaultStorage from './storage/vault-storage'
 import transStorage from './storage/trans-storage'
 import tokenStorage from './storage/token-storage'
 import tokenTransStorage from './storage/token-trans-storage'
-import { getAddressNetwork, getSendTokenContract } from './util/'
+import {
+  getAddressNetwork,
+  getSendTokenContract
+} from './util/'
 
 const TESTNET = 'testnet'
 const MAINNET = 'mainnet'
@@ -21,7 +24,7 @@ const getWiccApi = (network) => {
 }
 
 const getSignInfo = (network, address) => {
- 
+
   const baasApi = new BaasAPI(network)
   let srcRegId = null
 
@@ -46,7 +49,9 @@ const getSignInfo = (network, address) => {
 }
 
 export default {
-  async setNetwork ({ network }) {
+  async setNetwork({
+    network
+  }) {
     validateNetwork(network)
 
     const activeAccount = vaultStorage.getActiveAccount()
@@ -72,7 +77,9 @@ export default {
     }
   },
 
-  async setActiveAccount ({ id }) {
+  async setActiveAccount({
+    id
+  }) {
     return vaultStorage.setActiveAccount(id).then((account) => {
       if (account.type === 'privateKey') {
         stateStore.updateState({
@@ -87,16 +94,23 @@ export default {
     })
   },
   //checkMnemonicCode
-  async checkMnemonicCode ({ mnemonic }) {
+  async checkMnemonicCode({
+    mnemonic
+  }) {
     return getWiccApi(TESTNET).checkMnemonicCode(mnemonic)
   },
 
-  async createMnemonicCode ({ network }) {
+  async createMnemonicCode({
+    network
+  }) {
     validateNetwork(network)
     return getWiccApi(network).createMnemonicCode()
   },
 
-  async createWallet ({ password, mnemonic }) {
+  async createWallet({
+    password,
+    mnemonic
+  }) {
     if (!password) {
       throw new Error('password is required')
     }
@@ -111,7 +125,9 @@ export default {
     })
   },
 
-  async createAccount ({ mnemonic }) {
+  async createAccount({
+    mnemonic
+  }) {
     if (!mnemonic) {
       throw new Error('mnemonic is required')
     }
@@ -126,7 +142,10 @@ export default {
     })
   },
 
-  async importAccount ({ mnemonic, privateKey }) {
+  async importAccount({
+    mnemonic,
+    privateKey
+  }) {
     if (!mnemonic && !privateKey) {
       throw new Error('mnemonic or privateKey is required')
     }
@@ -152,7 +171,10 @@ export default {
     }
   },
 
-  async importWallet ({ password, mnemonic }) {
+  async importWallet({
+    password,
+    mnemonic
+  }) {
     if (!password) {
       throw new Error('password is required')
     }
@@ -167,7 +189,10 @@ export default {
     })
   },
 
-  async changePassword ({ password, newPassword }) {
+  async changePassword({
+    password,
+    newPassword
+  }) {
     if (!password || !newPassword) {
       throw new Error('password and newPassword is required.')
     }
@@ -181,7 +206,9 @@ export default {
     })
   },
 
-  async unlock ({ password }) {
+  async unlock({
+    password
+  }) {
     if (!password) {
       throw new Error('password is required.')
     }
@@ -203,7 +230,9 @@ export default {
     })
   },
 
-  async validatePassword ({ password }) {
+  async validatePassword({
+    password
+  }) {
     if (!password) {
       return false
     }
@@ -217,15 +246,20 @@ export default {
     return vaultStorage.validatePassword(password, vaultBlob)
   },
 
-  async logout () {
+  async logout() {
     vaultStorage.logout()
   },
 
-  async getMnemonic ({ address }) {
+  async getMnemonic({
+    address
+  }) {
     return vaultStorage.getMnemonic(address)
   },
 
-  async getPrivateKey ({ network, address }) {
+  async getPrivateKey({
+    network,
+    address
+  }) {
     const key = vaultStorage.getPrivateKey(address)
     if (key) {
       return key.toWIF()
@@ -233,7 +267,7 @@ export default {
     return null
   },
 
-  async getState () {
+  async getState() {
     const state = stateStore.getState() || {}
     let isLocked = !!state.isLocked
     if (!vaultStorage.isLogin()) {
@@ -268,13 +302,39 @@ export default {
     }
   },
 
-  getTransHistory ({ network, address }) {
+  async getDefaultAccount() {
+    const state = await this.getState()
+    const {
+      activeAccount,
+      network,
+      activeAddress,
+      // vaultCreated
+    } = state
+
+
+    return {
+      account: activeAccount ? {
+        address: activeAccount.address,
+        id: activeAccount.id,
+        testnetAddress: activeAccount.testnetAddress
+      } : null,
+      network,
+      address: activeAddress
+    }
+  },
+
+  getTransHistory({
+    network,
+    address
+  }) {
     return transStorage.list(network, address).then((value) => {
       return value || []
     })
   },
 
-  validateRegisterAccount ({ address }) {
+  validateRegisterAccount({
+    address
+  }) {
     const network = getAddressNetwork(address)
 
     return transStorage.list(network, address)
@@ -289,12 +349,14 @@ export default {
       })
   },
 
-  registerAccount ({ address }) {
+  registerAccount({
+    address
+  }) {
     const network = getAddressNetwork(address)
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    
+
     return baasApi.getblockcount()
       .then((data) => {
         const height = data
@@ -311,24 +373,48 @@ export default {
       })
   },
 
-  genCallContractRaw ({ network, address, destRegId, value, fees, contract }) {
+  genCallContractRaw({
+    network,
+    address,
+    destRegId,
+    value,
+    fees,
+    contract
+  }) {
     const wiccApi = getWiccApi(network)
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
       return wiccApi.createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract)
     }).then((sign) => {
-      return {rawtx: sign}
+      return {
+        rawtx: sign
+      }
     })
   },
 
-  callContract ({ network, address, destRegId, value, fees, contract }) {
+  callContract({
+    network,
+    address,
+    destRegId,
+    value,
+    fees,
+    contract
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
@@ -342,22 +428,44 @@ export default {
     })
   },
 
-  genPublishContractRaw ({ network, address, fees, script, scriptDesc }) {
+  genPublishContractRaw({
+    network,
+    address,
+    fees,
+    script,
+    scriptDesc
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       return wiccApi.createRegisterAppSign(privateKey, height, srcRegId, fees, script, scriptDesc)
     }).then((sign) => {
-      return {rawtx: sign}
+      return {
+        rawtx: sign
+      }
     })
   },
 
-  publishContract ({ network, address, fees, script, scriptDesc }) {
+  publishContract({
+    network,
+    address,
+    fees,
+    script,
+    scriptDesc
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       return wiccApi.createRegisterAppSign(privateKey, height, srcRegId, fees, script, scriptDesc)
     }).then((sign) => {
       return baasApi.submitOfflineTrans(sign)
@@ -368,10 +476,21 @@ export default {
     })
   },
 
-  send ({ network, address, destAddr, value, fees, desc }) {
+  send({
+    network,
+    address,
+    destAddr,
+    value,
+    fees,
+    desc
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
@@ -384,20 +503,38 @@ export default {
     })
   },
 
-  sendRaw ({ network, address, destAddr, value, fees, desc }) {
+  sendRaw({
+    network,
+    address,
+    destAddr,
+    value,
+    fees,
+    desc
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       if (isNaN(parseFloat(value))) {
         throw new Error('INVALID_VALUE')
       }
       return wiccApi.createTxSign(privateKey, height, srcRegId, destAddr, value, fees)
     }).then((sign) => {
-      return {rawtx: sign}
+      return {
+        rawtx: sign
+      }
     })
   },
 
-  async vote ({ network, address, votes, fees }) {
+  async vote({
+    network,
+    address,
+    votes,
+    fees
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
@@ -419,7 +556,11 @@ export default {
       })
     }))
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       // createDelegateTxSign (privateKey, height, srcRegId, delegateData, fees)
       return wiccApi.createDelegateTxSign(privateKey, height, srcRegId, delegateData, fees)
     }).then((sign) => {
@@ -431,15 +572,28 @@ export default {
     })
   },
 
-  getAccountInfo ({ network, address }) {
+  getAccountInfo({
+    network,
+    address
+  }) {
     return new BaasAPI(network).getAccountInfo(address)
   },
 
-  getTokenInfo ({ network, address, regId }) {
+  getTokenInfo({
+    network,
+    address,
+    regId
+  }) {
     return new BaasAPI(network).getTokenInfo(regId, address)
   },
 
-  async addToken ({ accountId, network, name, regId, precision }) {
+  async addToken({
+    accountId,
+    network,
+    name,
+    regId,
+    precision
+  }) {
     tokenStorage.add(accountId, network, name, regId, precision).then((value) => {
       stateStore.updateState({
         tokensConfig: value
@@ -447,7 +601,10 @@ export default {
     })
   },
 
-  async removeToken ({ accountId, index }) {
+  async removeToken({
+    accountId,
+    index
+  }) {
     tokenStorage.remove(accountId, index).then((value) => {
       stateStore.updateState({
         tokensConfig: value
@@ -455,11 +612,24 @@ export default {
     })
   },
 
-  async sendToken ({ network, address, regId, destAddress, amount, fees, desc, name }) {
+  async sendToken({
+    network,
+    address,
+    regId,
+    destAddress,
+    amount,
+    fees,
+    desc,
+    name
+  }) {
     const wiccApi = getWiccApi(network)
     const baasApi = new BaasAPI(network)
 
-    return getSignInfo(network, address).then(({ srcRegId, height, privateKey }) => {
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
       const contract = getSendTokenContract(destAddress, amount * Math.pow(10, 8))
       return wiccApi.createContractSign(privateKey, height, srcRegId, regId, 0, fees, contract)
     }).then((sign) => {
@@ -473,13 +643,17 @@ export default {
     })
   },
 
-  async getTokenTransHistory ({ network, address, regId }) {
+  async getTokenTransHistory({
+    network,
+    address,
+    regId
+  }) {
     return tokenTransStorage.list(network, address, regId).then((value) => {
       return value || []
     })
   },
 
-  handleMessage (action, data) {
+  handleMessage(action, data) {
     data = data || {}
     return new Promise((resolve, reject) => {
       if (typeof this[action] === 'function') {

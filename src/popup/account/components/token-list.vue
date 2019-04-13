@@ -38,7 +38,7 @@
     </div>
     <div class="token-list-bottom">
       <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-no-add-icon.svg" /> 
-      {{ $t('account.main.addTokenButton') }} <span style="font-size:10px;"> ({{ $t('account.main.expect') }})</span>
+      {{ $t('account.main.addTokenButton') }}
       </button>
     </div>
   </div>
@@ -228,7 +228,8 @@
 
     methods: {
       gotoAddToken () {
-        return false;
+        debugger
+        // return false;
         this.$router.push({
           name: 'addToken'
         })
