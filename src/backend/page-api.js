@@ -28,6 +28,7 @@ const getQueryString = (args) => {
   return result.join('&')
 }
 
+
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
   const queryString = getQueryString(args)
@@ -173,10 +174,25 @@ export default {
     })
   },
 
+  async requestVoteRaw({
+    votes,
+    callbackId,
+    onlyRaw
+  }) {
+    return openWindow('requestVote', {
+      votes,
+      callbackId,
+      onlyRaw
+    })
+  },
+
   handleMessage(action, data) {
     data = data || {}
-    return new Promise((resolve, reject) => {
-      if (typeof this[action] === 'function') {
+    return new Promise(async (resolve, reject) => {
+      const state = await wallet.getState()
+      if (!state.vaultCreated) {
+        reject(new Error('Please create wallet first'))
+      } else if (typeof this[action] === 'function') {
         this[action](data).then(resolve, reject)
       } else {
         reject(new Error('unknown action ' + action))

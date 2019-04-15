@@ -529,6 +529,47 @@ export default {
     })
   },
 
+  async voteRaw({
+    network,
+    address,
+    votes,
+    fees
+  }) {
+    const wiccApi = getWiccApi(network)
+    const baasApi = new BaasAPI(network)
+
+    votes = votes || []
+    if (votes.length === 0) {
+      throw new Error('votes should not be empty')
+    }
+
+    const delegateData = await Promise.all(votes.map((vote) => {
+      return baasApi.getAccountInfo(vote.address).then((value) => {
+        if (value.publicKey) {
+          return {
+            publicKey: value.publicKey,
+            votes: vote.votes
+          }
+        } else {
+          throw new Error(`${vote.address} not found`)
+        }
+      })
+    }))
+
+    return getSignInfo(network, address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      // createDelegateTxSign (privateKey, height, srcRegId, delegateData, fees)
+      return wiccApi.createDelegateTxSign(privateKey, height, srcRegId, delegateData, fees)
+    }).then((sign) => {
+      return {
+        rawtx: sign
+      }
+    })
+  },
+
   async vote({
     network,
     address,

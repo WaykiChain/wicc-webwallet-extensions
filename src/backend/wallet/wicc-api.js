@@ -107,7 +107,7 @@ export default class {
       nTxType: bitcore.WiccApi.DELEGATE_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8),
+      fees: fees * Math.pow(10, 8) + Math.round(Math.random()*10),
       srcRegId,
       delegateData
     }

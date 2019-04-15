@@ -172,5 +172,15 @@ window.WiccWallet = {
       votes,
       callbackId
     })
+  },
+
+  genVoteDelegateRaw(votes, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('requestVote', {
+      votes,
+      callbackId,
+      onlyRaw: 1
+    })
   }
 }
