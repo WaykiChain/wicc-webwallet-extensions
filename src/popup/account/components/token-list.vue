@@ -37,7 +37,7 @@
       </ul>
     </div>
     <div class="token-list-bottom">
-      <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-no-add-icon.svg" /> 
+      <button class="token-list-btn-add" @click="gotoAddToken"><img src="../../static/coin-add-icon.svg" /> 
       {{ $t('account.main.addTokenButton') }}
       </button>
     </div>
@@ -114,7 +114,7 @@
 
   .token-list-btn-add {
     border: none;
-   color:rgba(153,153,153,1);
+   color:#3C78EA;
    font-size: 16px;
   }
 
