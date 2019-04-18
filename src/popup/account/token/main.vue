@@ -123,7 +123,8 @@
             from: this.activeAddress,
             network: this.network,
             name: this.name,
-            regId: this.regId
+            regId: this.regId,
+            balance: this.activeTokenInfo.FreeValues
           }
         })
       },

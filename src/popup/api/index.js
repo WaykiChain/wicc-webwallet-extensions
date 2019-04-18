@@ -125,6 +125,10 @@ export default {
     })
   },
 
+  async callRaw (action, data) {
+    return callBackend(action, data)
+  },
+
   async callContract (network, address, destRegId, value, fees, contract) {
     return callBackend('callContract', {
       network,

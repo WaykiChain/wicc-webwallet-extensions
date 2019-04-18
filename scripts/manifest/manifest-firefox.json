@@ -1,7 +1,7 @@
 {
   "name": "WaykiMax",
-  "version": "1.0.0",
-  "description": "An WaykiChain Wallet in your Browser",
+  "version": "1.0.4",
+  "description": "A WaykiChain Wallet in your Browser",
   "author": "coredev@waykichainhk.com",
   "manifest_version": 2,
   "icons": {
@@ -25,7 +25,8 @@
     "default_popup": "pages/popup.html"
   },
   "background": {
-    "page": "pages/background.html"
+    "page": "pages/background.html",
+    "persistent":true
   },
   "content_scripts": [
     {

@@ -49,7 +49,7 @@ const createAccountWithMnemonic = (mnemonic) => {
   const wiccApi = new WiccAPI('mainnet')
 
   return {
-    id: uuidv4(),
+    id: uuidv4(), //v4是随机生成uuid
     type: 'mnemonic',
     data: {
       mnemonic
@@ -223,7 +223,7 @@ export default {
         } else if (item.type === 'mnemonic') {
           const network = getAddressNetwork(address)
           const wiccApi = new WiccAPI(network)
-          const pk = wiccApi.getPrivateKeyFromMnemonic(item.data.mnemonic)
+          const pk = wiccApi.getPrivateKeyFromMnemonic(item.data.mnemonic) //通过助记词获取私钥
           privateKeyMap[address] = pk
           return pk
         }
@@ -234,7 +234,7 @@ export default {
   },
 
   async createWallet (password, mnemonic) {
-    const account = createAccountWithMnemonic(mnemonic)
+    const account = createAccountWithMnemonic(mnemonic) //createAccountWithMnemonic 验证是正式环境还是测试环境
     state.data = [account]
 
     return passworder.encrypt(password, state.data).then((blob) => {

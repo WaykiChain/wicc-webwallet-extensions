@@ -4,7 +4,7 @@
     <div class="content-body">
       <div class="from-title">{{ $t('account.sendToken.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
-      <label class="transfer-limit">{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;WICC</label>
+      <label class="transfer-limit">{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;{{name}}</label>
      
       <wallet-input
           v-model="destAddr"

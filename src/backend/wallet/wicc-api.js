@@ -63,7 +63,7 @@ export default class {
       nTxType: bitcore.WiccApi.REG_APP_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8),
+      fees: fees * Math.pow(10, 8) + Math.round(Math.random()*10),
       regAcctId,
       script,
       scriptDesc
@@ -77,7 +77,7 @@ export default class {
       nTxType: bitcore.WiccApi.CONTRACT_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8),
+      fees: fees * Math.pow(10, 8) + Math.round(Math.random()*10),
       srcRegId,
       destRegId,
       value: value * Math.pow(10, 8),
@@ -92,7 +92,7 @@ export default class {
       nTxType: bitcore.WiccApi.COMMON_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8),
+      fees: fees * Math.pow(10, 8) + Math.round(Math.random()*10),
       srcRegId,
       destAddr,
       value: value * Math.pow(10, 8),
@@ -107,7 +107,7 @@ export default class {
       nTxType: bitcore.WiccApi.DELEGATE_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8),
+      fees: fees * Math.pow(10, 8) + Math.round(Math.random()*10),
       srcRegId,
       delegateData
     }

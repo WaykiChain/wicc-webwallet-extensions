@@ -25,11 +25,19 @@ let pendingPromise = {
   reject: null
 }
 
-pageStream.on('data', function ({ status, error, data, callbackId }) {
+pageStream.on('data', function ({
+  status,
+  error,
+  data,
+  callbackId
+}) {
   if (callbackId) {
     return resolveCallback(callbackId, error, data)
   }
-  const { resolve, reject } = pendingPromise
+  const {
+    resolve,
+    reject
+  } = pendingPromise
   if (resolve) {
     if (status === 'error') {
       reject(error)
@@ -64,17 +72,45 @@ const formatValue = (value) => {
 }
 
 window.WiccWallet = {
-  getDefaultAccount () {
-    return send('getDefaultAccount', {}).then((account) => {
-      if (account.activeAccount === null) {
-        throw new Error('Please create wallet or unlock wallet first')
-      }
+  getDefaultAccount() {
+    const promise = Promise.resolve()
+    promise.then = function (callback, error) {
+      const callbackId = saveCallback((err, data) => {
+        callback(data)
+      })
+      send('getDefaultAccount', {
+        callbackId,
+      }).then(data => {
+        if (data && data.locked)
+          callback(data)
+      }, err => {
+        error(err)
+      })
+    }
+    return promise
+  },
+  // getDefaultAccount() {
+  //   return send('getDefaultAccount', {}).then((account) => {
+  //     if (account.activeAccount === null) {
+  //       throw new Error('Please create wallet or unlock wallet first')
+  //     }
 
-      return account
+  //     return account
+  //   })
+  // },
+
+  genCallContractRaw(destRegId, contract, value, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('openContractWindowRaw', {
+      destRegId,
+      contract,
+      value: formatValue(value),
+      callbackId,
+      test: 1
     })
   },
-
-  callContract (destRegId, contract, value, callback) {
+  callContract(destRegId, contract, value, callback) {
     const callbackId = saveCallback(callback)
 
     return send('openContractWindow', {
@@ -85,7 +121,7 @@ window.WiccWallet = {
     })
   },
 
-  publishContract (script, scriptDesc, callback) {
+  publishContract(script, scriptDesc, callback) {
     const callbackId = saveCallback(callback)
 
     return send('publishContract', {
@@ -95,7 +131,18 @@ window.WiccWallet = {
     })
   },
 
-  requestPay (destAddress, value, desc, callback) {
+  genPublishContractRaw(script, scriptDesc, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('publishContractRaw', {
+      script,
+      scriptDesc,
+      callbackId,
+      onlyRaw: 1
+    })
+  },
+
+  requestPay(destAddress, value, desc, callback) {
     const callbackId = saveCallback(callback)
 
     return send('requestPay', {
@@ -106,12 +153,34 @@ window.WiccWallet = {
     })
   },
 
-  requestVote (votes, callback) {
+  genRequestPayRaw(destAddress, value, desc, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('requestPayRaw', {
+      destAddress,
+      value: formatValue(value),
+      desc,
+      callbackId,
+      onlyRaw: 1
+    })
+  },
+
+  requestVote(votes, callback) {
     const callbackId = saveCallback(callback)
 
     return send('requestVote', {
       votes,
       callbackId
+    })
+  },
+
+  genVoteDelegateRaw(votes, callback) {
+    const callbackId = saveCallback(callback)
+
+    return send('requestVote', {
+      votes,
+      callbackId,
+      onlyRaw: 1
     })
   }
 }
