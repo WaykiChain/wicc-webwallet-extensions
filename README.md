@@ -14,7 +14,7 @@ More importantly, WaykiMax provides the `WaykiPay` interface to developers. Deve
 ## `WaykiPay`
 [How to integrate WaykiPay on Web](https://www.wiccdev.org/book/en/DeveloperHelper/webextension.html#waykipay)
 
-[如何在Web页面中集成 WaykiPay](https://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#waykipay)
+[如何在Web页面中集成 WaykiPay](https://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#waykipay)
 
 ## Build
 
