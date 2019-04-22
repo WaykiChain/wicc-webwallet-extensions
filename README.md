@@ -1,20 +1,20 @@
 # WaykiMax
 
-WaykiMax is a browser extension wallet for WaykiChain. It enables you to send and receive WICC and WRC20 tokens. 
+WaykiMax is a browser extension wallet for WaykiChain. 
 
-The extension feature that allows users to manage their account info, add token, check balance, create/import/export mnemonics, transfer WICC, etc.
+It allows users to manage their account info, add `WRC20` token, check balance, create/import/export mnemonics, transfer WICC and `WRC20` token, etc.
 
-More importantly, WaykiMax provides the `WaykiPay` interface to developers. Developers can integrate `WaykiPay` when developing DApp so that they can sign and broadcast WaykiChain transactions.in turn enabling the use of Dapps from within the browser.
+More importantly, WaykiMax provides the [WiccWallet](https://www.wiccdev.org/book/en/DeveloperHelper/webextension.html#wiccwallet) interface to developers. Developers can integrate `WiccWallet` when developing DAPP so that they can sign and broadcast WaykiChain transactions. In turn enabling the use of DAPP from within the browser.
 
 ## Downloads
 
 **Chrome** – [Download](https://chrome.google.com/webstore/detail/waykimax/odaegfdpkolgbdaeibcebmibmibchbce)   
 **Firefox** – [Download](https://addons.mozilla.org/en-US/firefox/addon/waykichain/)
 
-## `WaykiPay`
-[How to integrate WaykiPay on Web](https://www.wiccdev.org/book/en/DeveloperHelper/webextension.html#waykipay)
+## `WiccWallet`
+[How to integrate WiccWallet on Web](https://www.wiccdev.org/book/en/DeveloperHelper/webextension.html#wiccwallet)
 
-[如何在Web页面中集成 WaykiPay](https://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#waykipay)
+[如何在Web页面中集成 WiccWallet](hhttps://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#wiccwallet)
 
 ## Build
 
