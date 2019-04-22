@@ -14,7 +14,7 @@ More importantly, WaykiMax provides the [WiccWallet](https://www.wiccdev.org/boo
 ## `WiccWallet`
 [How to integrate WiccWallet on Web](https://www.wiccdev.org/book/en/DeveloperHelper/webextension.html#wiccwallet)
 
-[如何在Web页面中集成 WiccWallet](hhttps://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#wiccwallet)
+[如何在Web页面中集成 WiccWallet](https://www.wiccdev.org/book/zh-hans/DeveloperHelper/webextension.html#wiccwallet)
 
 ## Build
 
