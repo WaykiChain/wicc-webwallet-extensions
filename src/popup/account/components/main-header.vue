@@ -70,6 +70,16 @@
             <span class="network-item-icon"></span>
             {{ getNetworkText('testnet') }}
           </li>
+
+          <li class="menu-item network-item" v-for="(net,index) in netList" :key="index"
+            @click="setNetwork('testnet')"
+              :class="{
+              active: network === net.id
+            }">
+            <span class="network-item-icon"></span>
+            {{ net.name }}
+          </li>
+          
         </ul>
       </div>
     </div>
@@ -101,7 +111,7 @@
 
     created () {
       this.refreshState()
-
+      this.netList = JSON.parse(localStorage.getItem('netList'))
       this.eventBus.$on('header:state:refresh', this.refreshState)
     },
 
@@ -113,7 +123,8 @@
       return {
         showNetwork: false,
         showMenu: false,
-        forceLogin: false
+        forceLogin: false,
+        netList:[],
       }
     },
 
@@ -152,6 +163,7 @@
       },
 
       setNetwork (network) {
+        localStorage.setItem('network',network)
         API.setNetwork(network).then(({ network, account }) => {
           this.network = network
           this.$emit('network-change', network, this)
@@ -198,7 +210,6 @@
 
         this.hideMenu()
       },
-
       gotoCreateAccount () {
         this.$router.push({
           name: 'createAccount'

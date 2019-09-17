@@ -34,7 +34,6 @@ export default {
       mnemonic
     })
   },
-
   async getState () {
     return callBackend('getState', {})
   },
@@ -159,10 +158,9 @@ export default {
     })
   },
 
-  async getTransHistory (network, address) {
+  async getTransHistory ({info}) {
     return callBackend('getTransHistory', {
-      network,
-      address
+      info
     })
   },
 
@@ -229,5 +227,5 @@ export default {
       accountId,
       index
     })
-  }
+  },
 }

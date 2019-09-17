@@ -15,12 +15,12 @@
       </div>
     </div>
     <div class="main-content" slot="content">
-      <div class="nav-header">
+      <!-- <div class="nav-header">
         <img
             @click="toggleDrawer"
             class="main-drawer-toggle"
             src="../../static/main-menu-toggle.svg" />
-      </div>
+      </div> -->
 
       <slot></slot>
 

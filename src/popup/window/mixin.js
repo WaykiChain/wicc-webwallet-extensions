@@ -67,14 +67,18 @@ export default {
       if (this.callbackId) {
         API.callPageCallback(this.callbackId, {
           message: 'User denied transaction signature.'
-        }, null).then(() => {
-          setTimeout(() => {
-            window.close()
-          }, 300)
-        })
-      } else {
-        window.close()
+        }, null).then(() => { })
+        setTimeout(() => {
+          window.close()
+        }, 300)
+      } 
+    },
+
+    cutMiddleStr(str,saveNum){
+      if (str){
+        return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
       }
+      return ''
     }
   }
 }

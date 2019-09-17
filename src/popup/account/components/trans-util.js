@@ -2,6 +2,31 @@ import fecha from 'fecha'
 import { getLanguage } from '../../locale'
 import fixed from '../../api/fixed'
 
+const TYPE_NEWTX_MAP = {
+  'DEX_TRADE_SETTLE_TX':	'DEX撮合',
+  'DEX_CANCEL_ORDER_TX':	'DEX取消挂单',
+  'DEX_MARKET_SELL_ORDER_TX':	'DEX市价卖单',
+  'DEX_MARKET_BUY_ORDER_TX':'DEX市价买单',
+  'DEX_LIMIT_SELL_ORDER_TX': 'DEX限价卖单',
+  'DEX_LIMIT_BUY_ORDER_TX': 'DEX限价买单',
+  'PRICE_MEDIAN_TX': '喂价中位数交易',
+  'PRICE_FEED_TX':	'喂价',
+  'FCOIN_STAKE_TX':	'抵押WGRT',
+  'UCOIN_TRANSFER_TX': '多币种交易',
+  'CDP_LIQUIDATE_TX':	'CDP清算',
+  'CDP_REDEEM_TX':	'CDP赎回',
+  'CDP_STAKE_TX':	'CDP抵押',
+  'DELEGATE_VOTE_TX':	'投票交易',
+  'LCONTRACT_INVOKE_TX':	'合约调用',
+  'LCONTRACT_DEPLOY_TX': '合约发布',
+  'BCOIN_TRANSFER_TX': 'WICC交易',
+  'ACCOUNT_REGISTER_TX':	'账户激活',
+  'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
+  'UCOIN_BLOCK_REWARD_TX':	'旷工奖励(新版)',
+  'BLOCK_REWARD_TX':	'旷工奖励',
+}
+
+
 const TYPE_MAP = {
   1: '挖矿',
   2: '账号激活',
@@ -33,6 +58,14 @@ const STATUS_MAP_EN = {
 }
 
 export default {
+  formatNewTxType(type){
+    const lang = getLanguage()
+    if (lang && lang.indexOf('zh') !== -1) {
+      return TYPE_NEWTX_MAP[type] || type
+    } else {
+      return TYPE_NEWTX_MAP[type] || type
+    }
+  },
   formatType (type) {
     const lang = getLanguage()
     if (lang && lang.indexOf('zh') !== -1) {
@@ -45,7 +78,7 @@ export default {
   formatStatus (trans) {
     const lang = getLanguage()
     let status
-    if (trans.confirmedHeight) {
+    if (trans.confirmedheight) {
       status = 'confirmed'
     } else if (trans.failed) {
       status = 'failed'
@@ -58,7 +91,15 @@ export default {
       return STATUS_MAP_EN[status]
     }
   },
-
+  /**
+   * 省略中间字符
+   */
+  cutMiddleStr(str,saveNum){
+    if (str){
+      return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
+    }
+    return ''
+  },
   formatTime (time) {
     if (!time) return ''
     const date = new Date(time)

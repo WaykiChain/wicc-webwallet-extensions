@@ -153,6 +153,104 @@ window.WiccWallet = {
     })
   },
 
+  ///创建
+  showCdpCreateView(bcoinSymbol,bcoinNum,scoinSymbol,scoinNum,callback){
+    const callbackId = saveCallback(callback)
+    return send('createCdpView', {
+      wiccNum:bcoinNum,
+      wusdNum:scoinNum,
+      bcoinSymbol,
+      scoinSymbol,
+      callbackId
+    })
+  },
+  ///追加
+  showCdpAdditionalView(bcoinSymbol,bcoinNum,scoinSymbol,scoinNum,cdpTxId,callback){
+    const callbackId = saveCallback(callback)
+    return send('additionalCdpView', {
+      wiccNum:bcoinNum,
+      wusdNum:scoinNum,
+      cdpTxId,
+      bcoinSymbol,
+      scoinSymbol,
+      callbackId
+    })
+  },
+  ///清算
+  showCdpLiquidView(assetType,liquidateNum,cdpTxId,callback){
+    const callbackId = saveCallback(callback)
+    return send('liquidCdpView', {
+      assetType,
+      wusdNum:liquidateNum,
+      cdpTxId,
+      callbackId
+    })
+  },
+  ///赎回
+  showCdpRedeemView(repayNum,redeemSymbol,redeemNum,cdpTxId,callback){
+    const callbackId = saveCallback(callback)
+    return send('redeemCdpView', {
+      wusdNum:repayNum,
+      wiccNum:redeemNum,
+      redeemSymbol,
+      cdpTxId,
+      callbackId
+    })
+  },
+  
+
+  ///限价交易  dealType : Limit_BUY / Limit_SELL
+  showLimitDexView(dealType,coinType,assetType,amount,price,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexView',{
+      dealType,
+      amount,
+      limitPrice:price,
+      coinType,assetType,
+      callbackId
+    })
+  },
+
+  ///市价交易    dealType : Market_BUY / Market_SELL
+  showMarketDexView(dealType,coinType,assetType,amount,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexView',{
+      dealType,
+      amount,
+      limitPrice:0,
+      coinType,assetType,
+      callbackId
+    })
+  },
+
+  showCancelDexView(dealNum,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexCancelView',{
+      dealNum,
+      callbackId
+    })
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   genRequestPayRaw(destAddress, value, desc, callback) {
     const callbackId = saveCallback(callback)
 

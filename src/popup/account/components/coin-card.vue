@@ -1,11 +1,12 @@
 <template>
   <div class="coin-card">
-    <div class="coin-name-wrapper">
+    <!-- <div class="coin-name-wrapper">
       <img src="../../static/coin-card-logo-wicc.svg" v-if="name === 'wicc'" />
       <div v-else class="coin-name">{{ name }}</div>
-    </div>
+    </div> -->
     <div class="coin-card-body">
-      <span class="coin-value">{{ value | fixed(8) }}</span>
+      <!-- <span class="coin-value">{{ value | fixed(8) }}</span> -->
+      <span class="coin-value">{{ value }}</span>
       <button
           v-if="showRegisterButton"
           @click="openRegisterConfirm"
@@ -93,12 +94,13 @@
   .coin-card {
     position: relative;
     background: url('../../static/coin-card-bg.svg') 0 0 no-repeat;
-    background-size: 100% 100%;
+    // background-size: 100% 100%;
     width: 344px;
-    height: 136px;
+    height: 83px;
     color: #fff;
     padding: 16px;
     box-sizing: border-box;
+    border-radius: 4px;
   }
 
   .coin-name-wrapper {
@@ -112,7 +114,6 @@
       color: #4270DA;
       display: inline-block;
       padding: 1px 2px;
-      border-radius: 3px;
       font-weight: bold;
       font-style: italic;
     }
@@ -120,14 +121,15 @@
 
   .coin-value {
     font-family: Garamond, Helvetica, Verdana, serif;
-    font-size: 38px;
+    font-size: 17px;
+    font-weight: bold;
   }
 
   .coin-card-body {
     position: absolute;
     left: 16px;
     right: 16px;
-    top: 40px;
+    top: 16px;
   }
 
   .btn-account-active {

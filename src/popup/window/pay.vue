@@ -62,8 +62,9 @@ export default {
 
   methods: {
     confirmRaw() {
-      this.$loading(this.$t("window.transfer.confirmLoading"));
 
+      this.$loading(this.$t("window.transfer.confirmLoading"));
+      
       API.callRaw("sendRaw", {
         network: this.network,
         address: this.address,
@@ -77,7 +78,6 @@ export default {
           this.$toast(this.$t("window.transfer.createSuccess"), {
             type: "center"
           });
-
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, value);
           }
@@ -107,7 +107,6 @@ export default {
     },
     confirm() {
       this.$loading(this.$t("window.transfer.confirmLoading"));
-
       API.send(
         this.network,
         this.address,
@@ -121,7 +120,6 @@ export default {
           this.$toast(this.$t("window.transfer.createSuccess"), {
             type: "center"
           });
-
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, value);
           }
