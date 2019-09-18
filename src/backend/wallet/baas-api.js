@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as uuidv4 from 'uuid/v4'
 
-const BAAS_TESTNET = 'http://10.0.0.31:21052' //   'https://baas-test.wiccdev.org/v2/api'  //   'https://test.wiccbaas.com/v1/api'
+const BAAS_TESTNET =  'http://10.0.0.31:21052' // 'https://baas-test.wiccdev.org/v2/api'  //      'https://test.wiccbaas.com/v1/api'
 const BAAS_MAINNET = 'https://baas.wiccdev.org/v2/api'
 
 const handleResponse = ({ data }) => {
@@ -19,10 +19,13 @@ const handleError = (error) => {
 export default class {
   constructor(network) {
     this.network = network || 'testnet'
-    if (this.network === 'testnet') {
-      this.host = BAAS_TESTNET
-    } else {
+    if (this.network === 'mainnet') {
       this.host = BAAS_MAINNET
+    }else if (this.network === 'testnet') {
+      this.host = BAAS_TESTNET
+    } else { 
+      this.host = 'https://baas-test.wiccdev.org/v2/api'
+      alert('自定义baas')
     }
   }
 
@@ -35,6 +38,7 @@ export default class {
   }
 
   getAccountInfo(address) {
+    alert(address)
     return axios.post(this.host + '/account/getaccountinfo',{'address':address}).then(handleResponse, handleError)
   }
 

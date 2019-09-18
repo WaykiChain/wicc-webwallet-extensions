@@ -106,7 +106,7 @@
         };
         API.callRaw('getDetailInfo',{info:param}).then(
         res => {
-          console.log(res);
+          console.log("通过hash查到的详情===》",res);
           this.detailInfo = res
           if (this.detailInfo.txtype.indexOf('CDP')<0 && this.detailInfo.txtype.indexOf('DEX')<0){
             this.showTitle = true

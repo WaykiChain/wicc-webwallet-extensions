@@ -83,6 +83,9 @@ export default {
         url:this.url,
         id: timeStamp
       }
+      if (!this.netList){
+        this.netList = []
+      }
       this.netList.push(netItem)
       localStorage.setItem('netList',JSON.stringify(this.netList))
       this.$router.go(-1)
