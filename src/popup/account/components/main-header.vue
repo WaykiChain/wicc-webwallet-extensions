@@ -47,7 +47,7 @@
     </div>
     <div class="dropdown-wrapper network-wrapper" v-click-outside="hideNetwork">
       <div class="dropdown-toggle" @click="toggleNetwork">
-        <div class="dropdown-toggle-label">{{ getNetworkText(network) }}</div>
+        <div class="dropdown-toggle-label">{{ getNetworkText(currentNet != '' ? currentNet : network) }}</div>
         <div class="dropdown-toggle-indicator"></div>
       </div>
       <div class="dropdown" v-show="showNetwork">
@@ -60,7 +60,7 @@
             class="menu-item network-item"
             @click="setNetwork('mainnet')"
             :class="{
-              active: network === 'mainnet'
+              active: currentNet != '' ? false : network === 'mainnet'
             }"
           >
             <span class="network-item-icon"></span>
@@ -70,7 +70,7 @@
             class="menu-item network-item"
             @click="setNetwork('testnet')"
             :class="{
-              active: network === 'testnet'
+              active: currentNet != '' ? false : network === 'testnet'
             }"
           >
             <span class="network-item-icon"></span>
@@ -81,9 +81,9 @@
             class="menu-item network-item"
             v-for="(item,index) in netList"
             :key="index"
-            @click="setNetwork(item.name)"
+            @click="setNetwork(item)"
             :class="{
-              active: network === item.name
+              active: currentNet === item.name
             }"
           >
             <span class="network-item-icon"></span>
@@ -125,6 +125,8 @@ export default {
   created() {
     this.refreshState();
     this.netList = JSON.parse(localStorage.getItem("netList"));
+    const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"))
+    this.currentNet = myselfNet ? myselfNet.name : "";
     this.eventBus.$on("header:state:refresh", this.refreshState);
   },
 
@@ -137,7 +139,8 @@ export default {
       showNetwork: false,
       showMenu: false,
       forceLogin: false,
-      netList: []
+      netList: [],
+      currentNet:"",
     };
   },
 
@@ -178,8 +181,19 @@ export default {
     },
 
     setNetwork(network) {
-      localStorage.setItem("network", network);
-      API.setNetwork(network).then(({ network, account }) => {
+      var net = ""
+      if (network.name){
+        net = network.network
+        localStorage.setItem("network", network.network);
+        this.currentNet = network.name
+        localStorage.setItem('myselfNetWork',JSON.stringify(network))
+      }else{
+        net = network
+        localStorage.setItem("network", network);
+        this.currentNet = network
+        localStorage.removeItem('myselfNetWork')
+      }
+      API.setNetwork(net).then(({ network, account }) => {
         this.network = network
         this.$emit("network-change", network, this);
         eventBus.$emit("network-change", network);
@@ -188,6 +202,8 @@ export default {
           eventBus.$emit("active-account-change", account);
         }
       });
+      const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"))
+      this.currentNet = myselfNet ? myselfNet.name : "";
       this.hideNetwork();
     },
 
@@ -196,7 +212,6 @@ export default {
       API.setActiveAccount(account.id).then(({ network }) => {
         this.activeAccount = account;
         eventBus.$emit("active-account-change", account);
-        alert(network)
         if (network) {
           this.network = network;
           this.$emit("network-change", network, this);

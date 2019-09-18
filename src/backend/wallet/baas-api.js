@@ -19,13 +19,14 @@ const handleError = (error) => {
 export default class {
   constructor(network) {
     this.network = network || 'testnet'
-    if (this.network === 'mainnet') {
-      this.host = BAAS_MAINNET
-    }else if (this.network === 'testnet') {
-      this.host = BAAS_TESTNET
-    } else { 
-      this.host = 'https://baas-test.wiccdev.org/v2/api'
-      alert('自定义baas')
+    if (localStorage.getItem('myselfNetWork')){
+      this.host = JSON.parse(localStorage.getItem('myselfNetWork')).url
+    }else{
+      if (this.network === 'mainnet') {
+        this.host = BAAS_MAINNET
+      }else if (this.network === 'testnet') {
+        this.host = BAAS_TESTNET
+      }
     }
   }
 
@@ -38,7 +39,6 @@ export default class {
   }
 
   getAccountInfo(address) {
-    alert(address)
     return axios.post(this.host + '/account/getaccountinfo',{'address':address}).then(handleResponse, handleError)
   }
 

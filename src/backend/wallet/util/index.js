@@ -6,8 +6,6 @@ export const getAddressNetwork = function (address) {
     network = 'testnet'
   } else if (address[0] === 'W') {
     network = 'mainnet'
-  }else{
-    network = 'testnet'
   }
   return network
 }

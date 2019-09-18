@@ -66,7 +66,7 @@
 
 <script type="text/jsx">
 import NavLayout from "../components/nav-layout";
-
+import axios from 'axios'
 export default {
   name: "setting",
 
@@ -77,19 +77,38 @@ export default {
 
   methods: {
     save() {
-      const timeStamp = new Date().getTime()
+      this.checkUrl()
+      return
+      
+    },
+    checkUrl(){
+      
+      axios.post(this.url + '/block/getinfo',{}).then(res=>{
+        const net = res.data.data.nettype
+        if (net === 'MAIN_NET'){
+          this.add('mainnet')
+        }else{
+          this.add('testnet')
+        }
+      }).catch(err=>{
+        this.$toast('链接无效')
+      })
+    },
+    add(network){
+      
       const netItem = {
         name:this.name,
         url:this.url,
-        id: timeStamp
+        network: network
       }
       if (!this.netList){
         this.netList = []
       }
       this.netList.push(netItem)
       localStorage.setItem('netList',JSON.stringify(this.netList))
+      this.$toast('添加成功过')
       this.$router.go(-1)
-    },
+    }
   },
 
   data() {
