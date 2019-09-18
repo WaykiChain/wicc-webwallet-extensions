@@ -135,7 +135,7 @@ export default {
 
       confirmedheight:"确定高度",
       bcointoredeem:'赎回数量',
-      scoinstorepay:'销毁数量',
+      scoinstorepay:'归还数量',
       scoinstoliquidate:"清算数量",
       assetamount:'资产数量',
       coinsymbol:"币种类型",
