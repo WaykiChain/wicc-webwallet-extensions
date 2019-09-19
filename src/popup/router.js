@@ -54,6 +54,8 @@ import CdpRedeem from './window/cdpRedeem'
 import CdpAdditional from './window/cdpAdditional'
 import DexDealView from './window/dexDeal'
 import DexCancelDealView from './window/dexCancelDeal'
+import assetsPub from './window/assetsPub'
+
 const router = new VueRouter({
   routes: [
     {
@@ -229,6 +231,11 @@ const router = new VueRouter({
         name: 'DexCancelDealView',
         path: 'dex-cancel-dealView',
         component: DexCancelDealView
+      },
+      {
+        name: 'assetsPub',
+        path: 'assets-pub',
+        component: assetsPub
       },
     ]
     }

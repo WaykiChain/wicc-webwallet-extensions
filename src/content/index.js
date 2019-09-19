@@ -231,6 +231,19 @@ window.WiccWallet = {
     })
   },
 
+  ///发布资产
+  showAssetPub(assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callback){
+    const callbackId = saveCallback(callback)
+    return send('AssetPub',{
+      assetSymbol,
+      assetName,
+      assetSupply,
+      assetOwnerId,
+      assetMintable,
+      callbackId
+    })
+  },
+
 
 
 

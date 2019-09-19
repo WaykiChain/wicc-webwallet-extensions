@@ -140,7 +140,7 @@ export default {
         return;
       }
 
-      if (this.balance && this.value > this.balance) {
+      if (this.balance && this.value > (this.balance - this.fees - 0.00001)) {
         this.$toast(this.$t("errors.insufficientBalance"), {
           type: "center"
         });

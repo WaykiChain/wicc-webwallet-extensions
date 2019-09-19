@@ -14,6 +14,7 @@ const TYPE_PATH_MAP = {
   additionalCdpView: '/window/cdp-additional',
   dexView: '/window/dex-dealView',
   dexCancelView: '/window/dex-cancel-dealView',
+  AssetPub:'/window/assets-pub',
 }
 
 const getQueryString = (args) => {
@@ -193,9 +194,13 @@ export default {
       dealNum,callbackId
     })
   },
+  
 
-
-
+  async AssetPub({ assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId }) {
+    return openWindow('AssetPub', {
+      assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId
+    })
+  },
 
 
 
