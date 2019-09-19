@@ -194,9 +194,10 @@ export default {
           }
         },
         error => {
+          console.log(error.message)
           this.$loading.close();
           this.$toast(
-            this.$t("window.transfer.createFailure") + " " + formatError(error),
+            this.$t(error.message),
             {
               type: "center",
               duration: 5000,
