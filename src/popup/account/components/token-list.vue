@@ -258,17 +258,14 @@ export default {
       });
     }
   },
-  // created(){
-  //   this.getWiccNum(this.activeAddress)
-  // },
   watch: {
     activeAddress(val) {
+      console.log('监听到的地址',val)
       this.getWiccNum(val);
     }
   },
   methods: {
     gotoAddToken() {
-      // return false;
       this.$router.push({
         name: "addToken"
       });
@@ -308,10 +305,18 @@ export default {
     getWiccNum(address) {
       API.getAccountInfo(this.network, address).then(
         res => {
+          console.log(res)
           let tokens = res.tokens;
-          this.wusd = tokens.WUSD;
-          this.wicc = tokens.WICC;
-          this.wgrt = tokens.WGRT;
+          if (tokens){
+            this.wusd = tokens.WUSD;
+            this.wicc = tokens.WICC;
+            this.wgrt = tokens.WGRT;
+          }else{
+            this.wusd = null;
+            this.wicc = null;
+            this.wgrt = null;
+          }
+          
         },
         error => {
           console.log(error)

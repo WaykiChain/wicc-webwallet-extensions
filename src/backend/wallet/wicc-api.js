@@ -109,18 +109,22 @@ export default class {
    * 多币种转账签名
    */
   createVariousCoinsTx(privateKey, height, srcRegId, destAddr, value, fees , coinType,feeSymbol,network,memo) {
+    var destArr = [{
+      "coinType":coinType,
+      "destAddr":destAddr,
+      "value":parseInt(value * Math.pow(10, 8)),
+    }
+   ]
     const txInfo = {
       nTxType: bitcore.WiccApi.UCOIN_TRANSFER_TX,
       nVersion: 1,
       nValidHeight: height,
       fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
       srcRegId,
-      destAddr,
-      value: parseInt(value * Math.pow(10, 8)),
+      destArr:destArr,
       memo:memo,
       network: network,
       publicKey:privateKey.toPublicKey().toString(),
-      coinType:coinType,
       feesCoinType:feeSymbol,
     }
     // alert(`${height},${fees},${srcRegId},${destAddr},${value},${network},${txInfo.value},`)
@@ -145,7 +149,7 @@ export default class {
 
   cdpStake(info) {
 
-    var map=new Map([[info.feeType ? info.feeType : 'WICC',info.bcoinsToStake]])
+    var map=new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC',info.bcoinsToStake]])
     var cdpStakeTxinfo = {
       nTxType: bitcore.WiccApi.CDP_STAKE_TX,
       nVersion: 1,

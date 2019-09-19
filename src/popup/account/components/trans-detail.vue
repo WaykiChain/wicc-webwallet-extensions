@@ -103,7 +103,7 @@
         <dt v-show="detailInfo.memo">{{ $t('account.transDetail.commentLabel') }}</dt>
         <dd>{{ detailInfo.memo }}</dd>
       </dl>
-      <dl v-else>
+      <dl v-if="showTitle">
         <dl v-if="!isDex">
           <dt>{{ $t('account.transDetail.fromLabel') }}</dt>
           <dd>{{ detailInfo.fromaddr }}</dd>
