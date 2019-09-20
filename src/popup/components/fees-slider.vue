@@ -126,25 +126,18 @@
           max: 100,
           interval: 0.1
         }
-      } else if (type === 'call-contract') {
+      }else if (type === 'call-cdp') {
         return {
           inputValue: 0.01,
           min: 0.01,
-          max: 1,
-          interval: 0.01
-        }
-      }else if (type === 'call-cdp') {
-        return {
-          inputValue: 0.001,
-          min: 0.001,
           max: 0.1,
           interval: 0.001
         }
       } else {
         return {
-          inputValue: 0.0001,
-          min: 0.0001,
-          max: 0.05,
+          inputValue: 0.001,
+          min: 0.001,
+          max: 0.01,
           interval: 0.0001
         }
       }

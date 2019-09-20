@@ -3,20 +3,38 @@
     <div class="content">
       <h5 class="titleHeader">{{$t('window.assets.资产发布')}}</h5>
       <div class="cell">
-        <p class="cellName">{{$t('window.cdp.cjcdpdz')}}</p>
-        <p class="cellValue">{{cutMiddleStr(address,8)}}</p>
+        <p class="cellName">{{$t('代币简称')}}</p>
+        <p class="cellValue">{{assetSymbol}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('window.cdp.dyl')}}</p>
-        <p class="cellValue">{{bcoinsToStake/100000000}} {{bcoinsSymbol}}</p>
+        <p class="cellName">{{$t('代币全称')}}</p>
+        <p class="cellValue">{{assetName}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('window.cdp.dcl')}}</p>
-        <p class="cellValue">{{scoinsToMint/100000000}} {{scoinsSymbol}}</p>
+        <p class="cellName">{{$t('总发行量')}}</p>
+        <p class="cellValue">{{assetSupply}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('代币持有者')}}</p>
+        <p class="cellValue">{{cutMiddleStr(assetOwnerId,10)}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('可否增发')}}</p>
+        <p class="cellValue">{{assetMintable == 'true' ? '是' : '否'}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('矿工费')}}</p>
+        <p class="cellValue">550 WICC</p>
       </div>
       <div class="bar"></div>
     </div>
-
+    <div class="feesView">
+      <select class="feesName" name="WICC" id="" v-model="feesName">
+        <option value="WICC">WICC</option>
+        <option value="WUSD">WUSD</option>
+      </select>
+      <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
+    </div>
     <div class="bottom_btn">
       <div class="btn" @click="cancel">{{$t('window.cdp.qx')}}</div>
       <div class="btn sure" @click="sureCreateCDP">{{$t('window.cdp.qd')}}</div>
@@ -34,50 +52,48 @@ export default {
   data() {
     return {
       urlQuery: "",
-      fees: 0.001,
-      cdpTxId: "",
-      bcoinsToStake: 0,
-      scoinsToMint: 0,
-      bcoinsSymbol:'WICC',
-      scoinsSymbol:'WUSD',
-      feesName:'WICC'
+      fees: 0.01,
+      assetMintable: "true",
+      assetName: "",
+      assetOwnerId: "",
+      assetSupply: "",
+      assetSymbol: "",
+      callbackId: "",
+      feesName:"WICC",
     };
   },
   created() {
     const query = this.$router.currentRoute.query;
-    this.bcoinsToStake = query.wiccNum;
-    this.scoinsToMint = query.wusdNum;
-    this.bcoinsSymbol = query.bcoinSymbol;
-    this.scoinsSymbol = query.scoinSymbol;
+    this.assetName = query.assetName;
+    this.assetOwnerId = query.assetOwnerId;
+    this.assetSupply = query.assetSupply;
+    this.assetSymbol = query.assetSymbol;
     this.callbackId = query.callbackId;
-    console.log(query)
+    this.assetMintable = query.assetMintable;
+    console.log(query);
   },
   methods: {
     sureCreateCDP() {
-      this.$loading('正在创建交易');//this.$t("window.transfer.confirmLoading")
+      this.$loading("开始发布资产"); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
-        cdpTxId: this.cdpTxId,
-        bcoinsToStake: this.bcoinsToStake,
-        scoinsToMint: this.scoinsToMint,
-        address: this.address,
-        feeType:this.feesName,
-        bcoin_symbol:this.bcoinsSymbol,
-        scoin_symbol:this.scoinsSymbol,
-        
+        assetName: this.assetName,
+        assetOwnerId: this.assetOwnerId,
+        assetSymbol: this.assetSymbol,
+        assetMintable: this.assetMintable,
+        assetSupply: this.assetSupply,
+        address:this.address,
+        feesName:this.feesName,
       };
-      API.callRaw("cdpStake", { info: param }).then(
+      API.callRaw("assetsPub", { info: param }).then(
         res => {
-          console.log(res)
+          console.log(res);
           this.$loading.close();
-          this.$toast(
-            this.$t("window.transfer.createSuccess"),
-            {
-              type: "center",
-              duration: 5000,
-              wordWrap: true
-            }
-          );
+          this.$toast(this.$t("window.transfer.createSuccess"), {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, res);
             this.$toast("Success", {
@@ -88,7 +104,6 @@ export default {
             setTimeout(() => {
               window.close();
             }, 300);
-            
           }
         },
         error => {
@@ -160,9 +175,9 @@ export default {
   }
 }
 .feesView {
-  padding-top: 47px;
+  padding-top: 40px;
   position: relative;
-  .feesName{
+  .feesName {
     border: none;
     position: absolute;
     top: 10px;

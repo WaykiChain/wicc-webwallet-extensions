@@ -24,7 +24,7 @@
           v-model="desc"
           :label="$t('account.sendToken.descLabel')">
       </wallet-input>
-      <fees-slider type="call-contract" v-model="fees"></fees-slider>
+      <fees-slider type="call-cdp" v-model="fees"></fees-slider>
     </div>
 
     <div class="content-footer">

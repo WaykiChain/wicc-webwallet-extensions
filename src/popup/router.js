@@ -55,6 +55,7 @@ import CdpAdditional from './window/cdpAdditional'
 import DexDealView from './window/dexDeal'
 import DexCancelDealView from './window/dexCancelDeal'
 import assetsPub from './window/assetsPub'
+import assetUpadte from './window/assetsUpdate'
 
 const router = new VueRouter({
   routes: [
@@ -236,6 +237,11 @@ const router = new VueRouter({
         name: 'assetsPub',
         path: 'assets-pub',
         component: assetsPub
+      },
+      {
+        name: 'assetsUpadte',
+        path: 'assets-update',
+        component: assetUpadte
       },
     ]
     }

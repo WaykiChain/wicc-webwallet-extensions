@@ -98,6 +98,7 @@ export default {
         currentpage: this.currentpage,
         pagesize: 10,
         coinsymbol:this.name,
+        // txtype:'BCOIN_TRANSFER_TX'
       }
      API.getTransHistory({info:param}).then(
         value => {

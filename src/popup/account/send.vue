@@ -28,7 +28,7 @@
           <option value="WICC">WICC</option>
           <option value="WUSD">WUSD</option>
         </select>
-        <fees-slider v-model="fees" type="" :feeName="feesName"></fees-slider>
+        <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
       </div>
     </div>
 
@@ -195,7 +195,7 @@ export default {
       destAddr: null,
       value: null,
       desc: null,
-      fees: 0.0001,
+      fees: 0.01,
       feesName:'WICC',
       coinType:'',
     };

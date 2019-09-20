@@ -1,24 +1,43 @@
 <template>
   <div class="cdp">
     <div class="content">
-      <h5 class="titleHeader">{{$t('window.cdp.cdpcjjy')}}</h5>
-      <div class="cell">
-        <p class="cellName">{{$t('window.cdp.cjcdpdz')}}</p>
-        <p class="cellValue">{{cutMiddleStr(address,8)}}</p>
+      <h5 class="titleHeader">{{$t('window.assets.资产更新')}}</h5>
+      <div class="cell" style="display: block;"  v-if="updateType == '2'">
+        <p class="cellName">{{$t('代币全称')}}</p>
+        <p class="cellValue">{{oldAssetName}} → <span style="color:#3C78EA">{{updateContent}}</span> </p>
+      </div>
+      <div class="cell" style="display: block;" v-if="updateType == '3'">
+        <p class="cellName">{{$t('代币总量')}}</p>
+        <p class="cellValue">{{oldAssetSupply}} → <span style="color:#3C78EA">{{updateContent}}</span> </p>
+      </div>
+      <div class="cell" style="display: block;" v-if="updateType == '1'">
+        <p class="cellName">{{$t('代币持有人')}}</p>
+        <p class="cellValue">{{oldAssetOwnerId}} → <span style="color:#3C78EA">{{cutMiddleStr(updateContent,10)}}</span> </p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('window.cdp.dyl')}}</p>
-        <p class="cellValue">{{bcoinsToStake/100000000}} {{bcoinsSymbol}}</p>
+        <p class="cellName">{{$t('代币简称')}}</p>
+        <p class="cellValue">{{assetSymbol}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('window.cdp.dcl')}}</p>
-        <p class="cellValue">{{scoinsToMint/100000000}} {{scoinsSymbol}}</p>
+        <p class="cellName">{{$t('代币全称')}}<span v-if="updateType == '2'" style="color:#3C78EA">(新)</span></p>
+        <p class="cellValue">{{updateType == '2' ? updateContent : oldAssetName}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('总发行量')}}<span v-if="updateType == '3'" style="color:#3C78EA">(新)</span></p>
+        <p class="cellValue">{{updateType == '3' ? updateContent :oldAssetSupply}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('代币持有者')}}<span v-if="updateType == '1'" style="color:#3C78EA">(新)</span></p>
+        <p class="cellValue">{{updateType == '1' ? cutMiddleStr(updateContent,10) : cutMiddleStr(oldAssetOwnerId,10)}}</p>
+      </div>
+      <div class="cell">
+        <p class="cellName">{{$t('矿工费')}}</p>
+        <p class="cellValue">110 WICC</p>
       </div>
       <div class="bar"></div>
     </div>
-
     <div class="feesView">
-     <select class="feesName" name="WICC" id="" v-model="feesName">
+      <select class="feesName" name="WICC" id="" v-model="feesName">
         <option value="WICC">WICC</option>
         <option value="WUSD">WUSD</option>
       </select>
@@ -42,49 +61,45 @@ export default {
     return {
       urlQuery: "",
       fees: 0.01,
-      cdpTxId: "",
-      bcoinsToStake: 0,
-      scoinsToMint: 0,
-      bcoinsSymbol:'WICC',
-      scoinsSymbol:'WUSD',
-      feesName:'WICC'
+      updateType: "",//1资产拥有者 2资产名称 2 资产发行量
+      oldAssetName: "我是旧的名字",
+      oldAssetOwnerId: "我是旧的持有人啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦阿里",
+      oldAssetSupply: "我是旧的增发量",
+      updateContent:"",
+      assetSymbol: "",
+      callbackId: "",
+      feesName:"WICC",
     };
   },
   created() {
     const query = this.$router.currentRoute.query;
-    this.bcoinsToStake = query.wiccNum;
-    this.scoinsToMint = query.wusdNum;
-    this.bcoinsSymbol = query.bcoinSymbol;
-    this.scoinsSymbol = query.scoinSymbol;
+    this.updateContent = query.updateContent;
+  
+    this.assetSymbol = query.assetSymbol;
     this.callbackId = query.callbackId;
-    console.log(query)
+    this.updateType = query.updateType;
+    console.log(query);
   },
   methods: {
     sureCreateCDP() {
-      this.$loading('正在创建交易');//this.$t("window.transfer.confirmLoading")
+      this.$loading("开始更新资产"); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
-        cdpTxId: this.cdpTxId,
-        bcoinsToStake: this.bcoinsToStake,
-        scoinsToMint: this.scoinsToMint,
-        address: this.address,
-        feeType:this.feesName,
-        bcoin_symbol:this.bcoinsSymbol,
-        scoin_symbol:this.scoinsSymbol,
-        
+        updateContent:this.updateContent,
+        assetSymbol: this.assetSymbol,
+        updateType:this.updateType,
+        address:this.address,
+        feesName:this.feesName,
       };
-      API.callRaw("cdpStake", { info: param }).then(
+      API.callRaw("assetsUpdate", { info: param }).then(
         res => {
-          console.log(res)
+          console.log(res);
           this.$loading.close();
-          this.$toast(
-            this.$t("window.transfer.createSuccess"),
-            {
-              type: "center",
-              duration: 5000,
-              wordWrap: true
-            }
-          );
+          this.$toast(this.$t("window.transfer.createSuccess"), {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, res);
             this.$toast("Success", {
@@ -95,7 +110,6 @@ export default {
             setTimeout(() => {
               window.close();
             }, 300);
-            
           }
         },
         error => {
@@ -132,7 +146,7 @@ export default {
   }
 }
 .content {
-  height: 447px;
+  height: 443px;
   position: relative;
   .bar {
     position: absolute;
@@ -146,7 +160,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
-  padding: 20px 16px;
+  padding: 15px 16px;
   &:after {
     content: " ";
     width: calc(100% - 32px);
@@ -160,16 +174,18 @@ export default {
   .cellName {
     color: #b4bccc;
     font-size: 13px;
+    line-height: 27px;
   }
   .cellValue {
     color: #5b5f67;
     font-size: 13px;
+    line-height: 27px;
   }
 }
 .feesView {
-  padding-top: 47px;
+  padding-top: 40px;
   position: relative;
-  .feesName{
+  .feesName {
     border: none;
     position: absolute;
     top: 10px;

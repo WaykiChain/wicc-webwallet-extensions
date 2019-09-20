@@ -47,7 +47,7 @@ export default {
   components: { FeesSlider },
   data() {
     return {
-      fees: 0.001,
+      fees: 0.01,
       cdpTxId: "",
       scoinsToLiquidate: 0,
       clipboardSelector: ".coin-card-copy",

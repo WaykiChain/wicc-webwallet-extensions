@@ -827,6 +827,69 @@ export default {
 
 
 
+  assetsPub({info}){
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.assetSupply))) {
+        throw new Error('INVALID_VALUE')
+      }
+      var assestInfo = {
+
+        nValidHeight: height,
+        fees: info.fees,
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+        
+        assetName: info.assetName,
+        assetOwnerId: info.assetOwnerId,
+        assetSupply: info.assetSupply,
+        assetSymbol: info.assetSymbol,
+        assetMintable: info.assetMintable,
+        network: localNetWork,
+        feesName:info.feesName,
+        
+      };
+      let hex = wiccApi.assetsPub(assestInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+  assetsUpdate({info}){
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (info.updateType == '3'){
+        if (isNaN(parseFloat(info.updateContent))) {
+          throw new Error('INVALID_VALUE')
+        }
+      }
+      var assestInfo = {
+
+        nValidHeight: height,
+        fees: info.fees,
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+        
+        updateType:info.updateType,
+        updateContent: info.updateContent,
+        assetSymbol: info.assetSymbol,
+        network: localNetWork,
+        feesName:info.feesName,
+        
+      };
+      let hex = wiccApi.assetsUpdate(assestInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
 
 
 

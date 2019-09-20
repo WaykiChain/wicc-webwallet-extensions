@@ -244,6 +244,17 @@ window.WiccWallet = {
     })
   },
 
+   ///资产更新
+   showAssetUpadte(assetSymbol,updateType,updateContent,callback){
+    const callbackId = saveCallback(callback)
+    return send('AssetUpadte',{
+      assetSymbol,
+      updateType,
+      updateContent,
+      callbackId
+    })
+  },
+
 
 
 

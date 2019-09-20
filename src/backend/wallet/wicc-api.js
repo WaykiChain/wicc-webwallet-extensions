@@ -307,4 +307,57 @@ export default class {
     var hex = dexCancelOrderTx.SerializeTx(info.privateKey)
     return hex
   }
+  assetsPub(info){
+    var assetData = {
+        tokenSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
+       ownerAddress: info.assetOwnerId,  //asset owner
+       tokeName:info.assetName,  //asset token name
+       totalSupply:parseInt(info.assetSupply),// total Supply 10^8
+       minTable:info.assetMintable=="true"?true:false    //Whether to increase the number
+      }
+    var assetCreateInfo = {
+      nTxType: bitcore.WiccApi.ASSET_ISUUE,
+      nVersion: 1,
+      nValidHeight: info.nValidHeight, // create height
+      srcRegId: info.srcRegId, // sender's regId
+      assetData: assetData,
+      feesCoinSymbol:info.feesName,
+      publicKey:info.privateKey.toPublicKey().toString(),
+      fees: parseInt(info.fees), // fees pay for miner min 500 wicc
+    };
+    const rawtx = this.api.createSignTransaction(info.privateKey,bitcore.WiccApi.ASSET_ISUUE,assetCreateInfo)
+    return rawtx
+  }
+
+  assetsUpdate(info){
+    var updateType = 0
+    if (info.updateType == '1'){
+      updateType = WriterHelper.prototype.UpdateAssetType.OWNER_UID
+    }else if(info.updateType == '2'){
+      updateType = WriterHelper.prototype.UpdateAssetType.NAME
+    }else{
+      updateType = WriterHelper.prototype.UpdateAssetType.MINT_AMOUNT
+    }
+    var assetUpdateData = {
+      updateType:updateType, 
+      updateValue:info.updateType == '3' ? parseInt(info.updateContent) : info.updateContent, //owner address
+     }
+    var assetCreateInfo = {
+      nTxType: bitcore.WiccApi.ASSET_UPDATE,
+      nVersion: 1,
+      nValidHeight: info.nValidHeight, // create height
+      srcRegId: info.srcRegId, // sender's regId
+      assetUpdateData: assetUpdateData,
+      feesCoinSymbol:info.feesName,
+      assetSymbol: info.assetSymbol, 
+      publicKey:info.privateKey.toPublicKey().toString(),
+      fees: parseInt(info.fees), // fees pay for miner min 500 wicc
+    };
+    alert(JSON.stringify(assetCreateInfo))
+    const rawtx = this.api.createSignTransaction(info.privateKey,bitcore.WiccApi.ASSET_UPDATE,assetCreateInfo)
+    return rawtx
+  }
+  
 }
+
+

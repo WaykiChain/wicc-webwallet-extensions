@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="footer">
-      <fees-slider v-model="fees"></fees-slider>
+      <fees-slider v-model="fees" type="wiccTx"></fees-slider>
       <div class="button-wrapper">
         <button @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
         <button class="btn-primary" @click="onlyRaw ? confirmRaw() : confirm()">{{ $t('window.transfer.confirmButton') }}</button>
@@ -154,7 +154,7 @@ export default {
       destAddress: null,
       desc: null,
       value: 0,
-      fees: 0.0001
+      fees: 0.1
     };
   }
 };

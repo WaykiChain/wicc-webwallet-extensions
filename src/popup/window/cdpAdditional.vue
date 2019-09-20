@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       urlQuery: "",
-      fees: 0.001,
+      fees: 0.01,
       cdpTxId: "",
       bcoinsToStake: 0,
       scoinsToMint: 0,

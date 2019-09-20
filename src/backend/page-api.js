@@ -15,6 +15,7 @@ const TYPE_PATH_MAP = {
   dexView: '/window/dex-dealView',
   dexCancelView: '/window/dex-cancel-dealView',
   AssetPub:'/window/assets-pub',
+  AssetUpadte:'/window/assets-update',
 }
 
 const getQueryString = (args) => {
@@ -199,6 +200,12 @@ export default {
   async AssetPub({ assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId }) {
     return openWindow('AssetPub', {
       assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId
+    })
+  },
+
+  async AssetUpadte({ assetSymbol,updateType,updateContent,callbackId }) {
+    return openWindow('AssetUpadte', {
+      assetSymbol,updateType,updateContent,callbackId
     })
   },
 

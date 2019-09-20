@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       urlQuery: "",
-      fees: 0.0001,
+      fees: 0.001,
       cdpTxId: "",
       amount: 0,
       price: 0,
