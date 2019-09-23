@@ -154,45 +154,43 @@ window.WiccWallet = {
   },
 
   ///创建
-  showCdpCreateView(bcoinSymbol,bcoinNum,scoinSymbol,scoinNum,callback){
+  walletPluginCdpStake(assetMap,scoinSymbol,scoinNum,cdpTxID,callback){
     const callbackId = saveCallback(callback)
+    if (cdpTxID){
+      return send('additionalCdpView', {
+        wiccNum:assetMap[0].bCoinToStake,
+        wusdNum:scoinNum,
+        cdpTxID,
+        bcoinSymbol:assetMap[0].coinSymbol,
+        scoinSymbol,
+        callbackId
+      })
+    }
     return send('createCdpView', {
-      wiccNum:bcoinNum,
+      wiccNum:assetMap[0].bCoinToStake,
       wusdNum:scoinNum,
-      bcoinSymbol,
-      scoinSymbol,
-      callbackId
-    })
-  },
-  ///追加
-  showCdpAdditionalView(bcoinSymbol,bcoinNum,scoinSymbol,scoinNum,cdpTxId,callback){
-    const callbackId = saveCallback(callback)
-    return send('additionalCdpView', {
-      wiccNum:bcoinNum,
-      wusdNum:scoinNum,
-      cdpTxId,
-      bcoinSymbol,
+      bcoinSymbol:assetMap[0].coinSymbol,
       scoinSymbol,
       callbackId
     })
   },
   ///清算
-  showCdpLiquidView(assetType,liquidateNum,cdpTxId,callback){
+  walletPluginCdpLiquidate(assetSymbol,liquidateNum,cdpTxId,callback){
     const callbackId = saveCallback(callback)
     return send('liquidCdpView', {
-      assetType,
+      assetSymbol,
       wusdNum:liquidateNum,
       cdpTxId,
       callbackId
     })
   },
   ///赎回
-  showCdpRedeemView(repayNum,redeemSymbol,redeemNum,cdpTxId,callback){
+  walletPluginCdpRedeem(repayNum,assetMap,cdpTxId,callback){
     const callbackId = saveCallback(callback)
     return send('redeemCdpView', {
       wusdNum:repayNum,
-      wiccNum:redeemNum,
-      redeemSymbol,
+      wiccNum:assetMap[0].redeemCoinNum,
+      redeemSymbol:assetMap[0].CoinSymbol,
       cdpTxId,
       callbackId
     })
@@ -200,7 +198,7 @@ window.WiccWallet = {
   
 
   ///限价交易  dealType : Limit_BUY / Limit_SELL
-  showLimitDexView(dealType,coinType,assetType,amount,price,callback){
+  walletPluginDexLimit(dealType,coinType,assetType,amount,price,callback){
     const callbackId = saveCallback(callback)
     return send('dexView',{
       dealType,
@@ -212,7 +210,7 @@ window.WiccWallet = {
   },
 
   ///市价交易    dealType : Market_BUY / Market_SELL
-  showMarketDexView(dealType,coinType,assetType,amount,callback){
+  walletPluginDexMarket(dealType,coinType,assetType,amount,callback){
     const callbackId = saveCallback(callback)
     return send('dexView',{
       dealType,
@@ -223,10 +221,10 @@ window.WiccWallet = {
     })
   },
 
-  showCancelDexView(dealNum,callback){
+  walletPluginDexCancelOrder(dexTxNum,callback){
     const callbackId = saveCallback(callback)
     return send('dexCancelView',{
-      dealNum,
+      dealNum:dexTxNum,
       callbackId
     })
   },
