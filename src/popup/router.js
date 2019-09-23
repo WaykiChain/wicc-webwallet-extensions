@@ -56,6 +56,7 @@ import DexDealView from './window/dexDeal'
 import DexCancelDealView from './window/dexCancelDeal'
 import assetsPub from './window/assetsPub'
 import assetUpadte from './window/assetsUpdate'
+import messageSign from './window/messageSign'
 
 const router = new VueRouter({
   routes: [
@@ -242,6 +243,11 @@ const router = new VueRouter({
         name: 'assetsUpadte',
         path: 'assets-update',
         component: assetUpadte
+      },
+      {
+        name: 'messageSign',
+        path: 'message-sign',
+        component: messageSign
       },
     ]
     }

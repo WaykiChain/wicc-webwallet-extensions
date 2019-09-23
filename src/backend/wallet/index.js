@@ -661,7 +661,7 @@ export default {
         scoinsToLiquidate: parseInt(info.scoinsToLiquidate),
         privateKey: privateKey,
         feeType: info.feeType,
-        assetSymbol:info.assetSymbol,
+        assetSymbol: info.assetSymbol,
         network: localNetWork,
       }
       let hex = wiccApi.cdpliquidate(newInfo)
@@ -682,7 +682,7 @@ export default {
         bcoins_to_redeem: parseInt(info.bcoins_to_redeem),
         privateKey: privateKey,
         feeType: info.feeType,
-        bcoins_symbol:info.bcoins_symbol,
+        bcoins_symbol: info.bcoins_symbol,
         network: localNetWork,
       }
       let hex = wiccApi.cdpRedeem(newInfo)
@@ -735,7 +735,7 @@ export default {
   },
 
   dexMarketSell({ info }) {
-   
+
     const localNetWork = localStorage.getItem('network')
     const wiccApi = getWiccApi(localNetWork)
     return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
@@ -799,7 +799,7 @@ export default {
   /**
    * 多币种转账
    */
-  variousCoinsTx({info }) {
+  variousCoinsTx({ info }) {
     const localNetWork = localStorage.getItem('network')
     const wiccApi = getWiccApi(localNetWork)
     return getSignInfo(localNetWork, info.address).then(({
@@ -810,7 +810,7 @@ export default {
       if (isNaN(parseFloat(info.value))) {
         throw new Error('INVALID_VALUE')
       }
-      let hex = wiccApi.createVariousCoinsTx(privateKey, height, srcRegId, info.destAddr, info.value, info.fees,info.coinType,info.feeSymbol,localNetWork,info.memo)
+      let hex = wiccApi.createVariousCoinsTx(privateKey, height, srcRegId, info.destAddr, info.value, info.fees, info.coinType, info.feeSymbol, localNetWork, info.memo)
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },
@@ -818,16 +818,16 @@ export default {
   /**
    * 获取交易详情
    */
-  getDetailInfo({info }) {
+  getDetailInfo({ info }) {
     const localNetWork = localStorage.getItem('network')
-    
-      return new BaasAPI(localNetWork).getDetailInfo(info)
+
+    return new BaasAPI(localNetWork).getDetailInfo(info)
 
   },
 
 
 
-  assetsPub({info}){
+  assetsPub({ info }) {
     const localNetWork = localStorage.getItem('network')
     const wiccApi = getWiccApi(localNetWork)
     return getSignInfo(localNetWork, info.address).then(({
@@ -844,21 +844,21 @@ export default {
         fees: info.fees,
         srcRegId: srcRegId,
         privateKey: privateKey,
-        
+
         assetName: info.assetName,
         assetOwnerId: info.assetOwnerId,
         assetSupply: info.assetSupply,
         assetSymbol: info.assetSymbol,
         assetMintable: info.assetMintable,
         network: localNetWork,
-        feesName:info.feesName,
-        
+        feesName: info.feesName,
+
       };
       let hex = wiccApi.assetsPub(assestInfo)
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },
-  assetsUpdate({info}){
+  assetsUpdate({ info }) {
     const localNetWork = localStorage.getItem('network')
     const wiccApi = getWiccApi(localNetWork)
     return getSignInfo(localNetWork, info.address).then(({
@@ -866,7 +866,7 @@ export default {
       height,
       privateKey
     }) => {
-      if (info.updateType == '3'){
+      if (info.updateType == '3') {
         if (isNaN(parseFloat(info.updateContent))) {
           throw new Error('INVALID_VALUE')
         }
@@ -877,17 +877,30 @@ export default {
         fees: info.fees,
         srcRegId: srcRegId,
         privateKey: privateKey,
-        
-        updateType:info.updateType,
+
+        updateType: info.updateType,
         updateContent: info.updateContent,
         assetSymbol: info.assetSymbol,
         network: localNetWork,
-        feesName:info.feesName,
-        
+        feesName: info.feesName,
+
       };
       let hex = wiccApi.assetsUpdate(assestInfo)
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
+  },
+  messageSign({ info }) {
+
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      return wiccApi.messageSign(info.msg, privateKey)
+    })
+
   },
 
 

@@ -232,7 +232,7 @@ window.WiccWallet = {
   },
 
   ///发布资产
-  showAssetPub(assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callback){
+  walletPluginAssetIssue(assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callback){
     const callbackId = saveCallback(callback)
     return send('AssetPub',{
       assetSymbol,
@@ -245,13 +245,21 @@ window.WiccWallet = {
   },
 
    ///资产更新
-   showAssetUpadte(assetSymbol,updateType,updateContent,callback){
+   walletPluginAssetUpdate(assetSymbol,updateType,updateContent,callback){
     const callbackId = saveCallback(callback)
     return send('AssetUpadte',{
       assetSymbol,
       updateType,
       updateContent,
       callbackId
+    })
+  },
+
+  ///请求签名
+  signMessage(message,callback){
+    const callbackId = saveCallback(callback)
+    return send('signMessage',{
+      message,callbackId
     })
   },
 

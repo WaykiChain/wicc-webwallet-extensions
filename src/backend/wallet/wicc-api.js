@@ -1,6 +1,8 @@
 import * as bitcore from 'bitcore-lib'
 import WriterHelper from 'bitcore-lib/lib/util/writerhelper'
 const DEFAULT_PASSWORD = '12345678'
+var Hash = require('bitcore-lib/lib/crypto/hash');
+var ECDSA = require('bitcore-lib/lib/crypto/ecdsa');
 
 export default class {
   constructor(network) {
@@ -67,7 +69,7 @@ export default class {
       regAcctId,
       script,
       scriptDesc,
-      publicKey:privateKey.toPublicKey().toString(),
+      publicKey: privateKey.toPublicKey().toString(),
     }
     alert(regAcctId)
     return this.api.createSignTransaction(privateKey, bitcore.WiccApi.REG_APP_TX, txInfo)
@@ -83,7 +85,7 @@ export default class {
       destRegId,
       value: parseInt(value * Math.pow(10, 8)),
       vContract: contract,
-      publicKey:privateKey.toPublicKey().toString(),
+      publicKey: privateKey.toPublicKey().toString(),
     }
 
     return this.api.createSignTransaction(privateKey, bitcore.WiccApi.CONTRACT_TX, txInfo)
@@ -99,7 +101,7 @@ export default class {
       destAddr,
       value: parseInt(value * Math.pow(10, 8)),
       network: this.network,
-      publicKey:privateKey.toPublicKey().toString(),
+      publicKey: privateKey.toPublicKey().toString(),
     }
 
     return this.api.createSignTransaction(privateKey, bitcore.WiccApi.COMMON_TX, txInfo)
@@ -108,24 +110,24 @@ export default class {
   /**
    * 多币种转账签名
    */
-  createVariousCoinsTx(privateKey, height, srcRegId, destAddr, value, fees , coinType,feeSymbol,network,memo) {
+  createVariousCoinsTx(privateKey, height, srcRegId, destAddr, value, fees, coinType, feeSymbol, network, memo) {
     var destArr = [{
-      "coinType":coinType,
-      "destAddr":destAddr,
-      "value":parseInt(value * Math.pow(10, 8)),
+      "coinType": coinType,
+      "destAddr": destAddr,
+      "value": parseInt(value * Math.pow(10, 8)),
     }
-   ]
+    ]
     const txInfo = {
       nTxType: bitcore.WiccApi.UCOIN_TRANSFER_TX,
       nVersion: 1,
       nValidHeight: height,
       fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
       srcRegId,
-      destArr:destArr,
-      memo:memo,
+      destArr: destArr,
+      memo: memo,
       network: network,
-      publicKey:privateKey.toPublicKey().toString(),
-      feesCoinType:feeSymbol,
+      publicKey: privateKey.toPublicKey().toString(),
+      feesCoinType: feeSymbol,
     }
     // alert(`${height},${fees},${srcRegId},${destAddr},${value},${network},${txInfo.value},`)
     var cointransferTx = new bitcore.Transaction.UCoinTransferTx(txInfo);
@@ -140,7 +142,7 @@ export default class {
       fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
       srcRegId,
       delegateData,
-      publicKey:privateKey.toPublicKey().toString(),
+      publicKey: privateKey.toPublicKey().toString(),
     }
 
     return this.api.createSignTransaction(privateKey, bitcore.WiccApi.DELEGATE_TX, txInfo)
@@ -149,25 +151,25 @@ export default class {
 
   cdpStake(info) {
 
-    var map=new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC',info.bcoinsToStake]])
+    var map = new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC', info.bcoinsToStake]])
     var cdpStakeTxinfo = {
       nTxType: bitcore.WiccApi.CDP_STAKE_TX,
       nVersion: 1,
-      nValidHeight:info.nValidHeight,
+      nValidHeight: info.nValidHeight,
       txUid: info.txUid,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       fees: info.fees,
       cdpTxId: info.cdpTxId == '' ? null : info.cdpTxId,
       scoinsToMint: info.scoinsToMint,
-      assetMap:map,
-      fee_symbol:info.feeType ? info.feeType : 'WICC',
+      assetMap: map,
+      fee_symbol: info.feeType ? info.feeType : 'WICC',
       network: info.network,
-      scoin_symbol:info.scoin_symbol ? info.scoin_symbol : 'WUSD',
+      scoin_symbol: info.scoin_symbol ? info.scoin_symbol : 'WUSD',
     };
     // alert(`${cdpStakeTxinfo.nValidHeight},${cdpStakeTxinfo.txUid},${cdpStakeTxinfo.fees},${cdpStakeTxinfo.cdpTxId},${cdpStakeTxinfo.bcoinsToStake},${cdpStakeTxinfo.scoinsToMint},${cdpStakeTxinfo.fee_symbol}`)
     var cdpStakeTx = new bitcore.Transaction.CdpStakeTx(cdpStakeTxinfo);
     var hex = cdpStakeTx.SerializeTx(info.privateKey)
-    return  hex
+    return hex
 
   }
   cdpliquidate(info) {
@@ -176,10 +178,10 @@ export default class {
       nVersion: 1,
       nValidHeight: info.nValidHeight,
       txUid: info.txUid,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       fees: info.fees,
-      fee_symbol:info.feeType ? info.feeType : 'WICC',
-      assetSymbol:info.assetSymbol ? info.assetSymbol : 'WICC',
+      fee_symbol: info.feeType ? info.feeType : 'WICC',
+      assetSymbol: info.assetSymbol ? info.assetSymbol : 'WICC',
       cdpTxId: info.cdpTxId,
       scoinsToLiquidate: info.scoinsToLiquidate,
       network: info.network
@@ -189,17 +191,17 @@ export default class {
     var hex = cdpliquidateTx.SerializeTx(info.privateKey)
     return hex
   }
-  cdpRedeem(info){
-    var map=new Map([[info.bcoins_symbol?info.bcoins_symbol:"WICC",info.bcoins_to_redeem]])
+  cdpRedeem(info) {
+    var map = new Map([[info.bcoins_symbol ? info.bcoins_symbol : "WICC", info.bcoins_to_redeem]])
     var cdpRedeemTxinfo = {
       nTxType: bitcore.WiccApi.CDP_REDEEMP_TX,
       nVersion: 1,
       nValidHeight: info.nValidHeight,
-      txUid:info.txUid ? info.txUid : "",
-      publicKey:info.privateKey.toPublicKey().toString(),
+      txUid: info.txUid ? info.txUid : "",
+      publicKey: info.privateKey.toPublicKey().toString(),
       fees: info.fees,
       cdpTxId: info.cdpTxId,
-      fee_symbol:info.feeType ? info.feeType : 'WICC',
+      fee_symbol: info.feeType ? info.feeType : 'WICC',
       scoins_to_repay: info.scoins_to_repay,
       assetMap: map,
       network: info.network
@@ -208,24 +210,24 @@ export default class {
     var cdpRedeemTx = new bitcore.Transaction.CdpRedeemTx(cdpRedeemTxinfo);
     var hex = cdpRedeemTx.SerializeTx(info.privateKey)
     return hex
-    
+
   }
 
 
-  dexPriceSell(info){
+  dexPriceSell(info) {
 
     var newInfo = {
       nTxType: bitcore.WiccApi.DEX_SELL_LIMIT_ORDER_TX,
       nVersion: 1,
-      nValidHeight:info.nValidHeight,
+      nValidHeight: info.nValidHeight,
       fees: info.fees,
       srcRegId: info.srcRegId,
-      publicKey:info.privateKey.toPublicKey().toString(),
-      feeSymbol:info.feeType ? info.feeType : 'WICC',
+      publicKey: info.privateKey.toPublicKey().toString(),
+      feeSymbol: info.feeType ? info.feeType : 'WICC',
       coinSymbol: info.coinType ? info.coinType : 'WICC',
-      assetSymbol:info.assetType ? info.assetType : 'WUSD',
-      assetAmount:info.assetAmount,
-      askPrice:info.askPrice,
+      assetSymbol: info.assetType ? info.assetType : 'WUSD',
+      assetAmount: info.assetAmount,
+      askPrice: info.askPrice,
       network: info.network
     };
     // alert(`${newInfo.nValidHeight},${newInfo.fees},${newInfo.srcRegId},${newInfo.feeSymbol},${newInfo.assetAmount},${newInfo.askPrice},${newInfo.publicKey},${newInfo.network},${newInfo.coinType},${newInfo.assetType}`)
@@ -234,19 +236,19 @@ export default class {
     return hex
   }
 
-  dexPriceBuy(info){
+  dexPriceBuy(info) {
     var dexBuyLimitTxinfo = {
       nTxType: bitcore.WiccApi.DEX_BUY_LIMIT_ORDER_TX,
       nVersion: 1,
       nValidHeight: info.nValidHeight,
       fees: info.fees,
       srcRegId: info.srcRegId,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       feeSymbol: info.feeType ? info.feeType : 'WICC',
       coinSymbol: info.coinType ? info.coinType : 'WICC',
-      assetSymbol:info.assetType ? info.assetType : 'WUSD',
-      assetAmount:info.assetAmount,
-      bidPrice:info.bidPrice,
+      assetSymbol: info.assetType ? info.assetType : 'WUSD',
+      assetAmount: info.assetAmount,
+      bidPrice: info.bidPrice,
       network: info.network
     };
     var dexBuyLimitOrderTx = new bitcore.Transaction.DexBuyLimitOrderTx(dexBuyLimitTxinfo);
@@ -254,43 +256,43 @@ export default class {
     return hex
   }
 
-  dexMarketSell(info){
+  dexMarketSell(info) {
     var dexSellMarketTxinfo = {
       nTxType: bitcore.WiccApi.DEX_SELL_MARKET_ORDER_TX,
       nVersion: 1,
       nValidHeight: info.nValidHeight,
       fees: info.fees,
       srcRegId: info.srcRegId,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       feeSymbol: info.feeType ? info.feeType : 'WICC',
       coinSymbol: info.coinType ? info.coinType : 'WUSD',
-      assetSymbol:info.assetType ? info.assetType : 'WICC',
-      assetAmount:info.assetAmount,
+      assetSymbol: info.assetType ? info.assetType : 'WICC',
+      assetAmount: info.assetAmount,
       network: info.network
     };
     var dexSellMarketOrderTx = new bitcore.Transaction.DexSellMarketOrderTx(dexSellMarketTxinfo);
     var hex = dexSellMarketOrderTx.SerializeTx(info.privateKey)
     return hex
   }
-  dexMarketBuy(info){
+  dexMarketBuy(info) {
     var dexBuyMarketTxinfo = {
       nTxType: bitcore.WiccApi.DEX_BUY_MARKET_ORDER_TX,
       nVersion: 1,
       nValidHeight: info.nValidHeight,
       fees: info.fees,
       srcRegId: info.srcRegId,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       feeSymbol: info.feeType ? info.feeType : 'WICC',
       coinSymbol: info.coinType ? info.coinType : 'WUSD',
-      assetSymbol:info.assetType ? info.assetType : 'WICC',
-      coinAmount:info.coinAmount,
+      assetSymbol: info.assetType ? info.assetType : 'WICC',
+      coinAmount: info.coinAmount,
       network: info.network
     };
     var dexBuyMarketOrderTx = new bitcore.Transaction.DexBuyMarketOrderTx(dexBuyMarketTxinfo);
     var hex = dexBuyMarketOrderTx.SerializeTx(info.privateKey)
     return hex
   }
-  dexCancel(info){
+  dexCancel(info) {
     var dexCancelTxinfo = {
       nTxType: bitcore.WiccApi.DEX_CANCEL_ORDER_TX,
       nVersion: 1,
@@ -298,66 +300,81 @@ export default class {
       fees: info.fees,
       feeSymbol: info.feeType ? info.feeType : 'WICC',
       srcRegId: info.srcRegId,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      publicKey: info.privateKey.toPublicKey().toString(),
       orderId: info.orderId,
       network: info.network
     };
-  
+
     var dexCancelOrderTx = new bitcore.Transaction.DexCancelOrderTx(dexCancelTxinfo);
     var hex = dexCancelOrderTx.SerializeTx(info.privateKey)
     return hex
   }
-  assetsPub(info){
+  assetsPub(info) {
     var assetData = {
-        tokenSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
-       ownerAddress: info.assetOwnerId,  //asset owner
-       tokeName:info.assetName,  //asset token name
-       totalSupply:parseInt(info.assetSupply),// total Supply 10^8
-       minTable:info.assetMintable=="true"?true:false    //Whether to increase the number
-      }
+      tokenSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
+      ownerAddress: info.assetOwnerId,  //asset owner
+      tokeName: info.assetName,  //asset token name
+      totalSupply: parseInt(info.assetSupply),// total Supply 10^8
+      minTable: info.assetMintable == "true" ? true : false    //Whether to increase the number
+    }
     var assetCreateInfo = {
       nTxType: bitcore.WiccApi.ASSET_ISUUE,
       nVersion: 1,
       nValidHeight: info.nValidHeight, // create height
       srcRegId: info.srcRegId, // sender's regId
       assetData: assetData,
-      feesCoinSymbol:info.feesName,
-      publicKey:info.privateKey.toPublicKey().toString(),
+      feesCoinSymbol: info.feesName,
+      publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
-    const rawtx = this.api.createSignTransaction(info.privateKey,bitcore.WiccApi.ASSET_ISUUE,assetCreateInfo)
+    const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_ISUUE, assetCreateInfo)
     return rawtx
   }
 
-  assetsUpdate(info){
+  assetsUpdate(info) {
     var updateType = 0
-    if (info.updateType == '1'){
+    if (info.updateType == '1') {
       updateType = WriterHelper.prototype.UpdateAssetType.OWNER_UID
-    }else if(info.updateType == '2'){
+    } else if (info.updateType == '2') {
       updateType = WriterHelper.prototype.UpdateAssetType.NAME
-    }else{
+    } else {
       updateType = WriterHelper.prototype.UpdateAssetType.MINT_AMOUNT
     }
     var assetUpdateData = {
-      updateType:updateType, 
-      updateValue:info.updateType == '3' ? parseInt(info.updateContent) : info.updateContent, //owner address
-     }
+      updateType: updateType,
+      updateValue: info.updateType == '3' ? parseInt(info.updateContent) : info.updateContent, //owner address
+    }
     var assetCreateInfo = {
       nTxType: bitcore.WiccApi.ASSET_UPDATE,
       nVersion: 1,
       nValidHeight: info.nValidHeight, // create height
       srcRegId: info.srcRegId, // sender's regId
       assetUpdateData: assetUpdateData,
-      feesCoinSymbol:info.feesName,
-      assetSymbol: info.assetSymbol, 
-      publicKey:info.privateKey.toPublicKey().toString(),
+      feesCoinSymbol: info.feesName,
+      assetSymbol: info.assetSymbol,
+      publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
-    alert(JSON.stringify(assetCreateInfo))
-    const rawtx = this.api.createSignTransaction(info.privateKey,bitcore.WiccApi.ASSET_UPDATE,assetCreateInfo)
+    // alert(JSON.stringify(assetCreateInfo))
+    const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_UPDATE, assetCreateInfo)
     return rawtx
   }
-  
+  messageSign(msg,privateKey) {
+
+    var msgBuff = Buffer.from(msg)
+    var msgBuffHash = Hash.sha256sha256(msgBuff);
+    var signMsg = ECDSA.sign(msgBuffHash, privateKey, 'endian')
+
+    //验证消息
+    var pubKey = privateKey.toPublicKey();
+    var vertifySuccess = ECDSA.verify(msgBuffHash, signMsg, pubKey, 'endian')
+    const res = {
+      signMsg: signMsg,
+      vertifySuccess: vertifySuccess,
+    }
+    return JSON.stringify(res)
+  }
+
 }
 
 
