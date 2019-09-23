@@ -211,7 +211,8 @@ export default {
       edit:'编辑',
       done:'完成',
       name:'网络名称',
-      rpc:'网络 RPC URL'
+      rpc:'网络 RPC URL',
+      addNet:'添加网络',
     },
     about: {
       title: '关于我们',

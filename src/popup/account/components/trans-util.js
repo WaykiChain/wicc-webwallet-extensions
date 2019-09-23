@@ -22,10 +22,33 @@ const TYPE_NEWTX_MAP = {
   'BCOIN_TRANSFER_TX': 'WICC交易',
   'ACCOUNT_REGISTER_TX':	'账户激活',
   'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
-  'UCOIN_BLOCK_REWARD_TX':	'旷工奖励(新版)',
-  'BLOCK_REWARD_TX':	'旷工奖励',
+  'UCOIN_BLOCK_REWARD_TX':	'矿工奖励(新版)',
+  'BLOCK_REWARD_TX':	'矿工奖励',
 }
 
+const TYPE_NEWTX_MAP_EN = {
+  'DEX_TRADE_SETTLE_TX': 'Settle Txn',
+  'DEX_CANCEL_ORDER_TX': 'Cancel Order Txn',
+  'DEX_MARKET_SELL_ORDER_TX': 'Market Sell Order',
+  'DEX_MARKET_BUY_ORDER_TX':'Market Buy Order',
+  'DEX_LIMIT_SELL_ORDER_TX': 'Limit Sell Order',
+  'DEX_LIMIT_BUY_ORDER_TX': 'Limit Buy Order',
+  'PRICE_MEDIAN_TX': 'Median Txn',
+  'PRICE_FEED_TX': 'Feed Txn',
+  'FCOIN_STAKE_TX': 'Stakecoin Txn',
+  'UCOIN_TRANSFER_TX': 'Transfer Txn',
+  'CDP_LIQUIDATE_TX': 'CDP Liquidating',
+  'CDP_REDEEM_TX': 'CDP Redemption',
+  'CDP_STAKE_TX': 'CDP Generated',
+  'DELEGATE_VOTE_TX': 'Vote Txn',
+  'LCONTRACT_INVOKE_TX': 'Invoke Contract',
+  'LCONTRACT_DEPLOY_TX': 'Publish Contract',
+  'BCOIN_TRANSFER_TX': 'WICC Transfer',
+  'ACCOUNT_REGISTER_TX': 'Register',
+  'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
+  'UCOIN_BLOCK_REWARD_TX': 'Reward Txn',
+  'BLOCK_REWARD_TX': 'Reward',
+}
 
 const TYPE_MAP = {
   1: '挖矿',
@@ -63,7 +86,7 @@ export default {
     if (lang && lang.indexOf('zh') !== -1) {
       return TYPE_NEWTX_MAP[type] || type
     } else {
-      return TYPE_NEWTX_MAP[type] || type
+      return TYPE_NEWTX_MAP_EN[type] || type
     }
   },
   formatType (type) {

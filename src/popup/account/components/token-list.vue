@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="token-list-container">
-      <p class="myzichan">我的资产</p>
+      <p class="myzichan">{{$t('window.cdp.wdzc')}}</p>
       <ul class="token-list">
         <li
           class="token-item"

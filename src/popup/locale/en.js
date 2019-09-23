@@ -209,7 +209,8 @@ export default {
       edit:'Edit',
       done:'Done',
       name:'Net Name',
-      rpc:'RPC URL'
+      rpc:'RPC URL',
+      addNet:'Add Net',
     },
     about: {
       title: 'Info',

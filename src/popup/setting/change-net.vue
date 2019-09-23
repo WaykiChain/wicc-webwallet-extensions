@@ -18,7 +18,7 @@
           <span>{{ item.name }}</span>
           <img v-if="showclose" src="../static/colose.png" @click="delNet(index)" />
         </div>
-        <div class="addNet" @click="toAddNet">添加网络</div>
+        <div class="addNet" @click="toAddNet">{{$t('setting.index.addNet')}}</div>
       </template>
     </nav-layout>
   </div>

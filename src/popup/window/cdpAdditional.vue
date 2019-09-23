@@ -67,6 +67,7 @@ export default {
     this.scoinSymbol = query.scoinSymbol;
     this.cdpTxId = query.cdpTxId;
     this.callbackId = query.callbackId;
+    console.log(query)
   },
   methods: {
     sureCreateCDP() {

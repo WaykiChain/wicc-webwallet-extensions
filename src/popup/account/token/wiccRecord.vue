@@ -114,7 +114,7 @@ export default {
               this.busy = false
               this.transactions.push.apply(this.transactions,value.transactions)
             }else{
-              this.$toast('数据加载完毕')
+              // this.$toast('数据加载完毕')
             }
             
           }

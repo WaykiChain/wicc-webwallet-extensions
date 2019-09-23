@@ -160,7 +160,7 @@ window.WiccWallet = {
       return send('additionalCdpView', {
         wiccNum:assetMap[0].bCoinToStake,
         wusdNum:scoinNum,
-        cdpTxID,
+        cdpTxId:cdpTxID,
         bcoinSymbol:assetMap[0].coinSymbol,
         scoinSymbol:sCoinSymbol,
         callbackId
@@ -170,7 +170,7 @@ window.WiccWallet = {
       wiccNum:assetMap[0].bCoinToStake,
       wusdNum:scoinNum,
       bcoinSymbol:assetMap[0].coinSymbol,
-      scoinSymbol,
+      scoinSymbol:sCoinSymbol,
       callbackId
     })
   },

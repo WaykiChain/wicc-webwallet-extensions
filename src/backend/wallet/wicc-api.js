@@ -129,7 +129,6 @@ export default class {
       publicKey: privateKey.toPublicKey().toString(),
       feesCoinType: feeSymbol,
     }
-    // alert(`${height},${fees},${srcRegId},${destAddr},${value},${network},${txInfo.value},`)
     var cointransferTx = new bitcore.Transaction.UCoinTransferTx(txInfo);
     return cointransferTx.SerializeTx(privateKey)
   }
@@ -166,9 +165,10 @@ export default class {
       network: info.network,
       scoin_symbol: info.scoin_symbol ? info.scoin_symbol : 'WUSD',
     };
-    // alert(`${cdpStakeTxinfo.nValidHeight},${cdpStakeTxinfo.txUid},${cdpStakeTxinfo.fees},${cdpStakeTxinfo.cdpTxId},${cdpStakeTxinfo.bcoinsToStake},${cdpStakeTxinfo.scoinsToMint},${cdpStakeTxinfo.fee_symbol}`)
+    alert(JSON.stringify(cdpStakeTxinfo))
     var cdpStakeTx = new bitcore.Transaction.CdpStakeTx(cdpStakeTxinfo);
     var hex = cdpStakeTx.SerializeTx(info.privateKey)
+    alert(hex)
     return hex
 
   }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as uuidv4 from 'uuid/v4'
 
-const BAAS_TESTNET =  'https://baas-test.wiccdev.org/v2/api'  //    'http://10.0.0.31:21052' //         'https://test.wiccbaas.com/v1/api'
+const BAAS_TESTNET = 'http://10.0.0.31:21052' //        'https://baas-test.wiccdev.org/v2/api'  //     'https://test.wiccbaas.com/v1/api'
 const BAAS_MAINNET = 'https://baas.wiccdev.org/v2/api'
 
 const handleResponse = ({ data }) => {

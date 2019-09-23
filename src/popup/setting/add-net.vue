@@ -91,7 +91,7 @@ export default {
           this.add('testnet')
         }
       }).catch(err=>{
-        this.$toast('链接无效')
+        this.$toast('Invalid url')
       })
     },
     add(network){
@@ -106,7 +106,7 @@ export default {
       }
       this.netList.push(netItem)
       localStorage.setItem('netList',JSON.stringify(this.netList))
-      this.$toast('添加成功过')
+      this.$toast(this.$t('account.addToken.addSuccess'))
       this.$router.go(-1)
     }
   },
