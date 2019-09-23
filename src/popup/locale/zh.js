@@ -239,7 +239,7 @@ export default {
       title: 'WICC 合约调用',
       addressLabel: '调用地址:',
       contractRegIdLabel: '合约regid:',
-      valueLabel: 'WICC数量:',
+      valueLabel: '数量:',
       contractLabel: '合约字段:',
       closeButton: '拒绝',
       confirmButton: '确定',

@@ -16,7 +16,8 @@ const TYPE_PATH_MAP = {
   dexCancelView: '/window/dex-cancel-dealView',
   AssetPub:'/window/assets-pub',
   AssetUpadte:'/window/assets-update',
-  signMessage:'/window/message-sign'
+  signMessage:'/window/message-sign',
+  UContractInvoke:'/window/contract-new'
 }
 
 const getQueryString = (args) => {
@@ -215,9 +216,13 @@ export default {
       message,callbackId
     })
   },
+  
 
-
-
+  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId }) {
+    return openWindow('UContractInvoke', {
+      amount,coinSymbol,regId,contract,memo,callbackId
+    })
+  },
 
 
 

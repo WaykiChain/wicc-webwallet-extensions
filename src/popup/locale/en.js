@@ -237,7 +237,7 @@ export default {
       title: 'WICC Contract Call',
       addressLabel: 'Address:',
       contractRegIdLabel: 'Contract RegID:',
-      valueLabel: 'WICC amount:',
+      valueLabel: 'Amount:',
       contractLabel: 'Contract:',
       closeButton: 'Close',
       confirmButton: 'Confirm',

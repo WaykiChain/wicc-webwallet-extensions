@@ -375,6 +375,27 @@ export default class {
     return JSON.stringify(res)
   }
 
+  uContractInvoke(privateKey, height, srcRegId, regId, amount, coinSymbol,fees,feesName, contract, localNetWork, memo){
+    var invokeAppInfo = {
+      nTxType: bitcore.WiccApi.UCOIN_CONTRACT_INVOKE_TX,
+      nVersion: 1,
+      nValidHeight: height,    // create height
+      publicKey: privateKey.toPublicKey().toString(),
+      srcRegId: srcRegId,    // sender's regId
+      destRegId: regId,  // app regId
+      feesCoinType:feesName,
+      coinType:coinSymbol,
+      fees: parseInt(fees),         // fees pay for miner
+      value: parseInt(amount),              // amount of WICC to be sent to the app account
+      vContract: contract      // contract method, hex format string
+    };
+    // alert(JSON.stringify(invokeAppInfo))
+    var rawtx = this.api.createSignTransaction(privateKey, bitcore.WiccApi.UCOIN_CONTRACT_INVOKE_TX, invokeAppInfo)
+    // alert(rawtx)
+    return rawtx
+    
+  }
+
 }
 
 

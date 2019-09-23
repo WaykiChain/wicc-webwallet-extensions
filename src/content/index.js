@@ -263,6 +263,14 @@ window.WiccWallet = {
     })
   },
 
+    ///多币种合约调用
+    walletPluginUContractInvoke(amount,coinSymbol,regId,contract,memo,callback){
+      const callbackId = saveCallback(callback)
+      return send('walletPluginUContractInvoke',{
+        amount,coinSymbol,regId,contract,memo,callbackId
+      })
+    },
+
 
 
 

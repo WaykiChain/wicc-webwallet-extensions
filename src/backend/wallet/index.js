@@ -904,6 +904,24 @@ export default {
   },
 
 
+  /**
+   * 多币种合约调用
+   */
+  variousCoinsContractTx({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.amount))) {
+        throw new Error('INVALID_VALUE')
+      }
+      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
 
 
 
