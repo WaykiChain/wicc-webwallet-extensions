@@ -61,6 +61,7 @@ export default {
     this.coinSymbol = query.coinSymbol;
     this.contract = query.contract;
     this.memo = query.memo;
+    this.callbackId = query.callbackId;
     console.log(query)
   },
   methods: {
