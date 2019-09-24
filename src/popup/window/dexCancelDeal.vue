@@ -26,7 +26,7 @@
           </div>
           <div v-if="dexType.indexOf('MARKET')==-1" class="subcell">
             <p class="cellName">获得数量({{dexType.indexOf('BUY') > -1 ? assetType : coinType}})</p>
-            <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (wiccNum * price).toFixed(4)}}</p>
+            <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (wiccNum * price).toFixed(8)}}</p>
           </div>
         </div>
       </div>

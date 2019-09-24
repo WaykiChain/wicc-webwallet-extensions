@@ -8,11 +8,11 @@
       </div>
       <div class="cell">
         <p class="cellName">{{confirmType()[2]}}({{danweiStr2}}):</p>
-        <p class="cellValue">{{price == $t('window.cdp.sjcjwz') ? price : price / Math.pow(10,8)}}</p>
+        <p class="cellValue">{{price == $t('window.cdp.sjcjwz') ? price : (price / Math.pow(10,8)).toFixed(8)}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{confirmType()[3]}}({{danweiStr3}}):</p>
-        <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (amount * price / Math.pow(10,16)).toFixed(2)}}</p>
+        <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (amount * price / Math.pow(10,16)).toFixed(8)}}</p>
       </div>
       <p v-if="dexType.indexOf('Market') > -1" class="tips">{{ dexType == "Market_SELL" ? $t('window.cdp.tipsmc') : $t('window.cdp.tipsmr')}}</p>
       <div class="bar"></div>
