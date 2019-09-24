@@ -269,6 +269,13 @@ window.WiccWallet = {
       })
     },
 
+    ///多币种转账
+    UCoinTransfer(assetMap,memo,callback){
+      const callbackId = saveCallback(callback)
+      return send('UCoinTransfer',{
+        assetMap,memo,callbackId
+      })
+    },
 
 
 

@@ -58,6 +58,7 @@ import assetsPub from './window/assetsPub'
 import assetUpadte from './window/assetsUpdate'
 import messageSign from './window/messageSign'   
 import contract_new from './window/contract_new'
+import window_send from './window/send'
 const router = new VueRouter({
   routes: [
     {
@@ -253,6 +254,11 @@ const router = new VueRouter({
         name: 'contract_new',
         path: 'contract-new',
         component: contract_new
+      },
+      {
+        name: 'windowSend',
+        path: 'windowSend',
+        component: window_send
       },
     ]
     }

@@ -131,7 +131,7 @@ export default {
       toLabel: '收款方',
       feesLabel: '矿工费用',
       hashLabel: '交易哈希',
-      cdpid: 'CDP ID',
+      cdpid: '该CDP创建交易哈希',
 
       confirmedheight:"确定高度",
       bcointoredeem:'赎回数量',

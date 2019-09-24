@@ -17,7 +17,8 @@ const TYPE_PATH_MAP = {
   AssetPub:'/window/assets-pub',
   AssetUpadte:'/window/assets-update',
   signMessage:'/window/message-sign',
-  UContractInvoke:'/window/contract-new'
+  UContractInvoke:'/window/contract-new',
+  UCoinTransfer:'/window/windowSend'
 }
 
 const getQueryString = (args) => {
@@ -224,22 +225,11 @@ export default {
     })
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  async UCoinTransfer({ assetMap,memo,callbackId }) {
+    return openWindow('UCoinTransfer', {
+      assetMap,memo,callbackId
+    })
+  },
 
 
 

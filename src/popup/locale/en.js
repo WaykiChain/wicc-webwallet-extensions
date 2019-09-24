@@ -131,7 +131,7 @@ export default {
       toLabel: 'To',
       feesLabel: 'Gas fee',
       hashLabel: 'Tx hash',
-      cdpid: 'CDP ID',
+      cdpid: 'Created at',
       assetamount:'Asset amount',
       price:'Price',
       bcointoredeem:'Redeem coins',
@@ -210,7 +210,7 @@ export default {
       done:'Done',
       name:'Net Name',
       rpc:'Baas URL',
-      addNet:'Add Net',
+      addNet:'Add Network',
     },
     about: {
       title: 'Info',
