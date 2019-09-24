@@ -47,7 +47,7 @@ const openWindow = async (type, args) => {
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
-    height: 667,
+    height: 700,
     width: 375
   })
 }
@@ -84,7 +84,7 @@ export default {
     return chrome.windows.create({
       url: popupURL,
       type: 'popup',
-      height: 600,
+      height: 700,
       width: 375
     })
   },
