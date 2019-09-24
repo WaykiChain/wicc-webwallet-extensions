@@ -10,7 +10,7 @@
         :key="index"
       >
         <div class="first-row">
-          <span class="trans-hash">{{ cutMiddleStr(trans.addr,8) }}</span>
+          <span class="trans-hash">{{ cutMiddleStr(trans.hash,8) }}</span>
           <span class="trans-amount"  v-show="showMoney(trans)">{{ formatAmount(trans.money) }} {{ trans.coinsymbol }}</span>
         </div>
         <div class="second-row">

@@ -7,7 +7,7 @@
 
     <div class="tokenCount">
       <p class="count">{{number}}</p>
-      <p>--</p>
+      <!-- <p>--</p> -->
     </div>
     <template slot="body">
       <trans-history v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-throttle-delay="1000" infinite-scroll-distance="0" :transactions="transactions" :show-empty-block="!loading"></trans-history>
