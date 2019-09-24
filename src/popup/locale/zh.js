@@ -131,7 +131,7 @@ export default {
       toLabel: '收款方',
       feesLabel: '矿工费用',
       hashLabel: '交易哈希',
-      cdpid: '该CDP创建交易哈希',
+      cdpid: 'CDP ID',
 
       confirmedheight:"确定高度",
       bcointoredeem:'赎回数量',
@@ -211,7 +211,7 @@ export default {
       edit:'编辑',
       done:'完成',
       name:'网络名称',
-      rpc:'网络 Baas URL',
+      rpc:'新的Baas URL',
       addNet:'添加网络',
     },
     about: {
@@ -237,7 +237,7 @@ export default {
 
   window: {
     contract: {
-      title: 'WICC 合约调用',
+      title: '合约调用',
       addressLabel: '调用地址:',
       contractRegIdLabel: '合约regid:',
       valueLabel: '数量:',
@@ -249,22 +249,22 @@ export default {
       createFailure: '调用失败'
     },
     publishContract: {
-      title: 'WICC 合约发布',
+      title: '合约发布',
       addressLabel: '调用地址:',
       scriptLabel: '合约内容:',
       scriptDescLabel: '合约描述:',
-      closeButton: '拒绝',
+      closeButton: '取消',
       confirmButton: '确定',
       confirmLoading: '正在创建...',
       createSuccess: '创建成功',
       createFailure: '创建失败'
     },
     transfer: {
-      title: 'WICC 转账确认',
+      title: '转账确认',
       addressLabel: '付款地址:',
       destAddressLabel: '收款地址:',
       valueLabel: '数量:',
-      closeButton: '拒绝',
+      closeButton: '取消',
       confirmButton: '确定',
       confirmLoading: '正在提交转账...',
       createSuccess: '提交成功',
@@ -283,10 +283,10 @@ export default {
       createFailure: '调用失败'
     },
     cdp:{
-      xjmr:"限价买入",
-      xjmc:"限价卖出",
-      sjmc:"市价卖出",
-      sjmr:"市价买入",
+      xjmr:"限价买单",
+      xjmc:"限价卖单",
+      sjmc:"市价卖单",
+      sjmr:"市价买单",
       slwicc:"数量",
       hdslwusd:"获得数量",
       slwusd:"数量",
