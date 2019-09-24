@@ -291,7 +291,7 @@ export default {
       hdslwusd:"获得数量",
       slwusd:"数量",
       jgwusd:"价格",
-      hdslwicc:"获得数量",
+      hdslwicc:"花费",
       dqscjg:"当前市场价格",
       yjhdwusd:"预计获得",
       yjhdwicc:"预计获得",

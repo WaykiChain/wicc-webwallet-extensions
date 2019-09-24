@@ -86,7 +86,7 @@ export default {
     this.amount = query.amount;
     this.coinType = query.coinType;
     this.assetType = query.assetType;
-    this.price = query.limitPrice==0 ? '以实际为准' : query.limitPrice;
+    this.price = query.limitPrice==0 ? this.$t('window.cdp.sjcjwz') : query.limitPrice;
     this.callbackId = query.callbackId;
     this.dexType = query.dealType;
     console.log(query);
@@ -113,9 +113,9 @@ export default {
         return this.Tiles.marketTitle1;
       }
       if (this.dexType == "Market_BUY") {
-        this.danweiStr1 = this.coinType
+        this.danweiStr1 = this.assetType
         this.danweiStr2 = this.coinType
-        this.danweiStr3 = this.coinType
+        this.danweiStr3 = this.assetType
         return this.Tiles.marketTitle2;
       }
     },

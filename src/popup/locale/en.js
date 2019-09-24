@@ -289,7 +289,7 @@ export default {
       jgwusd:"Price",
       hdslwusd:"Amount receive",
       slwusd:"Amount",
-      hdslwicc:"Amount receive",
+      hdslwicc:"Spend",
       dqscjg:"Current market price",
       yjhdwusd:"Expect to receive",
       yjhdwicc:"Expect to receive",
