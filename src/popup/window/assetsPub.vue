@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     sureCreateCDP() {
-      this.$loading("开始发布资产"); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzfbzc")); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
         assetName: this.assetName,

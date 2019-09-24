@@ -90,6 +90,8 @@
             {{ item.name }}
           </li>
         </ul>
+        <p style="background:#5b5f67;height:1px;width:100%"></p>
+        <p class="addNet" @click="addNet">{{$t('setting.index.addNet')}}</p>
       </div>
     </div>
   </div>
@@ -154,6 +156,11 @@ export default {
   },
 
   methods: {
+    addNet(){
+      this.$router.push({
+        name: "changeNet"
+      });
+    },
     hideMenu() {
       this.showMenu = false;
     },
@@ -279,6 +286,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addNet{
+  text-align: center;
+  color: #b4bccc;
+  cursor: pointer;
+  width: 107px;
+  margin-left: 94px;
+  line-height: 36px;
+  border: #ffffff 1px solid;
+ border-radius: 3px;
+}
 .wallet-main-header {
   background: #f2f5fc;
   height: 64px;

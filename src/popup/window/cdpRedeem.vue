@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     sureRedeemCDP() {
-      this.$loading('正在赎回交易');//this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzshjy"));//this.$t("window.transfer.confirmLoading")
 
       let param = {
        

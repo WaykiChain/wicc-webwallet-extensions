@@ -83,7 +83,7 @@ export default {
   methods: {
     formatNewTxType: transUtil.formatNewTxType,
     sure() {
-      this.$loading("正在创建交易"); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzqxjy")); //this.$t("window.transfer.confirmLoading")
 
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),

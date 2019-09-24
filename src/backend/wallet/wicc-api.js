@@ -165,10 +165,10 @@ export default class {
       network: info.network,
       scoin_symbol: info.scoin_symbol ? info.scoin_symbol : 'WUSD',
     };
-    alert(JSON.stringify(cdpStakeTxinfo))
+    // alert(JSON.stringify(cdpStakeTxinfo))
     var cdpStakeTx = new bitcore.Transaction.CdpStakeTx(cdpStakeTxinfo);
     var hex = cdpStakeTx.SerializeTx(info.privateKey)
-    alert(hex)
+    // alert(hex)
     return hex
 
   }

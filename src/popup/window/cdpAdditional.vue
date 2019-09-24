@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     sureCreateCDP() {
-      this.$loading("正在追加交易"); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzzjjy")); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
         cdpTxId: this.cdpTxId,

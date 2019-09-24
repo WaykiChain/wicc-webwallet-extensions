@@ -209,7 +209,7 @@ export default {
       edit:'Edit',
       done:'Done',
       name:'Net Name',
-      rpc:'RPC URL',
+      rpc:'Baas URL',
       addNet:'Add Net',
     },
     about: {
@@ -302,7 +302,7 @@ export default {
       lx:"Type",
       qx:"Cancel",
       qd:"Confirm",
-      wdzc:"My asset",
+      wdzc:"My assets",
       cdpcjjy:"CDP Generated",
       cdpzjjy:"CDP Addition",
       cdpqsjy:"CDP Liquidating",
@@ -318,6 +318,17 @@ export default {
       ghl:"Repay：",
       shl:"Redemptions：",
       sjcjwz:'The actual transaction prevails',
+      addtional:'Adding Collateral',
+      zzfbzc:'Creat',
+
+      zzfbzc:'Releasing Asset...',
+      updateAssets:'Updating Asset...',
+      zzzjjy:'Adding Collateral...',
+      zzcjjy:'Generating CDP...',
+      zzqsjy:'Liquidating CDP...',
+      zzshjy:'CDP in redemption',
+      zzqxjy:'Cancel...',
+      zzyzqm:'Verifying Signature...',
     }
   }
 }

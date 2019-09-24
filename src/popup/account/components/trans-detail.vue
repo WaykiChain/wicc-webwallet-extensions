@@ -26,7 +26,7 @@
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
 
         <dt>{{ $t('account.transDetail.txTypeLabel') }}</dt>
-        <dd>{{ formatNewTxType(detailInfo.txtype) }}</dd>
+        <dd>{{ detailInfo.txid === detailInfo.cdp_txid ? formatNewTxType(detailInfo.txtype) : $t('window.cdp.addtional') }}</dd>
 
         <dt>{{ $t('account.transDetail.hashLabel') }}</dt>
         <dd>{{ detailInfo.txid }}</dd>

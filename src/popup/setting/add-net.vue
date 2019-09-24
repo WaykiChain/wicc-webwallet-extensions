@@ -15,8 +15,8 @@
           <input type="text" v-model="url">
         </div>
         <div class="btnView">
-          <div class="cancel">取消</div>
-          <div class="save" @click="save">保存</div>
+          <div class="cancel" @click="cancel">{{$t('common.cancel')}}</div>
+          <div class="save" @click="save">{{$t('common.confirm')}}</div>
         </div>
       </template>
     </nav-layout>
@@ -81,9 +81,13 @@ export default {
       return
       
     },
+    cancel(){
+      this.$router.go(-1)
+    },
     checkUrl(){
-      
+      this.$loading('Checking...')
       axios.post(this.url + '/block/getinfo',{}).then(res=>{
+        this.$loading.close();
         const net = res.data.data.nettype
         if (net === 'MAIN_NET'){
           this.add('mainnet')
@@ -91,6 +95,7 @@ export default {
           this.add('testnet')
         }
       }).catch(err=>{
+        this.$loading.close();
         this.$toast('Invalid url')
       })
     },

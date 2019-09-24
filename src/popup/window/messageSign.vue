@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     sureCreateCDP() {
-      this.$loading("正在验证签名"); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzyzqm")); //this.$t("window.transfer.confirmLoading")
       let param = {
         address:this.address,
         msg:this.msg,

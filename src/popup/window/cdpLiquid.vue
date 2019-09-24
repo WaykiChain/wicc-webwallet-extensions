@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     sureLiquidCDP() {
-      this.$loading("正在清算交易"); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.zzqsjy")); //this.$t("window.transfer.confirmLoading")
 
       let param = {
         assetSymbol:this.assetType,

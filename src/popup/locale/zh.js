@@ -211,7 +211,7 @@ export default {
       edit:'编辑',
       done:'完成',
       name:'网络名称',
-      rpc:'网络 RPC URL',
+      rpc:'网络 Baas URL',
       addNet:'添加网络',
     },
     about: {
@@ -320,6 +320,15 @@ export default {
       ghl:"归还量：",
       shl:"赎回量：",
       sjcjwz:'以实际成交为准',
+      addtional:'CDP追加',
+      zzfbzc:'资产发布中...',
+      updateAssets:'资产更新中...',
+      zzzjjy:'CDP追加中...',
+      zzcjjy:'CDP创建中...',
+      zzqsjy:'CDP清算中...',
+      zzshjy:'CDP赎回中...',
+      zzqxjy:'取消交易中...',
+      zzyzqm:'验证签名...',
     }
   }
 }
