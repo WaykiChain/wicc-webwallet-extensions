@@ -10,8 +10,10 @@
         :key="index"
       >
         <div class="first-row">
-          <span class="trans-hash">{{ cutMiddleStr(trans.hash,8) }}</span>
-          <span class="trans-amount"  v-show="showMoney(trans)">{{ formatAmount(trans.money) }} {{ trans.coinsymbol }}</span>
+          <span class="trans-hash">{{ cutMiddleStr(trans.txid,8) }}</span>
+          <span
+            class="trans-amount"
+          >{{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
         </div>
         <div class="second-row">
           <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
@@ -65,10 +67,40 @@ export default {
       this.currentTrans = trans;
     },
     showMoney(trans) {
-      if (trans.txtype.indexOf("CDP") < 0 && trans.txtype.indexOf("DEX") < 0) {
+      if (trans.txtype.indexOf('DEX_LIMIT') > -1) {
         return true;
       }
       return false;
+    },
+    showCell(trans) {
+      if (trans.txtype.indexOf('DEX_MARKET') > -1) {
+        return false;
+      }
+      return true;
+    },
+    getCount(trans) {
+      if (trans) {
+        if (trans.txtype == "CDP_LIQUIDATE_TX") {
+          return trans.scoinstoliquidate / Math.pow(10,8);
+        }
+        if (trans.txtype == "CDP_STAKE_TX") {
+          return trans.assetstostake.WICC / Math.pow(10,8);
+        }
+        if (trans.txtype == 'CDP_REDEEM_TX') {
+          return trans.scoinstorepay / Math.pow(10,8);
+        }
+        if (trans.txtype.indexOf("DEX") > -1){
+          if (this.showMoney(trans)){
+            const amount = trans.assetamount ? trans.assetamount : trans.coinamount
+            const res = amount * trans.price  / Math.pow(10,16)
+            return res.toFixed(2);
+          }
+          return ""
+          
+        }
+      }
+
+      return trans.coinamount / Math.pow(10,8);
     }
   },
 

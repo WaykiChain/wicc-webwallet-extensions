@@ -262,27 +262,26 @@ export default {
   },
   watch: {
     activeAddress(val) {
-      console.log('监听到的地址',val)
+      console.log("监听到的地址", val);
       this.getWiccNum(val);
-      this.currentAddr = val
-      this.addressNoChanged = !this.addressNoChanged
+      this.currentAddr = val;
+      this.addressNoChanged = !this.addressNoChanged;
     }
   },
 
-  created () {
-    this.eventBus.$on('network-change', this.handleNetworkChange)
+  created() {
+    this.eventBus.$on("network-change", this.handleNetworkChange);
   },
 
-  destroyed () {
-    this.eventBus.$off('network-change', this.handleNetworkChange)
+  destroyed() {
+    this.eventBus.$off("network-change", this.handleNetworkChange);
   },
-
 
   methods: {
-    handleNetworkChange(network){
-      if (this.addressNoChanged){
-        console.log('切换了：'+this.currentAddr)
-        this.getWiccNum(this.currentAddr)
+    handleNetworkChange(network) {
+      if (this.addressNoChanged) {
+        console.log("切换了：" + this.currentAddr);
+        this.getWiccNum(this.currentAddr);
       }
     },
     gotoAddToken() {
@@ -323,23 +322,25 @@ export default {
       );
     },
     getWiccNum(address) {
+      this.wusd = null;
+      this.wicc = null;
+      this.wgrt = null;
       API.getAccountInfo(this.network, address).then(
         res => {
-          console.log(res)
+          console.log(res);
           let tokens = res.tokens;
-          if (tokens){
+          if (tokens) {
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
             this.wgrt = tokens.WGRT;
-          }else{
+          } else {
             this.wusd = null;
             this.wicc = null;
             this.wgrt = null;
           }
-          
         },
         error => {
-          console.log(error)
+          console.log(error);
           this.$toast(error.message, {
             type: "center"
           });
@@ -350,14 +351,14 @@ export default {
 
   data() {
     return {
-      currentAddr:"",
+      currentAddr: "",
       activeToken: null,
       clipboardSelector: ".address-btn-copy",
       wusd: null,
       wicc: null,
       wgrt: null,
       eventBus,
-      addressNoChanged:false
+      addressNoChanged: false
     };
   }
 };

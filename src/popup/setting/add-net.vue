@@ -86,7 +86,7 @@ export default {
     },
     checkUrl(){
       this.$loading('Checking...')
-      axios.post(this.url + '/block/getinfo',{}).then(res=>{
+      axios.post(this.url.trim() + '/block/getinfo',{}).then(res=>{
         this.$loading.close();
         const net = res.data.data.nettype
         if (net === 'MAIN_NET'){

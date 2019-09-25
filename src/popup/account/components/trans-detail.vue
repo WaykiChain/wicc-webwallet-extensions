@@ -32,7 +32,7 @@
         <dd>{{ detailInfo.txid }}</dd>
 
         <dt>{{ $t('account.transDetail.cdpid') }}</dt>
-        <dd>{{ detailInfo.cdp_txid }}</dd>
+        <dd>{{ detailInfo.cdptxid }}</dd>
 
         <dt>{{ $t('account.transDetail.confirmedheight') }}</dt>
         <dd>{{ detailInfo.confirmedheight }}</dd>
@@ -200,7 +200,7 @@ export default {
     },
     getDetailInfo() {
       let param = {
-        hash: this.detail.hash
+        hash: this.detail.txid
       };
       API.callRaw("getDetailInfo", { info: param }).then(
         res => {

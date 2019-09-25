@@ -43,7 +43,7 @@ export default class {
   }
 
   getTxDetail(tx) {
-    return axios.post(this.host + '/transaction/gettxdetail', {
+    return axios.post(this.host + '/transaction/gettxdetailplus', {
       hash: tx,
     }).then(handleResponse, handleError)
   }
@@ -56,7 +56,7 @@ export default class {
   }
 
   submitOfflineTrans(rawtx) {
-    let url = this.host + '/transaction/sendtxraw'
+    let url = this.host + '/transaction/sendrawtx'
     // alert(`${url},${rawtx}`)
     return axios.post(url, {
       rawtx: rawtx,
@@ -67,7 +67,7 @@ export default class {
   ///获取wicc，wusd，wgrt交易记录
   getTransHistory(info) {
     if (!info.address) throw new Error('address is required.')
-    return axios.post(this.host + '/transaction/gettranscationsbyaddress', {
+    return axios.post(this.host + '/transaction/gettranscationsbyaddressplus', {
         "address": info.address,
         "currentpage": info.currentpage,
         "pagesize": info.pagesize,

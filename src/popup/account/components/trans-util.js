@@ -76,7 +76,7 @@ const STATUS_MAP = {
 
 const STATUS_MAP_EN = {
   'pending': 'Pending',
-  'confirmed': 'Completed',
+  'confirmed': 'Successfull',
   'failed': 'Failed'
 }
 
