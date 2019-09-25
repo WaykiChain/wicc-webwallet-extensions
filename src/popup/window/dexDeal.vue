@@ -3,15 +3,15 @@
     <div class="content">
       <h5 class="titleHeader">{{confirmType()[0]}}</h5>
       <div class="cell">
-        <p class="cellName">{{confirmType()[1]}}({{danweiStr1}}):</p>
+        <p class="cellName">{{confirmType()[1]}}({{danweiStr1}})</p>
         <p class="cellValue">{{amount/100000000}} </p>
       </div>
       <div class="cell">
-        <p class="cellName">{{confirmType()[2]}}({{danweiStr2}}):</p>
+        <p class="cellName">{{confirmType()[2]}}({{danweiStr2}})</p>
         <p class="cellValue">{{price == $t('window.cdp.sjcjwz') ? price : (price / Math.pow(10,8)).toFixed(8)}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{confirmType()[3]}}({{danweiStr3}}):</p>
+        <p class="cellName">{{confirmType()[3]}}({{danweiStr3}})</p>
         <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (amount * price / Math.pow(10,16)).toFixed(8)}}</p>
       </div>
       <p v-if="dexType.indexOf('Market') > -1" class="tips">{{ dexType == "Market_SELL" ? $t('window.cdp.tipsmc') : $t('window.cdp.tipsmr')}}</p>
@@ -113,7 +113,7 @@ export default {
         return this.Tiles.marketTitle1;
       }
       if (this.dexType == "Market_BUY") {
-        this.danweiStr1 = this.assetType
+        this.danweiStr1 = this.coinType
         this.danweiStr2 = this.coinType
         this.danweiStr3 = this.assetType
         return this.Tiles.marketTitle2;

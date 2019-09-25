@@ -139,13 +139,22 @@ export default {
 
         return;
       }
-
-      if (this.balance && this.value > (this.balance - this.fees - 0.00001)) {
-        this.$toast(this.$t("errors.insufficientBalance"), {
-          type: "center"
-        });
-        return;
+      if (this.feesName == this.coinType){
+        if (this.balance && this.value > (this.balance - this.fees - 0.00001)) {
+          this.$toast(this.$t("errors.insufficientBalance"), {
+            type: "center"
+          });
+          return;
+        }
+      }else{
+        if (this.balance && this.value > this.balance) {
+          this.$toast(this.$t("errors.insufficientBalance"), {
+            type: "center"
+          });
+          return;
+        }
       }
+      
 
       this.$loading(this.$t("account.send.confirmLoading"));
 

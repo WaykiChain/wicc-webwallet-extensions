@@ -56,7 +56,7 @@ export default {
       bcoins_to_redeem:0,
       clipboardSelector: ".coin-card-copy",
       feesName:'WICC',
-      bcoins_symbol:'WICC',
+      bcoins_symbol:'',
     };
   },
   created() {
@@ -66,6 +66,7 @@ export default {
     this.scoins_to_repay = query.wusdNum;
     this.cdpTxId = query.cdpTxId;
     this.callbackId = query.callbackId;
+    console.log(query)
   },
   methods: {
     sureRedeemCDP() {

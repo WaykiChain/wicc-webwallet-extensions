@@ -37,7 +37,7 @@ const TYPE_NEWTX_MAP_EN = {
   'PRICE_FEED_TX': 'Feed Txn',
   'FCOIN_STAKE_TX': 'Stakecoin Txn',
   'UCOIN_TRANSFER_TX': 'Transfer Txn',
-  'CDP_LIQUIDATE_TX': 'CDP Liquidating',
+  'CDP_LIQUIDATE_TX': 'CDP Liquidation',
   'CDP_REDEEM_TX': 'CDP Redemption',
   'CDP_STAKE_TX': 'CDP Generated',
   'DELEGATE_VOTE_TX': 'Vote Txn',

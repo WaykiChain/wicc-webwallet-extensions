@@ -1,9 +1,9 @@
 <template>
   <div class="cdp">
     <div class="content">
-      <h5 class="titleHeader">取消交易</h5>
+      <h5 class="titleHeader">{{$t('window.cdp.qxjy')}}</h5>
       <div class="cell">
-        <p class="cellName">订单号</p>
+        <p class="cellName">{{$t('account.transDetail.hashLabel')}}</p>
         <p class="cellValue coin-card-copy" style="padding-right:20px">
           {{cutMiddleStr(dealNum,12)}}
           <img class="copyImg" src="../static/copy-icon-blue.svg" />
@@ -11,21 +11,21 @@
       </div>
       <div class="cell" style="padding-top:0">
         <div class="cellName" style="width:100%;line-height:50px;border-top: 1px #eeeeee solid;">
-          订单详情
+          {{$t('window.cdp.ddxq')}}
           <div class="subcell">
-            <p class="cellName">类型</p>
+            <p class="cellName">{{$t('window.cdp.lx')}}</p>
             <p class="cellValue">{{formatNewTxType(dexType)}}</p>
           </div>
           <div class="subcell">
-            <p class="cellName">数量({{dexType.indexOf('BUY') > -1 ? coinType : assetType}})</p>
+            <p class="cellName">{{dexType == "" ? '' : confirmType(dexType)[1]}}({{danweiStr1}})</p>
             <p class="cellValue">{{wiccNum}}</p>
           </div>
           <div class="subcell">
-            <p class="cellName">价格({{dexType.indexOf('BUY') > -1 ? coinType : assetType}})</p>
+            <p class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}({{danweiStr2}})</p>
             <p class="cellValue">{{price}}</p>
           </div>
           <div v-if="dexType.indexOf('MARKET')==-1" class="subcell">
-            <p class="cellName">获得数量({{dexType.indexOf('BUY') > -1 ? assetType : coinType}})</p>
+            <p class="cellName">{{dexType == "" ? '' : confirmType(dexType)[3]}}({{danweiStr3}})</p>
             <p class="cellValue">{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (wiccNum * price).toFixed(8)}}</p>
           </div>
         </div>
@@ -41,8 +41,8 @@
       <fees-slider v-model="fees" type="dex" :feeName="feesName"></fees-slider>
     </div>
     <div class="bottom_btn">
-      <div class="btn" @click="cancel">取消</div>
-      <div class="btn sure" @click="sure">确定</div>
+       <div class="btn" @click="cancel">{{$t('window.cdp.qx')}}</div>
+      <div class="btn sure" @click="sure">{{$t('window.cdp.qd')}}</div>
     </div>
   </div>
 </template>
@@ -68,8 +68,37 @@ export default {
       dexType: "",
       dealNum: "",
       clipboardSelector: ".coin-card-copy",
-      assetType:'WICC',
-      coinType:'WUSD',
+      assetType:'',
+      coinType:'',
+      danweiStr1:"",
+      danweiStr2:"",
+      danweiStr3:"",
+      Tiles: {
+        limitTitle1: [
+          this.$t('window.cdp.xjmc'),
+          this.$t('window.cdp.slwicc'),
+          this.$t('window.cdp.jgwusd'),
+          this.$t('window.cdp.hdslwusd'),
+        ],
+        limitTitle2: [
+          this.$t('window.cdp.xjmr'),
+          this.$t('window.cdp.slwusd'),
+          this.$t('window.cdp.jgwusd'),
+          this.$t('window.cdp.hdslwicc'),
+        ],
+        marketTitle1: [
+          this.$t('window.cdp.sjmc'),
+          this.$t('window.cdp.slwicc'),
+          this.$t('window.cdp.dqscjg'),
+          this.$t('window.cdp.yjhdwusd'),
+        ],
+        marketTitle2: [
+          this.$t('window.cdp.sjmr'),
+          this.$t('window.cdp.slwusd'),
+          this.$t('window.cdp.dqscjg'),
+          this.$t('window.cdp.yjhdwicc'),
+        ]
+      }
     };
   },
   ///type : 0 限价卖出，1 限价买入， 2 市价卖出，3市价买入
@@ -82,6 +111,32 @@ export default {
   },
   methods: {
     formatNewTxType: transUtil.formatNewTxType,
+    confirmType(dexType) {
+      if (dexType == "DEX_LIMIT_SELL_ORDER_TX") {
+        this.danweiStr1 = this.assetType
+        this.danweiStr2 = this.coinType
+        this.danweiStr3 = this.coinType
+        return this.Tiles.limitTitle1;
+      }
+      if (dexType == "DEX_LIMIT_BUY_ORDER_TX") {
+        this.danweiStr1 = this.assetType
+        this.danweiStr2 = this.coinType
+        this.danweiStr3 = this.coinType
+        return this.Tiles.limitTitle2;
+      }
+      if (dexType == "DEX_MARKET_SELL_ORDER_TX") {
+        this.danweiStr1 = this.assetType
+        this.danweiStr2 = this.coinType
+        this.danweiStr3 = this.coinType
+        return this.Tiles.marketTitle1;
+      }
+      if (dexType == 'DEX_MARKET_BUY_ORDER_TX') {
+        this.danweiStr1 = this.coinType
+        this.danweiStr2 = this.coinType
+        this.danweiStr3 = this.assetType
+        return this.Tiles.marketTitle2;
+      }
+    },
     sure() {
       this.$loading(this.$t("window.cdp.zzqxjy")); //this.$t("window.transfer.confirmLoading")
 
@@ -137,10 +192,10 @@ export default {
         res => {
           console.log(res)
           this.dexType = res.txtype;
-          this.price = res.price/100000000;
-          this.wiccNum = res.assetamount/100000000;
-          this.assetType = res.assetType;
-          this.coinType = res.coinType;
+          this.price = res.price ? res.price/100000000 :this.$t('window.cdp.sjcjwz') ;
+          this.wiccNum = res.assetamount ? res.assetamount/100000000 : res.coinamount/100000000;
+          this.assetType = res.assetsymbol;
+          this.coinType = res.coinsymbol;
         },
         error => {
           this.$loading.close();

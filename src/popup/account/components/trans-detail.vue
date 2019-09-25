@@ -80,7 +80,7 @@
         <dt>{{ $t('account.transDetail.scoinstoliquidate') }}</dt>
         <dd
           v-if="detailInfo.scoinstoliquidate"
-        >{{ formatFees(detailInfo.scoinstoliquidate).toFixed(8) }} {{detailInfo.scoinsymbol}}</dd>
+        >{{ formatFees(detailInfo.scoinstoliquidate).toFixed(8) }} {{detailInfo.liquidateassetsymbol}}</dd>
 
         <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
@@ -92,7 +92,32 @@
         <dd>{{ detailInfo.txid }}</dd>
 
         <dt>{{ $t('account.transDetail.cdpid') }}</dt>
-        <dd>{{ detailInfo.cdptxid }}</dd>
+        <dd>{{ detailInfo.cdp_txid }}</dd>
+
+        <dt>{{ $t('account.transDetail.confirmedheight') }}</dt>
+        <dd>{{ detailInfo.confirmedheight }}</dd>
+
+        <dt>{{ $t('account.transDetail.confirmedTimeLabel') }}</dt>
+        <dd>{{ formatTime(detailInfo.confirmedtime * 1000) }}</dd>
+
+        <dt v-show="detailInfo.memo">{{ $t('account.transDetail.commentLabel') }}</dt>
+        <dd>{{ detailInfo.memo }}</dd>
+      </dl>
+      <dl v-if="isDex">
+        <dt>{{ $t('window.cdp.slwicc') }}</dt>
+        <dd>{{ formatFees(detailInfo.assetamount ? detailInfo.assetamount : detailInfo.coinamount).toFixed(8) }} {{detailInfo.txtype == 'DEX_MARKET_BUY_ORDER_TX' ? detailInfo.coinamount : detailInfo.assetsymbol}}</dd>
+
+        <dt>{{ $t('window.cdp.jgwusd') }}</dt>
+        <dd>{{detailInfo.price ? formatFees(detailInfo.price).toFixed(8) : this.$t('window.cdp.sjcjwz') }} {{detailInfo.txtype.indexOf("DEX_MARKET")>-1 ?'':detailInfo.coinsymbol}}</dd>
+
+        <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
+        <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
+
+        <dt>{{ $t('account.transDetail.txTypeLabel') }}</dt>
+        <dd>{{ formatNewTxType(detailInfo.txtype) }}</dd>
+
+        <dt>{{ $t('account.transDetail.hashLabel') }}</dt>
+        <dd>{{ detailInfo.txid }}</dd>
 
         <dt>{{ $t('account.transDetail.confirmedheight') }}</dt>
         <dd>{{ detailInfo.confirmedheight }}</dd>
@@ -104,12 +129,11 @@
         <dd>{{ detailInfo.memo }}</dd>
       </dl>
       <dl v-if="showTitle">
-        <dl v-if="!isDex">
-          <dt>{{ $t('account.transDetail.fromLabel') }}</dt>
-          <dd>{{ detailInfo.fromaddr }}</dd>
-          <dt>{{ $t('account.transDetail.toLabel') }}</dt>
-          <dd>{{ detailInfo.toaddr }}</dd>
-        </dl>
+
+        <dt>{{ $t('account.transDetail.fromLabel') }}</dt>
+        <dd>{{ detailInfo.fromaddr }}</dd>
+        <dt>{{ $t('account.transDetail.toLabel') }}</dt>
+        <dd>{{ detailInfo.toaddr }}</dd>
 
         <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
@@ -182,10 +206,13 @@ export default {
         res => {
           console.log("通过hash查到的详情===》", res);
           this.detailInfo = res;
-          if (this.detailInfo.txtype.indexOf("CDP") < 0) {
-            this.showTitle = true;
-          } else {
+          if (
+            this.detailInfo.txtype.indexOf("CDP") > -1 ||
+            this.detailInfo.txtype.indexOf("DEX") > -1
+          ) {
             this.showTitle = false;
+          } else {
+            this.showTitle = true;
           }
           if (this.detailInfo.txtype.indexOf("DEX") < 0) {
             this.isDex = false;
@@ -194,16 +221,13 @@ export default {
           }
         },
         error => {
-          console.log(error.message)
+          console.log(error.message);
           this.$loading.close();
-          this.$toast(
-            this.$t(error.message),
-            {
-              type: "center",
-              duration: 5000,
-              wordWrap: true
-            }
-          );
+          this.$toast(this.$t(error.message), {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
         }
       );
     }

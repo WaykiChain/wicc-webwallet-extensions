@@ -182,9 +182,9 @@ export default {
       wusdNum, cdpTxId,callbackId
     })
   },
-  async redeemCdpView({ wusdNum, wiccNum, cdpTxId ,callbackId }) {
+  async redeemCdpView({ wusdNum, wiccNum,redeemSymbol, cdpTxId ,callbackId }) {
     return openWindow('redeemCdpView', {
-      wusdNum, wiccNum, cdpTxId,callbackId
+      wusdNum, wiccNum,redeemSymbol, cdpTxId,callbackId
     })
   },
   async dexView({ dealType, amount, limitPrice, coinType,assetType,callbackId }) {

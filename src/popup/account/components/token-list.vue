@@ -221,6 +221,8 @@
 import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import axios from "axios";
+import eventBus from "../bus";
+
 export default {
   name: "token-list",
 
@@ -262,9 +264,27 @@ export default {
     activeAddress(val) {
       console.log('监听到的地址',val)
       this.getWiccNum(val);
+      this.currentAddr = val
+      this.addressNoChanged = !this.addressNoChanged
     }
   },
+
+  created () {
+    this.eventBus.$on('network-change', this.handleNetworkChange)
+  },
+
+  destroyed () {
+    this.eventBus.$off('network-change', this.handleNetworkChange)
+  },
+
+
   methods: {
+    handleNetworkChange(network){
+      if (this.addressNoChanged){
+        console.log('切换了：'+this.currentAddr)
+        this.getWiccNum(this.currentAddr)
+      }
+    },
     gotoAddToken() {
       this.$router.push({
         name: "addToken"
@@ -330,11 +350,14 @@ export default {
 
   data() {
     return {
+      currentAddr:"",
       activeToken: null,
       clipboardSelector: ".address-btn-copy",
       wusd: null,
       wicc: null,
-      wgrt: null
+      wgrt: null,
+      eventBus,
+      addressNoChanged:false
     };
   }
 };
