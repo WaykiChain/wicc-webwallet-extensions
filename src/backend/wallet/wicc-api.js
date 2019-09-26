@@ -311,9 +311,9 @@ export default class {
   }
   assetsPub(info) {
     var assetData = {
-      tokenSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
+      assetSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
       ownerAddress: info.assetOwnerId,  //asset owner
-      tokeName: info.assetName,  //asset token name
+      assetName: info.assetName,  //asset token name
       totalSupply: parseInt(info.assetSupply),// total Supply 10^8
       minTable: info.assetMintable == "true" ? true : false    //Whether to increase the number
     }
@@ -359,23 +359,27 @@ export default class {
     const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_UPDATE, assetCreateInfo)
     return rawtx
   }
-  messageSign(msg,privateKey) {
+  messageSign(msg, privateKey) {
 
     var msgBuff = Buffer.from(msg)
-    var msgBuffHash = Hash.sha256sha256(msgBuff);
+    var msgBuffHash = Hash.sha256(Hash.sha256ripemd160(msgBuff));
     var signMsg = ECDSA.sign(msgBuffHash, privateKey, 'endian')
 
     //验证消息
     var pubKey = privateKey.toPublicKey();
-    var vertifySuccess = ECDSA.verify(msgBuffHash, signMsg, pubKey, 'endian')
+    // var vertifySuccess = ECDSA.verify(msgBuffHash, signMsg, pubKey, 'endian')
     const res = {
-      signMsg: signMsg,
-      vertifySuccess: vertifySuccess,
+      result: {
+        SignMessage: signMsg.toString(),
+        PublicKey: pubKey.toString(),
+      },
+      errorCode:0
+
     }
     return JSON.stringify(res)
   }
 
-  uContractInvoke(privateKey, height, srcRegId, regId, amount, coinSymbol,fees,feesName, contract, localNetWork, memo){
+  uContractInvoke(privateKey, height, srcRegId, regId, amount, coinSymbol, fees, feesName, contract, localNetWork, memo) {
     var invokeAppInfo = {
       nTxType: bitcore.WiccApi.UCOIN_CONTRACT_INVOKE_TX,
       nVersion: 1,
@@ -383,8 +387,8 @@ export default class {
       publicKey: privateKey.toPublicKey().toString(),
       srcRegId: srcRegId,    // sender's regId
       destRegId: regId,  // app regId
-      feesCoinType:feesName,
-      coinType:coinSymbol,
+      feesCoinType: feesName,
+      coinType: coinSymbol,
       fees: parseInt(fees),         // fees pay for miner
       value: parseInt(amount),              // amount of WICC to be sent to the app account
       vContract: contract      // contract method, hex format string
@@ -393,7 +397,7 @@ export default class {
     var rawtx = this.api.createSignTransaction(privateKey, bitcore.WiccApi.UCOIN_CONTRACT_INVOKE_TX, invokeAppInfo)
     // alert(rawtx)
     return rawtx
-    
+
   }
 
 }
