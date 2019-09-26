@@ -13,7 +13,7 @@
           <span class="trans-hash">{{ cutMiddleStr(trans.txid,8) }}</span>
           <span
             class="trans-amount"
-          >{{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
+          >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
         </div>
         <div class="second-row">
           <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
@@ -66,6 +66,15 @@ export default {
       this.transDetailVisible = true;
       this.currentTrans = trans;
     },
+    showTrandirection(trandirection){
+      if (trandirection == 1){
+        return '+'
+      }else if (trandirection == 2){
+        return '-'
+      }else{
+        return ''
+      }
+    },
     showMoney(trans) {
       if (trans.txtype.indexOf('DEX_LIMIT') > -1) {
         return true;
@@ -73,7 +82,7 @@ export default {
       return false;
     },
     showCell(trans) {
-      if (trans.txtype.indexOf('DEX_MARKET') > -1) {
+      if (trans.txtype.indexOf('DEX_MARKET') > -1 || trans.txtype == 'DEX_CANCEL_ORDER_TX') {
         return false;
       }
       return true;
@@ -93,7 +102,7 @@ export default {
           if (this.showMoney(trans)){
             const amount = trans.assetamount ? trans.assetamount : trans.coinamount
             const res = amount * trans.price  / Math.pow(10,16)
-            return res.toFixed(2);
+            return res.toFixed(4);
           }
           return ""
           

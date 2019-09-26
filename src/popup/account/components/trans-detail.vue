@@ -26,7 +26,7 @@
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
 
         <dt>{{ $t('account.transDetail.txTypeLabel') }}</dt>
-        <dd>{{ detailInfo.txid === detailInfo.cdp_txid ? formatNewTxType(detailInfo.txtype) : $t('window.cdp.addtional') }}</dd>
+        <dd>{{ detailInfo.txid === detailInfo.cdptxid ? formatNewTxType(detailInfo.txtype) : $t('window.cdp.addtional') }}</dd>
 
         <dt>{{ $t('account.transDetail.hashLabel') }}</dt>
         <dd>{{ detailInfo.txid }}</dd>
@@ -92,7 +92,7 @@
         <dd>{{ detailInfo.txid }}</dd>
 
         <dt>{{ $t('account.transDetail.cdpid') }}</dt>
-        <dd>{{ detailInfo.cdp_txid }}</dd>
+        <dd>{{ detailInfo.cdptxid }}</dd>
 
         <dt>{{ $t('account.transDetail.confirmedheight') }}</dt>
         <dd>{{ detailInfo.confirmedheight }}</dd>
@@ -104,11 +104,12 @@
         <dd>{{ detailInfo.memo }}</dd>
       </dl>
       <dl v-if="isDex">
-        <dt>{{ $t('window.cdp.slwicc') }}</dt>
-        <dd>{{ formatFees(detailInfo.assetamount ? detailInfo.assetamount : detailInfo.coinamount).toFixed(8) }} {{detailInfo.txtype == 'DEX_MARKET_BUY_ORDER_TX' ? detailInfo.coinamount : detailInfo.assetsymbol}}</dd>
+        
+        <dt v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ $t('window.cdp.slwicc') }}</dt>
+        <dd v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ formatFees(detailInfo.assetamount ? detailInfo.assetamount : detailInfo.coinamount).toFixed(8) }} {{detailInfo.txtype == 'DEX_MARKET_BUY_ORDER_TX' ? detailInfo.coinamount : detailInfo.assetsymbol}}</dd>
 
-        <dt>{{ $t('window.cdp.jgwusd') }}</dt>
-        <dd>{{detailInfo.price ? formatFees(detailInfo.price).toFixed(8) : this.$t('window.cdp.sjcjwz') }} {{detailInfo.txtype.indexOf("DEX_MARKET")>-1 ?'':detailInfo.coinsymbol}}</dd>
+        <dt v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ $t('window.cdp.jgwusd') }}</dt>
+        <dd v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{detailInfo.price ? formatFees(detailInfo.price).toFixed(8) : this.$t('window.cdp.sjcjwz') }} {{detailInfo.txtype.indexOf("DEX_MARKET")>-1 ?'':detailInfo.coinsymbol}}</dd>
 
         <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>

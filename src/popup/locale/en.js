@@ -131,7 +131,7 @@ export default {
       toLabel: 'To',
       feesLabel: 'Fee',
       hashLabel: 'Tx hash',
-      cdpid: 'CDP ID',
+      cdpid: 'Created at：',
       assetamount:'Asset amount',
       price:'Price',
       bcointoredeem:'Redeem amount',

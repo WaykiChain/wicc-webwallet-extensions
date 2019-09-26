@@ -118,7 +118,7 @@
     },
 
     data () {
-      const type = this.type
+      const type = this.type  
       if (type === 'publish-contract') {
         return {
           inputValue: 1.1,
@@ -132,6 +132,13 @@
           min: 0.01,
           max: 0.1,
           interval: 0.001
+        }
+      }else if (type === 'wiccTx') {
+        return {
+          inputValue: 0.1,
+          min: 0.1,
+          max: 1,
+          interval: 0.01
         }
       } else {
         return {
