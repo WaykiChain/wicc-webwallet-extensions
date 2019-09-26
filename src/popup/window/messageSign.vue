@@ -1,19 +1,19 @@
 <template>
   <div class="cdp">
     <div class="content">
-      <h5 class="titleHeader">{{$t('window.cdp.消息签名')}}</h5>
+      <h5 class="titleHeader">{{$t('window.msgSign.xxqm')}}</h5>
       <div class="bar">
-        <span>账户{{activeAccount?activeAccount.index+1:1}}：{{cutMiddleStr(address,8)}}</span>
+        <span>{{$t('window.msgSign.zh')}}{{activeAccount?activeAccount.index+1:1}}：{{cutMiddleStr(address,8)}}</span>
       </div>
       <div class="cell">
         <div class="info">
-          <img src="../static/account-icon.png" alt />
-          <p class="cellValue" style="line-height:26px">OTC小应用 申请试用</p>
+          <img :src="imgUrl" alt />
+          <p class="cellValue" style="line-height:26px">{{appName}} {{$t('window.msgSign.appName')}}</p>
         </div>
-        <p class="infoMsg">你的钱包地址信息，请确认信息并签名</p>
+        <p class="infoMsg">{{$t('window.msgSign.msgDesc')}}</p>
       </div>
       <div style="overflow:hidden;padding: 20px 16px;">
-        <p class="cellValue">{{$t('消息内容')}}</p>
+        <p class="cellValue">{{$t('window.msgSign.msgTitle')}}</p>
         <p class="cellName" style="margin-top:10px;">{{msg}}</p>
       </div>
     </div>
@@ -33,12 +33,16 @@ export default {
   data() {
     return {
       urlQuery: "",
-      msg: ""
+      msg: "",
+      imgUrl:"",
+      appName:"",
     };
   },
   created() {
     const query = this.$router.currentRoute.query;
     this.msg = query.message;
+    this.imgUrl = query.imgUrl;
+    this.appName = query.appName;
     this.callbackId = query.callbackId;
     console.log(query);
   },
@@ -51,7 +55,6 @@ export default {
       };
       API.callRaw("messageSign", { info: param }).then(
         res => {
-          alert(res)
           this.$loading.close();
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, res);
@@ -137,6 +140,7 @@ export default {
 
   img {
     width: 26px;
+    height: 26px;
     margin-right: 10px;
   }
   .info {

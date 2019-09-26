@@ -329,6 +329,13 @@ export default {
       zzshjy:'CDP赎回中...',
       zzqxjy:'取消交易中...',
       zzyzqm:'验证签名...',
+    },
+    msgSign:{
+      xxqm:'消息签名',
+      zh:'账户',
+      appName:'申请使用',
+      msgDesc:'你的钱包地址信息，请确认信息并签名',
+      msgTitle:'消息内容',
     }
   }
 }

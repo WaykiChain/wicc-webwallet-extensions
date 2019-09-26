@@ -17,7 +17,8 @@
         </div>
         <div class="second-row">
           <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
-          <span class="trans-type">{{ formatNewTxType(trans.txtype) }}</span>
+          <span class="trans-type" v-if="trans.txtype=='CDP_STAKE_TX'">{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
+          <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
           <span class="trans-status">{{ formatStatus(trans) }}</span>
         </div>
       </li>

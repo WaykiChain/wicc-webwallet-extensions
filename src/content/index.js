@@ -254,10 +254,10 @@ window.WiccWallet = {
   },
 
   ///请求签名
-  SignMessage(message,callback){
+  SignMessage(imgUrl,appName,message,callback){
     const callbackId = saveCallback(callback)
     return send('signMessage',{
-      message,callbackId
+      imgUrl,appName,message,callbackId
     })
   },
 

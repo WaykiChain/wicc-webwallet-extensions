@@ -212,9 +212,9 @@ export default {
     })
   },
 
-  async signMessage({ message,callbackId }) {
+  async signMessage({ imgUrl,appName,message,callbackId }) {
     return openWindow('signMessage', {
-      message,callbackId
+      imgUrl,appName,message,callbackId
     })
   },
   

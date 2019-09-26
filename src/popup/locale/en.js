@@ -329,6 +329,13 @@ export default {
       zzshjy:'CDP in redemption',
       zzqxjy:'Cancel...',
       zzyzqm:'Verifying Signature...',
+    },
+    msgSign:{
+      xxqm:'Information Sign',
+      zh:'Account',
+      appName:'Apply ingress',
+      msgDesc:'Your wallet address information, please confirm the information and sign',
+      msgTitle:'What the information is',
     }
   }
 }
