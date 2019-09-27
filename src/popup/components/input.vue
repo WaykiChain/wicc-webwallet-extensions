@@ -83,7 +83,7 @@
 
   .wallet-input--label {
     color: #717680;
-    font-size: 15px;
+    font-size: 14px;
     padding: 2px;
   }
 
@@ -94,16 +94,19 @@
   .wallet-input-postfix {
     position: absolute;
     right: 12px;
-    top: 12px;
+    top: 10px;
+    font-size: 12px;
   }
 
   .wallet-input--input {
+    height: 40px;
+    margin-top: 10px;
   }
 
   .wallet-input--textarea {
     padding: 16px;
     resize: none;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 30px;
     height: 120px;
   }

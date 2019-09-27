@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="footer">
-      <fees-slider type="call-contract" v-model="fees"></fees-slider>
+      <fees-slider type="call-cdp" v-model="fees"></fees-slider>
       <div class="button-wrapper">
         <button @click="cancel">{{ $t('window.contract.closeButton') }}</button>
         <button

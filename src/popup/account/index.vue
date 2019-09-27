@@ -1,7 +1,6 @@
 <template>
   <div class="wallet-container">
     <div class="main-wrapper">
-      <main-header></main-header>
       <router-view class="main-content"></router-view>
     </div>
   </div>
@@ -20,12 +19,9 @@
 </style>
 
 <script type="text/jsx">
-  import MainHeader from './components/main-header'
+ 
 
   export default {
-    components: {
-      MainHeader
-    },
 
     created () {
     },

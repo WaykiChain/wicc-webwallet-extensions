@@ -29,17 +29,12 @@ const getSignInfo = (network, address) => {
   let srcRegId = null
 
   return baasApi.getAccountInfo(address).then((data) => {
-    srcRegId = data.regID
 
-    if (!srcRegId || !String(srcRegId).trim()) {
-      throw new Error('ADDRESS_NOT_ACTIVATED')
-    }
-
+    srcRegId = data.regid
     return baasApi.getblockcount()
   }).then((data) => {
     const height = data
     const privateKey = vaultStorage.getPrivateKey(address)
-
     return {
       srcRegId,
       height,
@@ -324,12 +319,11 @@ export default {
   },
 
   getTransHistory({
-    network,
-    address
+    info
   }) {
-    return transStorage.list(network, address).then((value) => {
-      return value || []
-    })
+    const localNetWork = localStorage.getItem('network')
+    const baasApi = new BaasAPI(localNetWork)
+    return baasApi.getTransHistory(info)
   },
 
   validateRegisterAccount({
@@ -368,7 +362,6 @@ export default {
       })
       .then((value) => {
         transStorage.append(network, address, 2, value)
-
         return value
       })
   },
@@ -468,6 +461,7 @@ export default {
     }) => {
       return wiccApi.createRegisterAppSign(privateKey, height, srcRegId, fees, script, scriptDesc)
     }).then((sign) => {
+      // alert(sign)
       return baasApi.submitOfflineTrans(sign)
     }).then((value) => {
       transStorage.append(network, address, 5, value)
@@ -627,6 +621,340 @@ export default {
   }) {
     return new BaasAPI(network).getTokenInfo(regId, address)
   },
+
+
+  cdpStake({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      let newInfo = {
+        nValidHeight: height,
+        txUid: srcRegId,
+        fees: parseInt(info.fees),
+        cdpTxId: info.cdpTxId,
+        bcoinsToStake: parseInt(info.bcoinsToStake),
+        scoinsToMint: parseInt(info.scoinsToMint),
+        address: "",
+        privateKey: privateKey,
+        network: localNetWork,
+        feeType: info.feeType,
+        bcoin_symbol: info.bcoin_symbol,
+        scoin_symbol: info.scoin_symbol
+      }
+      let hex = wiccApi.cdpStake(newInfo)
+      // alert(hex)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+
+  },
+
+  cdpLiquid({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      let newInfo = {
+        nValidHeight: height,
+        txUid: srcRegId,
+        fees: parseInt(info.fees),
+        cdpTxId: info.cdpTxId,
+        scoinsToLiquidate: parseInt(info.scoinsToLiquidate),
+        privateKey: privateKey,
+        feeType: info.feeType,
+        assetSymbol: info.assetSymbol,
+        network: localNetWork,
+      }
+      let hex = wiccApi.cdpliquidate(newInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  cdpRedeem({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      let newInfo = {
+        nValidHeight: height,
+        txUid: srcRegId,
+        fees: parseInt(info.fees),
+        cdpTxId: info.cdpTxId,
+        scoins_to_repay: parseInt(info.scoins_to_repay),
+        bcoins_to_redeem: parseInt(info.bcoins_to_redeem),
+        privateKey: privateKey,
+        feeType: info.feeType,
+        bcoins_symbol: info.bcoins_symbol,
+        network: localNetWork,
+      }
+      let hex = wiccApi.cdpRedeem(newInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  dexPriceSell({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      let newInfo = {
+        nValidHeight: height,
+        fees: parseInt(info.fees),
+        srcRegId: srcRegId,
+        feeType: info.feeType,
+        assetAmount: parseInt(info.assetAmount),
+        askPrice: parseInt(info.askPrice),
+        privateKey: privateKey,
+        network: localNetWork,
+        coinType: info.coinType,
+        assetType: info.assetType
+      }
+      let hex = wiccApi.dexPriceSell(newInfo)
+
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  dexPriceBuy({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      var dexBuyLimitTxinfo = {
+
+        nValidHeight: height,
+        fees: parseInt(info.fees),
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+        feeType: info.feeType,
+        assetAmount: parseInt(info.assetAmount),
+        bidPrice: parseInt(info.bidPrice),
+        network: localNetWork,
+        coinType: info.coinType,
+        assetType: info.assetType
+      };
+      let hex = wiccApi.dexPriceBuy(dexBuyLimitTxinfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  dexMarketSell({ info }) {
+
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      var dexSellMarketTxinfo = {
+        nValidHeight: height,
+        fees: parseInt(info.fees),
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+        feeType: info.feeType,
+        assetAmount: parseInt(info.assetAmount),
+        network: localNetWork,
+        coinType: info.coinType,
+        assetType: info.assetType
+
+      };
+      let hex = wiccApi.dexMarketSell(dexSellMarketTxinfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  dexMarketBuy({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      var dexBuyMarketTxinfo = {
+
+        nValidHeight: height,
+        fees: parseInt(info.fees),
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+        feeType: info.feeType,
+        coinAmount: parseInt(info.coinAmount),
+        network: localNetWork,
+        coinType: info.coinType,
+        assetType: info.assetType
+      };
+      let hex = wiccApi.dexMarketBuy(dexBuyMarketTxinfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  dexCancel({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({ srcRegId, height, privateKey }) => {
+      var dexCancelTxinfo = {
+
+        nValidHeight: height,
+        fees: parseInt(info.fees),
+        feeSymbol: info.feeType,
+        srcRegId: srcRegId,
+        orderId: info.orderId,
+        network: localNetWork,
+        privateKey: privateKey,
+      };
+      let hex = wiccApi.dexCancel(dexCancelTxinfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  /**
+   * 多币种转账
+   */
+  variousCoinsTx({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.value))) {
+        throw new Error('INVALID_VALUE')
+      }
+      let hex = wiccApi.createVariousCoinsTx(privateKey, height, srcRegId, info.destAddr, info.value, info.fees, info.coinType, info.feeSymbol, localNetWork, info.memo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+  /**
+   * 获取交易详情
+   */
+  getDetailInfo({ info }) {
+    const localNetWork = localStorage.getItem('network')
+
+    return new BaasAPI(localNetWork).getDetailInfo(info)
+
+  },
+
+
+  /**
+   * 获取发型资产的资产详情
+   */
+  getAssetInfo({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    return new BaasAPI(localNetWork).getAssetInfo(info)
+  },
+
+
+
+  assetsPub({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.assetSupply))) {
+        throw new Error('INVALID_VALUE')
+      }
+      var assestInfo = {
+
+        nValidHeight: height,
+        fees: info.fees,
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+
+        assetName: info.assetName,
+        assetOwnerId: info.assetOwnerId,
+        assetSupply: info.assetSupply,
+        assetSymbol: info.assetSymbol,
+        assetMintable: info.assetMintable,
+        network: localNetWork,
+        feesName: info.feesName,
+
+      };
+      let hex = wiccApi.assetsPub(assestInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+  assetsUpdate({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (info.updateType == '3') {
+        if (isNaN(parseFloat(info.updateContent))) {
+          throw new Error('INVALID_VALUE')
+        }
+      }
+      var assestInfo = {
+
+        nValidHeight: height,
+        fees: info.fees,
+        srcRegId: srcRegId,
+        privateKey: privateKey,
+
+        updateType: info.updateType,
+        updateContent: info.updateContent,
+        assetSymbol: info.assetSymbol,
+        network: localNetWork,
+        feesName: info.feesName,
+
+      };
+      let hex = wiccApi.assetsUpdate(assestInfo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+  messageSign({ info }) {
+
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      return wiccApi.messageSign(info.msg, privateKey)
+    })
+
+  },
+
+
+  /**
+   * 多币种合约调用
+   */
+  variousCoinsContractTx({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.amount))) {
+        throw new Error('INVALID_VALUE')
+      }
+      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
+      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   async addToken({
     accountId,

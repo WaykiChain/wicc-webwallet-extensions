@@ -6,7 +6,19 @@ const TYPE_PATH_MAP = {
   requestPay: '/window/request-pay',
   requestVote: '/window/request-vote',
   login: '/window/login',
-  walletCreate: '/'
+  walletCreate: '/',
+  requestMyTest: '/window/request-my',
+  createCdpView: '/window/cdp-create',
+  liquidCdpView: '/window/cdp-liquid',
+  redeemCdpView: '/window/cdp-redeem',
+  additionalCdpView: '/window/cdp-additional',
+  dexView: '/window/dex-dealView',
+  dexCancelView: '/window/dex-cancel-dealView',
+  AssetPub:'/window/assets-pub',
+  AssetUpadte:'/window/assets-update',
+  signMessage:'/window/message-sign',
+  UContractInvoke:'/window/contract-new',
+  UCoinTransfer:'/window/windowSend'
 }
 
 const getQueryString = (args) => {
@@ -36,8 +48,8 @@ const openWindow = async (type, args) => {
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
-    height: 640,
-    width: 392
+    height: 700,
+    width: 375
   })
 }
 
@@ -73,7 +85,7 @@ export default {
     return chrome.windows.create({
       url: popupURL,
       type: 'popup',
-      height: 600,
+      height: 700,
       width: 375
     })
   },
@@ -148,6 +160,84 @@ export default {
     })
   },
 
+  /**
+   cdp  pop 界面 
+   */
+  async createCdpView({ wiccNum, wusdNum, bcoinSymbol,scoinSymbol, callbackId }) {
+    return openWindow('createCdpView', {
+      wiccNum, wusdNum,
+      bcoinSymbol,
+      scoinSymbol,
+    
+      callbackId,
+    })
+  },
+  async additionalCdpView({ wiccNum, wusdNum, cdpTxId,bcoinSymbol,scoinSymbol, callbackId }) {
+    return openWindow('additionalCdpView', {
+      wiccNum, wusdNum, cdpTxId, bcoinSymbol,scoinSymbol,callbackId
+    })
+  },
+  async liquidCdpView({ wusdNum, cdpTxId, callbackId, }) {
+    return openWindow('liquidCdpView', {
+      wusdNum, cdpTxId,callbackId
+    })
+  },
+  async redeemCdpView({ wusdNum, wiccNum,redeemSymbol, cdpTxId ,callbackId }) {
+    return openWindow('redeemCdpView', {
+      wusdNum, wiccNum,redeemSymbol, cdpTxId,callbackId
+    })
+  },
+  async dexView({ dealType, amount, limitPrice, coinType,assetType,callbackId }) {
+    return openWindow('dexView', {
+      dealType, amount, limitPrice,  coinType,assetType,callbackId
+    })
+  },
+
+  async dexCancelView({ dealNum,callbackId }) {
+    return openWindow('dexCancelView', {
+      dealNum,callbackId
+    })
+  },
+  
+
+  async AssetPub({ assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId }) {
+    return openWindow('AssetPub', {
+      assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callbackId
+    })
+  },
+
+  async AssetUpadte({ assetSymbol,updateType,updateContent,callbackId }) {
+    return openWindow('AssetUpadte', {
+      assetSymbol,updateType,updateContent,callbackId
+    })
+  },
+
+  async signMessage({ imgUrl,appName,message,callbackId }) {
+    return openWindow('signMessage', {
+      imgUrl,appName,message,callbackId
+    })
+  },
+  
+
+  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId }) {
+    return openWindow('UContractInvoke', {
+      amount,coinSymbol,regId,contract,memo,callbackId
+    })
+  },
+
+  async UCoinTransfer({ assetMap,memo,callbackId }) {
+    return openWindow('UCoinTransfer', {
+      assetMap,memo,callbackId
+    })
+  },
+
+
+
+
+
+
+
+
   async requestPayRaw({
     destAddress,
     value,
@@ -185,7 +275,6 @@ export default {
       onlyRaw
     })
   },
-
   handleMessage(action, data) {
     data = data || {}
     return new Promise(async (resolve, reject) => {

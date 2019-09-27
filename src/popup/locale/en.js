@@ -2,11 +2,11 @@ export default {
   common: {
     confirm: 'Confirm',
     cancel: 'Cancel',
-    activeAccount: 'Activate',
+    activeAccount: 'Register',
     copySuccess: 'Copied',
     fast: 'Fast',
     slow: 'Slow',
-    minerFee: 'Gas fee',
+    minerFee: 'Fee',
     accountLabel: 'Account',
     copyAddress: 'Copy Address',
     unknownError: 'Unknown Error',
@@ -15,14 +15,14 @@ export default {
   },
 
   errors: {
-    passwordError: 'The password you entered is incorrect.',
-    passwordInConsistent: 'Passwords do not match. Please check.',
+    passwordError: 'Password is incorrect.',
+    passwordInConsistent: 'Passwords do not match.',
     insufficientBalance: 'Insufficient balance',
     amountLessThanLimit: 'The transferred amount should not less than 0.0001',
-    accountNotActivated: 'Please activate your wallet first',
+    accountNotActivated: 'Please register your wallet first',
     accountAlreadyExists: 'Account already exists',
     passwordInvalid: 'The input current password is incorrect',
-    inActivating: 'Activating, please wait'
+    inActivating: 'Registering, please wait'
   },
 
   splash: {
@@ -129,17 +129,29 @@ export default {
     transDetail: {
       fromLabel: 'From',
       toLabel: 'To',
-      feesLabel: 'Gas fee',
+      feesLabel: 'Fee',
       hashLabel: 'Tx hash',
-      commentLabel: 'Comment',
+      cdpid: 'Created at：',
+      assetamount:'Asset amount',
+      price:'Price',
+      bcointoredeem:'Redeem amount',
+      scoinstorepay:'Destroy coins',
+      coinsymbol:"Coin symbol",
+      scoinstoliquidate:"Liquid amount",
+      bcoinstostake:'Stake amount',
+      scoinstomint:'Generate amount',
+      confirmedheight:"Confirmed height",
+      commentLabel: 'Memo',
       txTypeLabel: 'Type',
-      confirmedTimeLabel: 'Confirmation time'
+      confirmedTimeLabel: 'Confirmed time',
+      assetSymbol:'Total',
+      costWicc:'Cost',
     },
     transHistory: {
       title: 'History',
-      statusConfirmed: 'Completed',
+      statusConfirmed: 'Successful',
       statusPending: 'Pending...',
-      emptyBlock: 'No history'
+      emptyBlock: 'No records'
     }
   },
 
@@ -158,7 +170,7 @@ export default {
       backup: {
         title: 'Backup Mnemonics',
         tip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
-        mnemonicLabel: 'Please copy the following mnemonics. We will verify them in the next step.',
+        mnemonicLabel: 'Please copy the following mnemonics. You will verify them in the next step.',
         nextButton: 'Next',
         downloadButton: 'Download'
       },
@@ -194,7 +206,13 @@ export default {
       changePassword: 'Change Password',
       walletTitle: 'Reset Wallet',
       createWallet: 'Create Wallet',
-      importWallet: 'Import Wallet'
+      importWallet: 'Import Wallet',
+      net:'NetWork',
+      edit:'Edit',
+      done:'Done',
+      name:'Network Name',
+      rpc:'New Baas URL',
+      addNet:'Add Network',
     },
     about: {
       title: 'Info',
@@ -219,50 +237,122 @@ export default {
 
   window: {
     contract: {
-      title: 'WICC Contract Call',
+      title: 'Invoke Contract',
       addressLabel: 'Address:',
       contractRegIdLabel: 'Contract RegID:',
-      valueLabel: 'WICC amount:',
+      valueLabel: 'Amount:',
       contractLabel: 'Contract:',
-      closeButton: 'Close',
+      closeButton: 'Cancel',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Call contract successfully',
-      createFailure: 'Failed to call contract'
+      createSuccess: 'Successful',
+      createFailure: 'Failed'
     },
     publishContract: {
-      title: 'WICC Contract Publish',
+      title: 'Publish Contract',
       addressLabel: 'Address:',
       scriptLabel: 'Contract script:',
       scriptDescLabel: 'Contract description:',
-      closeButton: 'Close',
+      closeButton: 'Cancel',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Create contract successfully',
-      createFailure: 'Failed to create contract'
+      createSuccess: 'Successful',
+      createFailure: 'Failed'
     },
     transfer: {
-      title: 'WICC Transfer Confirm',
+      title: 'Transfer',
       fromLabel: 'From:',
       toLabel: 'To:',
       valueLabel: 'Amount:',
-      closeButton: 'Close',
+      closeButton: 'Cancel',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Submit successfully',
-      createFailure: 'Failed to submit'
+      createSuccess: 'Successful',
+      createFailure: 'Failed'
     },
     vote: {
-      title: 'WICC Node Voting',
+      title: 'Vote',
       addressLabel: 'Address:',
       valueLabel: 'Vote amount:',
       withdrawValueLabel: 'Withdrawal amount:',
       maxVoteLimit: 'The number of voted addresses should not exceed 11.',
-      closeButton: 'Close',
+      closeButton: 'Cancek',
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
-      createSuccess: 'Call successfully',
-      createFailure: 'Failed to call'
+      createSuccess: 'Successful',
+      createFailure: 'Failed'
+    },
+    cdp:{
+      xjmr:"Limit Buy Order",
+      xjmc:"Limit Sell Order",
+      sjmc:"Market Sell Order",
+      sjmr:"Market Buy Order",
+      slwicc:"Amount",
+      jgwusd:"Price",
+      hdslwusd:"Amount receive",
+      slwusd:"Amount",
+      hdslwicc:"Cost",
+      dqscjg:"Price",
+      yjhdwusd:"Amount receive",
+      yjhdwicc:"Amount receive",
+      sjcjwz:"Subject to actual tx",
+      tipsmc:"Note:The system will sell at the highest market price.The final price is subject to the actual transaction.",
+      tipsmr:"Note:The system will buy at the lowest market price.The final price is subject to the actual transaction.",
+      qxjy:"Cancel",
+      ddh:"Order",
+      ddxq:"Details",
+      lx:"Type",
+      qx:"Cancel",
+      qd:"Confirm",
+      wdzc:"My assets",
+      cdpcjjy:"CDP Generated",
+      cdpzjjy:"CDP Addition",
+      cdpqsjy:"CDP Liquidation",
+      cdpshjy:"CDP Redemption",
+      cjcdpdz:"Created by：",
+      dyl:"Collateral amount：",
+      dcl:"Generate amount：",
+      gcdpCjjyid:"Created at：",
+      zjdyl:"Add Collateral amount：",
+      zjdcl:" Generate amount：",
+      qsrdz:"Address：",
+      qsl:"Liquidation amount：",
+      ghl:"Repay amount：",
+      shl:"Redemption amount：",
+      sjcjwz:'The actual transaction prevails',
+      addtional:'Adding Collateral',
+      zzfbzc:'Creat',
+
+      zzfbzc:'Releasing Asset...',
+      updateAssets:'Updating Asset...',
+      zzzjjy:'Adding Collateral...',
+      zzcjjy:'Generating CDP...',
+      zzqsjy:'Liquidating CDP...',
+      zzshjy:'CDP in redemption',
+      zzqxjy:'Cancel...',
+      zzyzqm:'Verifying Signature...',
+      hqzcz:'Loading...',
+      noAssets:"You don't have any assets",
+    },
+    msgSign:{
+      xxqm:'Information Sign',
+      zh:'Account',
+      appName:'Apply ingress',
+      msgDesc:'Your wallet address information, please confirm the information and sign',
+      msgTitle:'What the information is',
+    },
+    assets:{
+      zcfb:'Asset release',
+      dbjc:'Token symbol',
+      dbqc:'Token name',
+      zfxl:'Total',
+      dbcyz:'Owner',
+      kfzf:'Can increment?',
+      s:'Yes',
+      f:'No',
+      fwf:'Cost',
+      zcgx:'Asset update',
+      n:'New'
     }
   }
 }

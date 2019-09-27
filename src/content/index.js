@@ -153,6 +153,149 @@ window.WiccWallet = {
     })
   },
 
+  ///创建
+  CdpStake(assetMap,sCoinSymbol,scoinNum,cdpTxID,callback){
+    const callbackId = saveCallback(callback)
+    if (cdpTxID){
+      return send('additionalCdpView', {
+        wiccNum:assetMap[0].bCoinToStake,
+        wusdNum:scoinNum,
+        cdpTxId:cdpTxID,
+        bcoinSymbol:assetMap[0].coinSymbol,
+        scoinSymbol:sCoinSymbol,
+        callbackId
+      })
+    }
+    return send('createCdpView', {
+      wiccNum:assetMap[0].bCoinToStake,
+      wusdNum:scoinNum,
+      bcoinSymbol:assetMap[0].coinSymbol,
+      scoinSymbol:sCoinSymbol,
+      callbackId
+    })
+  },
+  ///清算
+  CdpLiquidate(liquidateAssetSymbol,scoinsToLiquidate,cdpTxId,callback){
+    const callbackId = saveCallback(callback)
+    return send('liquidCdpView', {
+      assetSymbol:liquidateAssetSymbol,
+      wusdNum:scoinsToLiquidate,
+      cdpTxId,
+      callbackId
+    })
+  },
+  ///赎回
+  CdpRedeem(assetMap,repayNum,cdpTxId,callback){
+    const callbackId = saveCallback(callback)
+    return send('redeemCdpView', {
+      wusdNum:repayNum,
+      wiccNum:assetMap[0].redeemCoinNum,
+      redeemSymbol:assetMap[0].coinSymbol,
+      cdpTxId,
+      callbackId
+    })
+  },
+  
+
+  ///限价交易  dealType : Limit_BUY / Limit_SELL
+  DexLimit(dexTxType,coinType,assetType,amount,price,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexView',{
+      dealType:dexTxType,
+      amount,
+      limitPrice:price,
+      coinType,assetType,
+      callbackId
+    })
+  },
+
+  ///市价交易    dealType : Market_BUY / Market_SELL
+  DexMarket(dexTxType,coinType,assetType,amount,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexView',{
+      dealType:dexTxType,
+      amount,
+      limitPrice:0,
+      coinType,assetType,
+      callbackId
+    })
+  },
+
+  DexCancelOrder(dexTxNum,callback){
+    const callbackId = saveCallback(callback)
+    return send('dexCancelView',{
+      dealNum:dexTxNum,
+      callbackId
+    })
+  },
+
+  ///发布资产
+  AssetIssue(assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callback){
+    const callbackId = saveCallback(callback)
+    return send('AssetPub',{
+      assetSymbol,
+      assetName,
+      assetSupply,
+      assetOwnerId,
+      assetMintable,
+      callbackId
+    })
+  },
+
+   ///资产更新
+   AssetUpdate(tokenSymbol,updateType,updateValue,callback){
+    const callbackId = saveCallback(callback)
+    return send('AssetUpadte',{
+      assetSymbol:tokenSymbol,
+      updateType,
+      updateContent:updateValue,
+      callbackId
+    })
+  },
+
+  ///请求签名
+  SignMessage(imgUrl,appName,message,callback){
+    const callbackId = saveCallback(callback)
+    return send('signMessage',{
+      imgUrl,appName,message,callbackId
+    })
+  },
+
+    ///多币种合约调用
+    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback){
+      const callbackId = saveCallback(callback)
+      return send('walletPluginUContractInvoke',{
+        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId
+      })
+    },
+
+    ///多币种转账
+    UCoinTransfer(assetMap,memo,callback){
+      const callbackId = saveCallback(callback)
+      return send('UCoinTransfer',{
+        assetMap,memo,callbackId
+      })
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   genRequestPayRaw(destAddress, value, desc, callback) {
     const callbackId = saveCallback(callback)
 

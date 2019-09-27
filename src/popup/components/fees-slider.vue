@@ -1,7 +1,7 @@
 <template>
   <div class="fees-slider">
-    <div class="fees-slider-label">{{ label || $t('common.minerFee') }}</div>
-    <div class="fees-slider-value-tip">{{ inputValue }} WICC</div>
+    <div class="fees-slider-label">{{ label || $t('common.minerFee') }}:</div>
+    <div class="fees-slider-value-tip">{{ inputValue }} {{feeName}}</div>
     <vue-slider
         v-model="inputValue"
         @callback="handleChange"
@@ -61,22 +61,22 @@
     position: relative;
 
     span {
-      font-size: 14px;
+      font-size: 12px;
       color: #999;
     }
   }
 
   .fees-slider-label {
     color: #999;
-    font-size: 14px;
-    padding: 2px;
+    font-size: 12px;
+    padding: 4px 0;
   }
 
   .fees-slider-value-tip {
     position: absolute;
-    font-size: 14px;
-    right: 0;
-    top: 2px;
+    font-size: 12px;
+    left: 45px;
+    top: 4px;
     color: #999;
   }
 </style>
@@ -90,6 +90,10 @@
     },
 
     props: {
+      feeName: {
+        type: String,
+        default:'WICC'
+      },
       label: {
         type: String
       },
@@ -114,7 +118,7 @@
     },
 
     data () {
-      const type = this.type
+      const type = this.type  
       if (type === 'publish-contract') {
         return {
           inputValue: 1.1,
@@ -122,18 +126,25 @@
           max: 100,
           interval: 0.1
         }
-      } else if (type === 'call-contract') {
+      }else if (type === 'call-cdp') {
         return {
           inputValue: 0.01,
           min: 0.01,
+          max: 0.1,
+          interval: 0.001
+        }
+      }else if (type === 'wiccTx') {
+        return {
+          inputValue: 0.1,
+          min: 0.1,
           max: 1,
           interval: 0.01
         }
       } else {
         return {
-          inputValue: 0.0001,
-          min: 0.0001,
-          max: 0.05,
+          inputValue: 0.001,
+          min: 0.001,
+          max: 0.01,
           interval: 0.0001
         }
       }

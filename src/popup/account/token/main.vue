@@ -1,25 +1,22 @@
 <template>
-  <main-layout ref="mainLayout">
-    <token-list
-        slot="drawer"
-        @active-token-change="handleActiveTokenChange"
-        :active-reg-id="regId"
-        :active-account="activeAccount"
-        :active-address="activeAddress"
-        :network="network"
-        :tokens="tokens">
-    </token-list>
+  <main-layout ref="mainLayout" >
 
-    <coin-card
-        v-if="activeTokenInfo"
-        style="margin: 16px;"
-        :show-register-button="false"
-        :name="name"
-        :address="activeAddress"
-        :value="activeTokenInfo.FreeValues">
-    </coin-card>
+    <div class="backView"  @click="goback">
+       <img src="../../static/back-icon.svg" alt="">
+      <p >
+       {{this.name}}
+      </p>
+    </div>
 
-    <template slot="body">
+    <div class="tokenCount">
+      <p class="count">
+         {{activeTokenInfo ? activeTokenInfo.FreeValues : 0}}
+      </p>
+      <p>
+        --
+      </p>
+    </div>
+    <template slot="body" >
       <trans-history
           :transactions="transactions"
           :show-empty-block="!loading"></trans-history>
@@ -32,13 +29,37 @@
 </template>
 
 <style scoped lang="scss">
+p{
+  margin-bottom: 0;
+}
+.backView{
+  text-align: center;
+  box-sizing: border-box;
+
+  img{
+    position: absolute;
+    left: 5px;
+    top: 10px;
+  }
+  p{
+    line-height: 54px;
+    font-size: 18px;
+    color: #5B5F67;
+  };
+}
+.tokenCount{
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  .count{
+    font-size: 22px;
+    color: #3C78EA;
+  }
+}
 </style>
 
 <script type="text/jsx">
   import API from '../../api'
-  import { DrawerLayout } from 'vue-drawer-layout'
-  import TokenList from '../components/token-list'
-  import CoinCard from '../components/coin-card'
   import TransHistory from '../components/trans-history'
   import StateWatcher from '../state-watcher'
   import MainLayout from '../components/main-layout'
@@ -47,9 +68,6 @@
     mixins: [StateWatcher],
 
     components: {
-      DrawerLayout,
-      TokenList,
-      CoinCard,
       TransHistory,
       MainLayout
     },
@@ -76,27 +94,15 @@
     },
 
     methods: {
-      handleActiveTokenChange (token) {
-        if (!token) {
-          this.$router.push({
-            name: 'accountMain'
-          })
-        } else {
-          this.$router.push({
-            name: 'tokenMain',
-            query: {
-              name: token.name,
-              regId: token.regId
-            }
-          })
-
-          this.$refs.mainLayout.toggleDrawer()
-        }
+      goback(){
+        this.$router.go(-1)
       },
 
       fetchTokenInfo () {
+
         this.loading = true
         this.$loading(this.$t('common.loading'))
+        console.log(this.network,this.activeAddress,this.regId)
         API.getTokenInfo(this.network, this.activeAddress, this.regId).then((value) => {
           const tokenInfo = value.result
           if (tokenInfo && tokenInfo.FreeValues) {
@@ -106,6 +112,7 @@
           this.$loading.close()
           this.loading = false
         }, (error) => {
+          console.log(error)
           this.$loading.close()
           this.loading = false
         })
@@ -117,6 +124,12 @@
       },
 
       gotoSendToken () {
+
+        if (!this.activeTokenInfo){
+          this.$toast('No found this token')
+          return
+        }
+
         this.$router.push({
           name: 'sendToken',
           query: {
