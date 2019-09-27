@@ -12,7 +12,7 @@
       <div class="cell" style="display: block;" v-if="updateType == '3'">
         <p class="cellName">{{$t('window.assets.zfxl')}}</p>
         <p class="cellValue">
-          {{oldAssetSupply}} →
+          {{oldAssetSupply}} +
           <span style="color:#3C78EA">{{updateContent}}</span>
         </p>
       </div>
@@ -39,7 +39,7 @@
           {{$t('window.assets.zfxl')}}
           <span v-if="updateType == '3'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
         </p>
-        <p class="cellValue">{{updateType == '3' ? updateContent :oldAssetSupply}}</p>
+        <p class="cellValue">{{updateType == '3' ? parseInt(updateContent)+parseInt(oldAssetSupply) :oldAssetSupply}}</p>
       </div>
       <div class="cell">
         <p class="cellName">
@@ -82,10 +82,10 @@ export default {
       urlQuery: "",
       fees: 0.01,
       updateType: "", //1资产拥有者 2资产名称 3 资产发行量
-      oldAssetName: "我是旧的名字",
+      oldAssetName: "",
       oldAssetOwnerId:
-        "我是旧的持有人啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦阿里",
-      oldAssetSupply: "我是旧的增发量",
+        "",
+      oldAssetSupply: "",
       updateContent: "",
       assetSymbol: "",
       callbackId: "",
@@ -151,14 +151,17 @@ export default {
       );
     },
     getOldAssets() {
-      this.$loading(" "); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.hqzcz")); //this.$t("window.transfer.confirmLoading")
       let param = {
-        assetSymbol: "SHULIA"
+        assetSymbol: this.assetSymbol
       };
       API.callRaw("getAssetInfo", { info: param }).then(
         res => {
           console.log(res);
           this.$loading.close();
+          this.oldAssetName = res.assetname
+          this.oldAssetOwnerId = res.owneraddr
+          this.oldAssetSupply = res.totalsupply / Math.pow(10,8)
         },
         error => {
           this.$loading.close();

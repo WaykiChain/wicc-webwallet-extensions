@@ -26,7 +26,7 @@
         >
           <img class="token-item-icon" src="../../static/wicclogo.svg" />
           <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8)}}</span>
+          <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8)}}</span>
         </li>
         <li v-if="Object.keys(myAssets).length == 0 " class="token-item">
             <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
@@ -238,7 +238,6 @@ import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import axios from "axios";
 import eventBus from "../bus";
-import decimal from 'decimal.js'
 
 export default {
   name: "token-list",
@@ -294,10 +293,6 @@ export default {
   },
 
   methods: {
-    decimalNum(numble){
-      const x = new decimal(numble)
-      return x.div(100000000)
-    },
     handleNetworkChange(network) {
       if (network == this.lastNetWork) {
         console.log("点击切换节点地址：" + this.currentAddr+'Net:'+network);

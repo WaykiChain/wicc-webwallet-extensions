@@ -324,7 +324,7 @@ export default class {
       srcRegId: info.srcRegId, // sender's regId
       assetData: assetData,
       feesCoinSymbol: info.feesName,
-      publicKey: info.privateKey.toPublicKey().toString(),
+      // publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
     const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_ISUUE, assetCreateInfo)
@@ -352,10 +352,10 @@ export default class {
       assetUpdateData: assetUpdateData,
       feesCoinSymbol: info.feesName,
       assetSymbol: info.assetSymbol,
-      publicKey: info.privateKey.toPublicKey().toString(),
+      // publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
-    alert(JSON.stringify(assetCreateInfo))
+    // alert(JSON.stringify(assetCreateInfo))
     const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_UPDATE, assetCreateInfo)
     return rawtx
   }
