@@ -106,10 +106,37 @@
       <dl v-if="isDex">
         
         <dt v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ $t('window.cdp.slwicc') }}</dt>
-        <dd v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ formatFees(detailInfo.assetamount ? detailInfo.assetamount : detailInfo.coinamount).toFixed(8) }} {{detailInfo.txtype == 'DEX_MARKET_BUY_ORDER_TX' ? detailInfo.coinamount : detailInfo.assetsymbol}}</dd>
+        <dd v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ formatFees(detailInfo.assetamount ? detailInfo.assetamount : detailInfo.coinamount).toFixed(8) }} {{detailInfo.txtype == 'DEX_MARKET_BUY_ORDER_TX' ? detailInfo.coinsymbol : detailInfo.assetsymbol}}</dd>
 
         <dt v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{ $t('window.cdp.jgwusd') }}</dt>
         <dd v-if="detailInfo.txtype != 'DEX_CANCEL_ORDER_TX'">{{detailInfo.price ? formatFees(detailInfo.price).toFixed(8) : this.$t('window.cdp.sjcjwz') }} {{detailInfo.txtype.indexOf("DEX_MARKET")>-1 ?'':detailInfo.coinsymbol}}</dd>
+
+        <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
+        <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
+
+        <dt>{{ $t('account.transDetail.txTypeLabel') }}</dt>
+        <dd>{{ formatNewTxType(detailInfo.txtype) }}</dd>
+
+        <dt>{{ $t('account.transDetail.hashLabel') }}</dt>
+        <dd>{{ detailInfo.txid }}</dd>
+
+        <dt>{{ $t('account.transDetail.confirmedheight') }}</dt>
+        <dd>{{ detailInfo.confirmedheight }}</dd>
+
+        <dt>{{ $t('account.transDetail.confirmedTimeLabel') }}</dt>
+        <dd>{{ formatTime(detailInfo.confirmedtime * 1000) }}</dd>
+
+        <dt v-show="detailInfo.memo">{{ $t('account.transDetail.commentLabel') }}</dt>
+        <dd>{{ detailInfo.memo }}</dd>
+      </dl>
+      <dl v-if="detailInfo.txtype == 'ASSET_UPDATE_TX' || detailInfo.txtype == 'ASSET_ISSUE_TX'">
+
+          <dt>{{ $t('account.transDetail.costWicc') }}</dt>
+        <dd>{{ detailInfo.txtype == 'ASSET_UPDATE_TX' ? '110 WICC' : '550WICC'}}</dd>
+
+        <dt>{{ $t('account.transDetail.assetSymbol') }}</dt>
+        <dd
+        >{{detailInfo.txtype == 'ASSET_UPDATE_TX' ? parseInt(formatFees(detailInfo.updatevalue)):parseInt(formatFees(detailInfo.totalsupply))}} {{detailInfo.assetsymbol}}</dd>
 
         <dt>{{ $t('account.transDetail.feesLabel') }}</dt>
         <dd>{{ formatFees(detailInfo.fees).toFixed(8) }} {{detailInfo.feesymbol}}</dd>
@@ -209,7 +236,8 @@ export default {
           this.detailInfo = res;
           if (
             this.detailInfo.txtype.indexOf("CDP") > -1 ||
-            this.detailInfo.txtype.indexOf("DEX") > -1
+            this.detailInfo.txtype.indexOf("DEX") > -1 ||
+            this.detailInfo.txtype.indexOf("ASSET") > -1
           ) {
             this.showTitle = false;
           } else {

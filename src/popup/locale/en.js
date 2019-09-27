@@ -143,7 +143,9 @@ export default {
       confirmedheight:"Confirmed height",
       commentLabel: 'Memo',
       txTypeLabel: 'Type',
-      confirmedTimeLabel: 'confirmed time'
+      confirmedTimeLabel: 'Confirmed time',
+      assetSymbol:'Total',
+      costWicc:'Cost',
     },
     transHistory: {
       title: 'History',
@@ -289,7 +291,7 @@ export default {
       jgwusd:"Price",
       hdslwusd:"Amount receive",
       slwusd:"Amount",
-      hdslwicc:"Coast",
+      hdslwicc:"Cost",
       dqscjg:"Price",
       yjhdwusd:"Amount receive",
       yjhdwicc:"Amount receive",
@@ -329,6 +331,8 @@ export default {
       zzshjy:'CDP in redemption',
       zzqxjy:'Cancel...',
       zzyzqm:'Verifying Signature...',
+      hqzcz:'Loading...',
+      noAssets:"You don't have any assets",
     },
     msgSign:{
       xxqm:'Information Sign',
@@ -336,6 +340,19 @@ export default {
       appName:'Apply ingress',
       msgDesc:'Your wallet address information, please confirm the information and sign',
       msgTitle:'What the information is',
+    },
+    assets:{
+      zcfb:'Asset release',
+      dbjc:'Token symbol',
+      dbqc:'Token name',
+      zfxl:'Total',
+      dbcyz:'Owner',
+      kfzf:'Can increment?',
+      s:'Yes',
+      f:'No',
+      fwf:'Cost',
+      zcgx:'Asset update',
+      n:'New'
     }
   }
 }

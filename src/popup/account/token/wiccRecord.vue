@@ -122,6 +122,7 @@ export default {
         },err=>{
           console.log(err)
           this.$loading.close();
+          this.$toast(err.message)
           this.loading = false;
       }
       );

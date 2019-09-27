@@ -75,7 +75,7 @@
   .fees-slider-value-tip {
     position: absolute;
     font-size: 12px;
-    left: 55px;
+    left: 45px;
     top: 4px;
     color: #999;
   }

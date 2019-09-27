@@ -118,7 +118,7 @@ export default {
     } else {
       this.balance = 0;
     }
-    this.feesName = query.coinType == "WGRT" ? 'WICC' : query.coinType
+    this.feesName = query.coinType == "WUSD" ?  query.coinType : 'WICC'
     this.coinType = query.coinType
   },
 

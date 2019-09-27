@@ -144,7 +144,10 @@ export default {
       price:'价格',
       commentLabel: '备注',
       txTypeLabel: '交易类型',
-      confirmedTimeLabel: '交易时间'
+      confirmedTimeLabel: '交易时间',
+      assetSymbol:'资产总量',
+      costWicc:'花费',
+
     },
     transHistory: {
       title: '历史交易',
@@ -329,6 +332,8 @@ export default {
       zzshjy:'CDP赎回中...',
       zzqxjy:'取消交易中...',
       zzyzqm:'验证签名...',
+      hqzcz:'获取资产中...',
+      noAssets:"您没有任何资产",
     },
     msgSign:{
       xxqm:'消息签名',
@@ -336,6 +341,19 @@ export default {
       appName:'申请使用',
       msgDesc:'你的钱包地址信息，请确认信息并签名',
       msgTitle:'消息内容',
+    },
+    assets:{
+      zcfb:'资产发布',
+      dbjc:'代币简称',
+      dbqc:'代币全称',
+      zfxl:'总发行量',
+      dbcyz:'代币持有者',
+      kfzf:'可否增发',
+      s:'是',
+      f:'否',
+      fwf:'服务费',
+      zcgx:'资产更新',
+      n:'新'
     }
   }
 }

@@ -8,7 +8,7 @@ const handleResponse = ({ data }) => {
   if (data.code === 0) {
     return data.data
   } else {
-    throw new Error('error from server response: ' + data.msg)
+    throw new Error('error:' + data.msg)
   }
 }
 
@@ -80,5 +80,10 @@ export default class {
   ///获取
   getDetailInfo(info){
     return axios.post(this.host + '/transaction/gettxdetailplus', info).then(handleResponse, handleError)
+  }
+
+  ///根据代号查询发型资产详情
+  getAssetInfo(info){
+    return axios.post(this.host + '/asset/getasset', info).then(handleResponse, handleError)
   }
 }

@@ -1,29 +1,29 @@
 <template>
   <div class="cdp">
     <div class="content">
-      <h5 class="titleHeader">{{$t('window.assets.资产发布')}}</h5>
+      <h5 class="titleHeader">{{$t('window.assets.zcfb')}}</h5>
       <div class="cell">
-        <p class="cellName">{{$t('代币简称')}}</p>
+        <p class="cellName">{{$t('window.assets.dbjc')}}</p>
         <p class="cellValue">{{assetSymbol}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('代币全称')}}</p>
+        <p class="cellName">{{$t('window.assets.dbqc')}}</p>
         <p class="cellValue">{{assetName}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('总发行量')}}</p>
+        <p class="cellName">{{$t('window.assets.zfxl')}}</p>
         <p class="cellValue">{{assetSupply}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('代币持有者')}}</p>
+        <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
         <p class="cellValue">{{cutMiddleStr(assetOwnerId,10)}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('可否增发')}}</p>
-        <p class="cellValue">{{assetMintable == 'true' ? '是' : '否'}}</p>
+        <p class="cellName">{{$t('window.assets.kfzf')}}</p>
+        <p class="cellValue">{{assetMintable == 'true' ? $t('window.assets.s') : $t('window.assets.f')}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('矿工费')}}</p>
+        <p class="cellName">{{$t('window.assets.fwf')}}</p>
         <p class="cellValue">550 WICC</p>
       </div>
       <div class="bar"></div>
@@ -81,7 +81,7 @@ export default {
         assetOwnerId: this.assetOwnerId,
         assetSymbol: this.assetSymbol,
         assetMintable: this.assetMintable,
-        assetSupply: this.assetSupply,
+        assetSupply: parseInt(this.assetSupply) * Math.pow(10,8),
         address:this.address,
         feesName:this.feesName,
       };

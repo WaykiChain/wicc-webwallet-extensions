@@ -24,6 +24,8 @@ const TYPE_NEWTX_MAP = {
   'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
   'UCOIN_BLOCK_REWARD_TX':	'矿工奖励(新版)',
   'BLOCK_REWARD_TX':	'矿工奖励',
+  'ASSET_UPDATE_TX' : '资产更新',
+  'ASSET_ISSUE_TX' : '资产发布',
 }
 
 const TYPE_NEWTX_MAP_EN = {
@@ -48,6 +50,8 @@ const TYPE_NEWTX_MAP_EN = {
   'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
   'UCOIN_BLOCK_REWARD_TX': 'Reward Txn',
   'BLOCK_REWARD_TX': 'Reward',
+  'ASSET_UPDATE_TX' : 'Asset update',
+  'ASSET_ISSUE_TX' : 'Asset release',
 }
 
 const TYPE_MAP = {

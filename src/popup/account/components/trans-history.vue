@@ -118,7 +118,7 @@ export default {
 
   .trans-amount {
     color: #5b5f67;
-    font-size: 17px;
+    font-size: 14px;
   }
 
   .trans-time,

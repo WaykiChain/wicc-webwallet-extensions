@@ -826,6 +826,15 @@ export default {
   },
 
 
+  /**
+   * 获取发型资产的资产详情
+   */
+  getAssetInfo({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    return new BaasAPI(localNetWork).getAssetInfo(info)
+  },
+
+
 
   assetsPub({ info }) {
     const localNetWork = localStorage.getItem('network')

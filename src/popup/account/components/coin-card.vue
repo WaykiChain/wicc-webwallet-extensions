@@ -13,7 +13,7 @@
           class="btn-account-active btn-text">{{ $t('common.activeAccount') }}</button>
     </div>
     <div class="coin-card-footer">
-      <div class="coin-address">{{ address }}</div>
+      <div class="coin-address">{{cutMiddleStr(address,10)}}</div>
       <div class="coin-card-btn coin-card-copy">
         <img src="../../static/copy-icon-white.svg" />
       </div>
@@ -85,7 +85,13 @@
 
       getCopyText () {
         return this.address
+      },
+      cutMiddleStr(str,saveNum){
+      if (str){
+        return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
       }
+      return ''
+    }
     }
   }
 </script>

@@ -1,43 +1,63 @@
 <template>
   <div class="cdp">
     <div class="content">
-      <h5 class="titleHeader">{{$t('window.assets.资产更新')}}</h5>
-      <div class="cell" style="display: block;"  v-if="updateType == '2'">
-        <p class="cellName">{{$t('代币全称')}}</p>
-        <p class="cellValue">{{oldAssetName}} → <span style="color:#3C78EA">{{updateContent}}</span> </p>
+      <h5 class="titleHeader">{{$t('window.assets.zcgx')}}</h5>
+      <div class="cell" style="display: block;" v-if="updateType == '2'">
+        <p class="cellName">{{$t('window.assets.dbqc')}}</p>
+        <p class="cellValue">
+          {{oldAssetName}} →
+          <span style="color:#3C78EA">{{updateContent}}</span>
+        </p>
       </div>
       <div class="cell" style="display: block;" v-if="updateType == '3'">
-        <p class="cellName">{{$t('代币总量')}}</p>
-        <p class="cellValue">{{oldAssetSupply}} → <span style="color:#3C78EA">{{updateContent}}</span> </p>
+        <p class="cellName">{{$t('window.assets.zfxl')}}</p>
+        <p class="cellValue">
+          {{oldAssetSupply}} →
+          <span style="color:#3C78EA">{{updateContent}}</span>
+        </p>
       </div>
       <div class="cell" style="display: block;" v-if="updateType == '1'">
-        <p class="cellName">{{$t('代币持有人')}}</p>
-        <p class="cellValue">{{oldAssetOwnerId}} → <span style="color:#3C78EA">{{cutMiddleStr(updateContent,10)}}</span> </p>
+        <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
+        <p class="cellValue">
+          {{oldAssetOwnerId}} →
+          <span style="color:#3C78EA">{{cutMiddleStr(updateContent,10)}}</span>
+        </p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('代币简称')}}</p>
+        <p class="cellName">{{$t('window.assets.dbjc')}}</p>
         <p class="cellValue">{{assetSymbol}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('代币全称')}}<span v-if="updateType == '2'" style="color:#3C78EA">(新)</span></p>
+        <p class="cellName">
+          {{$t('window.assets.dbqc')}}
+          <span v-if="updateType == '2'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+        </p>
         <p class="cellValue">{{updateType == '2' ? updateContent : oldAssetName}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('总发行量')}}<span v-if="updateType == '3'" style="color:#3C78EA">(新)</span></p>
+        <p class="cellName">
+          {{$t('window.assets.zfxl')}}
+          <span v-if="updateType == '3'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+        </p>
         <p class="cellValue">{{updateType == '3' ? updateContent :oldAssetSupply}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('代币持有者')}}<span v-if="updateType == '1'" style="color:#3C78EA">(新)</span></p>
-        <p class="cellValue">{{updateType == '1' ? cutMiddleStr(updateContent,10) : cutMiddleStr(oldAssetOwnerId,10)}}</p>
+        <p class="cellName">
+          {{$t('window.assets.dbcyz')}}
+          <span v-if="updateType == '1'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+        </p>
+        <p
+          class="cellValue"
+        >{{updateType == '1' ? cutMiddleStr(updateContent,10) : cutMiddleStr(oldAssetOwnerId,10)}}</p>
       </div>
       <div class="cell">
-        <p class="cellName">{{$t('矿工费')}}</p>
+        <p class="cellName">{{$t('window.assets.fwf')}}</p>
         <p class="cellValue">110 WICC</p>
       </div>
       <div class="bar"></div>
     </div>
     <div class="feesView">
-      <select class="feesName" name="WICC" id="" v-model="feesName">
+      <select class="feesName" name="WICC" id v-model="feesName">
         <option value="WICC">WICC</option>
         <option value="WUSD">WUSD</option>
       </select>
@@ -61,23 +81,25 @@ export default {
     return {
       urlQuery: "",
       fees: 0.01,
-      updateType: "",//1资产拥有者 2资产名称 2 资产发行量
+      updateType: "", //1资产拥有者 2资产名称 3 资产发行量
       oldAssetName: "我是旧的名字",
-      oldAssetOwnerId: "我是旧的持有人啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦阿里",
+      oldAssetOwnerId:
+        "我是旧的持有人啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦阿里",
       oldAssetSupply: "我是旧的增发量",
-      updateContent:"",
+      updateContent: "",
       assetSymbol: "",
       callbackId: "",
-      feesName:"WICC",
+      feesName: "WICC"
     };
   },
   created() {
     const query = this.$router.currentRoute.query;
     this.updateContent = query.updateContent;
-  
+
     this.assetSymbol = query.assetSymbol;
     this.callbackId = query.callbackId;
     this.updateType = query.updateType;
+    this.getOldAssets()
     console.log(query);
   },
   methods: {
@@ -85,11 +107,11 @@ export default {
       this.$loading(this.$t("window.cdp.updateAssets")); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
-        updateContent:this.updateContent,
+        updateContent: this.updateContent,
         assetSymbol: this.assetSymbol,
-        updateType:this.updateType,
-        address:this.address,
-        feesName:this.feesName,
+        updateType: this.updateType,
+        address: this.address,
+        feesName: this.feesName
       };
       API.callRaw("assetsUpdate", { info: param }).then(
         res => {
@@ -125,6 +147,21 @@ export default {
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, error, null);
           }
+        }
+      );
+    },
+    getOldAssets() {
+      this.$loading(" "); //this.$t("window.transfer.confirmLoading")
+      let param = {
+        assetSymbol: "SHULIA"
+      };
+      API.callRaw("getAssetInfo", { info: param }).then(
+        res => {
+          console.log(res);
+          this.$loading.close();
+        },
+        error => {
+          this.$loading.close();
         }
       );
     }

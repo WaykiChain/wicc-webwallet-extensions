@@ -99,6 +99,12 @@ export default {
         if (trans.txtype == 'CDP_REDEEM_TX') {
           return trans.scoinstorepay / Math.pow(10,8);
         }
+        if (trans.txtype == 'ASSET_UPDATE_TX') {
+          return 110;
+        }
+        if (trans.txtype == 'ASSET_ISSUE_TX') {
+          return 550;
+        }
         if (trans.txtype.indexOf("DEX") > -1){
           if (this.showMoney(trans)){
             const amount = trans.assetamount ? trans.assetamount : trans.coinamount
@@ -168,7 +174,7 @@ export default {
 
   .trans-amount {
     color: #5b5f67;
-    font-size: 17px;
+    font-size: 14px;
   }
 
   .trans-time,

@@ -20,6 +20,22 @@
           :class="{
             active: activeRegId === null
           }"
+          v-for="tokenKey in Object.keys(myAssets)"
+          :key="tokenKey"
+          @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
+        >
+          <img class="token-item-icon" src="../../static/wicclogo.svg" />
+          <span class="token-item-name">{{tokenKey}}</span>
+          <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8)}}</span>
+        </li>
+        <li v-if="Object.keys(myAssets).length == 0 " class="token-item">
+            <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
+        </li>
+        <!-- <li
+          class="token-item"
+          :class="{
+            active: activeRegId === null
+          }"
           @click="handleItemClick({num:wicc?wicc.freeAmount/100000000:0,name:'WICC'})"
         >
           <img class="token-item-icon" src="../../static/wicclogo.svg" />
@@ -47,7 +63,7 @@
           <img class="token-item-icon" src="../../static/wicclogo.svg" />
           <span class="token-item-name">WGRT</span>
           <span>{{wgrt ? wgrt.freeAmount/100000000 : 0}}</span>
-        </li>
+        </li> -->
         <li
           class="token-item"
           v-for="(token, index) in visibleTokens"
@@ -61,7 +77,7 @@
           <span class="token-item-name">{{ token.name }}</span>
           <!-- <span class="token-item-more-btn">
             <span class="token-item-remove-btn" @click.stop="handleRemoveToken(token)">{{ $t('account.main.removeToken') }}</span>
-          </span>-->
+          </span> -->
         </li>
       </ul>
     </div>
@@ -222,6 +238,7 @@ import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import axios from "axios";
 import eventBus from "../bus";
+import decimal from 'decimal.js'
 
 export default {
   name: "token-list",
@@ -265,7 +282,6 @@ export default {
       console.log("监听到的地址", val);
       this.getWiccNum(val);
       this.currentAddr = val;
-      this.addressNoChanged = !this.addressNoChanged;
     }
   },
 
@@ -278,11 +294,17 @@ export default {
   },
 
   methods: {
+    decimalNum(numble){
+      const x = new decimal(numble)
+      return x.div(100000000)
+    },
     handleNetworkChange(network) {
-      if (this.addressNoChanged) {
-        console.log("切换了：" + this.currentAddr);
+      if (network == this.lastNetWork) {
+        console.log("点击切换节点地址：" + this.currentAddr+'Net:'+network);
         this.getWiccNum(this.currentAddr);
       }
+      localStorage.setItem('tempNetWork',network)
+      this.lastNetWork = network
     },
     gotoAddToken() {
       this.$router.push({
@@ -325,21 +347,28 @@ export default {
       this.wusd = null;
       this.wicc = null;
       this.wgrt = null;
+      this.myAssets = {}
+      this.$loading(this.$t('window.cdp.hqzcz'))
       API.getAccountInfo(this.network, address).then(
         res => {
-          console.log(res);
+          this.$loading.close();
           let tokens = res.tokens;
+          
+          console.log(res);
           if (tokens) {
+            this.myAssets = tokens
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
             this.wgrt = tokens.WGRT;
           } else {
+            this.myAssets = {}
             this.wusd = null;
             this.wicc = null;
             this.wgrt = null;
           }
         },
         error => {
+          this.$loading.close();
           console.log(error);
           this.$toast(error.message, {
             type: "center"
@@ -358,7 +387,8 @@ export default {
       wicc: null,
       wgrt: null,
       eventBus,
-      addressNoChanged: false
+      myAssets:{},
+      lastNetWork : localStorage.getItem('tempNetWork'),
     };
   }
 };
