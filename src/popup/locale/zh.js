@@ -351,7 +351,7 @@ export default {
       kfzf:'可否增发',
       s:'是',
       f:'否',
-      fwf:'服务费',
+      fwf:'手续费',
       zcgx:'资产更新',
       n:'新'
     }

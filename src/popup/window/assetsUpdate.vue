@@ -20,7 +20,7 @@
         <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
         <p class="cellValue">
           {{oldAssetOwnerId}} →
-          <span style="color:#3C78EA">{{cutMiddleStr(updateContent,10)}}</span>
+          <span style="color:#3C78EA">{{updateContent}}</span>
         </p>
       </div>
       <div class="cell">
@@ -48,7 +48,7 @@
         </p>
         <p
           class="cellValue"
-        >{{updateType == '1' ? cutMiddleStr(updateContent,10) : cutMiddleStr(oldAssetOwnerId,10)}}</p>
+        >{{updateType == '1' ? updateContent : oldAssetOwnerId}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.fwf')}}</p>

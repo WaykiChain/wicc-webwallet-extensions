@@ -75,9 +75,9 @@
         >
           <img class="token-item-icon" src="../../static/coin-icon.svg" />
           <span class="token-item-name">{{ token.name }}</span>
-          <!-- <span class="token-item-more-btn">
+          <span class="token-item-more-btn">
             <span class="token-item-remove-btn" @click.stop="handleRemoveToken(token)">{{ $t('account.main.removeToken') }}</span>
-          </span> -->
+          </span>
         </li>
       </ul>
     </div>
