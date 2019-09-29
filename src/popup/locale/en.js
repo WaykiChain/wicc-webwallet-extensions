@@ -329,6 +329,7 @@ export default {
       zzcjjy:'Generating CDP...',
       zzqsjy:'Liquidating CDP...',
       zzshjy:'CDP in redemption',
+      dexjyz:'Generating...',
       zzqxjy:'Cancel...',
       zzyzqm:'Verifying Signature...',
       hqzcz:'Loading...',

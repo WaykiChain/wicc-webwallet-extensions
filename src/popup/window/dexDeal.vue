@@ -120,7 +120,7 @@ export default {
       }
     },
     sure() {
-      this.$loading(this.$t("window.cdp.zzcjjy")); //this.$t("window.transfer.confirmLoading")
+      this.$loading(this.$t("window.cdp.dexjyz")); //this.$t("window.transfer.confirmLoading")
       //Market_BUY / Market_SELL  Limit_BUY / Limit_SELL
 
       if (this.dexType == "Limit_SELL") {

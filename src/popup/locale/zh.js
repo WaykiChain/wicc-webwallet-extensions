@@ -330,6 +330,7 @@ export default {
       zzcjjy:'CDP创建中...',
       zzqsjy:'CDP清算中...',
       zzshjy:'CDP赎回中...',
+      dexjyz:'创建交易中...',
       zzqxjy:'取消交易中...',
       zzyzqm:'验证签名...',
       hqzcz:'获取资产中...',

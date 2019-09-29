@@ -17,7 +17,10 @@
         </div>
         <div class="second-row">
           <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
-          <span class="trans-type" v-if="trans.txtype=='CDP_STAKE_TX'">{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
+          <span
+            class="trans-type"
+            v-if="trans.txtype=='CDP_STAKE_TX'"
+          >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
           <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
           <span class="trans-status">{{ formatStatus(trans) }}</span>
         </div>
@@ -67,23 +70,26 @@ export default {
       this.transDetailVisible = true;
       this.currentTrans = trans;
     },
-    showTrandirection(trandirection){
-      if (trandirection == 1){
-        return '+'
-      }else if (trandirection == 2){
-        return '-'
-      }else{
-        return ''
+    showTrandirection(trandirection) {
+      if (trandirection == 1) {
+        return "+";
+      } else if (trandirection == 2) {
+        return "-";
+      } else {
+        return "";
       }
     },
     showMoney(trans) {
-      if (trans.txtype.indexOf('DEX_LIMIT') > -1) {
+      if (trans.txtype.indexOf("DEX_LIMIT") > -1) {
         return true;
       }
       return false;
     },
     showCell(trans) {
-      if (trans.txtype.indexOf('DEX_MARKET') > -1 || trans.txtype == 'DEX_CANCEL_ORDER_TX') {
+      if (
+        trans.txtype.indexOf("DEX_MARKET") > -1 ||
+        trans.txtype == "DEX_CANCEL_ORDER_TX"
+      ) {
         return false;
       }
       return true;
@@ -91,32 +97,39 @@ export default {
     getCount(trans) {
       if (trans) {
         if (trans.txtype == "CDP_LIQUIDATE_TX") {
-          return trans.scoinstoliquidate / Math.pow(10,8);
+          return trans.scoinstoliquidate / Math.pow(10, 8);
         }
         if (trans.txtype == "CDP_STAKE_TX") {
-          return trans.assetstostake.WICC / Math.pow(10,8);
+          return trans.assetstostake.WICC / Math.pow(10, 8);
         }
-        if (trans.txtype == 'CDP_REDEEM_TX') {
-          return trans.scoinstorepay / Math.pow(10,8);
+        if (trans.txtype == "CDP_REDEEM_TX") {
+          return trans.scoinstorepay / Math.pow(10, 8);
         }
-        if (trans.txtype == 'ASSET_UPDATE_TX') {
+        if (trans.txtype == "ASSET_UPDATE_TX") {
           return 110;
         }
-        if (trans.txtype == 'ASSET_ISSUE_TX') {
+        if (trans.txtype == "ASSET_ISSUE_TX") {
           return 550;
         }
-        if (trans.txtype.indexOf("DEX") > -1){
-          if (this.showMoney(trans)){
-            const amount = trans.assetamount ? trans.assetamount : trans.coinamount
-            const res = amount * trans.price  / Math.pow(10,16)
+        if (trans.txtype.indexOf("DEX") > -1) {
+          if (this.showMoney(trans)) {
+            if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
+              const amount = trans.assetamount
+                ? trans.assetamount
+                : trans.coinamount;
+              return amount / Math.pow(10, 8);
+            }
+            const amount = trans.assetamount
+              ? trans.assetamount
+              : trans.coinamount;
+            const res = (amount * trans.price) / Math.pow(10, 16);
             return res.toFixed(4);
           }
-          return ""
-          
+          return "";
         }
       }
 
-      return trans.coinamount / Math.pow(10,8);
+      return trans.coinamount / Math.pow(10, 8);
     }
   },
 

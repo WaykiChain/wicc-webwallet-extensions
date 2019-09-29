@@ -28,7 +28,7 @@
           <span class="token-item-name">{{tokenKey}}</span>
           <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8)}}</span>
         </li>
-        <li v-if="Object.keys(myAssets).length == 0 " class="token-item">
+        <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
             <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
         </li>
         <!-- <li
