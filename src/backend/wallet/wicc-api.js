@@ -92,19 +92,20 @@ export default class {
   }
 
   createTxSign(privateKey, height, srcRegId, destAddr, value, fees) {
-    const txInfo = {
+    const commonTxinfo = {
       nTxType: bitcore.WiccApi.COMMON_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
+      fees: parseInt(fees * Math.pow(10, 8) + Math.round(Math.random() * 10)),
       srcRegId,
       destAddr,
       value: parseInt(value * Math.pow(10, 8)),
       network: this.network,
+      memo:"memo",
       publicKey: privateKey.toPublicKey().toString(),
     }
 
-    return this.api.createSignTransaction(privateKey, bitcore.WiccApi.COMMON_TX, txInfo)
+    return this.api.createSignTransaction(privateKey, bitcore.WiccApi.COMMON_TX, commonTxinfo)
   }
 
   /**
