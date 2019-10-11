@@ -72,9 +72,9 @@ export default {
     },
     showTrandirection(trandirection) {
       if (trandirection == 1) {
-        return "+";
-      } else if (trandirection == 2) {
         return "-";
+      } else if (trandirection == 2) {
+        return "+";
       } else {
         return "";
       }
