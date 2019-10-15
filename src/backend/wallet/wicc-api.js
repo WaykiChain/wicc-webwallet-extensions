@@ -71,7 +71,6 @@ export default class {
       scriptDesc,
       publicKey: privateKey.toPublicKey().toString(),
     }
-    alert(regAcctId)
     return this.api.createSignTransaction(privateKey, bitcore.WiccApi.REG_APP_TX, txInfo)
   }
 

@@ -52,10 +52,11 @@
     created () {
       const query = this.$route.query  //currentRoute
       //const par = location.hash.split('?')[1].split('&');
-      this.script =  query.script
+      this.script =  decodeURI(query.script)
       this.scriptDesc = query.scriptDesc
       this.callbackId = query.callbackId,
       this.onlyRaw = query.onlyRaw
+      console.log(this.script)
     },
 
     methods: {
