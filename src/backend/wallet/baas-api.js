@@ -60,7 +60,7 @@ export default class {
   }
 
   submitOfflineTrans(rawtx) {
-    let url = this.host + '/transaction/sendrawtx'
+    let url = this.host + '/transaction/submittxraw'
     // alert(`${url},${rawtx}`)
     return axios.post(url, {
       rawtx: rawtx,
