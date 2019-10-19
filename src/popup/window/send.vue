@@ -239,7 +239,7 @@ export default {
         res => {
           console.log(res);
           let tokens = res.tokens;
-          if (tokens) {
+          if (Object.keys(tokens).length > 0) {
             this.tokens = tokens;
             if (this.coinType == "WICC") {
               this.balance = tokens.WICC.freeAmount / Math.pow(10, 8);

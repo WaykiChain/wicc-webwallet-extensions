@@ -354,7 +354,8 @@ export default {
       f:'否',
       fwf:'手续费',
       zcgx:'资产更新',
-      n:'新'
+      n:'新',
+      owidError:"Owner账号不存在或者未激活",
     }
   }
 }

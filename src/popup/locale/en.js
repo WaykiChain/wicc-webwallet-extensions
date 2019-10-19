@@ -353,7 +353,8 @@ export default {
       f:'No',
       fwf:'Cost',
       zcgx:'Asset update',
-      n:'New'
+      n:'New',
+      owidError:"Owner account does not exist or is not activated",
     }
   }
 }

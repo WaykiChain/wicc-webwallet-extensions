@@ -12,7 +12,7 @@
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.zfxl')}}</p>
-        <p class="cellValue">{{assetSupply}}</p>
+        <p class="cellValue">{{assetSupply / Math.pow(10,8)}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
@@ -20,7 +20,9 @@
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.kfzf')}}</p>
-        <p class="cellValue">{{assetMintable == 'true' ? $t('window.assets.s') : $t('window.assets.f')}}</p>
+        <p
+          class="cellValue"
+        >{{assetMintable == 'true' ? $t('window.assets.s') : $t('window.assets.f')}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.fwf')}}</p>
@@ -29,7 +31,7 @@
       <div class="bar"></div>
     </div>
     <div class="feesView">
-      <select class="feesName" name="WICC" id="" v-model="feesName">
+      <select class="feesName" name="WICC" id v-model="feesName">
         <option value="WICC">WICC</option>
         <option value="WUSD">WUSD</option>
       </select>
@@ -59,7 +61,7 @@ export default {
       assetSupply: "",
       assetSymbol: "",
       callbackId: "",
-      feesName:"WICC",
+      feesName: "WICC"
     };
   },
   created() {
@@ -74,51 +76,69 @@ export default {
   },
   methods: {
     sureCreateCDP() {
-      this.$loading(this.$t("window.cdp.zzfbzc")); //this.$t("window.transfer.confirmLoading")
-      let param = {
-        fees: parseFloat(this.fees) * Math.pow(10, 8),
-        assetName: this.assetName,
-        assetOwnerId: this.assetOwnerId,
-        assetSymbol: this.assetSymbol,
-        assetMintable: this.assetMintable,
-        assetSupply: parseInt(this.assetSupply) * Math.pow(10,8),
-        address:this.address,
-        feesName:this.feesName,
-      };
-      API.callRaw("assetsPub", { info: param }).then(
+      let net = localStorage.getItem("network");
+      API.getAccountInfo(net, this.assetOwnerId).then(
         res => {
-          console.log(res);
-          this.$loading.close();
-          this.$toast(this.$t("window.transfer.createSuccess"), {
+          console.log("Chenggong===>", res);
+          if (res.regid == "") {
+            this.$toast("regid is null");
+            return;
+          }
+          this.$loading(this.$t("window.cdp.zzfbzc")); //this.$t("window.transfer.confirmLoading")
+          let param = {
+            fees: parseFloat(this.fees) * Math.pow(10, 8),
+            assetName: this.assetName,
+            assetOwnerId: res.regid,
+            assetSymbol: this.assetSymbol,
+            assetMintable: this.assetMintable,
+            assetSupply: parseInt(this.assetSupply),
+            address: this.address,
+            feesName: this.feesName
+          };
+          API.callRaw("assetsPub", { info: param }).then(
+            res => {
+              this.$loading.close();
+              this.$toast(this.$t("window.transfer.createSuccess"), {
+                type: "center",
+                duration: 5000,
+                wordWrap: true
+              });
+              if (this.callbackId) {
+                API.callPageCallback(this.callbackId, null, res);
+                this.$toast("Success", {
+                  type: "center",
+                  duration: 1000,
+                  wordWrap: true
+                });
+                setTimeout(() => {
+                  window.close();
+                }, 300);
+              }
+            },
+            error => {
+              this.$loading.close();
+              this.$toast(
+                this.$t("window.transfer.createFailure") +
+                  " " +
+                  formatError(error),
+                {
+                  type: "center",
+                  duration: 5000,
+                  wordWrap: true
+                }
+              );
+              if (this.callbackId) {
+                API.callPageCallback(this.callbackId, error, null);
+              }
+            }
+          );
+        },
+        error => {
+          this.$toast(this.$t("window.assets.owidError"), {
             type: "center",
             duration: 5000,
             wordWrap: true
           });
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, null, res);
-            this.$toast("Success", {
-              type: "center",
-              duration: 1000,
-              wordWrap: true
-            });
-            setTimeout(() => {
-              window.close();
-            }, 300);
-          }
-        },
-        error => {
-          this.$loading.close();
-          this.$toast(
-            this.$t("window.transfer.createFailure") + " " + formatError(error),
-            {
-              type: "center",
-              duration: 5000,
-              wordWrap: true
-            }
-          );
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
         }
       );
     }
