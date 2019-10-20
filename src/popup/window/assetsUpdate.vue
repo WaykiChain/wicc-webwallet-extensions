@@ -20,7 +20,9 @@
         <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
         <p class="cellValue">
           {{cutMiddleStr(oldAssetOwnerId,8)}} →
-          <span style="color:#3C78EA">{{cutMiddleStr(updateContent,8)}}</span>
+          <span
+            style="color:#3C78EA"
+          >{{cutMiddleStr(updateContent,8)}}</span>
         </p>
       </div>
       <div class="cell">
@@ -57,7 +59,9 @@
             style="color:#3C78EA"
           >({{$t('window.assets.n')}})</span>
         </p>
-        <p class="cellValue">{{updateType == '1' ? cutMiddleStr(updateContent,10):cutMiddleStr(oldAssetOwnerId,10)}}</p>
+        <p
+          class="cellValue"
+        >{{updateType == '1' ? cutMiddleStr(updateContent,10):cutMiddleStr(oldAssetOwnerId,10)}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.fwf')}}</p>
@@ -98,7 +102,7 @@ export default {
       assetSymbol: "",
       callbackId: "",
       feesName: "WICC",
-      newOwnerID:"",
+      newOwnerID: ""
     };
   },
   created() {
@@ -113,19 +117,21 @@ export default {
   },
   methods: {
     sureCreateCDP() {
-      
-      if (this.newOwnerID == ""){
-        this.$toast(this.$t('window.assets.owidError'), {
-              type: "center",
-              duration: 1000,
-              wordWrap: true
-            });
-        return
+      if (this.updateType == "1") {
+        if (this.newOwnerID == "") {
+          this.$toast(this.$t("window.assets.owidError"), {
+            type: "center",
+            duration: 1000,
+            wordWrap: true
+          });
+          return;
+        }
       }
       this.$loading(this.$t("window.cdp.updateAssets")); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
-        updateContent:this.updateType == "1" ? this.newOwnerID : this.updateContent,
+        updateContent:
+          this.updateType == "1" ? this.newOwnerID : this.updateContent,
         assetSymbol: this.assetSymbol,
         updateType: this.updateType,
         address: this.address,
@@ -194,15 +200,15 @@ export default {
         API.getAccountInfo(net, this.updateContent).then(
           res => {
             console.log("Chenggong===>", res);
-            if (!res.regid){
-              this.$toast('Wallet not Active')
-              this.newOwnerID == ""
-              return
+            if (!res.regid) {
+              this.$toast("Wallet not Active");
+              this.newOwnerID == "";
+              return;
             }
-            this.newOwnerID = res.regid
+            this.newOwnerID = res.regid;
           },
           error => {
-            this.$toast(this.$t('window.assets.owidError'), {
+            this.$toast(this.$t("window.assets.owidError"), {
               type: "center",
               duration: 5000,
               wordWrap: true

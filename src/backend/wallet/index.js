@@ -883,8 +883,15 @@ export default {
         feesName: info.feesName,
 
       };
-      let hex = wiccApi.assetsPub(assestInfo)
-      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      
+      if (srcRegId){
+        let hex = wiccApi.assetsPub(assestInfo)
+        return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      }else{
+        return new Promise((resolve, reject) => {
+            reject("qianbaoweijihuo")
+        })
+      }
     })
   },
   assetsUpdate({ info }) {
@@ -914,8 +921,14 @@ export default {
         feesName: info.feesName,
 
       };
-      let hex = wiccApi.assetsUpdate(assestInfo)
-      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      if (srcRegId){
+        let hex = wiccApi.assetsUpdate(assestInfo)
+        return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      }else{
+        return new Promise((resolve, reject) => {
+            reject("qianbaoweijihuo")
+        })
+      }
     })
   },
   messageSign({ info }) {

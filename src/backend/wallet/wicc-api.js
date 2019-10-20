@@ -100,7 +100,7 @@ export default class {
       destAddr,
       value: parseInt(value * Math.pow(10, 8)),
       network: this.network,
-      memo:"memo",
+      memo: "memo",
       publicKey: privateKey.toPublicKey().toString(),
     }
 
@@ -342,7 +342,7 @@ export default class {
     }
     var assetUpdateData = {
       updateType: updateType,
-      updateValue: info.updateType == '3' ? parseInt(info.updateContent)*Math.pow(10,8) : info.updateContent, //owner address
+      updateValue: info.updateType == '3' ? parseInt(info.updateContent) * Math.pow(10, 8) : info.updateContent, //owner address
     }
     var assetCreateInfo = {
       nTxType: bitcore.WiccApi.ASSET_UPDATE,
@@ -352,12 +352,12 @@ export default class {
       assetUpdateData: assetUpdateData,
       feesCoinSymbol: info.feesName,
       assetSymbol: info.assetSymbol,
-      // publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
     // alert(JSON.stringify(assetCreateInfo))
     const rawtx = this.api.createSignTransaction(info.privateKey, bitcore.WiccApi.ASSET_UPDATE, assetCreateInfo)
     return rawtx
+
   }
   messageSign(msg, privateKey) {
 
@@ -373,7 +373,7 @@ export default class {
         SignMessage: signMsg.toString(),
         PublicKey: pubKey.toString(),
       },
-      errorCode:0
+      errorCode: 0
 
     }
     return JSON.stringify(res)

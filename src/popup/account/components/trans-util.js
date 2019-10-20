@@ -122,10 +122,10 @@ export default {
    * 省略中间字符
    */
   cutMiddleStr(str,saveNum){
-    if (str){
+    if (str.length > 24){
       return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
     }
-    return ''
+    return str
   },
   formatTime (time) {
     if (!time) return ''
