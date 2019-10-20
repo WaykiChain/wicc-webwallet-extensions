@@ -105,9 +105,9 @@ export default {
             }
           );
 
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
+          // if (this.callbackId) {
+          //   API.callPageCallback(this.callbackId, error, null);
+          // }
 
           console.log(error);
         }

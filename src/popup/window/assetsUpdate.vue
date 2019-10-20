@@ -115,7 +115,11 @@ export default {
     sureCreateCDP() {
       
       if (this.newOwnerID == ""){
-        this.$toast('Wallet not Active')
+        this.$toast(this.$t('window.assets.owidError'), {
+              type: "center",
+              duration: 1000,
+              wordWrap: true
+            });
         return
       }
       this.$loading(this.$t("window.cdp.updateAssets")); //this.$t("window.transfer.confirmLoading")
@@ -158,9 +162,9 @@ export default {
               wordWrap: true
             }
           );
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
+          // if (this.callbackId) {
+          //   API.callPageCallback(this.callbackId, error, null);
+          // }
         }
       );
     },
