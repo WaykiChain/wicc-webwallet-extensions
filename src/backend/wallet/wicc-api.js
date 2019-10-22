@@ -1,5 +1,6 @@
 import * as bitcore from 'bitcore-lib'
 import WriterHelper from 'bitcore-lib/lib/util/writerhelper'
+import {Decimal} from 'decimal.js';
 const DEFAULT_PASSWORD = '12345678'
 var Hash = require('bitcore-lib/lib/crypto/hash');
 var ECDSA = require('bitcore-lib/lib/crypto/ecdsa');
@@ -61,11 +62,13 @@ export default class {
   }
 
   createRegisterAppSign(privateKey, height, regAcctId, fees, script, scriptDesc) {
+    
+    const v = this.handelNum(fees)
     const txInfo = {
       nTxType: bitcore.WiccApi.REG_APP_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
+      fees: v + Math.round(Math.random() * 10),
       regAcctId,
       script,
       scriptDesc,
@@ -75,14 +78,16 @@ export default class {
   }
 
   createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract) {
+    
+    const v = this.handelNum(value)
     const txInfo = {
       nTxType: bitcore.WiccApi.CONTRACT_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
+      fees:this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       destRegId,
-      value: parseInt(value * Math.pow(10, 8)),
+      value: v,
       vContract: contract,
       publicKey: privateKey.toPublicKey().toString(),
     }
@@ -95,10 +100,10 @@ export default class {
       nTxType: bitcore.WiccApi.COMMON_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: parseInt(fees * Math.pow(10, 8) + Math.round(Math.random() * 10)),
+      fees: this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       destAddr,
-      value: parseInt(value * Math.pow(10, 8)),
+      value: this.handelNum(value),
       network: this.network,
       memo: "memo",
       publicKey: privateKey.toPublicKey().toString(),
@@ -111,17 +116,19 @@ export default class {
    * 多币种转账签名
    */
   createVariousCoinsTx(privateKey, height, srcRegId, destAddr, value, fees, coinType, feeSymbol, network, memo) {
+    const v = this.handelNum(value)
     var destArr = [{
       "coinType": coinType,
       "destAddr": destAddr,
-      "value": parseInt(value * Math.pow(10, 8)),
+      "value": v,
     }
     ]
+    
     const txInfo = {
       nTxType: bitcore.WiccApi.UCOIN_TRANSFER_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
+      fees: this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       destArr: destArr,
       memo: memo,
@@ -129,6 +136,7 @@ export default class {
       publicKey: privateKey.toPublicKey().toString(),
       feesCoinType: feeSymbol,
     }
+    // alert(JSON.stringify(txInfo))
     var cointransferTx = new bitcore.Transaction.UCoinTransferTx(txInfo);
     return cointransferTx.SerializeTx(privateKey)
   }
@@ -138,7 +146,7 @@ export default class {
       nTxType: bitcore.WiccApi.DELEGATE_TX,
       nVersion: 1,
       nValidHeight: height,
-      fees: fees * Math.pow(10, 8) + Math.round(Math.random() * 10),
+      fees: this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       delegateData,
       publicKey: privateKey.toPublicKey().toString(),
@@ -398,6 +406,12 @@ export default class {
     // alert(rawtx)
     return rawtx
 
+  }
+  handelNum(x){
+    const a = new Decimal(x)
+    const b = new Decimal(100000000)
+    const v = a.mul(b)
+    return parseInt(v)
   }
 
 }

@@ -123,7 +123,7 @@ export default {
               ? trans.assetamount
               : trans.coinamount;
             const res = (amount * trans.price) / Math.pow(10, 16);
-            return res.toFixed(4);
+            return res
           }
           return "";
         }
