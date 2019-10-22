@@ -28,7 +28,7 @@
         <div class="menu-item" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
         <div class="menu-item" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
         <div class="menu-separator"></div>
-        <div class="menu-item" @click="gotoAbout">{{ $t('account.header.about') }}</div>
+        <!-- <div class="menu-item" @click="gotoAbout">{{ $t('account.header.about') }}</div> -->
         <div class="menu-item" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
         <div class="menu-separator"></div>
         <div class="social-icon-container">

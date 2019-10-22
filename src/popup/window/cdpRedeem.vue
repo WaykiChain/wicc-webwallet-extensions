@@ -107,9 +107,9 @@ export default {
               wordWrap: true
             }
           );
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
+          // if (this.callbackId) {
+          //   API.callPageCallback(this.callbackId, error, null);
+          // }
         });
       },
       getCopyText () {

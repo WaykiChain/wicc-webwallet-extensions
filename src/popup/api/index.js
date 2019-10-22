@@ -7,6 +7,9 @@ const callBackend = (action, data) => {
     }, function (response) {
       response = response || {}
       if (response.status === 'error') {
+        if (Object.keys(response.error).length == 0){
+          reject("Wallet is not active")
+        }
         reject(response.error)
       } else {
         resolve(response.data)

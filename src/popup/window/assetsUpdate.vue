@@ -13,14 +13,16 @@
         <p class="cellName">{{$t('window.assets.zfxl')}}</p>
         <p class="cellValue">
           {{oldAssetSupply}} +
-          <span style="color:#3C78EA">{{updateContent}}</span>
+          <span style="color:#3C78EA">{{updateContent/Math.pow(10,8)}}</span>
         </p>
       </div>
       <div class="cell" style="display: block;" v-if="updateType == '1'">
         <p class="cellName">{{$t('window.assets.dbcyz')}}</p>
         <p class="cellValue">
-          {{oldAssetOwnerId}} →
-          <span style="color:#3C78EA">{{cutMiddleStr(updateContent,10)}}</span>
+          {{cutMiddleStr(oldAssetOwnerId,8)}} →
+          <span
+            style="color:#3C78EA"
+          >{{cutMiddleStr(updateContent,8)}}</span>
         </p>
       </div>
       <div class="cell">
@@ -30,25 +32,36 @@
       <div class="cell">
         <p class="cellName">
           {{$t('window.assets.dbqc')}}
-          <span v-if="updateType == '2'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+          <span
+            v-if="updateType == '2'"
+            style="color:#3C78EA"
+          >({{$t('window.assets.n')}})</span>
         </p>
         <p class="cellValue">{{updateType == '2' ? updateContent : oldAssetName}}</p>
       </div>
       <div class="cell">
         <p class="cellName">
           {{$t('window.assets.zfxl')}}
-          <span v-if="updateType == '3'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+          <span
+            v-if="updateType == '3'"
+            style="color:#3C78EA"
+          >({{$t('window.assets.n')}})</span>
         </p>
-        <p class="cellValue">{{updateType == '3' ? parseInt(updateContent)+parseInt(oldAssetSupply) :oldAssetSupply}}</p>
+        <p
+          class="cellValue"
+        >{{updateType == '3' ? updateContent/Math.pow(10,8)+oldAssetSupply :oldAssetSupply}}</p>
       </div>
       <div class="cell">
         <p class="cellName">
           {{$t('window.assets.dbcyz')}}
-          <span v-if="updateType == '1'" style="color:#3C78EA">({{$t('window.assets.n')}})</span>
+          <span
+            v-if="updateType == '1'"
+            style="color:#3C78EA"
+          >({{$t('window.assets.n')}})</span>
         </p>
         <p
           class="cellValue"
-        >{{updateType == '1' ? cutMiddleStr(updateContent,10) : cutMiddleStr(oldAssetOwnerId,10)}}</p>
+        >{{updateType == '1' ? cutMiddleStr(updateContent,10):cutMiddleStr(oldAssetOwnerId,10)}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.assets.fwf')}}</p>
@@ -83,13 +96,13 @@ export default {
       fees: 0.01,
       updateType: "", //1资产拥有者 2资产名称 3 资产发行量
       oldAssetName: "",
-      oldAssetOwnerId:
-        "",
+      oldAssetOwnerId: "",
       oldAssetSupply: "",
       updateContent: "",
       assetSymbol: "",
       callbackId: "",
-      feesName: "WICC"
+      feesName: "WICC",
+      newOwnerID: ""
     };
   },
   created() {
@@ -99,15 +112,26 @@ export default {
     this.assetSymbol = query.assetSymbol;
     this.callbackId = query.callbackId;
     this.updateType = query.updateType;
-    this.getOldAssets()
+    this.getOldAssets();
     console.log(query);
   },
   methods: {
     sureCreateCDP() {
+      if (this.updateType == "1") {
+        if (this.newOwnerID == "") {
+          this.$toast(this.$t("window.assets.owidError"), {
+            type: "center",
+            duration: 1000,
+            wordWrap: true
+          });
+          return;
+        }
+      }
       this.$loading(this.$t("window.cdp.updateAssets")); //this.$t("window.transfer.confirmLoading")
       let param = {
         fees: parseFloat(this.fees) * Math.pow(10, 8),
-        updateContent: this.updateContent,
+        updateContent:
+          this.updateType == "1" ? this.newOwnerID : this.updateContent,
         assetSymbol: this.assetSymbol,
         updateType: this.updateType,
         address: this.address,
@@ -144,29 +168,55 @@ export default {
               wordWrap: true
             }
           );
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
+          // if (this.callbackId) {
+          //   API.callPageCallback(this.callbackId, error, null);
+          // }
         }
       );
     },
     getOldAssets() {
-      this.$loading(this.$t("window.cdp.hqzcz")); //this.$t("window.transfer.confirmLoading")
+      // this.$loading(this.$t("window.cdp.hqzcz")); //this.$t("window.transfer.confirmLoading")
       let param = {
         assetSymbol: this.assetSymbol
       };
       API.callRaw("getAssetInfo", { info: param }).then(
         res => {
-          console.log(res);
-          this.$loading.close();
-          this.oldAssetName = res.assetname
-          this.oldAssetOwnerId = res.owneraddr
-          this.oldAssetSupply = res.totalsupply / Math.pow(10,8)
+          // this.$loading.close();
+          this.oldAssetName = res.assetname;
+          this.oldAssetOwnerId = res.owneraddr;
+          this.oldAssetSupply = res.totalsupply / Math.pow(10, 8);
         },
         error => {
+          this.$toast(error.message, {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
           this.$loading.close();
         }
       );
+      if (this.updateType == "1") {
+        let net = localStorage.getItem("network");
+        API.getAccountInfo(net, this.updateContent).then(
+          res => {
+            console.log("Chenggong===>", res);
+            if (!res.regid) {
+              this.$toast("Wallet not Active");
+              this.newOwnerID == "";
+              return;
+            }
+            this.newOwnerID = res.regid;
+          },
+          error => {
+            this.$toast(this.$t("window.assets.owidError"), {
+              type: "center",
+              duration: 5000,
+              wordWrap: true
+            });
+            this.$loading.close();
+          }
+        );
+      }
     }
   }
 };

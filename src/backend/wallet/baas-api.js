@@ -49,14 +49,18 @@ export default class {
   }
 
 
-  ///这里暂时每更换，还是v1接口
+  ///查询ERC20代币详情
   getTokenInfo(regId, address) {
-    return axios.get(this.host + '/contract/get/' + regId + '/' + address)
+    // alert(this.host + '/contract/getcontractaccountinfo'+address+regId)
+    return axios.post(this.host + '/contract/getcontractaccountinfo',{
+      'address': address,
+      'contractregid': regId.trim()
+    })
       .then(handleResponse, handleError)
   }
 
   submitOfflineTrans(rawtx) {
-    let url = this.host + '/transaction/sendrawtx'
+    let url = this.host + '/transaction/submittxraw'
     // alert(`${url},${rawtx}`)
     return axios.post(url, {
       rawtx: rawtx,

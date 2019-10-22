@@ -28,7 +28,7 @@
           <span class="token-item-name">{{tokenKey}}</span>
           <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8)}}</span>
         </li>
-        <li v-if="Object.keys(myAssets).length == 0 " class="token-item">
+        <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
             <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
         </li>
         <!-- <li
@@ -75,9 +75,9 @@
         >
           <img class="token-item-icon" src="../../static/coin-icon.svg" />
           <span class="token-item-name">{{ token.name }}</span>
-          <!-- <span class="token-item-more-btn">
+          <span class="token-item-more-btn">
             <span class="token-item-remove-btn" @click.stop="handleRemoveToken(token)">{{ $t('account.main.removeToken') }}</span>
-          </span> -->
+          </span>
         </li>
       </ul>
     </div>
@@ -351,6 +351,7 @@ export default {
           
           console.log(res);
           if (tokens) {
+            // this.sortAssets(tokens)
             this.myAssets = tokens
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
@@ -370,6 +371,20 @@ export default {
           });
         }
       );
+    },
+
+    sortAssets(tokens){
+      
+      let keys = Object.keys(tokens)
+      console.log(keys)
+      if (keys.length > 0){
+          const a = keys.filter(ele=>{
+            return ["WICC","WUSD","WGRT"].indexOf(ele)<0
+          })
+
+      }
+      // this.myAssets == newAssets
+      // console.log(tokens)
     }
   },
 
@@ -383,6 +398,7 @@ export default {
       wgrt: null,
       eventBus,
       myAssets:{},
+      tokensKeys:[],
       lastNetWork : localStorage.getItem('tempNetWork'),
     };
   }

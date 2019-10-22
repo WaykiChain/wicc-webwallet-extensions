@@ -326,9 +326,10 @@ export default {
       zzfbzc:'Releasing Asset...',
       updateAssets:'Updating Asset...',
       zzzjjy:'Adding Collateral...',
-      zzcjjy:'Generating CDP...',
-      zzqsjy:'Liquidating CDP...',
-      zzshjy:'CDP in redemption',
+      zzcjjy:'Generating...',
+      zzqsjy:'Liquidating...',
+      zzshjy:'Redemption...',
+      dexjyz:'Generating...',
       zzqxjy:'Cancel...',
       zzyzqm:'Verifying Signature...',
       hqzcz:'Loading...',
@@ -347,12 +348,13 @@ export default {
       dbqc:'Token name',
       zfxl:'Total',
       dbcyz:'Owner',
-      kfzf:'Can increment?',
-      s:'Yes',
-      f:'No',
+      kfzf:'',
+      s:'Changeable',
+      f:'Unchangeable',
       fwf:'Cost',
       zcgx:'Asset update',
-      n:'New'
+      n:'New',
+      owidError:"Owner account does not exist or is not activated",
     }
   }
 }

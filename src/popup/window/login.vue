@@ -61,9 +61,9 @@ export default {
           }, 300);
         },
         error => {
-          if (this.callbackId) {
-            API.callPageCallback(this.callbackId, error, null);
-          }
+          // if (this.callbackId) {
+          //   API.callPageCallback(this.callbackId, error, null);
+          // }
 
           console.log(error);
         }

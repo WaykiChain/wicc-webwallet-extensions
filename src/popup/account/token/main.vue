@@ -10,11 +10,9 @@
 
     <div class="tokenCount">
       <p class="count">
-         {{activeTokenInfo ? activeTokenInfo.FreeValues : 0}}
+         {{activeTokenInfo ? activeTokenInfo.freevalues / Math.pow(10,8) : 0}}
       </p>
-      <p>
-        --
-      </p>
+      
     </div>
     <template slot="body" >
       <trans-history
@@ -23,7 +21,7 @@
     </template>
 
     <template slot="footer">
-      <button class="btn-primary display-block" @click="gotoSendToken"> 转账 </button>
+      <button class="btn-primary display-block" @click="gotoSendToken"> {{ $t('account.main.sendButton') }} </button>
     </template>
   </main-layout>
 </template>
@@ -104,7 +102,8 @@ p{
         this.$loading(this.$t('common.loading'))
         console.log(this.network,this.activeAddress,this.regId)
         API.getTokenInfo(this.network, this.activeAddress, this.regId).then((value) => {
-          const tokenInfo = value.result
+          const tokenInfo = value
+          console.log('ERC20:token->',tokenInfo)
           if (tokenInfo && tokenInfo.FreeValues) {
             tokenInfo.FreeValues = tokenInfo.FreeValues * Math.pow(10, -8)
           }
@@ -113,6 +112,11 @@ p{
           this.loading = false
         }, (error) => {
           console.log(error)
+          this.$toast(error.message, {
+              type: "center",
+              duration: 1000,
+              wordWrap: true
+            });
           this.$loading.close()
           this.loading = false
         })
@@ -125,6 +129,8 @@ p{
 
       gotoSendToken () {
 
+        this.$toast('维护中')
+        return
         if (!this.activeTokenInfo){
           this.$toast('No found this token')
           return
@@ -137,7 +143,7 @@ p{
             network: this.network,
             name: this.name,
             regId: this.regId,
-            balance: this.activeTokenInfo.FreeValues
+            balance: this.activeTokenInfo.freevalues / Math.pow(10,8)
           }
         })
       },

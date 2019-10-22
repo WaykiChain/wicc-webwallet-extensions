@@ -297,6 +297,26 @@ export default {
     }
   },
 
+  // async getDefaultAccount() {
+  //   const state = await this.getState()
+  //   const {
+  //     activeAccount,
+  //     network,
+  //     activeAddress,
+  //     // vaultCreated
+  //   } = state
+
+
+  //   return {
+  //     account: activeAccount ? {
+  //       address: activeAccount.address,
+  //       id: activeAccount.id,
+  //       testnetAddress: activeAccount.testnetAddress
+  //     } : null,
+  //     network,
+  //     address: activeAddress
+  //   }
+  // },
   async getDefaultAccount() {
     const state = await this.getState()
     const {
@@ -306,18 +326,18 @@ export default {
       // vaultCreated
     } = state
 
-
-    return {
-      account: activeAccount ? {
-        address: activeAccount.address,
-        id: activeAccount.id,
-        testnetAddress: activeAccount.testnetAddress
-      } : null,
-      network,
-      address: activeAddress
-    }
+    return getSignInfo(network, activeAddress).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      return {
+        network,
+        address: activeAddress,
+        regid:srcRegId?srcRegId:"", 
+      }
+    })
   },
-
   getTransHistory({
     info
   }) {
@@ -863,8 +883,15 @@ export default {
         feesName: info.feesName,
 
       };
-      let hex = wiccApi.assetsPub(assestInfo)
-      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      
+      if (srcRegId){
+        let hex = wiccApi.assetsPub(assestInfo)
+        return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      }else{
+        return new Promise((resolve, reject) => {
+            reject("qianbaoweijihuo")
+        })
+      }
     })
   },
   assetsUpdate({ info }) {
@@ -894,8 +921,14 @@ export default {
         feesName: info.feesName,
 
       };
-      let hex = wiccApi.assetsUpdate(assestInfo)
-      return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      if (srcRegId){
+        let hex = wiccApi.assetsUpdate(assestInfo)
+        return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+      }else{
+        return new Promise((resolve, reject) => {
+            reject("qianbaoweijihuo")
+        })
+      }
     })
   },
   messageSign({ info }) {
