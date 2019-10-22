@@ -13,7 +13,7 @@
         <p class="cellName">{{$t('window.assets.zfxl')}}</p>
         <p class="cellValue">
           {{oldAssetSupply}} +
-          <span style="color:#3C78EA">{{updateContent}}</span>
+          <span style="color:#3C78EA">{{updateContent/Math.pow(10,8)}}</span>
         </p>
       </div>
       <div class="cell" style="display: block;" v-if="updateType == '1'">
@@ -49,7 +49,7 @@
         </p>
         <p
           class="cellValue"
-        >{{updateType == '3' ? parseInt(updateContent)+parseInt(oldAssetSupply) :oldAssetSupply}}</p>
+        >{{updateType == '3' ? updateContent/Math.pow(10,8)+oldAssetSupply :oldAssetSupply}}</p>
       </div>
       <div class="cell">
         <p class="cellName">

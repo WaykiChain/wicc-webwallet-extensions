@@ -26,6 +26,7 @@ const TYPE_NEWTX_MAP = {
   'BLOCK_REWARD_TX':	'矿工奖励',
   'ASSET_UPDATE_TX' : '资产更新',
   'ASSET_ISSUE_TX' : '资产发布',
+  'UCONTRACT_INVOKE_TX' : '多币种合约调用',
 }
 
 const TYPE_NEWTX_MAP_EN = {
@@ -47,11 +48,12 @@ const TYPE_NEWTX_MAP_EN = {
   'LCONTRACT_DEPLOY_TX': 'Publish Contract',
   'BCOIN_TRANSFER_TX': 'WICC Transfer',
   'ACCOUNT_REGISTER_TX': 'Register',
-  'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
+  'UCOIN_REWARD_TX': 'Init Transfer（WICC WGRT）',
   'UCOIN_BLOCK_REWARD_TX': 'Reward Txn',
   'BLOCK_REWARD_TX': 'Reward',
   'ASSET_UPDATE_TX' : 'Asset update',
   'ASSET_ISSUE_TX' : 'Asset release',
+  'UCONTRACT_INVOKE_TX' : 'Contract Invoke',
 }
 
 const TYPE_MAP = {

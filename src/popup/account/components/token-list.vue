@@ -351,6 +351,7 @@ export default {
           
           console.log(res);
           if (tokens) {
+            // this.sortAssets(tokens)
             this.myAssets = tokens
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
@@ -370,6 +371,20 @@ export default {
           });
         }
       );
+    },
+
+    sortAssets(tokens){
+      
+      let keys = Object.keys(tokens)
+      console.log(keys)
+      if (keys.length > 0){
+          const a = keys.filter(ele=>{
+            return ["WICC","WUSD","WGRT"].indexOf(ele)<0
+          })
+
+      }
+      // this.myAssets == newAssets
+      // console.log(tokens)
     }
   },
 
@@ -383,6 +398,7 @@ export default {
       wgrt: null,
       eventBus,
       myAssets:{},
+      tokensKeys:[],
       lastNetWork : localStorage.getItem('tempNetWork'),
     };
   }

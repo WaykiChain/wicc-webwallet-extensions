@@ -342,7 +342,7 @@ export default class {
     }
     var assetUpdateData = {
       updateType: updateType,
-      updateValue: info.updateType == '3' ? parseInt(info.updateContent) * Math.pow(10, 8) : info.updateContent, //owner address
+      updateValue: info.updateType == '3' ? parseInt(info.updateContent) : info.updateContent, //owner address
     }
     var assetCreateInfo = {
       nTxType: bitcore.WiccApi.ASSET_UPDATE,
