@@ -262,18 +262,18 @@ window.WiccWallet = {
   },
 
     ///多币种合约调用
-    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback){
+    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback,onlyRaw){
       const callbackId = saveCallback(callback)
       return send('walletPluginUContractInvoke',{
-        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId
+        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId,onlyRaw
       })
     },
 
     ///多币种转账
-    UCoinTransfer(assetMap,memo,callback){
+    UCoinTransfer(assetMap,memo,callback,onlyRaw){
       const callbackId = saveCallback(callback)
       return send('UCoinTransfer',{
-        assetMap,memo,callbackId
+        assetMap,memo,callbackId,onlyRaw
       })
     },
 

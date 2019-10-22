@@ -4,7 +4,7 @@
       <h5 class="titleHeader">{{$t('window.contract.title')}}</h5>
       <div class="cell">
         <p class="cellName">{{$t('window.contract.addressLabel')}}</p>
-        <p class="cellValue">{{cutMiddleStr(address,8)}}</p>
+        <p class="cellValue">{{address ? cutMiddleStr(address,8) : ""}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.contract.contractRegIdLabel')}}</p>
@@ -51,7 +51,8 @@ export default {
       regId: 0,
       coinSymbol:'',
       contract:'',
-      memo:'Message'
+      memo:'Message',
+      onlyRaw:"",
     };
   },
   created() {
@@ -62,6 +63,7 @@ export default {
     this.contract = query.contract;
     this.memo = query.memo;
     this.callbackId = query.callbackId;
+    this.onlyRaw = query.onlyRaw;
     console.log(query)
   },
   methods: {
@@ -78,7 +80,14 @@ export default {
         memo:this.memo,
         
       };
-      API.callRaw("variousCoinsContractTx", { info: param }).then(
+      if (this.onlyRaw == "1"){
+        this.call("variousCoinsContractRaw",param)
+      }else{
+        this.call("variousCoinsContractTx",param)
+      }
+    },
+    call(name,param){
+      API.callRaw(name, { info: param }).then(
         res => {
           console.log(res)
           this.$loading.close();

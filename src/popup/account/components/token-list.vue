@@ -81,12 +81,12 @@
         </li>
       </ul>
     </div>
-    <div class="token-list-bottom">
+    <!-- <div class="token-list-bottom">
       <button class="token-list-btn-add" @click="gotoAddToken">
         <img src="../../static/coin-add-icon.svg" />
         {{ $t('account.main.addTokenButton') }}
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 

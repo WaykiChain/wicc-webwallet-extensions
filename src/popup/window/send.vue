@@ -6,7 +6,7 @@
       <div class="from-address">{{ activeAddress }}</div>
       <label
         class="transfer-limit"
-      >{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;{{coinType}}</label>
+      >{{$t('account.sendToken.limit')}}&nbsp;{{balance ? balance : 0}} &nbsp;{{coinType}}</label>
       <wallet-input
         v-model="destAddr"
         :label="$t('account.send.destLabel')"
@@ -150,6 +150,7 @@ export default {
     this.desc = query.memo;
     this.value = this.value / Math.pow(10, 8);
     this.callbackId = query.callbackId;
+    this.onlyRaw = query.onlyRaw;
     console.log(query);
   },
   watch: {
@@ -194,7 +195,12 @@ export default {
         feeSymbol: this.feesName,
         memo: this.desc
       };
-      this.callRaw("variousCoinsTx", param);
+      if (this.onlyRaw == "1"){
+        this.callRaw("variousCoinsRaw",param)
+      }else{
+        this.callRaw("variousCoinsTx", param);
+      }
+      
     },
 
     callRaw(method, param) {
@@ -271,7 +277,8 @@ export default {
       desc: null,
       fees: 0.01,
       feesName: "WICC",
-      coinType: ""
+      coinType: "",
+      onlyRaw:"",
     };
   }
 };
