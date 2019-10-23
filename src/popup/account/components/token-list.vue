@@ -381,7 +381,7 @@ export default {
           const a = keys.filter(ele=>{
             return ["WICC","WUSD","WGRT"].indexOf(ele)<0
           })
-
+          this.tokensKeys = a
       }
       // this.myAssets == newAssets
       // console.log(tokens)

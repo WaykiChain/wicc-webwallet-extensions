@@ -122,15 +122,24 @@ export default {
     },
 
     createWallet() {
+      this.checkNetWork()
       this.$router.push({
         name: "createWallet"
       });
     },
 
     importWallet() {
+      this.checkNetWork()
       this.$router.push({
         name: "importWallet"
       });
+    },
+    checkNetWork(){
+      const localNet = localStorage.getItem('network')
+      if (localNet){
+        return
+      }
+      localStorage.setItem('network','mainnet')
     }
   }
 };
