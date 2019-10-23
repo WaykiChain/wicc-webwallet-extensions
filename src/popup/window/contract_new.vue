@@ -60,6 +60,11 @@ export default {
     this.amount = query.amount;
     this.regId = query.regId;
     this.coinSymbol = query.coinSymbol;
+    if (query.coinSymbol == "WUSD"){
+      this.feesName = "WUSD"
+    }else{
+      this.feesName = "WICC"
+    }
     this.contract = query.contract;
     this.memo = query.memo;
     this.callbackId = query.callbackId;

@@ -147,6 +147,11 @@ export default {
       this.$toast("Invalid Amount");
       this.value = 0;
     }
+    if (assetMap.coinSymbol == "WUSD"){
+      this.feesName = "WUSD"
+    }else{
+      this.feesName = "WICC"
+    }
     this.desc = query.memo;
     this.value = this.value / Math.pow(10, 8);
     this.callbackId = query.callbackId;
