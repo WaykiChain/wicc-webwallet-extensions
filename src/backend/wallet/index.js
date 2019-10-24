@@ -26,11 +26,23 @@ const getWiccApi = (network) => {
 const getSignInfo = (network, address) => {
 
   const baasApi = new BaasAPI(network)
-  let srcRegId = null
-
+  let srcRegId = ""
+  const localRegid = localStorage.getItem('srcRegId')
+  srcRegId = localRegid ? localRegid : ""
+  if (srcRegId!="") {
+    return baasApi.getblockcount().then((data) => {
+      const height = data
+      const privateKey = vaultStorage.getPrivateKey(address)
+      return {
+        srcRegId,
+        height,
+        privateKey
+      }
+    })
+  }
   return baasApi.getAccountInfo(address).then((data) => {
-
-    srcRegId = data.regid
+    srcRegId = data.regid ? data.regid : ""
+    localStorage.setItem('srcRegId',srcRegId)
     return baasApi.getblockcount()
   }).then((data) => {
     const height = data
@@ -325,18 +337,12 @@ export default {
       activeAddress,
       // vaultCreated
     } = state
-
-    return getSignInfo(network, activeAddress).then(({
-      srcRegId,
-      height,
-      privateKey
-    }) => {
-      return {
-        network,
-        address: activeAddress,
-        regid:srcRegId?srcRegId:"", 
-      }
-    })
+    const localRegid = localStorage.getItem('srcRegId')
+    return {
+      network,
+      address: activeAddress,
+      regid:localRegid?localRegid:"", 
+    }
   },
   getTransHistory({
     info
