@@ -20,17 +20,31 @@
           :class="{
             active: activeRegId === null
           }"
-          v-for="tokenKey in Object.keys(myAssets)"
+          v-for="tokenKey in ['WICC','WGRT','WUSD']"
+          :key="tokenKey"
+          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey})"
+        >
+          <img class="token-item-icon" src="../../static/wicclogo.svg" />
+          <span class="token-item-name">{{tokenKey}}</span>
+          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
+        </li>
+        
+        <li
+          class="token-item"
+          :class="{
+            active: activeRegId === null
+          }"
+          v-for="tokenKey in tokensKeys"
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
         >
           <img class="token-item-icon" src="../../static/wicclogo.svg" />
           <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8)}}</span>
+          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
         </li>
-        <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
+        <!-- <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
             <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
-        </li>
+        </li> -->
         <!-- <li
           class="token-item"
           :class="{
@@ -348,10 +362,10 @@ export default {
         res => {
           this.$loading.close();
           let tokens = res.tokens;
-          
+          localStorage.setItem('srcRegID',res.regid ? res.regid : "")
           console.log(res);
           if (tokens) {
-            // this.sortAssets(tokens)
+            this.sortAssets(tokens)
             this.myAssets = tokens
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
@@ -376,15 +390,14 @@ export default {
     sortAssets(tokens){
       
       let keys = Object.keys(tokens)
-      console.log(keys)
       if (keys.length > 0){
           const a = keys.filter(ele=>{
             return ["WICC","WUSD","WGRT"].indexOf(ele)<0
           })
           this.tokensKeys = a
+      }else{
+        this.tokensKeys = []
       }
-      // this.myAssets == newAssets
-      // console.log(tokens)
     }
   },
 

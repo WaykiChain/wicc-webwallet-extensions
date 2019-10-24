@@ -27,7 +27,7 @@ const getSignInfo = (network, address) => {
 
   const baasApi = new BaasAPI(network)
   let srcRegId = ""
-  const localRegid = localStorage.getItem('srcRegId')
+  const localRegid = localStorage.getItem('srcRegID')
   srcRegId = localRegid ? localRegid : ""
   if (srcRegId!="") {
     return baasApi.getblockcount().then((data) => {
@@ -42,7 +42,7 @@ const getSignInfo = (network, address) => {
   }
   return baasApi.getAccountInfo(address).then((data) => {
     srcRegId = data.regid ? data.regid : ""
-    localStorage.setItem('srcRegId',srcRegId)
+    localStorage.setItem('srcRegID',srcRegId)
     return baasApi.getblockcount()
   }).then((data) => {
     const height = data
@@ -337,7 +337,7 @@ export default {
       activeAddress,
       // vaultCreated
     } = state
-    const localRegid = localStorage.getItem('srcRegId')
+    const localRegid = localStorage.getItem('srcRegID')
     return {
       network,
       address: activeAddress,

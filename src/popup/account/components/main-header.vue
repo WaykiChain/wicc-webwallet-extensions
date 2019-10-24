@@ -188,7 +188,7 @@ export default {
     },
 
     setNetwork(network) {
-      localStorage.removeItem('srcRegId')
+      localStorage.removeItem('srcRegID')
       var net = ""
       if (network.name){
         net = network.network
@@ -216,7 +216,7 @@ export default {
     },
 
     setActiveAccount(account) {
-      localStorage.removeItem('srcRegId')
+      localStorage.removeItem('srcRegID')
       API.setActiveAccount(account.id).then(({ network }) => {
         this.activeAccount = account;
         eventBus.$emit("active-account-change", account);
