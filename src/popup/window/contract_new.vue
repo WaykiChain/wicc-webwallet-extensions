@@ -166,6 +166,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 20px 16px;
+  overflow: hidden;
   &:after {
     content: " ";
     width: calc(100% - 32px);
@@ -179,10 +180,15 @@ export default {
   .cellName {
     color: #b4bccc;
     font-size: 13px;
+    flex: 0 0 60px;
+    overflow: hidden;
   }
   .cellValue {
     color: #5b5f67;
     font-size: 13px;
+    overflow: hidden;
+    word-break: break-all;
+    // text-align: right;
   }
 }
 .feesView {

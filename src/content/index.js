@@ -50,9 +50,11 @@ pageStream.on('data', function ({
 })
 
 const send = (action, data) => {
-  if (pendingPromise.resolve) {
-    throw new Error('one task has already running')
-  }
+  // if (pendingPromise.resolve) {
+  //   throw new Error('one task has already running')
+  // }
+
+  pendingPromise.resolve = null
 
   pageStream.write({
     from: 'page',
