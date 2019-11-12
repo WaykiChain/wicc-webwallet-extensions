@@ -11,6 +11,7 @@
         v-model="destAddr"
         :label="$t('account.send.destLabel')"
         :placeholder="$t('account.send.destPlaceHolder')"
+        :readOnly = "true"
       ></wallet-input>
 
       <wallet-input
@@ -19,9 +20,10 @@
         :postfix="coinType"
         :label="$t('account.send.valueLabel')"
         :placeholder="$t('account.send.valuePlaceHolder')"
+        :readOnly = "true"
       ></wallet-input>
 
-      <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input>
+      <wallet-input v-model="desc" :label="$t('account.send.descLabel')" :readOnly = "true"></wallet-input>
 
       <div class="feesView">
         <select class="feesName" name="WICC" id v-model="feesName">
