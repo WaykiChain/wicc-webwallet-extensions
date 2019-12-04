@@ -28,7 +28,7 @@
           <span class="token-item-name">{{tokenKey}}</span>
           <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
         </li>
-        
+
         <li
           class="token-item"
           :class="{
@@ -44,7 +44,7 @@
         </li>
         <!-- <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
             <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
-        </li> -->
+        </li>-->
         <!-- <li
           class="token-item"
           :class="{
@@ -77,7 +77,7 @@
           <img class="token-item-icon" src="../../static/wicclogo.svg" />
           <span class="token-item-name">WGRT</span>
           <span>{{wgrt ? wgrt.freeAmount/100000000 : 0}}</span>
-        </li> -->
+        </li>-->
         <li
           class="token-item"
           v-for="(token, index) in visibleTokens"
@@ -90,7 +90,10 @@
           <img class="token-item-icon" src="../../static/coin-icon.svg" />
           <span class="token-item-name">{{ token.name }}</span>
           <span class="token-item-more-btn">
-            <span class="token-item-remove-btn" @click.stop="handleRemoveToken(token)">{{ $t('account.main.removeToken') }}</span>
+            <span
+              class="token-item-remove-btn"
+              @click.stop="handleRemoveToken(token)"
+            >{{ $t('account.main.removeToken') }}</span>
           </span>
         </li>
       </ul>
@@ -100,7 +103,7 @@
         <img src="../../static/coin-add-icon.svg" />
         {{ $t('account.main.addTokenButton') }}
       </button>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -295,6 +298,11 @@ export default {
       console.log("监听到的地址", val);
       this.getWiccNum(val);
       this.currentAddr = val;
+      const localNet = localStorage.getItem("network");
+      if (localNet) {
+        return;
+      }
+      localStorage.setItem("network", this.localNet);
     }
   },
 
@@ -309,11 +317,11 @@ export default {
   methods: {
     handleNetworkChange(network) {
       if (network == this.lastNetWork) {
-        console.log("点击切换节点地址：" + this.currentAddr+'Net:'+network);
+        console.log("点击切换节点地址：" + this.currentAddr + "Net:" + network);
         this.getWiccNum(this.currentAddr);
       }
-      localStorage.setItem('tempNetWork',network)
-      this.lastNetWork = network
+      localStorage.setItem("tempNetWork", network);
+      this.lastNetWork = network;
     },
     gotoAddToken() {
       this.$router.push({
@@ -356,22 +364,22 @@ export default {
       this.wusd = null;
       this.wicc = null;
       this.wgrt = null;
-      this.myAssets = {}
-      this.$loading(this.$t('window.cdp.hqzcz'))
+      this.myAssets = {};
+      this.$loading(this.$t("window.cdp.hqzcz"));
       API.getAccountInfo(this.network, address).then(
         res => {
           this.$loading.close();
           let tokens = res.tokens;
-          localStorage.setItem('srcRegID',res.regid ? res.regid : "")
+          localStorage.setItem("srcRegID", res.regid ? res.regid : "");
           console.log(res);
           if (tokens) {
-            this.sortAssets(tokens)
-            this.myAssets = tokens
+            this.sortAssets(tokens);
+            this.myAssets = tokens;
             this.wusd = tokens.WUSD;
             this.wicc = tokens.WICC;
             this.wgrt = tokens.WGRT;
           } else {
-            this.myAssets = {}
+            this.myAssets = {};
             this.wusd = null;
             this.wicc = null;
             this.wgrt = null;
@@ -387,16 +395,15 @@ export default {
       );
     },
 
-    sortAssets(tokens){
-      
-      let keys = Object.keys(tokens)
-      if (keys.length > 0){
-          const a = keys.filter(ele=>{
-            return ["WICC","WUSD","WGRT"].indexOf(ele)<0
-          })
-          this.tokensKeys = a
-      }else{
-        this.tokensKeys = []
+    sortAssets(tokens) {
+      let keys = Object.keys(tokens);
+      if (keys.length > 0) {
+        const a = keys.filter(ele => {
+          return ["WICC", "WUSD", "WGRT"].indexOf(ele) < 0;
+        });
+        this.tokensKeys = a;
+      } else {
+        this.tokensKeys = [];
       }
     }
   },
@@ -410,9 +417,9 @@ export default {
       wicc: null,
       wgrt: null,
       eventBus,
-      myAssets:{},
-      tokensKeys:[],
-      lastNetWork : localStorage.getItem('tempNetWork'),
+      myAssets: {},
+      tokensKeys: [],
+      lastNetWork: localStorage.getItem("tempNetWork")
     };
   }
 };
