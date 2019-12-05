@@ -4,7 +4,7 @@
       <h5 class="titleHeader">{{$t('window.contract.title')}}</h5>
       <div class="cell">
         <p class="cellName">{{$t('window.contract.addressLabel')}}</p>
-        <p class="cellValue">{{cutMiddleStr(address,8)}}</p>
+        <p class="cellValue">{{address ? cutMiddleStr(address,8) : ""}}</p>
       </div>
       <div class="cell">
         <p class="cellName">{{$t('window.contract.contractRegIdLabel')}}</p>
@@ -51,7 +51,8 @@ export default {
       regId: 0,
       coinSymbol:'',
       contract:'',
-      memo:'Message'
+      memo:'Message',
+      onlyRaw:"",
     };
   },
   created() {
@@ -59,9 +60,15 @@ export default {
     this.amount = query.amount;
     this.regId = query.regId;
     this.coinSymbol = query.coinSymbol;
+    if (query.coinSymbol == "WUSD"){
+      this.feesName = "WUSD"
+    }else{
+      this.feesName = "WICC"
+    }
     this.contract = query.contract;
     this.memo = query.memo;
     this.callbackId = query.callbackId;
+    this.onlyRaw = query.onlyRaw;
     console.log(query)
   },
   methods: {
@@ -78,7 +85,14 @@ export default {
         memo:this.memo,
         
       };
-      API.callRaw("variousCoinsContractTx", { info: param }).then(
+      if (this.onlyRaw == "1"){
+        this.call("variousCoinsContractRaw",param)
+      }else{
+        this.call("variousCoinsContractTx",param)
+      }
+    },
+    call(name,param){
+      API.callRaw(name, { info: param }).then(
         res => {
           console.log(res)
           this.$loading.close();
@@ -152,6 +166,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 20px 16px;
+  overflow: hidden;
   &:after {
     content: " ";
     width: calc(100% - 32px);
@@ -165,10 +180,15 @@ export default {
   .cellName {
     color: #b4bccc;
     font-size: 13px;
+    flex: 0 0 60px;
+    overflow: hidden;
   }
   .cellValue {
     color: #5b5f67;
     font-size: 13px;
+    overflow: hidden;
+    word-break: break-all;
+    // text-align: right;
   }
 }
 .feesView {

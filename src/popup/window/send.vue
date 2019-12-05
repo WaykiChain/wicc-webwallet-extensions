@@ -6,11 +6,12 @@
       <div class="from-address">{{ activeAddress }}</div>
       <label
         class="transfer-limit"
-      >{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;{{coinType}}</label>
+      >{{$t('account.sendToken.limit')}}&nbsp;{{balance ? balance : 0}} &nbsp;{{coinType}}</label>
       <wallet-input
         v-model="destAddr"
         :label="$t('account.send.destLabel')"
         :placeholder="$t('account.send.destPlaceHolder')"
+        :readOnly = "true"
       ></wallet-input>
 
       <wallet-input
@@ -19,9 +20,10 @@
         :postfix="coinType"
         :label="$t('account.send.valueLabel')"
         :placeholder="$t('account.send.valuePlaceHolder')"
+        :readOnly = "true"
       ></wallet-input>
 
-      <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input>
+      <wallet-input v-model="desc" :label="$t('account.send.descLabel')" :readOnly = "true"></wallet-input>
 
       <div class="feesView">
         <select class="feesName" name="WICC" id v-model="feesName">
@@ -147,9 +149,15 @@ export default {
       this.$toast("Invalid Amount");
       this.value = 0;
     }
+    if (assetMap.coinSymbol == "WUSD"){
+      this.feesName = "WUSD"
+    }else{
+      this.feesName = "WICC"
+    }
     this.desc = query.memo;
     this.value = this.value / Math.pow(10, 8);
     this.callbackId = query.callbackId;
+    this.onlyRaw = query.onlyRaw;
     console.log(query);
   },
   watch: {
@@ -194,7 +202,12 @@ export default {
         feeSymbol: this.feesName,
         memo: this.desc
       };
-      this.callRaw("variousCoinsTx", param);
+      if (this.onlyRaw == "1"){
+        this.callRaw("variousCoinsRaw",param)
+      }else{
+        this.callRaw("variousCoinsTx", param);
+      }
+      
     },
 
     callRaw(method, param) {
@@ -271,7 +284,8 @@ export default {
       desc: null,
       fees: 0.01,
       feesName: "WICC",
-      coinType: ""
+      coinType: "",
+      onlyRaw:"",
     };
   }
 };

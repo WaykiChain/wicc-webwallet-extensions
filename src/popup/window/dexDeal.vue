@@ -179,7 +179,6 @@ export default {
       }
     },
     callRaw(method, param) {
-      debugger
       API.callRaw(method, { info: param }).then(
         res => {
           console.log(res);

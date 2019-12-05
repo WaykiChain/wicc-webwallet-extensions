@@ -15,6 +15,7 @@
         read-only></wallet-input>
 
     <template slot="footer">
+      <button class="jump" @click="goAccountHome">跳过备份</button>
       <button class="display-block btn-primary" @click="validateWalletMnemonic">{{ $t('wallet.create.backup.nextButton') }} </button>
       <button class="display-block btn-text" @click="download"><img src="../../static/download.svg" />  {{ $t('wallet.create.backup.downloadButton') }}</button>
     </template>
@@ -30,6 +31,8 @@
   import NavLayout from '../../components/nav-layout'
   import download from '../../api/download'
   import mnemonic from './mnemonic'
+  import API from '../../api'
+  import eventBus from '../../account/bus'
 
   export default {
     name: 'backup-mnemonic',
@@ -38,7 +41,6 @@
       NavLayout,
       WalletInput
     },
-
     created () {
       const route = this.$router.currentRoute
       const { password } = route.query
@@ -72,6 +74,44 @@
     },
 
     methods: {
+      goAccountHome(){
+      this.$loading(this.$t('wallet.create.validate.confirmLoading'))
+
+        setTimeout(() => {
+          let promise
+
+          if (this.isCreatingWallet) {
+            promise = API.createWallet(this.password, this.mnemonic)
+          } else {
+            promise = API.createAccount(this.mnemonic)
+          }
+
+          promise.then(() => {
+            this.$loading.close()
+            this.$toast(this.$t('wallet.create.validate.createSuccess'), {
+              type: 'center'
+            })
+
+            if (!this.isCreatingWallet) {
+              eventBus.$emit('header:state:refresh')
+            }
+
+            mnemonic.clear()
+
+            this.$router.push({
+              name: 'accountMain'
+            })
+          }, (error) => {
+            console.log('create wallet error:', error)
+            this.$loading.close()
+            this.$toast(this.$t('wallet.create.validate.createFailure') + ' ' + formatError(error), {
+              type: 'center',
+              duration: 5000,
+              wordWrap: true
+            })
+          })
+        }, 300)
+    },
       validateWalletMnemonic () {
         if (this.isCreatingWallet) {
           this.$router.push({
@@ -105,3 +145,11 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+.jump{
+  border: none;
+  text-align: center;
+  width: 100%;
+  color: #8e8e8e;
+}
+</style>

@@ -219,15 +219,15 @@ export default {
   },
   
 
-  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId }) {
+  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId,onlyRaw}) {
     return openWindow('UContractInvoke', {
-      amount,coinSymbol,regId,contract,memo,callbackId
+      amount,coinSymbol,regId,contract,memo,callbackId,onlyRaw
     })
   },
 
-  async UCoinTransfer({ assetMap,memo,callbackId }) {
+  async UCoinTransfer({ assetMap,memo,callbackId,onlyRaw }) {
     return openWindow('UCoinTransfer', {
-      assetMap,memo,callbackId
+      assetMap,memo,callbackId,onlyRaw
     })
   },
 

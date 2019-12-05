@@ -26,11 +26,23 @@ const getWiccApi = (network) => {
 const getSignInfo = (network, address) => {
 
   const baasApi = new BaasAPI(network)
-  let srcRegId = null
-
+  let srcRegId = ""
+  const localRegid = localStorage.getItem('srcRegID')
+  srcRegId = localRegid ? localRegid : ""
+  if (srcRegId!="") {
+    return baasApi.getblockcount().then((data) => {
+      const height = data
+      const privateKey = vaultStorage.getPrivateKey(address)
+      return {
+        srcRegId,
+        height,
+        privateKey
+      }
+    })
+  }
   return baasApi.getAccountInfo(address).then((data) => {
-
-    srcRegId = data.regid
+    srcRegId = data.regid ? data.regid : ""
+    localStorage.setItem('srcRegID',srcRegId)
     return baasApi.getblockcount()
   }).then((data) => {
     const height = data
@@ -325,18 +337,12 @@ export default {
       activeAddress,
       // vaultCreated
     } = state
-
-    return getSignInfo(network, activeAddress).then(({
-      srcRegId,
-      height,
-      privateKey
-    }) => {
-      return {
-        network,
-        address: activeAddress,
-        regid:srcRegId?srcRegId:"", 
-      }
-    })
+    const localRegid = localStorage.getItem('srcRegID')
+    return {
+      network,
+      address: activeAddress,
+      regid:localRegid?localRegid:"", 
+    }
   },
   getTransHistory({
     info
@@ -834,6 +840,24 @@ export default {
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },
+  /**
+   * 多币种转账(仅仅签名)
+   */
+  variousCoinsRaw({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.value))) {
+        throw new Error('INVALID_VALUE')
+      }
+      let hex = wiccApi.createVariousCoinsTx(privateKey, height, srcRegId, info.destAddr, info.value, info.fees, info.coinType, info.feeSymbol, localNetWork, info.memo)
+      return {rawtx:hex}
+    })
+  },
 
   /**
    * 获取交易详情
@@ -962,6 +986,25 @@ export default {
       }
       let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
+    })
+  },
+
+    /**
+   * 多币种合约调用(仅仅签名)
+   */
+  variousCoinsContractRaw({ info }) {
+    const localNetWork = localStorage.getItem('network')
+    const wiccApi = getWiccApi(localNetWork)
+    return getSignInfo(localNetWork, info.address).then(({
+      srcRegId,
+      height,
+      privateKey
+    }) => {
+      if (isNaN(parseFloat(info.amount))) {
+        throw new Error('INVALID_VALUE')
+      }
+      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
+      return {rawtx:hex}
     })
   },
 
