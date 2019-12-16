@@ -2,7 +2,8 @@
   <div class="wallet-container">
     <div class="welcome-container" v-show="!loading">
       <div class="logo-container">
-        <img src="../static/main-logo.png" width="107">
+        <img src="../static/main-logo.png" width="136" />
+        <div class="slogin">Building, sharing, and sharing Waykichain Ecological platform</div>
       </div>
 
       <div class="login-container" v-show="vaultCreated && isLocked">
@@ -11,7 +12,7 @@
           type="password"
           v-model="password"
           :placeholder="$t('splash.passwordPlaceholder')"
-        >
+        />
         <button class="display-block btn-primary" @click="unlock">{{ $t('splash.unlockButton') }}</button>
         <button
           class="display-block btn-text"
@@ -21,10 +22,10 @@
 
       <div class="create-container" v-show="!vaultCreated">
         <button
-          class="display-block btn-primary"
+          class="display-block btn-primary btn-higher"
           @click="createWallet"
         >{{ $t('splash.createWalletButton') }}</button>
-        <button class="display-block" @click="importWallet">{{ $t('splash.importWalletButton') }}</button>
+        <button class="display-block btn-higher btn-lighter" @click="importWallet">{{ $t('splash.importWalletButton') }}</button>
       </div>
     </div>
   </div>
@@ -35,12 +36,19 @@
   position: relative;
   height: 100%;
   box-sizing: border-box;
-  padding: 16px;
 }
 
 .logo-container {
-  padding-top: 128px;
+  padding-top: 80px;
   text-align: center;
+  .slogin {
+    margin-top: 50px;
+    color: #7C8BB9;
+    font-size: 17px;
+    padding: 0 64px;
+    line-height: 28px;
+    font-weight: 300;
+  }
 }
 
 .create-container,
@@ -48,7 +56,8 @@
   position: absolute;
   left: 16px;
   right: 16px;
-  bottom: 16px;
+  bottom: 48px;
+  padding: 0 60px;
 }
 </style>
 
@@ -122,24 +131,24 @@ export default {
     },
 
     createWallet() {
-      this.checkNetWork()
+      this.checkNetWork();
       this.$router.push({
         name: "createWallet"
       });
     },
 
     importWallet() {
-      this.checkNetWork()
+      this.checkNetWork();
       this.$router.push({
         name: "importWallet"
       });
     },
-    checkNetWork(){
-      const localNet = localStorage.getItem('network')
-      if (localNet){
-        return
+    checkNetWork() {
+      const localNet = localStorage.getItem("network");
+      if (localNet) {
+        return;
       }
-      localStorage.setItem('network','mainnet')
+      localStorage.setItem("network", "mainnet");
     }
   }
 };

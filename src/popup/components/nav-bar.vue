@@ -1,41 +1,44 @@
 <template>
   <div class="navbar">
+    <div class="navbar-btn" @click="goBack">
+      <img v-if="backType === 'arrow'" class="arrow" src="../static/back-icon-arrow.png" />
+      <img v-else src="../static/back-icon-close.png" />
+    </div>
     <div class="navbar-title">
       <slot></slot>
       {{ title }}
     </div>
-    <button class="navbar-btn" @click="goBack">
-      <img src="../static/back-icon.svg" />
-    </button>
   </div>
 </template>
 
 <style scoped>
   .navbar {
-    position: relative;
-    padding-top: 12px;
-    border-bottom: 1px solid #ededed;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
   }
 
   .navbar-title {
-    color: #2f2f2f;
-    font-size: 16px;
-    font-weight: 400;
-    padding-bottom: 8px;
+    flex: 1;
+    overflow: hidden;
+    color: #21274A;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
     text-align: center;
   }
 
   .navbar-btn {
-    position: absolute;
-    line-height: 16px;
-    padding: 0 6px;
-    height: 16px;
-    bottom: 8px;
-    border: none;
+    width: 20px;
+    cursor: pointer;
   }
 
   .navbar-btn img {
-    width: 24px;
+    width: 18px;
+    float: left;
+  }
+  .navbar-btn .arrow {
+    width: 13px;
   }
 </style>
 
@@ -48,6 +51,10 @@
 
       path: {
         type: Object
+      },
+      backType: {
+        type: String,
+        default: 'arrow'
       }
     },
 

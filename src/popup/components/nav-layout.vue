@@ -2,6 +2,7 @@
   <div class="layout">
     <nav-bar
         :title.sync="title"
+        back-type="close"
         :path="path">
       <slot name="title"></slot>
     </nav-bar>
@@ -39,18 +40,17 @@
   .layout {
     position: relative;
     box-sizing: border-box;
-    display: flex;
     flex-direction: column;
-    overflow: auto;
+    padding-top: 16px;
   }
 
   .layout-body {
     flex: 1 0 0;
-    padding: 0 16px 16px;
+    padding: 30px 24px 0;
   }
 
   .layout-footer {
-    padding: 0 16px;
     margin-top: 12px;
+    padding: 60px 24px 0;
   }
 </style>
