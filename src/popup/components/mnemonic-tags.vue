@@ -71,23 +71,21 @@
 </script>
 
 <style lang="scss" scoped>
-  .mnemonic-tags {
-  }
-
   .mnemonic-tags-item {
     display: inline-block;
-    background-color: rgba(0, 61, 184, 0.05);
-    color: #003db8;
-    font-size: 16px;
-    border-radius: 4px;
+    color: #21274A;
+    font-size: 14px;
+    border-radius: 6px;
     padding: 6px 16px;
     margin-right: 16px;
     margin-bottom: 10px;
     cursor: pointer;
+    border: 1px solid #E4E8EE;
 
     &.active {
-      background-color: #3c78ea;
-      color: #fff;
+      background-color: #F8F9FB;
+      color: #C2C4CE;
+      border-color: #F8F9FB;
     }
   }
 </style>

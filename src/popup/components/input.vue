@@ -1,13 +1,14 @@
 <template>
   <div class="wallet-input">
     <div class="wallet-input--label">{{ label || '' }}</div>
-    <div class="wallet-input-content" :class="{hover: hover}">
+    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly}">
       <textarea
-        v-if="type === 'textarea'"
+        v-if="theType === 'textarea'"
         class="wallet-input--textarea display-block"
         :value="value"
         :placeholder="placeholder"
         :readonly="readOnly"
+        :style="{color: color}"
         @input="handleInput"
         @focus="focusHandler"
         @blur="blurHandler"
@@ -15,12 +16,13 @@
 
       <input
         ref="input"
-        v-if="type === 'text' || type === 'password' || type === 'number'"
+        v-if="theType === 'text' || theType === 'password' || theType === 'number'"
         class="wallet-input--input display-block"
         :placeholder="placeholder"
-        :type="type"
+        :type="theType"
         :value="value"
         :readonly="readOnly"
+        :style="{color: color}"
         @input="handleInput"
         @focus="focusHandler"
         @blur="blurHandler"
@@ -30,7 +32,7 @@
 
       <slot></slot>
 
-      <div class="actions" v-if="!postfix && type !== 'textarea'">
+      <div class="actions" v-if="!postfix && theType !== 'textarea'">
         <div class="action clear" v-if="showClear" @click="setClear"></div>
         <div class="action line" v-if="showClear && showCheck"></div>
         <div class="action check" :class="{cansee: cansee}" v-if="showCheck && showClear" @click="toggleCansee"></div>
@@ -47,6 +49,10 @@ export default {
   props: {
     label: {
       type: String
+    },
+    color: {
+      type: String,
+      default: '#21294A'
     },
     type: {
       default: "text"
@@ -67,30 +73,29 @@ export default {
     },
     postfix: {
       type: String
-    },
-    showCheck: {
-      type: Boolean,
-      default: false
     }
   },
   beforeMount() {
     if (this.type === "password") {
       this.showCheck = true;
     }
+    this.theType = this.type
   },
   data() {
     return {
       hover: false,
       showClear: false,
-      cansee: false
+      cansee: false,
+      showCheck: false,
+      theType: ''
     };
   },
   watch: {
     cansee(val) {
       if (val) {
-        this.type = "text";
+        this.theType = "text";
       } else {
-        this.type = "password";
+        this.theType = "password";
       }
     }
   },
@@ -106,6 +111,9 @@ export default {
       this.cansee = !this.cansee;
     },
     focusHandler() {
+      if (this.readOnly) {
+        return
+      }
       this.hover = true;
     },
     blurHandler() {
@@ -148,6 +156,9 @@ export default {
   border-radius: 6px;
   &.hover {
     border-color: #3c78ea;
+  }
+  &.readOnly {
+    border: 0;
   }
 }
 
@@ -209,7 +220,9 @@ export default {
 }
 
 .wallet-input--textarea[readonly] {
-  background: rgba(0, 61, 184, 0.05);
+  background: #F5F7FA;
+  font-size: 15px;
+  color: #21294A;
 }
 
 .wallet-input--message {

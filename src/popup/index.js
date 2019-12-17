@@ -7,6 +7,7 @@ import Vodal from 'vodal'
 import './scss/skeleton.scss'
 import './scss/base.scss'
 import './scss/vodel.scss'
+import './scss/animate.css'
 import 'vodal/zoom.css'
 import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
@@ -22,7 +23,7 @@ Vue.component(Vodal.name, Vodal)
 Vue.use(Toast, {
   defaultType: 'center',
   duration: 2500,
-  wordWrap: false,
+  wordWrap: true,
   width: 'auto'
 })
 
