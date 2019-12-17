@@ -7,17 +7,29 @@
       </div>
 
       <div class="login-container" v-show="vaultCreated && isLocked">
-        <input
-          class="display-block"
-          type="password"
-          v-model="password"
-          :placeholder="$t('splash.passwordPlaceholder')"
-        />
+        <div class="password-wrap">
+          <input
+            class="display-block"
+            :type="type"
+            v-model="password"
+            @focus="focusHandler"
+            @blur="blurHandler"
+            ref="password1"
+          />
+          <div class="holder" :class="{shouldTop: shouldTop}">Password</div>
+          <div class="actions" v-if="showClear">
+            <div class="action clear" @click="setClear"></div>
+            <div class="action line"></div>
+            <div
+              class="action check"
+              :class="{cansee: cansee}"
+              v-if="showClear"
+              @click="toggleCansee"
+            ></div>
+          </div>
+        </div>
         <button class="display-block btn-primary" @click="unlock">{{ $t('splash.unlockButton') }}</button>
-        <button
-          class="display-block btn-text"
-          @click="importWallet"
-        >{{ $t('splash.restoreWalletButton') }}</button>
+        <div class="recover" @click="importWallet">{{ $t('splash.restoreWalletButton') }}</div>
       </div>
 
       <div class="create-container" v-show="!vaultCreated">
@@ -25,7 +37,10 @@
           class="display-block btn-primary btn-higher"
           @click="createWallet"
         >{{ $t('splash.createWalletButton') }}</button>
-        <button class="display-block btn-higher btn-lighter" @click="importWallet">{{ $t('splash.importWalletButton') }}</button>
+        <button
+          class="display-block btn-higher btn-lighter"
+          @click="importWallet"
+        >{{ $t('splash.importWalletButton') }}</button>
       </div>
     </div>
   </div>
@@ -43,7 +58,7 @@
   text-align: center;
   .slogin {
     margin-top: 50px;
-    color: #7C8BB9;
+    color: #7c8bb9;
     font-size: 17px;
     padding: 0 64px;
     line-height: 28px;
@@ -51,13 +66,98 @@
   }
 }
 
-.create-container,
-.login-container {
+.create-container {
   position: absolute;
   left: 16px;
   right: 16px;
   bottom: 48px;
   padding: 0 60px;
+}
+.login-container {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 44px;
+  .recover {
+    text-align: center;
+    color: #062deb;
+    text-decoration: underline;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .password-wrap {
+    position: relative;
+    height: 50px;
+    margin-bottom: 30px;
+    .holder {
+      position: absolute;
+      left: 14px;
+      top: 15px;
+      font-size: 15px;
+      color: #8187a5;
+      line-height: 20px;
+      background-color: #fff;
+      z-index: 1;
+      transition: all 150ms linear;
+      &.shouldTop {
+        padding: 0 6px;
+        top: -10px;
+        z-index: 3;
+        font-size: 12px;
+      }
+    }
+    input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      width: 100%;
+      height: 50px;
+      z-index: 2;
+      background: none;
+      padding-left: 14px;
+      padding-right: 83px;
+      &:focus {
+        border-color: #8187a5;
+      }
+    }
+  }
+  .actions {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 3;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .action {
+      background-color: #ccc;
+      margin-right: 12px;
+      cursor: pointer;
+    }
+    .clear {
+      margin-left: 12px;
+      width: 16px;
+      height: 16px;
+      background: url("../static/input-clear.svg");
+    }
+    .line {
+      width: 1px;
+      height: 17px;
+      background-color: #d1d2da;
+    }
+    .check {
+      width: 18px;
+      height: 14px;
+      background: url("../static/cansee.svg");
+      &.cansee {
+        background: url("../static/cannotsee.svg");
+      }
+    }
+  }
 }
 </style>
 
@@ -67,10 +167,14 @@ import API from "../api";
 export default {
   data() {
     return {
-      loading: true,
+      loading: true, 
       isLocked: true,
       vaultCreated: false,
-      password: ""
+      password: "",
+      shouldTop: false,
+      showClear: false,
+      cansee: false,
+      type: 'password'
     };
   },
 
@@ -109,7 +213,44 @@ export default {
     );
   },
 
+  watch: {
+    password(val) {
+      if (val) {
+        this.showClear = true;
+      } else {
+        this.showClear = false;
+      }
+    },
+    cansee(val) {
+      if (val) {
+        this.type = "text";
+      } else {
+        this.type = "password";
+      }
+    }
+  },
+
   methods: {
+    focusHandler() {
+      this.shouldTop = true;
+    },
+    blurHandler() {
+      if (this.password) return;
+      this.shouldTop = false;
+    },
+    setFocus() {
+      this.$refs.password1 && this.$refs.password1.focus()
+    },
+    setClear() {
+      this.password = "";
+      this.setFocus()
+      setTimeout(() => {
+        this.showClear = false;
+      }, 10);
+    },
+    toggleCansee() {
+      this.cansee = !this.cansee;
+    },
     gotoMain() {
       this.$router.push({
         name: "accountMain"

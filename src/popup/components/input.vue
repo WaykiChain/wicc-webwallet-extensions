@@ -152,10 +152,10 @@ export default {
 .wallet-input-content {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(6, 45, 235, 0.2);
+  border: 1px solid #E4E8EE;
   border-radius: 6px;
   &.hover {
-    border-color: #3c78ea;
+    border-color: #8187A5;
   }
   &.readOnly {
     border: 0;

@@ -28,7 +28,7 @@ export default {
   splash: {
     passwordPlaceholder: 'Please enter 6~20 characters',
     unlockButton: 'Log in',
-    restoreWalletButton: 'Recover your wallet with mnemonics.',
+    restoreWalletButton: 'Recover your wallet with mnemonics',
     createWalletButton: 'Create Wallet',
     importWalletButton: 'Import Wallet'
   },
