@@ -1,4 +1,4 @@
-import * as bitcore from 'bitcore-lib'
+import WiccWalletLib from 'wicc-wallet-lib'
 
 export const getAddressNetwork = function (address) {
   let network
@@ -11,7 +11,7 @@ export const getAddressNetwork = function (address) {
 }
 
 export const getPrivateKeyNetwork = function (string) {
-  const privateKey = bitcore.PrivateKey.fromWIF(string)
+  const privateKey = WiccWalletLib.bitcore.PrivateKey.fromWIF(string)
   const address = privateKey.toAddress().toString()
   return getAddressNetwork(address)
 }

@@ -7,7 +7,6 @@
   "private": false,
   "dependencies": {
     "axios": "^0.17.1",
-    "bitcore-lib": "git+ssh://git@github.com:xinshuhao/wicc-wallet-utils-js.git",
     "browser-passworder": "^2.0.3",
     "clipboard": "^2.0.4",
     "decimal.js": "^10.2.0",
@@ -31,7 +30,7 @@
     "vue-slider-component": "^2.8.16",
     "vue2-toast": "^2.0.2",
     "vuex": "^3.1.1",
-    "wicc-wallet-lib": "git+ssh://git@github.com/xinshuhao/wicc-wallet-utils-js.git"
+    "wicc-wallet-lib": "https://github.com/pengandpeng/wicc-webwallet-utils.git"
   },
   "scripts": {
     "lint": "eslint --ext .js,.vue src",

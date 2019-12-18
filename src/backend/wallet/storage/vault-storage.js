@@ -1,7 +1,7 @@
 import * as passworder from 'browser-passworder'
 import WiccAPI from '../wicc-api'
 import * as uuidv4 from 'uuid/v4'
-import * as bitcore from 'bitcore-lib'
+import WiccWalletLib from 'wicc-wallet-lib'
 import { getAddressNetwork, getPrivateKeyNetwork } from '../util/index'
 
 const privateKeyMap = {}
@@ -60,7 +60,7 @@ const createAccountWithMnemonic = (mnemonic) => {
 }
 
 const createAccountWithPrivateKey = (wif) => {
-  const privateKey = bitcore.PrivateKey.fromWIF(wif)
+  const privateKey = WiccWalletLib.bitcore.PrivateKey.fromWIF(wif)
   const address = privateKey.toAddress().toString()
 
   const network = getAddressNetwork(address)
@@ -217,7 +217,7 @@ export default {
     for (let item of data) {
       if (address === item.address || address === item.testnetAddress) {
         if (item.type === 'privateKey') {
-          const pk = bitcore.PrivateKey.fromWIF(item.data.privateKey)
+          const pk = WiccWalletLib.bitcore.PrivateKey.fromWIF(item.data.privateKey)
           privateKeyMap[address] = pk
           return pk
         } else if (item.type === 'mnemonic') {
