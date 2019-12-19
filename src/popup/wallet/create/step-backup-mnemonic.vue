@@ -10,7 +10,6 @@
 
     <template>
       <div class="jump" @click="switchCode">
-        <!-- <span class="circle"></span> -->
         <span>Switch {{currentLang === "CHINESE" ? "English" : "Chinese"}} Mnemonic</span>
       </div>
       <button
@@ -122,7 +121,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .jump {
-  display: flex;
+  display: inline-block;
   align-items: center;
   height: 18px;
   font-size: 13px;
