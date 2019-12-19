@@ -9,9 +9,9 @@
     ></wallet-input>
 
     <template>
-      <div class="jump">
-        <span class="circle"></span>
-        <span>Switch Chinese Mnemonic</span>
+      <div class="jump" @click="switchCode">
+        <!-- <span class="circle"></span> -->
+        <span>Switch {{currentLang === "CHINESE" ? "English" : "Chinese"}} Mnemonic</span>
       </div>
       <button
         class="display-block btn-primary"
@@ -33,10 +33,9 @@
 import WalletInput from "../../components/input";
 import NavLayout from "../../components/nav-layout";
 import download from "../../api/download";
-import mnemonic from "./mnemonic";
-import API from "../../api";
 import eventBus from "../../account/bus";
 import Warning from "../../components/warning";
+import WiccApi from "../../../backend/wallet/wicc-api"
 
 export default {
   name: "backup-mnemonic",
@@ -57,7 +56,8 @@ export default {
       this.isCreatingWallet = route.path.indexOf("wallet") !== -1;
     }
 
-
+    this.wiccApi = new WiccApi()
+    this.currentLang = this.wiccApi.getMnemonicCodeLanguage(this.mnemonic)
   },
 
   computed: {
@@ -75,6 +75,16 @@ export default {
   },
 
   methods: {
+    switchCode() {
+      if (this.currentLang === "ENGLISH") {
+        this.mnemonic = this.wiccApi.switchMnemonicCode(this.mnemonic, "CHINESE")
+        this.currentLang = "CHINESE"
+      } else {
+        this.mnemonic = this.wiccApi.switchMnemonicCode(this.mnemonic, "ENGLISH")
+        this.currentLang ="ENGLISH"
+      }
+    },
+
     validateWalletMnemonic() {
       if (this.isCreatingWallet) {
         this.$router.push({
@@ -103,7 +113,9 @@ export default {
     return {
       isCreatingWallet: true,
       mnemonic: this.$route.query.mnemonic,
-      password: null
+      password: null,
+      currentLang: "",
+      wiccApi: null
     };
   }
 };

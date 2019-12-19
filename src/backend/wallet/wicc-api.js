@@ -13,8 +13,16 @@ export default class {
     })
   }
 
-  createMnemonicCode() {
-    return this.api.createAllCoinMnemonicCode()
+  createMnemonicCode(language) {
+    return this.api.createAllCoinMnemonicCode(language)
+  }
+
+  switchMnemonicCode(mnemonic, targetLanguage) {
+    return this.api.switchMnemonicCode(mnemonic, targetLanguage)
+  }
+
+  getMnemonicCodeLanguage(mnemonic) {
+    return this.api.getMnemonicCodeLanguage(mnemonic)
   }
 
   createWallet(mnemonic) {
