@@ -1,7 +1,7 @@
 <template>
   <main-layout ref="mainLayout">
     <div class="backView" @click="goback">
-      <img src="../../static/back-icon-arrow.png" alt />
+      <img src="../../static/back-icon-arrow.svg" alt />
       <p>{{name}}</p>
     </div>
 

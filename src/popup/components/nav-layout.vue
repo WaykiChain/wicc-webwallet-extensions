@@ -2,7 +2,7 @@
   <div class="layout">
     <nav-bar
         :title.sync="title"
-        back-type="close"
+        :back-type="backType"
         :path="path">
       <slot name="title"></slot>
     </nav-bar>
@@ -31,6 +31,10 @@
       },
       path: {
         type: Object
+      },
+      backType: {
+        type: String,
+        default: "arrow"
       }
     }
   }

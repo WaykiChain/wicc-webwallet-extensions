@@ -1,8 +1,8 @@
 <template>
   <div class="navbar">
     <div class="navbar-btn" @click="goBack">
-      <img v-if="backType === 'arrow'" class="arrow" src="../static/back-icon-arrow.png" />
-      <img v-else src="../static/back-icon-close.png" />
+      <img v-if="backType === 'arrow'" class="arrow" src="../static/back-icon-arrow.svg" />
+      <img v-else src="../static/back-icon-close.svg" />
     </div>
     <div class="navbar-title">
       <slot></slot>
