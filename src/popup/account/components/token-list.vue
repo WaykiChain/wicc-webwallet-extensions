@@ -113,7 +113,6 @@
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
-  padding-top: 20px;
 }
 
 .token-list-container {

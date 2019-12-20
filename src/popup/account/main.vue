@@ -3,7 +3,6 @@
     <main-header></main-header>
 
     <coin-card
-      style="margin: 16px;"
       :show-register-button="false"
       name="wicc"
       :address="activeAddress"

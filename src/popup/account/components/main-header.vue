@@ -1,53 +1,10 @@
 <template>
   <div class="wallet-main-header">
-    <div class="dropdown-wrapper menu-wrapper" v-click-outside="hideMenu">
-      <div class="dropdown-toggle" @click="toggleMenu" v-if="!hideMenuToggle">
-        <img src="../../static/main-header-icon.svg" alt="click show menu" />
-      </div>
-      <div class="dropdown" v-show="showMenu">
-        <div class="dropdown-header">
-          <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
-        </div>
-        <ul class="account-list">
-          <li
-            v-for="(account,index) in visibleAccounts"
-            :key="index"
-            class="account-item"
-            @click="setActiveAccount(account)"
-            :class="{
-              active: activeAccount.id === account.id
-            }"
-          >
-            <span class="account-item-icon"></span>
-            {{ $t('common.accountLabel') }} {{ account.index + 1 }}
-          </li>
-        </ul>
-        <div class="menu-separator"></div>
-        <div class="menu-item" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
-        <div class="menu-item" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
-        <div class="menu-item" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
-        <div class="menu-item" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
-        <div class="menu-separator"></div>
-        <!-- <div class="menu-item" @click="gotoAbout">{{ $t('account.header.about') }}</div> -->
-        <div class="menu-item" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
-        <div class="menu-separator"></div>
-        <div class="social-icon-container">
-          <a class="wechat-link" href="JavaScript: void(0)">
-            <img class="social-icon" src="../../static/wechat.svg" />
-            <img class="wechat-img" src="https://wiccdev.org/images/index/wechat_kf.png" />
-          </a>
-          <a href="https://t.me/wiccofficial" target="_blank">
-            <img class="social-icon" src="../../static/telegram.svg" />
-          </a>
-          <a href="https://twitter.com/wayki_chain" target="_blank">
-            <img class="social-icon" src="../../static/twitter.svg" />
-          </a>
-        </div>
-      </div>
-    </div>
     <div class="dropdown-wrapper network-wrapper" v-click-outside="hideNetwork">
       <div class="dropdown-toggle" @click="toggleNetwork">
-        <div class="dropdown-toggle-label">{{ getNetworkText(currentNet != '' ? currentNet : network) }}</div>
+        <div
+          class="dropdown-toggle-label"
+        >{{ getNetworkText(currentNet != '' ? currentNet : network) }}</div>
         <div class="dropdown-toggle-indicator"></div>
       </div>
       <div class="dropdown" v-show="showNetwork">
@@ -94,6 +51,65 @@
         <p class="addNet" @click="addNet">{{$t('setting.index.addNet')}}</p>
       </div>
     </div>
+    <div class="dropdown-wrapper menu-wrapper" v-click-outside="hideMenu">
+      <a href="https://cdp.waykichain.com/" target="_blank" class="link">
+        <img src="../../static/cdp.svg" alt />
+        <div class="link-title">
+          <span>CDP</span>
+          <i></i>
+        </div>
+      </a>
+      <a href="https://dex.waykichain.com/" target="_blank" class="link">
+        <img src="../../static/dex.svg" alt />
+        <div class="link-title">
+          <span>DEX</span>
+          <i></i>
+        </div>
+      </a>
+      <div class="dropdown-toggle" @click="toggleMenu" v-if="!hideMenuToggle">
+        <img src="../../static/main-header-icon.svg" alt="click show menu" />
+      </div>
+      <div class="dropdown" v-show="showMenu">
+        <div class="dropdown-header">
+          <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
+        </div>
+        <ul class="account-list">
+          <li
+            v-for="(account,index) in visibleAccounts"
+            :key="index"
+            class="account-item"
+            @click="setActiveAccount(account)"
+            :class="{
+              active: activeAccount.id === account.id
+            }"
+          >
+            <span class="account-item-icon"></span>
+            {{ $t('common.accountLabel') }} {{ account.index + 1 }}
+          </li>
+        </ul>
+        <div class="menu-separator"></div>
+        <div class="menu-item" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
+        <div class="menu-item" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
+        <div class="menu-item" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
+        <div class="menu-item" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
+        <div class="menu-separator"></div>
+        <!-- <div class="menu-item" @click="gotoAbout">{{ $t('account.header.about') }}</div> -->
+        <div class="menu-item" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
+        <div class="menu-separator"></div>
+        <div class="social-icon-container">
+          <a class="wechat-link" href="JavaScript: void(0)">
+            <img class="social-icon" src="../../static/wechat.svg" />
+            <img class="wechat-img" src="https://wiccdev.org/images/index/wechat_kf.png" />
+          </a>
+          <a href="https://t.me/wiccofficial" target="_blank">
+            <img class="social-icon" src="../../static/telegram.svg" />
+          </a>
+          <a href="https://twitter.com/wayki_chain" target="_blank">
+            <img class="social-icon" src="../../static/twitter.svg" />
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -127,7 +143,7 @@ export default {
   created() {
     this.refreshState();
     this.netList = JSON.parse(localStorage.getItem("netList"));
-    const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"))
+    const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"));
     this.currentNet = myselfNet ? myselfNet.name : "";
     this.eventBus.$on("header:state:refresh", this.refreshState);
   },
@@ -142,7 +158,7 @@ export default {
       showMenu: false,
       forceLogin: false,
       netList: [],
-      currentNet:"",
+      currentNet: ""
     };
   },
 
@@ -156,7 +172,7 @@ export default {
   },
 
   methods: {
-    addNet(){
+    addNet() {
       this.$router.push({
         name: "changeNet"
       });
@@ -180,29 +196,29 @@ export default {
     getNetworkText(network) {
       if (network === "mainnet") {
         return this.$t("account.header.mainnet");
-      } else if (network == "testnet"){
+      } else if (network == "testnet") {
         return this.$t("account.header.testnet");
-      }else{
-        return network
+      } else {
+        return network;
       }
     },
 
     setNetwork(network) {
-      localStorage.removeItem('srcRegID')
-      var net = ""
-      if (network.name){
-        net = network.network
+      localStorage.removeItem("srcRegID");
+      var net = "";
+      if (network.name) {
+        net = network.network;
         localStorage.setItem("network", network.network);
-        this.currentNet = network.name
-        localStorage.setItem('myselfNetWork',JSON.stringify(network))
-      }else{
-        net = network
+        this.currentNet = network.name;
+        localStorage.setItem("myselfNetWork", JSON.stringify(network));
+      } else {
+        net = network;
         localStorage.setItem("network", network);
-        this.currentNet = network
-        localStorage.removeItem('myselfNetWork')
+        this.currentNet = network;
+        localStorage.removeItem("myselfNetWork");
       }
       API.setNetwork(net).then(({ network, account }) => {
-        this.network = network
+        this.network = network;
         this.$emit("network-change", network, this);
         eventBus.$emit("network-change", network);
         if (account) {
@@ -210,13 +226,13 @@ export default {
           eventBus.$emit("active-account-change", account);
         }
       });
-      const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"))
+      const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"));
       this.currentNet = myselfNet ? myselfNet.name : "";
       this.hideNetwork();
     },
 
     setActiveAccount(account) {
-      localStorage.removeItem('srcRegID')
+      localStorage.removeItem("srcRegID");
       API.setActiveAccount(account.id).then(({ network }) => {
         this.activeAccount = account;
         eventBus.$emit("active-account-change", account);
@@ -287,7 +303,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addNet{
+.addNet {
   text-align: center;
   color: #b4bccc;
   cursor: pointer;
@@ -295,18 +311,19 @@ export default {
   margin-left: 94px;
   line-height: 36px;
   border: #ffffff 1px solid;
- border-radius: 3px;
+  border-radius: 3px;
 }
 .wallet-main-header {
-  background: #f2f5fc;
-  height: 64px;
-  border-bottom: 1px solid #d6d6d6;
+  height: 60px;
+  background-color: #f5f7fa;
   z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  padding: 0 14px;
 }
 
 .dropdown-wrapper {
   position: relative;
-  display: inline-block;
 }
 
 .dropdown {
@@ -329,9 +346,9 @@ export default {
   cursor: pointer;
 
   > img {
-    width: 42px;
-    height: 38px;
-    margin-top: 4px;
+    width: 34px;
+    height: 34px;
+    float: left;
   }
 
   > img:hover {
@@ -340,42 +357,98 @@ export default {
 }
 
 .menu-wrapper {
-  float: right;
-  margin-top: 8px;
-  margin-right: 8px;
-
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   .dropdown {
     left: auto;
     top: 56px;
     right: -8px;
   }
+  .dropdown-toggle {
+    width: 34px;
+    height: 34px;
+  }
+  .link {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &:hover {
+      .link-title {
+        display: block;
+      }
+    }
+    .link-title {
+      position: absolute;
+      bottom: -37px;
+      left: 50%;
+      margin-left: -21px;
+      width: 42px;
+      height: 22px;
+      background-color: rgba(0, 0, 0, 0.85);
+      border-radius: 6px;
+      color: #fff;
+      line-height: 22px;
+      text-align: center;
+      font-size: 13px;
+      display: none;
+      i {
+        width: 16px;
+        height: 8px;
+        position: absolute;
+        left: 50%;
+        top: -8px;
+        margin-left: -8px;
+        overflow: hidden;
+        &:after {
+          content: "";
+          position: absolute;
+          left: 3px;
+          top: 4px;
+          width: 10px;
+          height: 10px;
+          border-radius: 2px;
+          background-color: rgba(0, 0, 0, 0.85);
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
 }
 
 .network-wrapper {
-  margin-right: 66px;
-  display: block;
+  width: 170px;
+  display: flex;
+  align-items: center;
 
   .dropdown-toggle {
     box-sizing: border-box;
-    margin-left: 10px;
-    margin-top: 10px;
-    /*width: 283px;*/
-    height: 44px;
-    border: 1px solid #c6cede;
-    border-radius: 22px;
+    width: 100%;
+    height: 32px;
+    border: 1.5px solid #d9dbde;
+    border-radius: 16px;
     background: #fff;
   }
 
   .dropdown-toggle-label {
     margin-left: 24px;
-    line-height: 42px;
+    line-height: 30px;
+    color: #1d213c;
+    font-size: 13px;
+    font-weight: 450;
   }
 
   .dropdown-toggle-indicator {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    background: url("../../static/dropdown-indicator.png");
+    top: 11px;
+    right: 14px;
+    background: url("../../static/dropdown-indicator.svg");
     background-size: 12px 7px;
     width: 12px;
     height: 7px;

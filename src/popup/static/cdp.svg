@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.5" height="19.497" viewBox="0 0 19.5 19.497">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #1d203c;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <path id="联合_3303" data-name="联合 3303" class="cls-1" d="M.017,10.729h3v2.625L9,10.952l6,2.4V10.729h3L17.98,18,9,14.39,0,18Zm14.968-3.46V4.642L9,7.045,3,4.64V7.269H0L.02,0,9,3.607,18,0l-.019,7.269Z" transform="translate(0.75 0.75)"/>
+</svg>
