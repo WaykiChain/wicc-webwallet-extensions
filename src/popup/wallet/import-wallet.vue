@@ -22,6 +22,7 @@
       :label="$t('wallet.import.password2')"
       :placeholder="$t('wallet.import.password2Placeholder')"
       type="password"
+      style="margin-bottom: 0;"
     ></wallet-input>
 
     <template slot="footer">

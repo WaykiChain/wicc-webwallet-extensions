@@ -6,6 +6,7 @@
       :label="$t('wallet.create.backup.mnemonicLabel')"
       type="textarea"
       read-only
+      style="margin-bottom:16px;"
     ></wallet-input>
 
     <template>
@@ -126,8 +127,7 @@ export default {
   height: 18px;
   font-size: 13px;
   color: #062DEB;
-  margin-top: 16px;
-   margin-bottom: 30px;
+  margin-bottom: 30px;
   cursor: pointer;
   .circle {
     width: 14px;

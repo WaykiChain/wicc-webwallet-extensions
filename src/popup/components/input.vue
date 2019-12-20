@@ -35,7 +35,12 @@
       <div class="actions" v-if="!postfix && theType !== 'textarea'">
         <div class="action clear" v-if="showClear" @click="setClear"></div>
         <div class="action line" v-if="showClear && showCheck"></div>
-        <div class="action check" :class="{cansee: cansee}" v-if="showCheck && showClear" @click="toggleCansee"></div>
+        <div
+          class="action check"
+          :class="{cansee: cansee}"
+          v-if="showCheck && showClear"
+          @click="toggleCansee"
+        ></div>
       </div>
     </div>
     <div class="wallet-input--message"></div>
@@ -52,7 +57,7 @@ export default {
     },
     color: {
       type: String,
-      default: '#21294A'
+      default: "#21294A"
     },
     type: {
       default: "text"
@@ -79,7 +84,7 @@ export default {
     if (this.type === "password") {
       this.showCheck = true;
     }
-    this.theType = this.type
+    this.theType = this.type;
   },
   data() {
     return {
@@ -87,7 +92,7 @@ export default {
       showClear: false,
       cansee: false,
       showCheck: false,
-      theType: ''
+      theType: ""
     };
   },
   watch: {
@@ -112,7 +117,7 @@ export default {
     },
     focusHandler() {
       if (this.readOnly) {
-        return
+        return;
       }
       this.hover = true;
     },
@@ -142,6 +147,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wallet-input {
+  margin-bottom: 24px;
+}
 .wallet-input--label {
   color: #717680;
   font-size: 14px;
@@ -152,10 +160,10 @@ export default {
 .wallet-input-content {
   display: flex;
   align-items: center;
-  border: 1px solid #E4E8EE;
+  border: 1px solid #e4e8ee;
   border-radius: 6px;
   &.hover {
-    border-color: #8187A5;
+    border-color: #8187a5;
   }
   &.readOnly {
     border: 0;
@@ -220,9 +228,9 @@ export default {
 }
 
 .wallet-input--textarea[readonly] {
-  background: #F5F7FA;
+  background: #f5f7fa;
   font-size: 15px;
-  color: #21294A;
+  color: #21294a;
 }
 
 .wallet-input--message {

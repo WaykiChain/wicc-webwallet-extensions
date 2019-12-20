@@ -18,6 +18,7 @@
           <div class="wrap">
             <div class="icon">
               <img src="../../static/collect.svg" alt />
+              <div class="shine"></div>
             </div>
             <div class="title">Collect</div>
           </div>
@@ -26,6 +27,7 @@
           <div class="wrap">
             <div class="icon">
               <img src="../../static/send.svg" alt />
+              <div class="shine"></div>
             </div>
             <div class="title">Send</div>
           </div>
@@ -207,8 +209,26 @@ export default {
   }
   .icon {
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &:hover {
+      .shine {
+        left: 100px;
+        transition: left 200ms linear;
+      }
+    }
+    .shine {
+      width: 66px;
+      height: 1000px;
+      background-color: rgba(255,255,255,0.2);
+      position: absolute;
+      left: -100px;
+      transform: rotate(45deg);
+      box-shadow: 0px 0px 10px rgba(255,255,255,0.2); 
+    }
     img {
-      float: left;
       width: 44px;
       height: 44px;
     }
@@ -231,81 +251,81 @@ export default {
   }
 }
 
-.coin-name-wrapper {
-  img {
-    margin-left: -7px;
-  }
+// .coin-name-wrapper {
+//   img {
+//     margin-left: -7px;
+//   }
 
-  .coin-name {
-    font-size: 10px;
-    background: #fff;
-    color: #4270da;
-    display: inline-block;
-    padding: 1px 2px;
-    font-weight: bold;
-    font-style: italic;
-  }
-}
+//   .coin-name {
+//     font-size: 10px;
+//     background: #fff;
+//     color: #4270da;
+//     display: inline-block;
+//     padding: 1px 2px;
+//     font-weight: bold;
+//     font-style: italic;
+//   }
+// }
 
-.coin-value {
-  font-family: Garamond, Helvetica, Verdana, serif;
-  font-size: 17px;
-  font-weight: bold;
-}
+// .coin-value {
+//   font-family: Garamond, Helvetica, Verdana, serif;
+//   font-size: 17px;
+//   font-weight: bold;
+// }
 
-.coin-card-body {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  top: 16px;
-}
+// .coin-card-body {
+//   position: absolute;
+//   left: 16px;
+//   right: 16px;
+//   top: 16px;
+// }
 
-.btn-account-active {
-  color: white;
-  text-decoration: underline;
-  font-size: 13px;
-}
+// .btn-account-active {
+//   color: white;
+//   text-decoration: underline;
+//   font-size: 13px;
+// }
 
-.coin-card-footer {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+// .coin-card-footer {
+//   position: absolute;
+//   left: 16px;
+//   right: 16px;
+//   bottom: 16px;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
 
-  .coin-address {
-    cursor: default;
-    color: #cbdbfa;
-    font-size: 12px;
-    flex: 1 0 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+//   .coin-address {
+//     cursor: default;
+//     color: #cbdbfa;
+//     font-size: 12px;
+//     flex: 1 0 0;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//   }
 
-  .coin-separator {
-    border-left: 1px solid #fff;
-    height: 16px;
-    margin: 0 4px;
-  }
+//   .coin-separator {
+//     border-left: 1px solid #fff;
+//     height: 16px;
+//     margin: 0 4px;
+//   }
 
-  .coin-card-btn {
-    margin-left: 6px;
-    margin-right: 6px;
-    line-height: 0;
-    cursor: pointer;
+//   .coin-card-btn {
+//     margin-left: 6px;
+//     margin-right: 6px;
+//     line-height: 0;
+//     cursor: pointer;
 
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
+//     &:last-of-type {
+//       margin-right: 0;
+//     }
+//   }
 
-  .coin-card-copy {
-    img {
-      width: 16px;
-      height: 17px;
-    }
-  }
-}
+//   .coin-card-copy {
+//     img {
+//       width: 16px;
+//       height: 17px;
+//     }
+//   }
+// }
 </style>
