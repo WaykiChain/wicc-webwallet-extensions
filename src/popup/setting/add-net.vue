@@ -1,22 +1,27 @@
 <template>
   <div class="wallet-container">
     <nav-layout class="u-full-height">
-      <template slot="title">
+      <div class="title">
         <span>{{ $t('setting.index.net') }}</span>
-      </template>
+      </div>
 
       <template>
-        <div class="section">
-          <span>{{ $t('setting.index.name') }}</span>
-          <input type="text" maxlength="50" v-model="name">
-        </div>
-         <div class="section">
-          <span>{{ $t('setting.index.rpc') }}</span>
-          <input type="text" v-model="url">
-        </div>
+        <wallet-input
+          v-model="name"
+          :label="$t('setting.index.name')"
+          :placeholder="'输入1～50位字符'"
+          type="text"
+        ></wallet-input>
+        
+        <wallet-input
+          v-model="url"
+          :label="$t('setting.index.rpc')"
+          :placeholder="'URL以http/https开头'"
+          type="text"
+        ></wallet-input>
+
         <div class="btnView">
-          <div class="cancel" @click="cancel">{{$t('common.cancel')}}</div>
-          <div class="save" @click="save">{{$t('common.confirm')}}</div>
+          <button :disabled="!name || !url" class="display-block btn-primary" @click="save">{{$t('common.confirm')}}</button>
         </div>
       </template>
     </nav-layout>
@@ -25,106 +30,121 @@
 
 <style lang="scss" scoped>
 @import "./header-tab.scss";
-
-.section{
-  span{
+.title {
+  font-size: 20px;
+  color: #21274a;
+  line-height: 28px;
+  font-weight: 450;
+  margin-bottom: 30px;
+}
+.section {
+  span {
     color: #717680;
     font-size: 15px;
     line-height: 30px;
   }
-  input{
+  input {
     width: 100%;
     margin: 0;
   }
   margin-top: 24px;
 }
-.btnView{
+.btnView {
   margin-top: 60px;
   display: flex;
   justify-content: center;
-  div{
+  div {
     width: 164px;
     line-height: 48px;
     font-size: 16px;
     text-align: center;
-    color: #5B5F67;
+    color: #5b5f67;
     border-radius: 3px;
   }
-  .cancel{
-    border: #B4BCCC 1px solid;
+  .cancel {
+    border: #b4bccc 1px solid;
     background: white;
     margin-right: 16px;
   }
-  .save{
+  .save {
     border: none;
-    background: #004EEC;
+    background: #004eec;
     color: white;
   }
 }
-
 </style>
 
 <script type="text/jsx">
 import NavLayout from "../components/nav-layout";
-import axios from 'axios'
+import WalletInput from "../components/input";
+import axios from "axios";
 export default {
   name: "setting",
 
-
   components: {
-    NavLayout
+    NavLayout,
+    WalletInput
   },
 
   methods: {
     save() {
-      this.checkUrl()
-      return
-      
+      this.checkUrl();
+      return;
     },
-    cancel(){
-      this.$router.go(-1)
+    cancel() {
+      this.$router.go(-1);
     },
-    checkUrl(){
-      this.$loading('Checking...')
-      axios.post(this.url.trim() + '/block/getinfo',{}).then(res=>{
-        this.$loading.close();
-        const net = res.data.data.nettype
-        if (net === 'MAIN_NET'){
-          this.add('mainnet')
-        }else{
-          this.add('testnet')
-        }
-      }).catch(err=>{
-        this.$loading.close();
-        this.$toast('Invalid url')
-      })
+    checkUrl() {
+      if (this.name.trim().length > 50) {
+        this.$toast("Maximum length is 50 characters");
+        return;
+      }
+      if (this.netList.find(item => item.name === this.name.trim())) {
+        this.$toast("Exist already");
+        return;
+      }
+      this.$loading("Checking...");
+      axios
+        .post(this.url.trim() + "/block/getinfo", {})
+        .then(res => {
+          this.$loading.close();
+          const net = res.data.data.nettype;
+          if (net === "MAIN_NET") {
+            this.add("mainnet");
+          } else {
+            this.add("testnet");
+          }
+        })
+        .catch(err => {
+          this.$loading.close();
+          this.$toast("Invalid url");
+        });
     },
-    add(network){
-      
+    add(network) {
       const netItem = {
-        name:this.name,
-        url:this.url,
+        name: this.name,
+        url: this.url,
         network: network
+      };
+      if (!this.netList) {
+        this.netList = [];
       }
-      if (!this.netList){
-        this.netList = []
-      }
-      this.netList.push(netItem)
-      localStorage.setItem('netList',JSON.stringify(this.netList))
-      this.$toast(this.$t('account.addToken.addSuccess'))
-      this.$router.go(-1)
+      this.netList.push(netItem);
+      localStorage.setItem("netList", JSON.stringify(this.netList));
+      this.$toast(this.$t("account.addToken.addSuccess"));
+      this.$router.go(-1);
     }
   },
 
   data() {
     return {
-      netList : [],
-      name:'',
-      url:'',
+      netList: [],
+      name: "",
+      url: ""
     };
   },
-  created(){
-    this.netList = JSON.parse(localStorage.getItem('netList'))
+  created() {
+    this.netList = JSON.parse(localStorage.getItem("netList"));
   }
 };
 </script>

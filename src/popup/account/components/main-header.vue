@@ -434,7 +434,9 @@ export default {
 
   .dropdown-toggle-label {
     margin-left: 24px;
-    line-height: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
     color: #1d213c;
     font-size: 13px;
     font-weight: 450;

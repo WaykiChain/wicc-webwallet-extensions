@@ -37,8 +37,8 @@
     </div>
 
     <div class="dropdown" v-show="showMenu">
-      <!-- <div class="menu-item vm" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
-      <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div> -->
+      <div class="menu-item vm">{{ $t('account.header.viewMnemonic') }}</div>
+      <div class="menu-item ep">{{ $t('account.header.exportPrivateKey') }}</div>
       <div class="menu-item ad">Account details</div>
       <div class="menu-item man">Modify account name</div>
       <div class="menu-item da">Delete account</div>

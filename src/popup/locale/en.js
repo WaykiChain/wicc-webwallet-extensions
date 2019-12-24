@@ -207,7 +207,7 @@ export default {
       walletTitle: 'Reset Wallet',
       createWallet: 'Create Wallet',
       importWallet: 'Import Wallet',
-      net:'NetWork',
+      net:'Networks',
       edit:'Edit',
       done:'Done',
       name:'Network Name',

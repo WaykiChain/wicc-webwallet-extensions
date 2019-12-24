@@ -1,10 +1,13 @@
 <template>
   <div class="wallet-container">
     <nav-layout class="u-full-height">
-      <template slot="title">
+      <div class="title">
         <span>{{ $t('setting.index.net') }}</span>
-        <span class="editNet" @click="edit">{{showclose ? $t('setting.index.done') : $t('setting.index.edit') }}</span>
-      </template>
+        <span
+          class="editNet"
+          @click="edit"
+        >{{showclose ? $t('setting.index.done') : $t('setting.index.edit') }}</span>
+      </div>
 
       <template>
         <div class="section-title">
@@ -14,11 +17,17 @@
           <span>{{ $t('account.header.testnet') }}</span>
         </div>
         <div class="section-title" v-for="(item,index) in netList" v-bind:key="index">
-
           <span>{{ item.name }}</span>
-          <img v-if="showclose" src="../static/colose.png" @click="delNet(index)" />
+          <img v-if="showclose" src="../static/colose.svg" @click="delNet(index)" />
         </div>
-        <div class="addNet" @click="toAddNet">{{$t('setting.index.addNet')}}</div>
+        <!-- <div class="addNet" @click="toAddNet">{{$t('setting.index.addNet')}}</div> -->
+        <div class="addNet">
+          <button
+            class="display-block btn-higher btn-lighter"
+            @click="toAddNet"
+            style="font-weight:400;"
+          >{{$t('setting.index.addNet')}}</button>
+        </div>
       </template>
     </nav-layout>
   </div>
@@ -27,34 +36,41 @@
 <style lang="scss" scoped>
 @import "./header-tab.scss";
 .section-title {
-  border-bottom: rgba(180, 188, 204, 0.301) 1px solid;
-  line-height: 58px;
+  border-bottom: 1px solid #F0F3F7;
+  line-height: 21px;
+  padding: 20px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 15px;
+  color: #1D213C;
   > img {
-    width: 13px;
-    height: 13px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
   }
 }
-.editNet{
+.title {
+  font-size: 20px;
+  color: #21274a;
+  line-height: 28px;
+  font-weight: 450;
+  margin-bottom: 30px;
+}
+.editNet {
   cursor: pointer;
   position: absolute;
-  right: 16px;
-  color: #8e8e8e;
-  font-size: 14px;
+  right: 24px;
+  color: #062deb;
+  font-size: 15px;
 }
-.addNet{
+.addNet {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
-  line-height: 48px;
-  text-align: center;
-  width: 343px;
-  border: #3C78EA 1px solid;
-  border-radius: 3px;
-  color: #3C78EA;
-
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 </style>
 
@@ -65,7 +81,7 @@ export default {
   name: "setting",
 
   created() {
-    this.netList = JSON.parse(localStorage.getItem('netList'))
+    this.netList = JSON.parse(localStorage.getItem("netList"));
   },
 
   components: {
@@ -73,23 +89,26 @@ export default {
   },
 
   methods: {
-  
-    edit(){
-      this.showclose = !this.showclose
+    edit() {
+      this.showclose = !this.showclose;
     },
-    toAddNet(){
-      this.$router.push({path:'addNet'})
+    toAddNet() {
+      this.$router.push({ path: "addNet" });
     },
-    delNet(index){
-      this.netList.splice(index,1)
-      localStorage.setItem('netList',JSON.stringify(this.netList))
+    delNet(index) {
+      let myselfNetWork = localStorage.getItem("myselfNetWork") ? JSON.parse(localStorage.getItem("myselfNetWork")) : null
+      if (myselfNetWork && myselfNetWork.name === this.netList[index].name) {
+        localStorage.removeItem("myselfNetWork")
+      }
+      this.netList.splice(index, 1);
+      localStorage.setItem("netList", JSON.stringify(this.netList));
     }
   },
 
   data() {
     return {
-      showclose:false,
-      netList:[],
+      showclose: false,
+      netList: []
     };
   }
 };
