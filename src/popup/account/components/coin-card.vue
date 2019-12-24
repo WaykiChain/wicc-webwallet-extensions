@@ -1,7 +1,7 @@
 <template>
   <div class="coin-card">
     <div class="account-info">
-      <div class="account-refresh">
+      <div class="account-refresh" :class="{isRefreshing: isRefreshing}" @click="setRefresh">
         <img src="../../static/refresh.svg" alt />
       </div>
       <div class="account-detail">
@@ -70,6 +70,7 @@ import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import formatError from "../../api/format-error";
 import { openQrCodeDialog, openRegisterConfirmDialog } from "../dialog";
+import eventBus from "../bus";
 
 export default {
   name: "coin-card",
@@ -99,11 +100,21 @@ export default {
     return {
       registerConfirmVisible: false,
       clipboardSelector: ".coin-card-copy",
-      showMenu: false
+      showMenu: false,
+      isRefreshing: false
     };
   },
 
   methods: {
+    setRefresh() {
+      if (this.isRefreshing) return
+      this.isRefreshing = true;
+      setTimeout(() => {
+        this.isRefreshing = false;
+      }, 600);
+      eventBus.$emit("on-refresh");
+    },
+
     openQrCode() {
       openQrCodeDialog(this.address);
     },
@@ -217,6 +228,10 @@ export default {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  &.isRefreshing {
+    transform: rotate(360deg);
+    transition: all 500ms linear;
+  }
   img {
     float: left;
     width: 100%;

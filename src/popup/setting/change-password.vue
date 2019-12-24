@@ -1,5 +1,6 @@
 <template>
-  <nav-layout :title="$t('setting.password.title')" class="u-full-height">
+  <nav-layout class="u-full-height">
+    <div class="title">{{$t('setting.password.title')}}</div>
     <wallet-input
         v-model="password"
         :label="$t('setting.password.currentPassword')"
@@ -27,7 +28,14 @@
   </nav-layout>
 </template>
 
-<style>
+<style lang="scss" scoped>
+.title {
+  font-size: 20px;
+  color: #21274a;
+  line-height: 28px;
+  font-weight: 450;
+  margin-bottom: 30px;
+}
 </style>
 
 <script type="text/jsx">

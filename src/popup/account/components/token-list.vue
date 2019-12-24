@@ -296,6 +296,9 @@ export default {
 
   created() {
     this.eventBus.$on("network-change", this.handleNetworkChange);
+    this.eventBus.$on("on-refresh", () => {
+      this.getWiccNum(this.activeAddress)
+    })
   },
 
   destroyed() {

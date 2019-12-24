@@ -151,10 +151,10 @@ export default {
   margin-bottom: 24px;
 }
 .wallet-input--label {
-  color: #717680;
+  color: #8187A5;
   font-size: 14px;
   line-height: 16px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .wallet-input-content {
