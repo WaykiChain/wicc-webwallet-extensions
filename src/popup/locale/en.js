@@ -48,14 +48,14 @@ export default {
       importFailure: 'Failed to import '
     },
     header: {
-      network: 'Network',
+      network: 'Networks',
       defaultNetwork: 'The default network is MainNet',
       logout: 'Logout',
       viewMnemonic: 'View mnemonics',
       exportPrivateKey: 'Export Private Key',
       createAccount: 'Create Account',
       importAccount: 'Import Account',
-      about: 'Info',
+      about: 'Information',
       setting: 'Setting',
       mainnet: 'WICC MainNet',
       testnet: 'WICC TestNet'
@@ -215,7 +215,7 @@ export default {
       addNet:'Add Network',
     },
     about: {
-      title: 'Info',
+      title: 'Information',
       name: 'WaykiMax',
       links: 'Links',
       homepage: 'WaykiChain Offical Website',

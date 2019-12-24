@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0318c7;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="组_27841" data-name="组 27841" transform="translate(-1586 -1035)">
+    <rect id="矩形_21841" data-name="矩形 21841" class="cls-1" width="26" height="26" rx="13" transform="translate(1586 1035)"/>
+    <path id="telegram_1_" data-name="telegram (1)" class="cls-2" d="M133.477,201.961l.227-3.715,6.227-6.078c.276-.272-.057-.4-.422-.167l-7.686,5.261L128.5,196.12c-.713-.22-.722-.755.162-1.142l12.948-5.411c.592-.29,1.159.158.932,1.142l-2.205,11.252c-.154.8-.6.993-1.216.624l-3.356-2.688-1.613,1.7A.84.84,0,0,1,133.477,201.961Z" transform="translate(1462.848 851.877)"/>
+  </g>
+</svg>

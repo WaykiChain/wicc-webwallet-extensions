@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0070fa;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="组_27809" data-name="组 27809" transform="translate(-24 -396)">
+    <rect id="矩形_27745" data-name="矩形 27745" class="cls-1" width="40" height="40" rx="20" transform="translate(24 396)"/>
+    <path id="联合_3291" data-name="联合 3291" class="cls-2" d="M18.161,18.18,9.09,14.537,0,18.18l.018-7.341H3.046v2.652L9.09,11.064l.01.011.009-.011,6.046,2.429V10.839h3.027l-.02,7.341v0ZM15.136,7.344V4.691L9.092,7.118l-.009-.011-.01.011L3.027,4.689V7.344H0L.02,0V0L9.092,3.645,18.182,0l-.018,7.342Z" transform="translate(34.909 406.909)"/>
+  </g>
+</svg>

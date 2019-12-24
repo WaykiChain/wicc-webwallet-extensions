@@ -8,7 +8,7 @@
         <div class="name">{{ value }}</div>
         <div class="address">{{cutMiddleStr(address,5)}}</div>
       </div>
-      <div class="account-more">
+      <div class="account-more" v-click-outside="hideMenu" @click="toggleMenu">
         <img src="../../static/actions.svg" alt />
       </div>
     </div>
@@ -36,6 +36,14 @@
       </div>
     </div>
 
+    <div class="dropdown" v-show="showMenu">
+      <!-- <div class="menu-item vm" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
+      <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div> -->
+      <div class="menu-item ad">Account details</div>
+      <div class="menu-item man">Modify account name</div>
+      <div class="menu-item da">Delete account</div>
+    </div>
+
     <!-- <div class="coin-card-body">
       <span class="coin-value">{{ value }}</span>
       <button
@@ -57,6 +65,7 @@
 </template>
 
 <script>
+import ClickOutside from "vue-click-outside";
 import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import formatError from "../../api/format-error";
@@ -65,6 +74,9 @@ import { openQrCodeDialog, openRegisterConfirmDialog } from "../dialog";
 export default {
   name: "coin-card",
   mixins: [CopyMixin],
+  directives: {
+    ClickOutside
+  },
 
   props: {
     name: {
@@ -86,13 +98,22 @@ export default {
   data() {
     return {
       registerConfirmVisible: false,
-      clipboardSelector: ".coin-card-copy"
+      clipboardSelector: ".coin-card-copy",
+      showMenu: false
     };
   },
 
   methods: {
     openQrCode() {
       openQrCodeDialog(this.address);
+    },
+
+    hideMenu() {
+      this.showMenu = false;
+    },
+
+    toggleMenu() {
+      this.showMenu = !this.showMenu;
     },
 
     openRegisterConfirm() {
@@ -137,13 +158,54 @@ export default {
 <style lang="scss" scoped>
 .coin-card {
   position: relative;
-  // background: url('../../static/coin-card-bg.svg') 0 0 no-repeat;
-  // background-size: 100% 100%;
-  // height: 83px;
   color: #fff;
   padding: 14px 20px 30px;
   box-sizing: border-box;
   border-radius: 4px;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 999;
+  right: 10px;
+  top: 55px;
+  background: rgba(0, 0, 0, 0.8);
+  width: 200px;
+  max-height: 500px;
+  overflow: auto;
+  border-radius: 6px;
+  font-size: 14px;
+  .menu-separator {
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-item {
+    cursor: pointer;
+    padding: 12px 0 12px 42px;
+    color: #fff;
+    &.vm {
+      background: url("../../static/vm.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.ep {
+      background: url("../../static/epk.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.ad {
+      background: url("../../static/ad.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.man {
+      background: url("../../static/man.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.da {
+      background: url("../../static/da.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+  }
 }
 
 .account-info {
@@ -222,11 +284,11 @@ export default {
     .shine {
       width: 66px;
       height: 1000px;
-      background-color: rgba(255,255,255,0.2);
+      background-color: rgba(255, 255, 255, 0.2);
       position: absolute;
       left: -100px;
       transform: rotate(45deg);
-      box-shadow: 0px 0px 10px rgba(255,255,255,0.2); 
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
     }
     img {
       width: 44px;
@@ -250,82 +312,4 @@ export default {
     margin: auto;
   }
 }
-
-// .coin-name-wrapper {
-//   img {
-//     margin-left: -7px;
-//   }
-
-//   .coin-name {
-//     font-size: 10px;
-//     background: #fff;
-//     color: #4270da;
-//     display: inline-block;
-//     padding: 1px 2px;
-//     font-weight: bold;
-//     font-style: italic;
-//   }
-// }
-
-// .coin-value {
-//   font-family: Garamond, Helvetica, Verdana, serif;
-//   font-size: 17px;
-//   font-weight: bold;
-// }
-
-// .coin-card-body {
-//   position: absolute;
-//   left: 16px;
-//   right: 16px;
-//   top: 16px;
-// }
-
-// .btn-account-active {
-//   color: white;
-//   text-decoration: underline;
-//   font-size: 13px;
-// }
-
-// .coin-card-footer {
-//   position: absolute;
-//   left: 16px;
-//   right: 16px;
-//   bottom: 16px;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-
-//   .coin-address {
-//     cursor: default;
-//     color: #cbdbfa;
-//     font-size: 12px;
-//     flex: 1 0 0;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//   }
-
-//   .coin-separator {
-//     border-left: 1px solid #fff;
-//     height: 16px;
-//     margin: 0 4px;
-//   }
-
-//   .coin-card-btn {
-//     margin-left: 6px;
-//     margin-right: 6px;
-//     line-height: 0;
-//     cursor: pointer;
-
-//     &:last-of-type {
-//       margin-right: 0;
-//     }
-//   }
-
-//   .coin-card-copy {
-//     img {
-//       width: 16px;
-//       height: 17px;
-//     }
-//   }
-// }
 </style>

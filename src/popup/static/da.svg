@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff5252;
+        opacity: 0.5;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #919191;
+        stroke: #fff;
+      }
+
+      .cls-4, .cls-6 {
+        fill: none;
+      }
+
+      .cls-5, .cls-7 {
+        stroke: none;
+      }
+
+      .cls-7 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="矩形_27853" data-name="矩形 27853" class="cls-1" width="18" height="18" transform="translate(164 296)"/>
+    </clipPath>
+  </defs>
+  <g id="蒙版组_2522" data-name="蒙版组 2522" class="cls-2" transform="translate(-164 -296)">
+    <g id="组_27775" data-name="组 27775" transform="translate(3 -3)">
+      <g id="矩形_27767" data-name="矩形 27767" class="cls-3" transform="translate(168 300)">
+        <rect class="cls-5" width="4" height="1" rx="0.5"/>
+        <rect class="cls-6" x="0.5" y="0.5" width="3"/>
+      </g>
+      <g id="矩形_27769" data-name="矩形 27769" class="cls-3" transform="translate(168 306) rotate(90)">
+        <rect class="cls-5" width="6" height="1" rx="0.5"/>
+        <rect class="cls-6" x="0.5" y="0.5" width="5"/>
+      </g>
+      <g id="矩形_27854" data-name="矩形 27854" class="cls-3" transform="translate(173 306) rotate(90)">
+        <rect class="cls-5" width="6" height="1" rx="0.5"/>
+        <rect class="cls-6" x="0.5" y="0.5" width="5"/>
+      </g>
+      <g id="矩形_27855" data-name="矩形 27855" class="cls-3" transform="translate(170.5 306) rotate(90)">
+        <rect class="cls-5" width="6" height="1" rx="0.5"/>
+        <rect class="cls-6" x="0.5" y="0.5" width="5"/>
+      </g>
+      <g id="矩形_27768" data-name="矩形 27768" class="cls-3" transform="translate(162 302)">
+        <rect class="cls-5" width="16" height="1" rx="0.5"/>
+        <rect class="cls-6" x="0.5" y="0.5" width="15"/>
+      </g>
+      <g id="路径_97079" data-name="路径 97079" class="cls-4" transform="translate(163 302)">
+        <path class="cls-5" d="M0,0H14V11.2A2.8,2.8,0,0,1,11.2,14H2.8A2.8,2.8,0,0,1,0,11.2Z"/>
+        <path class="cls-7" d="M 1.000000953674316 1.000000953674316 L 1.000000953674316 11.20000076293945 C 1.000000953674316 12.19252014160156 1.807480812072754 13 2.800000190734863 13 L 11.20000076293945 13 C 12.19252014160156 13 13 12.19252014160156 13 11.20000076293945 L 13 1.000000953674316 L 1.000000953674316 1.000000953674316 M 9.5367431640625e-07 9.5367431640625e-07 L 14 9.5367431640625e-07 L 14 11.20000076293945 C 14 12.74640083312988 12.74640083312988 14 11.20000076293945 14 L 2.800000190734863 14 C 1.253600120544434 14 9.5367431640625e-07 12.74640083312988 9.5367431640625e-07 11.20000076293945 L 9.5367431640625e-07 9.5367431640625e-07 Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

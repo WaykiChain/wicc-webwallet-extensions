@@ -1,8 +1,9 @@
 .wallet-container {
   position  : relative;
-  width     : 375px;
+  width     : 360px;
   height    : 600px;
   box-sizing: border-box;
+  margin    : auto;
 }
 
 .display-block {
@@ -42,12 +43,10 @@ button.btn-text {
 
 @media (min-width: 550px) {
   .wallet-container {
-    width : 360px;
     border: 1px dashed #ccc;
-    margin: 0 auto;
   }
 }
 
 .animated {
-  animation-duration: .5s !important;
+  animation-duration: .3s !important;
 }

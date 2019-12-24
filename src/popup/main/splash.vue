@@ -60,7 +60,7 @@
     margin-top: 50px;
     color: #7c8bb9;
     font-size: 17px;
-    padding: 0 64px;
+    padding: 0 54px;
     line-height: 28px;
     font-weight: 300;
   }

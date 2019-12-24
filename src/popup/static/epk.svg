@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff5252;
+        opacity: 0.6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-5, .cls-6, .cls-7 {
+        stroke: #fff;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path-2);
+      }
+
+      .cls-5, .cls-6, .cls-7, .cls-9 {
+        fill: none;
+      }
+
+      .cls-6, .cls-7 {
+        stroke-linecap: round;
+      }
+
+      .cls-6 {
+        stroke-linejoin: round;
+      }
+
+      .cls-8 {
+        stroke: none;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="矩形_27849" data-name="矩形 27849" class="cls-1" width="18" height="18" transform="translate(179 147)"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="矩形_27848" data-name="矩形 27848" class="cls-2" width="16" height="3" transform="translate(2621 4882)"/>
+    </clipPath>
+  </defs>
+  <g id="蒙版组_2518" data-name="蒙版组 2518" class="cls-3" transform="translate(-179 -147)">
+    <g id="组_27772" data-name="组 27772" transform="translate(16 4)">
+      <g id="蒙版组_2517" data-name="蒙版组 2517" class="cls-4" transform="translate(-2457 -4726)">
+        <g id="矩形_27847" data-name="矩形 27847" class="cls-5" transform="translate(2621 4874)">
+          <rect class="cls-8" width="16" height="11" rx="2"/>
+          <rect class="cls-9" x="0.5" y="0.5" width="15" height="10" rx="1.5"/>
+        </g>
+      </g>
+      <path id="路径_97150" data-name="路径 97150" class="cls-6" d="M2626.5,4873.1l3,3-3,3" transform="translate(-4704.1 2774.5) rotate(-90)"/>
+      <path id="路径_97151" data-name="路径 97151" class="cls-7" d="M2627,4875.225v10" transform="translate(-2455 -4730.225)"/>
+    </g>
+  </g>
+</svg>

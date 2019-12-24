@@ -55,7 +55,7 @@ export default {
       exportPrivateKey: '导出私钥',
       createAccount: '创建账号',
       importAccount: '导入账号',
-      about: '信息',
+      about: '关于我们',
       setting: '设置',
       mainnet: 'WICC 主网',
       testnet: 'WICC 测试网'

@@ -20,13 +20,16 @@
           :class="{
             active: activeRegId === null
           }"
-          v-for="tokenKey in ['WICC','WGRT','WUSD']"
+          v-for="tokenKey in ['WICC','WUSD','WGRT']"
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey})"
         >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
+          <img class="token-item-icon" :src="getIcon(tokenKey)" />
           <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
+          <div class="token-amount">
+            <div class="token-amount-num">{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+            <div class="token-worth">≈$ 128.73</div>
+          </div>
         </li>
 
         <li
@@ -38,46 +41,13 @@
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
         >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
+          <img class="token-item-icon" :src="getIcon('WICC')" />
           <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
+          <div class="token-amount">
+            <div class="token-amount-num">{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+            <div class="token-worth">≈$ 128.73</div>
+          </div>
         </li>
-        <!-- <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
-            <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
-        </li>-->
-        <!-- <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wicc?wicc.freeAmount/100000000:0,name:'WICC'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WICC</span>
-          <span>{{wicc ? wicc.freeAmount/100000000 : 0}}</span>
-        </li>
-        <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wusd ?wusd.freeAmount/100000000:0,name:'WUSD'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WUSD</span>
-          <span>{{wusd ? wusd.freeAmount/100000000 : 0}}</span>
-        </li>
-        <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wgrt?wgrt.freeAmount/100000000:0,name:'WGRT'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WGRT</span>
-          <span>{{wgrt ? wgrt.freeAmount/100000000 : 0}}</span>
-        </li>-->
         <li
           class="token-item"
           v-for="(token, index) in visibleTokens"
@@ -98,12 +68,6 @@
         </li>
       </ul>
     </div>
-    <!-- <div class="token-list-bottom">
-      <button class="token-list-btn-add" @click="gotoAddToken">
-        <img src="../../static/coin-add-icon.svg" />
-        {{ $t('account.main.addTokenButton') }}
-      </button>
-    </div>-->
   </div>
 </template>
 
@@ -122,6 +86,10 @@
 }
 .myzichan {
   margin-bottom: 0;
+  font-size: 16px;
+  color: #1D213C;
+  line-height: 24px;
+  font-weight: 450;
 }
 .account-info-basic {
   text-align: center;
@@ -197,11 +165,12 @@
 
 .token-item {
   display: flex;
-  flex-direction: row;
-  padding: 16px 0;
+  padding-bottom: 22px;
+  padding-top: 23px;
   align-items: center;
-  border-bottom: 1px solid rgba(180, 188, 204, 0.3);
+  border-bottom: 1px solid #F0F3F7;
   cursor: pointer;
+  margin: 0;
 }
 
 .token-item.active {
@@ -210,15 +179,35 @@
 }
 
 .token-item-icon {
-  width: 30px;
-  margin-right: 8px;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
 }
 
 .token-item-name {
-  font-weight: 400;
+  font-weight: 450;
+  font-size: 17px;
+  color: #8187A5;
+  width: 86px;
+}
+
+.token-amount {
+  flex: 1;
+  text-align: right;
+}
+
+.token-amount-num {
+  line-height: 21px;
   font-size: 16px;
-  margin-right: 8px;
-  flex: 1 0 0;
+  color: #1D213C;
+  font-weight: 450;
+  margin-bottom: 3px;
+}
+
+.token-worth {
+  line-height: 18px;
+  font-size: 13px;
+  color: #8187A5;
 }
 
 .token-item-more-btn {
@@ -314,6 +303,9 @@ export default {
   },
 
   methods: {
+    getIcon(key) {
+      return require(`../../static/${key === 'WICC' ? 'wicclogo' : key.toLowerCase()}.svg`)
+    },
     handleNetworkChange(network) {
       if (network == this.lastNetWork) {
         console.log("点击切换节点地址：" + this.currentAddr + "Net:" + network);

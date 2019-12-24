@@ -8,11 +8,13 @@
         <div class="dropdown-toggle-indicator"></div>
       </div>
       <div class="dropdown" v-show="showNetwork">
-        <div class="dropdown-header">{{ $t('account.header.network') }}</div>
+        <div class="dropdown-header">
+          <i>{{ $t('account.header.network') }}</i>
+        </div>
         <div class="menu-separator"></div>
 
         <ul class="network-list">
-          <li>{{ $t('account.header.defaultNetwork') }}</li>
+          <li class="defult-network">{{ $t('account.header.defaultNetwork') }}</li>
           <li
             class="menu-item network-item"
             @click="setNetwork('mainnet')"
@@ -20,7 +22,6 @@
               active: currentNet != '' ? false : network === 'mainnet'
             }"
           >
-            <span class="network-item-icon"></span>
             {{ getNetworkText('mainnet') }}
           </li>
           <li
@@ -30,7 +31,6 @@
               active: currentNet != '' ? false : network === 'testnet'
             }"
           >
-            <span class="network-item-icon"></span>
             {{ getNetworkText('testnet') }}
           </li>
 
@@ -43,12 +43,14 @@
               active: currentNet === item.name
             }"
           >
-            <span class="network-item-icon"></span>
             {{ item.name }}
           </li>
         </ul>
-        <p style="background:#5b5f67;height:1px;width:100%"></p>
-        <p class="addNet" @click="addNet">{{$t('setting.index.addNet')}}</p>
+        <div class="menu-separator"></div>
+        <p class="addNet" @click="addNet">
+          <img src="../../static/add-net.svg" alt="">
+          <span>{{$t('setting.index.addNet')}}</span>
+        </p>
       </div>
     </div>
     <div class="dropdown-wrapper menu-wrapper" v-click-outside="hideMenu">
@@ -71,8 +73,10 @@
       </div>
       <div class="dropdown" v-show="showMenu">
         <div class="dropdown-header">
+          <span>My Accounts</span>
           <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
         </div>
+        <div class="menu-separator"></div>
         <ul class="account-list">
           <li
             v-for="(account,index) in visibleAccounts"
@@ -83,31 +87,18 @@
               active: activeAccount.id === account.id
             }"
           >
-            <span class="account-item-icon"></span>
             {{ $t('common.accountLabel') }} {{ account.index + 1 }}
           </li>
         </ul>
         <div class="menu-separator"></div>
-        <div class="menu-item" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
-        <div class="menu-item" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
-        <div class="menu-item" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
-        <div class="menu-item" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
+        <!-- <div class="menu-item" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
+        <div class="menu-item" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div> -->
+        <div class="menu-item create" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
+        <div class="menu-item import" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
         <div class="menu-separator"></div>
-        <!-- <div class="menu-item" @click="gotoAbout">{{ $t('account.header.about') }}</div> -->
-        <div class="menu-item" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
+        <div class="menu-item about" @click="gotoAbout">{{ $t('account.header.about') }}</div>
+        <div class="menu-item setting" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
         <div class="menu-separator"></div>
-        <div class="social-icon-container">
-          <a class="wechat-link" href="JavaScript: void(0)">
-            <img class="social-icon" src="../../static/wechat.svg" />
-            <img class="wechat-img" src="https://wiccdev.org/images/index/wechat_kf.png" />
-          </a>
-          <a href="https://t.me/wiccofficial" target="_blank">
-            <img class="social-icon" src="../../static/telegram.svg" />
-          </a>
-          <a href="https://twitter.com/wayki_chain" target="_blank">
-            <img class="social-icon" src="../../static/twitter.svg" />
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -276,10 +267,7 @@ export default {
 
     gotoAbout() {
       this.$router.push({
-        name: "setting",
-        query: {
-          tab: "about"
-        }
+        name: "about"
       });
 
       this.hideMenu();
@@ -304,14 +292,22 @@ export default {
 
 <style lang="scss" scoped>
 .addNet {
-  text-align: center;
-  color: #b4bccc;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 19px 0;
+  font-weight: 450;
+  font-size: 15px;
   cursor: pointer;
-  width: 107px;
-  margin-left: 94px;
-  line-height: 36px;
-  border: #ffffff 1px solid;
-  border-radius: 3px;
+  color: #fff;
+  opacity: 0.7;
+  span {
+    padding-left: 7px;
+  }
+  &:hover {
+    opacity: 1;
+  }
 }
 .wallet-main-header {
   height: 60px;
@@ -331,14 +327,11 @@ export default {
   z-index: 999;
   left: 0;
   top: 55px;
-  background: #464a53;
-  opacity: 0.95;
+  background: rgba(0, 0, 0, 0.8);
   width: 300px;
   max-height: 500px;
   overflow: auto;
-  border-radius: 2px;
-  box-shadow: 0 3px 10px rgba(180, 188, 204, 0.8);
-  color: #b4bccc;
+  border-radius: 6px;
 }
 
 .dropdown-toggle {
@@ -434,6 +427,9 @@ export default {
     border: 1.5px solid #d9dbde;
     border-radius: 16px;
     background: #fff;
+    &:hover {
+      border-color: #8187a5;
+    }
   }
 
   .dropdown-toggle-label {
@@ -456,7 +452,6 @@ export default {
 }
 
 .network-list {
-  margin: 12px;
   list-style: none;
 
   li {
@@ -466,61 +461,84 @@ export default {
 
 .dropdown-header {
   color: #fff;
-  font-size: 15px;
-  margin: 16px;
+  font-size: 16px;
+  margin: 9px 16px;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  i {
+    width: 100%;
+    font-style: normal;
+  }
 
   .logout-btn {
-    float: right;
+    height: 32px;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0 14px;
+    border-radius: 6px;
     cursor: pointer;
+    line-height: 28px;
+    font-size: 14px;
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.8);
+    }
   }
 }
 
 .menu-separator {
   width: 100%;
   height: 0;
-  border-bottom: 1px solid #5b5f67;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu-item {
   cursor: pointer;
-  margin: 16px;
-
-  &:hover {
-    color: #fff;
+  padding: 14px 44px;
+  color: #fff;
+  &.create {
+    background: url("../../static/ca.svg") no-repeat 16px center;
+    background-size: 18px;
+  }
+  &.import {
+    background: url("../../static/ia.svg") no-repeat 16px center;
+    background-size: 18px;
+  }
+  &.about {
+    background: url("../../static/au.svg") no-repeat 16px center;
+    background-size: 18px;
+  }
+  &.setting {
+    background: url("../../static/su.svg") no-repeat 16px center;
+    background-size: 18px;
   }
 }
 
 .network-list {
-  .network-item {
-    margin: 16px 0;
-
-    &.active .network-item-icon {
-      border-color: #5379db;
-
-      &:after {
-        content: "";
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #5379db;
-        left: 2px;
-        top: 2px;
-      }
-    }
+  .defult-network {
+    padding: 14px 16px 13px;
+    line-height: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
   }
+  .network-item {
+    padding: 11px 0 11px 45px;
+    height: 19px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 450;
+    background: url("../../static/select.svg") no-repeat 16px center;
+    background-size: 17px;
+    &:hover {
+      color: #fff;
+    }
 
-  .network-item-icon {
-    position: relative;
-    top: 3px;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 16px;
-    height: 16px;
-    border: 1px solid #b4bccc;
-    border-radius: 50%;
+    &.active {
+      background-image: url("../../static/select-active.svg");
+      color: #fff;
+    }
   }
 }
 
@@ -558,25 +576,19 @@ export default {
   margin: 0;
 
   .account-item {
-    padding: 8px;
+    padding: 12px 44px;
     cursor: pointer;
-    line-height: 30px;
+    line-height: 24px;
     margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    font-weight: 450;
   }
 
   .account-item.active {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .account-item-icon {
-    float: left;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 32px;
-    height: 32px;
-    margin-right: 4px;
-    background: url("../../static/account-list-icon.png") no-repeat;
-    background-size: 32px 28.5px;
+    color: #fff;
+    background: url('../../static/account-selected.svg') no-repeat 16px center;
+    background-size: 16px 11px;
   }
 }
 </style>
