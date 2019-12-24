@@ -11,6 +11,7 @@ import ChangePassword from './setting/change-password'
 import AddNet from './setting/add-net'   
 import ChangeNet from './setting/change-net'
 import About from './setting/about'
+import Update from './setting/update'
 import ImportWallet from './wallet/import-wallet'
 
 /**
@@ -100,6 +101,10 @@ const router = new VueRouter({
         name: 'about',
         path: 'about',
         component: About
+      }, {
+        name: 'update',
+        path: 'update',
+        component: Update
       }, {
         name: 'changeNet',
         path: 'changeNet',
