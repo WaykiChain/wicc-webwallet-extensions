@@ -1,7 +1,7 @@
 <template>
   <div class="wallet-input">
     <div class="wallet-input--label">{{ label || '' }}</div>
-    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly}">
+    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly, noBorder: type==='custom'}">
       <textarea
         v-if="theType === 'textarea'"
         class="wallet-input--textarea display-block"
@@ -167,6 +167,9 @@ export default {
   }
   &.readOnly {
     border: 0;
+  }
+  &.noBorder {
+    border: 0 !important;
   }
 }
 
