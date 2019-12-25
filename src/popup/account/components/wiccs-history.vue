@@ -2,30 +2,32 @@
   <div class="trans-history">
     <trans-detail :visible.sync="transDetailVisible" :detail="currentTrans"></trans-detail>
     <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
-    <ul class="trans-list" v-if="transactions && transactions.length > 0">
-      <li
-        class="trans-item"
-        @click="handleClick(trans)"
-        v-for="(trans, index) in transactions"
-        :key="index"
-      >
-        <div class="first-row">
-          <span class="trans-hash">{{ cutMiddleStr(trans.txid,8) }}</span>
-          <span
-            class="trans-amount"
-          >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
-        </div>
-        <div class="second-row">
-          <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
-          <span
-            class="trans-type"
-            v-if="trans.txtype=='CDP_STAKE_TX'"
-          >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
-          <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
-          <span class="trans-status">{{ formatStatus(trans) }}</span>
-        </div>
-      </li>
-    </ul>
+    <div class="line"></div>
+    <div class="wrap" v-if="transactions && transactions.length > 0">
+      <ul class="trans-list">
+        <li
+          class="trans-item"
+          @click="handleClick(trans)"
+          v-for="(trans, index) in transactions"
+          :key="index"
+        >
+          <div class="first-row">
+            <span
+              class="trans-type"
+              v-if="trans.txtype=='CDP_STAKE_TX'"
+            >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
+            <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
+            <span
+              class="trans-amount"
+            >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
+          </div>
+          <div class="second-row">
+            <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
+            <span class="trans-status">{{ formatStatus(trans) }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
     <div
       v-else
       class="empty-block"
@@ -123,7 +125,7 @@ export default {
               ? trans.assetamount
               : trans.coinamount;
             const res = (amount * trans.price) / Math.pow(10, 16);
-            return res
+            return res;
           }
           return "";
         }
@@ -145,35 +147,52 @@ export default {
 <style lang="scss" scoped>
 .empty-block {
   text-align: center;
+  margin-top: 20px;
+}
+
+.wrap {
+  height: 248px;
+  overflow: auto;
 }
 
 .trans-history-title {
-  font-size: 13px;
-  color: #b4bccc;
-  padding-bottom: 10px;
+  font-size: 16px;
+  color: #1d213c;
+  line-height: 21px;
   margin-bottom: 12px;
-  border-bottom: 1px solid rgba(180, 188, 204, 0.3);
-  padding-left: 16px;
+  font-weight: 450;
+}
+
+.line {
+  width: 500%;
+  height: 0;
+  border-bottom: 1px solid #f0f3f7;
+  margin-left: -100%;
 }
 
 .trans-list {
   list-style: none;
-  padding: 0 20px;
   margin: 0;
 }
 
 .trans-item {
   cursor: pointer;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eceef2;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f0f3f7;
+  margin: 0;
 
   .first-row {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 4px;
   }
 
   .second-row {
-    line-height: 12px;
+    line-height: 16px;
   }
 
   .trans-hash {
@@ -186,15 +205,18 @@ export default {
   }
 
   .trans-amount {
-    color: #5b5f67;
+    color: #21264a;
     font-size: 14px;
   }
 
   .trans-time,
-  .trans-type,
   .trans-status {
-    color: #b4bccc;
+    color: #b3b7c9;
     font-size: 12px;
+  }
+
+  .trans-type {
+    color: #8187a5;
   }
 
   .trans-time {

@@ -26,6 +26,8 @@
   font-weight: 500;
   line-height: 28px;
   text-align: center;
+  box-sizing: border-box;
+  padding-right: 20px;
 }
 
 .navbar-btn {

@@ -21,18 +21,14 @@
             :class="{
               active: currentNet != '' ? false : network === 'mainnet'
             }"
-          >
-            {{ getNetworkText('mainnet') }}
-          </li>
+          >{{ getNetworkText('mainnet') }}</li>
           <li
             class="menu-item network-item"
             @click="setNetwork('testnet')"
             :class="{
               active: currentNet != '' ? false : network === 'testnet'
             }"
-          >
-            {{ getNetworkText('testnet') }}
-          </li>
+          >{{ getNetworkText('testnet') }}</li>
 
           <li
             class="menu-item network-item"
@@ -42,13 +38,11 @@
             :class="{
               active: currentNet === item.name
             }"
-          >
-            {{ item.name }}
-          </li>
+          >{{ item.name }}</li>
         </ul>
         <div class="menu-separator"></div>
         <p class="addNet" @click="addNet">
-          <img src="../../static/add-net.svg" alt="">
+          <img src="../../static/add-net.svg" alt />
           <span>{{$t('setting.index.addNet')}}</span>
         </p>
       </div>
@@ -86,13 +80,17 @@
             :class="{
               active: activeAccount.id === account.id
             }"
-          >
-            {{ $t('common.accountLabel') }} {{ account.index + 1 }}
-          </li>
+          >{{ $t('common.accountLabel') }} {{ account.index + 1 }}</li>
         </ul>
         <div class="menu-separator"></div>
-        <div class="menu-item create" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
-        <div class="menu-item import" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
+        <div
+          class="menu-item create"
+          @click="getMnemonic"
+        >{{ $t('account.header.createAccount') }}</div>
+        <div
+          class="menu-item import"
+          @click="gotoImportAccount"
+        >{{ $t('account.header.importAccount') }}</div>
         <div class="menu-separator"></div>
         <div class="menu-item about" @click="gotoAbout">{{ $t('account.header.about') }}</div>
         <div class="menu-item setting" @click="gotoSetting">{{ $t('account.header.setting') }}</div>
@@ -105,6 +103,7 @@
 <script>
 import ClickOutside from "vue-click-outside";
 import API from "../../api/index";
+import mnemonic from "../../wallet/create/mnemonic.js";
 import eventBus from "../bus";
 import {
   openMnemonicDialog,
@@ -149,7 +148,8 @@ export default {
       showMenu: false,
       forceLogin: false,
       netList: [],
-      currentNet: ""
+      currentNet: "",
+      mnemonic: ""
     };
   },
 
@@ -257,10 +257,55 @@ export default {
 
       this.hideMenu();
     },
+    getMnemonic() {
+      mnemonic.get().then(
+        data => {
+          this.mnemonic = data;
+          this.gotoCreateAccount();
+        },
+        error => {
+          console.log("get mnemonic error:", error.message);
+          this.loading = false
+        }
+      );
+    },
     gotoCreateAccount() {
-      this.$router.push({
-        name: "createAccount"
-      });
+      this.$loading(this.$t("wallet.create.validate.confirmLoading"));
+
+      setTimeout(() => {
+        let promise;
+
+        promise = API.createAccount(this.mnemonic);
+
+        promise.then(
+          () => {
+            this.$loading.close();
+
+            mnemonic.clear();
+
+            this.$router.push({
+              name: "createAccount",
+              query: {
+                mnemonic: this.mnemonic
+              }
+            });
+          },
+          error => {
+            console.log("create wallet error:", error);
+            this.$loading.close();
+            this.$toast(
+              this.$t("wallet.create.validate.createFailure") +
+                " " +
+                formatError(error),
+              {
+                type: "center",
+                duration: 5000,
+                wordWrap: true
+              }
+            );
+          }
+        );
+      }, 300);
 
       this.hideMenu();
     },
@@ -589,7 +634,7 @@ export default {
 
   .account-item.active {
     color: #fff;
-    background: url('../../static/account-selected.svg') no-repeat 16px center;
+    background: url("../../static/account-selected.svg") no-repeat 16px center;
     background-size: 16px 11px;
   }
 }

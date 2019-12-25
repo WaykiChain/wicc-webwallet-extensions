@@ -20,6 +20,7 @@ import ImportWallet from './wallet/import-wallet'
 import Account from './account/index'
 import AccountMain from './account/main'
 import Send from './account/send'
+import Collect from './account/collect'
 import ImportAccount from './account/import-account'
 import AddToken from './account/token/add'
 import SendToken from './account/token/send'
@@ -128,6 +129,10 @@ const router = new VueRouter({
         name: 'send',
         path: 'send',
         component: Send
+      }, {
+        name: 'collect',
+        path: 'collect',
+        component: Collect
       }, {
         name: 'tokenMain',
         path: 'token/main',

@@ -14,7 +14,7 @@
     </div>
     <div class="account-action">
       <div class="inner">
-        <div class="item collect">
+        <div class="item collect" @click="collect">
           <div class="wrap">
             <div class="icon">
               <img src="../../static/collect.svg" alt />
@@ -23,7 +23,7 @@
             <div class="title">Collect</div>
           </div>
         </div>
-        <div class="item send">
+        <div class="item send" @click="send">
           <div class="wrap">
             <div class="icon">
               <img src="../../static/send.svg" alt />
@@ -41,8 +41,8 @@
       <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
       <a :href="`https://testnet.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-if="address && address[0] === 'w'">Account details</a>
       <a :href="`https://www.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-else>Account details</a>
-      <div class="menu-item man">Modify account name</div>
-      <div class="menu-item da">Delete account</div>
+      <!-- <div class="menu-item man">Modify account name</div> -->
+      <!-- <div class="menu-item da">Delete account</div> -->
     </div>
 
     <!-- <div class="coin-card-body">
@@ -134,6 +134,14 @@ export default {
 
     toggleMenu() {
       this.showMenu = !this.showMenu;
+    },
+
+    send() {
+      this.$router.push("/account/send")
+    },
+
+    collect() {
+      this.$router.push("/account/collect?address=" + this.address)
     },
 
     openRegisterConfirm() {

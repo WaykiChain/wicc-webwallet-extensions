@@ -77,6 +77,7 @@
   color: #717680;
   font-size: 14px;
   padding: 2px;
+  padding-left: 0;
 }
 
 .from-address {
@@ -119,7 +120,7 @@ export default {
       this.balance = 0;
     }
     this.feesName = query.coinType == "WUSD" ?  query.coinType : 'WICC'
-    this.coinType = query.coinType
+    this.coinType = query.coinType || "WICC"
   },
 
   computed: {
