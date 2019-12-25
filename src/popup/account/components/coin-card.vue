@@ -37,9 +37,10 @@
     </div>
 
     <div class="dropdown" v-show="showMenu">
-      <div class="menu-item vm">{{ $t('account.header.viewMnemonic') }}</div>
-      <div class="menu-item ep">{{ $t('account.header.exportPrivateKey') }}</div>
-      <div class="menu-item ad">Account details</div>
+      <div class="menu-item vm" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
+      <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
+      <a :href="`https://testnet.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-if="address && address[0] === 'w'">Account details</a>
+      <a :href="`https://www.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-else>Account details</a>
       <div class="menu-item man">Modify account name</div>
       <div class="menu-item da">Delete account</div>
     </div>
@@ -113,6 +114,14 @@ export default {
         this.isRefreshing = false;
       }, 600);
       eventBus.$emit("on-refresh");
+    },
+
+    viewMnemonic() {
+      eventBus.$emit("on-viewMnemonic");
+    },
+
+     viewPrivateKey() {
+      eventBus.$emit("on-viewPrivateKey");
     },
 
     openQrCode() {
@@ -196,6 +205,7 @@ export default {
     cursor: pointer;
     padding: 12px 0 12px 42px;
     color: #fff;
+    display: block;
     &.vm {
       background: url("../../static/vm.svg") no-repeat 14px center;
       background-size: 18px;

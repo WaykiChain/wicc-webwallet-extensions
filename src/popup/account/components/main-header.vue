@@ -91,8 +91,6 @@
           </li>
         </ul>
         <div class="menu-separator"></div>
-        <!-- <div class="menu-item" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
-        <div class="menu-item" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div> -->
         <div class="menu-item create" @click="gotoCreateAccount">{{ $t('account.header.createAccount') }}</div>
         <div class="menu-item import" @click="gotoImportAccount">{{ $t('account.header.importAccount') }}</div>
         <div class="menu-separator"></div>
@@ -137,6 +135,8 @@ export default {
     const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"));
     this.currentNet = myselfNet ? myselfNet.name : "";
     this.eventBus.$on("header:state:refresh", this.refreshState);
+    this.eventBus.$on("on-viewMnemonic", this.viewMnemonic);
+    this.eventBus.$on("on-viewPrivateKey", this.viewPrivateKey);
   },
 
   destroyed() {
