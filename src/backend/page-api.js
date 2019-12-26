@@ -41,7 +41,7 @@ const getQueryString = (args) => {
 }
 
 const ua = navigator.userAgent.toLowerCase()
-const deltaHeight = ua.indexOf("mac os") > -1 ? 22 : 30
+const deltaHeight = ua.indexOf("mac os") > -1 ? 34 : 34
 
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
@@ -51,7 +51,7 @@ const openWindow = async (type, args) => {
     url: popupURL,
     type: 'popup',
     height: 600 + deltaHeight,
-    width: 360
+    width: 376
   })
 }
 
@@ -88,7 +88,7 @@ export default {
       url: popupURL,
       type: 'popup',
       height: 600 + deltaHeight,
-      width: 375
+      width: 376
     })
   },
 
