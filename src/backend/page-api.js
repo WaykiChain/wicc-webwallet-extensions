@@ -40,6 +40,8 @@ const getQueryString = (args) => {
   return result.join('&')
 }
 
+const ua = navigator.userAgent.toLowerCase()
+const deltaHeight = ua.indexOf("mac os") > -1 ? 22 : 30
 
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
@@ -48,8 +50,8 @@ const openWindow = async (type, args) => {
   return chrome.windows.create({
     url: popupURL,
     type: 'popup',
-    height: 700,
-    width: 375
+    height: 600 + deltaHeight,
+    width: 360
   })
 }
 
@@ -85,7 +87,7 @@ export default {
     return chrome.windows.create({
       url: popupURL,
       type: 'popup',
-      height: 700,
+      height: 600 + deltaHeight,
       width: 375
     })
   },

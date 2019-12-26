@@ -1,9 +1,10 @@
 .wallet-container {
-  position  : relative;
-  width     : 360px;
-  height    : 600px;
-  box-sizing: border-box;
-  margin    : auto;
+  position        : relative;
+  width           : 360px;
+  height          : 600px;
+  box-sizing      : border-box;
+  margin          : auto;
+  background-color: #fff;
 }
 
 .display-block {
@@ -43,7 +44,7 @@ button.btn-text {
 
 @media (min-width: 550px) {
   .wallet-container {
-    border: 1px dashed #ccc;
+    box-shadow: 0 5px 10px #ccc;
   }
 }
 
