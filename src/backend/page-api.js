@@ -41,7 +41,7 @@ const getQueryString = (args) => {
 }
 
 const ua = navigator.userAgent.toLowerCase()
-const deltaHeight = ua.indexOf("mac os") > -1 ? 34 : 34
+const deltaHeight = ua.indexOf("mac os") > -1 ? 34 : 36
 
 const openWindow = async (type, args) => {
   const path = TYPE_PATH_MAP[type]
