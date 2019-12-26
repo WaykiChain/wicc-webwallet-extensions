@@ -4,6 +4,7 @@ const DEFAULT_PASSWORD = '12345678'
 var Hash = WiccWalletLib.bitcore.crypto.Hash
 var ECDSA = WiccWalletLib.bitcore.crypto.ECDSA
 var WriterHelper = WiccWalletLib.bitcore.util.WriterHelper
+var bitcore = WiccWalletLib.bitcore
 
 export default class {
   constructor(network) {

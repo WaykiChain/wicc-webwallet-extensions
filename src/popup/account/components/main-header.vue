@@ -319,16 +319,16 @@ export default {
     },
 
     viewMnemonic() {
-      openConfirmPassword().then(() => {
+      // openConfirmPassword().then(() => {
         openMnemonicDialog(this.network, this.activeAddress);
-      });
+      // });
       this.hideMenu();
     },
 
     viewPrivateKey() {
-      openConfirmPassword().then(() => {
+      // openConfirmPassword().then(() => {
         openPkDialog(this.network, this.activeAddress);
-      });
+      // });
       this.hideMenu();
     }
   }

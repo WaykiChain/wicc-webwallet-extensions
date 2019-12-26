@@ -8,8 +8,10 @@
 
       <div class="login-container" v-show="vaultCreated && isLocked">
         <div class="password-wrap">
+          <div class="error" v-if="error">{{ error }}</div>
           <input
             class="display-block"
+            :class="{error: error}"
             :type="type"
             v-model="password"
             @focus="focusHandler"
@@ -91,6 +93,14 @@
     position: relative;
     height: 50px;
     margin-bottom: 30px;
+    .error {
+      line-height: 18px;
+      position: absolute;
+      bottom: -18px;
+      right: 0;
+      font-size: 12px;
+      color: #f75555;
+    }
     .holder {
       position: absolute;
       left: 14px;
@@ -121,6 +131,9 @@
       padding-right: 83px;
       &:focus {
         border-color: #8187a5;
+      }
+      &.error {
+        border-color: #f75555;
       }
     }
   }
@@ -167,14 +180,15 @@ import API from "../api";
 export default {
   data() {
     return {
-      loading: true, 
+      loading: true,
       isLocked: true,
       vaultCreated: false,
       password: "",
       shouldTop: false,
       showClear: false,
       cansee: false,
-      type: 'password'
+      type: "password",
+      error: ""
     };
   },
 
@@ -239,11 +253,11 @@ export default {
       this.shouldTop = false;
     },
     setFocus() {
-      this.$refs.password1 && this.$refs.password1.focus()
+      this.$refs.password1 && this.$refs.password1.focus();
     },
     setClear() {
       this.password = "";
-      this.setFocus()
+      this.setFocus();
       setTimeout(() => {
         this.showClear = false;
       }, 10);
@@ -263,9 +277,10 @@ export default {
           this.gotoMain();
         },
         error => {
-          this.$toast(this.$t("errors.passwordError"), {
-            type: "center"
-          });
+          // this.$toast(this.$t("errors.passwordError"), {
+          //   type: "center"
+          // });
+          this.error = this.$t("errors.passwordError");
           // throw error
         }
       );

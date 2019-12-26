@@ -1,7 +1,7 @@
 <template>
   <div class="wallet-input">
     <div class="wallet-input--label">{{ label || '' }}</div>
-    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly, noBorder: type==='custom'}">
+    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly, noBorder: type==='custom', error: message}">
       <textarea
         v-if="theType === 'textarea'"
         class="wallet-input--textarea display-block"
@@ -43,7 +43,7 @@
         ></div>
       </div>
     </div>
-    <div class="wallet-input--message"></div>
+    <div class="wallet-input--message" v-if="message">{{ message }}</div>
   </div>
 </template>
 
@@ -149,6 +149,7 @@ export default {
 <style lang="scss" scoped>
 .wallet-input {
   margin-bottom: 24px;
+  position: relative;
 }
 .wallet-input--label {
   color: #8187A5;
@@ -170,6 +171,9 @@ export default {
   }
   &.noBorder {
     border: 0 !important;
+  }
+  &.error {
+    border-color: #F75555 !important;
   }
 }
 
@@ -237,6 +241,11 @@ export default {
 }
 
 .wallet-input--message {
-  line-height: 20px;
+  line-height: 18px;
+  position: absolute;
+  bottom: -18px;
+  right: 0;
+  font-size: 12px;
+  color: #F75555;
 }
 </style>

@@ -10,44 +10,46 @@
 
 .vodal {
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .vodal-mask {
   position: absolute;
-  background: rgba(0, 0, 0, .15);
+  background: rgba(0, 0, 0, .5);
 }
 
 .vodal-dialog {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // bottom: 0;
+  // margin: auto;
+  position: relative;
+  height: auto !important;
   z-index: 101;
-  padding: 15px;
+  padding: 20px;
   box-sizing: border-box;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(60, 120, 234, 0.2);
+  border-radius: 6px;
 }
 
 .vodal-close {
   position: absolute;
   cursor: pointer;
-  bottom: -52px;
-  left: 50%;
-  display: inline-block;
-  width: 27px;
-  height: 27px;
-  margin-left: -12px;
+  top: 13px;
+  right: 13px;
+  width: 18px;
+  height: 18px;
   z-index: 9999;
 }
 
 .vodal-close:after {
   content: ' ';
-  background: url('../static/circle-close-white.svg') center center no-repeat;
-  background-size: 27px 27px;
+  background: url('../static/back-icon-close.svg') center center no-repeat;
+  background-size: 18px 18px;
   display: inline-block;
   width: 100%;
   height: 100%;
