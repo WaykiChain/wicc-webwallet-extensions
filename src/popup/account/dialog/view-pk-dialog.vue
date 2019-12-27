@@ -10,7 +10,7 @@
       <wallet-input v-model="privateKey" label="请妥善保存私钥" type="textarea" read-only></wallet-input>
       <div class="btn-wrapper">
         <button @click="download" class="btn-lighter">{{ $t('account.dialog.downloadPkButton') }}</button>
-        <button class="copy-address-btn btn-primary">{{ $t('account.dialog.copyPkButton') }}</button>
+        <button class="privateKey-need-copy btn-primary">{{ $t('account.dialog.copyPkButton') }}</button>
       </div>
     </div>
   </vodal>
@@ -18,15 +18,13 @@
 
 <script>
 import WalletInput from "../../components/input";
-import CopyMixin from "../../components/copy-mixin";
 import API from "../../api/index";
 import download from "../../api/download";
 import Password from "./password";
+import ClipboardJS from "clipboard";
 
 export default {
   name: "view-private-key",
-
-  mixins: [CopyMixin],
 
   components: {
     WalletInput,
@@ -50,9 +48,32 @@ export default {
     }
   },
 
-  mounted() {},
+  watch: {
+    showInfoContent(val) {
+      setTimeout(() => {
+        const clipboard = new ClipboardJS(
+          this.$el.querySelector(this.clipboardSelector),
+          {
+            text: () => {
+              return this.getCopyText();
+            }
+          }
+        );
+
+        clipboard.on("success", () => {
+          this.handleCopySuccess && this.handleCopySuccess();
+        });
+      }, 200);
+    }
+  },
 
   methods: {
+    handleCopySuccess() {
+      this.$toast(this.$t("common.copySuccess"), {
+        type: "center",
+        duration: 1000
+      });
+    },
     show() {
       this.visible = true;
     },
@@ -72,7 +93,7 @@ export default {
     },
 
     onConfirm() {
-      this.showInfoContent = true
+      this.showInfoContent = true;
       this.$loading(this.$t("common.loading"));
       setTimeout(() => {
         API.getPrivateKey(this.network, this.address).then(
@@ -91,7 +112,7 @@ export default {
   data() {
     return {
       privateKey: null,
-      clipboardSelector: ".copy-address-btn",
+      clipboardSelector: ".privateKey-need-copy",
       showInfoContent: false
     };
   }

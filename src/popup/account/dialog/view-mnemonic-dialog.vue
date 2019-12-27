@@ -1,7 +1,11 @@
 <template>
   <vodal class="view-mnemonic-dialog" :show="visible" animation="zoom" @hide="onHide" :width="300">
     <div class="dialog-title">{{ $t('account.dialog.viewMnemonicTitle') }}</div>
-    <password :warn-txt="$t('account.dialog.viewMnemonicTip')" @on-cancel="onHide" @on-confirm="onConfirm"></password>
+    <password
+      :warn-txt="$t('account.dialog.viewMnemonicTip')"
+      @on-cancel="onHide"
+      @on-confirm="onConfirm"
+    ></password>
     <div class="info-content" v-if="showInfoContent">
       <wallet-input
         v-model="mnemonic"
@@ -19,7 +23,7 @@
           class="btn-lighter"
           @click="download"
         >{{ $t('account.dialog.downloadMnemonicButton') }}</button>
-        <button class="btn-primary coin-card-copy">{{ $t('account.dialog.copyMnemonicButton') }}</button>
+        <button class="btn-primary mnemonic-need-copy">{{ $t('account.dialog.copyMnemonicButton') }}</button>
       </div>
     </div>
   </vodal>
@@ -31,13 +35,13 @@ import API from "../../api/index";
 import download from "../../api/download";
 import DialogMixin from "./dialog-mixin";
 import WiccApi from "../../../backend/wallet/wicc-api";
-import CopyMixin from "../../components/copy-mixin";
 import Password from "./password";
+import ClipboardJS from "clipboard";
 
 export default {
   name: "view-mnemonic",
 
-  mixins: [DialogMixin, CopyMixin],
+  mixins: [DialogMixin],
 
   components: {
     WalletInput,
@@ -56,11 +60,34 @@ export default {
     }
   },
 
-  mounted() {},
+  watch: {
+    showInfoContent(val) {
+      setTimeout(() => {
+        const clipboard = new ClipboardJS(
+          this.$el.querySelector(this.clipboardSelector),
+          {
+            text: () => {
+              return this.getCopyText();
+            }
+          }
+        );
+
+        clipboard.on("success", () => {
+          this.handleCopySuccess && this.handleCopySuccess();
+        });
+      }, 200);
+    }
+  },
 
   methods: {
     download() {
       download("wicc-seed.txt", this.mnemonic);
+    },
+    handleCopySuccess() {
+      this.$toast(this.$t("common.copySuccess"), {
+        type: "center",
+        duration: 1000
+      });
     },
     getCopyText() {
       return this.mnemonic;
@@ -86,7 +113,7 @@ export default {
       }
     },
     onConfirm() {
-      this.showInfoContent = true
+      this.showInfoContent = true;
       this.$loading(this.$t("common.loading"));
 
       setTimeout(() => {
@@ -112,7 +139,7 @@ export default {
       mnemonic: null,
       currentLang: "",
       isRefreshing: false,
-      clipboardSelector: ".coin-card-copy",
+      clipboardSelector: ".mnemonic-need-copy",
       showInfoContent: false
     };
   }
