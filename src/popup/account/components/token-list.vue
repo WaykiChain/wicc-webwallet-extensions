@@ -14,6 +14,7 @@
     </div>
     <div class="token-list-container">
       <p class="myzichan">{{$t('window.cdp.wdzc')}}</p>
+      <div class="line"></div>
       <ul class="token-list">
         <li
           class="token-item"
@@ -27,7 +28,9 @@
           <img class="token-item-icon" :src="getIcon(tokenKey)" />
           <span class="token-item-name">{{tokenKey}}</span>
           <div class="token-amount">
-            <div class="token-amount-num">{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+            <div
+              class="token-amount-num"
+            >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
             <div class="token-worth">≈$ 128.73</div>
           </div>
         </li>
@@ -44,7 +47,9 @@
           <img class="token-item-icon" :src="getIcon('WICC')" />
           <span class="token-item-name">{{tokenKey}}</span>
           <div class="token-amount">
-            <div class="token-amount-num">{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+            <div
+              class="token-amount-num"
+            >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
             <div class="token-worth">≈$ 128.73</div>
           </div>
         </li>
@@ -81,15 +86,22 @@
 
 .token-list-container {
   flex: 1 0 0;
-  overflow-y: auto;
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 .myzichan {
-  margin-bottom: 0;
+  margin-bottom: 12px;
   font-size: 16px;
-  color: #1D213C;
+  color: #1d213c;
   line-height: 24px;
   font-weight: 450;
+  padding: 0 20px;
+}
+.line {
+  width: 500%;
+  height: 0;
+  border-bottom: 1px solid #f0f3f7;
+  margin-left: -100%;
 }
 .account-info-basic {
   text-align: center;
@@ -161,6 +173,10 @@
 
 .token-list {
   list-style: none;
+  overflow-y: auto;
+  flex: 1 0 0;
+  padding: 0 20px;
+  margin-bottom: 0;
 }
 
 .token-item {
@@ -168,7 +184,7 @@
   padding-bottom: 22px;
   padding-top: 23px;
   align-items: center;
-  border-bottom: 1px solid #F0F3F7;
+  border-bottom: 1px solid #f0f3f7;
   cursor: pointer;
   margin: 0;
 }
@@ -187,7 +203,7 @@
 .token-item-name {
   font-weight: 450;
   font-size: 17px;
-  color: #8187A5;
+  color: #8187a5;
   width: 86px;
 }
 
@@ -199,7 +215,7 @@
 .token-amount-num {
   line-height: 21px;
   font-size: 16px;
-  color: #1D213C;
+  color: #1d213c;
   font-weight: 450;
   margin-bottom: 3px;
 }
@@ -207,7 +223,7 @@
 .token-worth {
   line-height: 18px;
   font-size: 13px;
-  color: #8187A5;
+  color: #8187a5;
 }
 
 .token-item-more-btn {
@@ -297,8 +313,8 @@ export default {
   created() {
     this.eventBus.$on("network-change", this.handleNetworkChange);
     this.eventBus.$on("on-refresh", () => {
-      this.getWiccNum(this.activeAddress)
-    })
+      this.getWiccNum(this.activeAddress);
+    });
   },
 
   destroyed() {
@@ -307,7 +323,9 @@ export default {
 
   methods: {
     getIcon(key) {
-      return require(`../../static/${key === 'WICC' ? 'wicclogo' : key.toLowerCase()}.svg`)
+      return require(`../../static/${
+        key === "WICC" ? "wicclogo" : key.toLowerCase()
+      }.svg`);
     },
     handleNetworkChange(network) {
       if (network == this.lastNetWork) {

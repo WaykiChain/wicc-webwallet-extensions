@@ -27,10 +27,14 @@
 <style lang="scss">
 .wicc-record {
   overflow: hidden;
+  .layout-footer {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 .wicc-record .layout-body {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 </style>
 <style scoped lang="scss">
