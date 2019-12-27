@@ -344,7 +344,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 19px 0;
-  font-weight: 450;
+  font-weight: 500;
   font-size: 15px;
   cursor: pointer;
   color: #fff;
@@ -486,7 +486,7 @@ export default {
     align-items: center;
     color: #1d213c;
     font-size: 13px;
-    font-weight: 450;
+    font-weight: 500;
   }
 
   .dropdown-toggle-indicator {
@@ -577,7 +577,7 @@ export default {
     padding: 11px 0 11px 45px;
     height: 19px;
     color: rgba(255, 255, 255, 0.5);
-    font-weight: 450;
+    font-weight: 500;
     background: url("../../static/select.svg") no-repeat 16px center;
     background-size: 17px;
     &:hover {
@@ -631,7 +631,7 @@ export default {
     margin: 0;
     color: rgba(255, 255, 255, 0.5);
     font-size: 15px;
-    font-weight: 450;
+    font-weight: 500;
   }
 
   .account-item.active {

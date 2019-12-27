@@ -94,7 +94,7 @@
   font-size: 16px;
   color: #1d213c;
   line-height: 24px;
-  font-weight: 450;
+  font-weight: 500;
   padding: 0 20px;
 }
 .line {
@@ -201,7 +201,7 @@
 }
 
 .token-item-name {
-  font-weight: 450;
+  font-weight: 500;
   font-size: 17px;
   color: #8187a5;
   width: 86px;
@@ -216,7 +216,7 @@
   line-height: 21px;
   font-size: 16px;
   color: #1d213c;
-  font-weight: 450;
+  font-weight: 500;
   margin-bottom: 3px;
 }
 

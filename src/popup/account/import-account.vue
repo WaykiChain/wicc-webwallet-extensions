@@ -145,7 +145,7 @@ export default {
   font-size: 20px;
   color: #21274a;
   line-height: 28px;
-  font-weight: 450;
+  font-weight: 500;
   margin-bottom: 30px;
 }
 select{

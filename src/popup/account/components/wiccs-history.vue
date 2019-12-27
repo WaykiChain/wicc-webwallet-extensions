@@ -160,7 +160,7 @@ export default {
   color: #1d213c;
   line-height: 21px;
   margin-bottom: 12px;
-  font-weight: 450;
+  font-weight: 500;
   padding: 0 20px;
 }
 

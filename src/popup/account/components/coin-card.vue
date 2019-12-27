@@ -261,7 +261,7 @@ export default {
     height: 24px;
     font-size: 18px;
     line-height: 24px;
-    font-weight: 450;
+    font-weight: 500;
     color: #1d213c;
   }
   .address {
@@ -295,7 +295,7 @@ export default {
     height: 70px;
     font-size: 15px;
     color: #091340;
-    font-weight: 450;
+    font-weight: 500;
     display: flex;
     justify-content: center;
   }

@@ -81,7 +81,7 @@ p {
   padding-top: 16px;
   .count {
     font-size: 24px;
-    font-weight: 450;
+    font-weight: 500;
     color: #1d213c;
     line-height: 32px;
   }
