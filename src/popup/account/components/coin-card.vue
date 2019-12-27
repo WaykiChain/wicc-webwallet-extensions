@@ -67,7 +67,6 @@
 
 <script>
 import ClickOutside from "vue-click-outside";
-import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import formatError from "../../api/format-error";
 import { openQrCodeDialog, openRegisterConfirmDialog } from "../dialog";
@@ -75,7 +74,6 @@ import eventBus from "../bus";
 
 export default {
   name: "coin-card",
-  mixins: [CopyMixin],
   directives: {
     ClickOutside
   },
@@ -100,7 +98,6 @@ export default {
   data() {
     return {
       registerConfirmVisible: false,
-      clipboardSelector: ".coin-card-copy",
       showMenu: false,
       isRefreshing: false
     };

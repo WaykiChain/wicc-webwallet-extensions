@@ -24,13 +24,13 @@
 
 <script>
   import QrCode from 'qrcode.vue'
-  import CopyMixin from '../../components/copy-mixin'
+  // import CopyMixin from '../../components/copy-mixin'
   import DialogMixin from './dialog-mixin'
 
   export default {
     name: 'account-qr-code',
 
-    mixins: [CopyMixin, DialogMixin],
+    mixins: [DialogMixin],
 
     components: {
       QrCode

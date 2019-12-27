@@ -255,7 +255,7 @@
 </style>
 
 <script type="text/jsx">
-import CopyMixin from "../../components/copy-mixin";
+// import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import axios from "axios";
 import eventBus from "../bus";
@@ -263,7 +263,7 @@ import eventBus from "../bus";
 export default {
   name: "token-list",
 
-  mixins: [CopyMixin],
+  // mixins: [CopyMixin],
 
   props: {
     activeRegId: {
