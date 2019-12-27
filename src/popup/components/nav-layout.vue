@@ -9,7 +9,7 @@
     <div class="layout-body">
       <slot></slot>
     </div>
-    <div class="layout-footer">
+    <div class="layout-footer" :style="{paddingTop: `${footerPadding}px`}">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -35,6 +35,10 @@
       backType: {
         type: String,
         default: "arrow"
+      },
+      footerPadding: {
+        type: [Number, String],
+        default: 0
       }
     }
   }
@@ -54,7 +58,6 @@
   }
 
   .layout-footer {
-    margin-top: 12px;
-    padding: 60px 24px 0;
+    padding: 0 24px;
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav-layout class="u-full-height">
+  <nav-layout footer-padding="60" class="u-full-height">
     <div class="title">{{$t('account.import.title')}}</div>
     <wallet-input :label="$t('account.import.typeLabel')" type="custom">
       <select v-model="type" class="display-block">

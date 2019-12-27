@@ -1,12 +1,8 @@
 <template>
-  <div class="content-wrapper">
-    <nav-bar :title="$t('account.send.title')"></nav-bar>
+  <nav-layout :title="$t('account.send.title')" class="content-wrapper">
     <div class="content-body">
       <div class="from-title">{{ $t('account.send.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
-      <label
-        class="transfer-limit"
-      >{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;{{coinType}}</label>
       <wallet-input
         v-model="destAddr"
         :label="$t('account.send.destLabel')"
@@ -21,7 +17,7 @@
         :placeholder="$t('account.send.valuePlaceHolder')"
       ></wallet-input>
 
-      <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input>
+      <!-- <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input> -->
 
       <div class="feesView">
         <select class="feesName" name="WICC" id v-model="feesName">
@@ -39,7 +35,7 @@
         @click="confirmSend"
       >{{ $t('account.send.confirmButton') }}</button>
     </div>
-  </div>
+  </nav-layout>
 </template>
 
 <style lang="scss" scoped>
@@ -52,9 +48,7 @@
 }
 
 .content-body {
-  margin-top: 20px;
   flex: 1 0 0;
-  padding: 0 16px 7px;
   position: relative;
 }
 .transfer-limit {
@@ -69,35 +63,43 @@
   color: rgba(165, 174, 193, 1);
 }
 .content-footer {
-  padding: 0 16px;
+  padding-top: 42px;
 }
 
-.from-title,
-.from-address {
-  color: #717680;
+.from-title {
+  color: #8187A5;
   font-size: 14px;
-  padding: 2px;
-  padding-left: 0;
+  line-height: 20px;
+  margin-bottom: 8px;
 }
 
 .from-address {
-  margin-bottom: 10px;
+  margin-bottom: 24px;
+  height: 50px;
+  background-color: #F5F7FA;
+  border-radius: 6px;
+  color: rgba(33, 36, 74, 0.5);
+  padding-left: 14px;
+  line-height: 50px;
 }
 .feesView {
-  padding-top: 47px;
+  padding-top: 20px;
   position: relative;
   .feesName {
-    border: none;
+    border: 1.5px solid #D9DBDE;
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 0px;
+    height: 28px;
+    margin: 0;
+    z-index: 10;
   }
 }
 </style>
 
 <script type="text/jsx">
 import WalletInput from "../components/input";
-import NavBar from "../components/nav-bar";
+import NavLayout from "../components/nav-layout";
 import FeesSlider from "../components/fees-slider";
 import API from "../api";
 import formatError from "../api/format-error";
@@ -107,7 +109,7 @@ export default {
   components: {
     WalletInput,
     FeesSlider,
-    NavBar
+    NavLayout
   },
 
   mixins: [StateWatcher],

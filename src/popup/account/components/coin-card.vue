@@ -99,8 +99,15 @@ export default {
     return {
       registerConfirmVisible: false,
       showMenu: false,
-      isRefreshing: false
+      isRefreshing: false,
+      tokens: null
     };
+  },
+
+  created () {
+    eventBus.$on("on-assets-update", data => {
+      this.tokens = data
+    })
   },
 
   methods: {
@@ -134,7 +141,7 @@ export default {
     },
 
     send() {
-      this.$router.push("/account/send")
+      this.$router.push("/account/send?tokens=" + JSON.stringify(this.tokens))
     },
 
     collect() {

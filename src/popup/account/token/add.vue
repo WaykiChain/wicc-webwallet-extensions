@@ -1,5 +1,5 @@
 <template>
-  <nav-layout :title="$t('account.addToken.title')" class="u-full-height">
+  <nav-layout footer-padding="60" :title="$t('account.addToken.title')" class="u-full-height">
     <wallet-input
         v-model="regId"
         :label="$t('account.addToken.regIdLabel')"

@@ -1,5 +1,5 @@
 <template>
-  <nav-layout back-type="close" class="u-full-height">
+  <nav-layout footer-padding="60" back-type="close" class="u-full-height">
     <div class="title">{{$t('wallet.import.title')}}</div>
     <wallet-input
       v-model="mnemonic"

@@ -42,6 +42,7 @@ import TransHistory from "./components/trans-history";
 import StateWatcher from "./state-watcher";
 import MainLayout from "./components/main-layout";
 import MainHeader from "./components/main-header";
+import eventBus from "./bus";
 export default {
   mixins: [StateWatcher],
 
@@ -54,11 +55,24 @@ export default {
     MainHeader
   },
 
+  created() {
+    eventBus.$on("on-assets-update", data => {
+      this.asssets = data;
+    });
+  },
+
   methods: {
     handleActiveTokenChange(token) {
-      if (this.isRealNum(token.num)){
-        this.$router.push({ name: "WiccRecord",query:{coinNum:token.num,coinName:token.name}});
-        return
+      if (this.isRealNum(token.num)) {
+        this.$router.push({
+          name: "WiccRecord",
+          query: {
+            coinNum: token.num,
+            coinName: token.name,
+            tokens: JSON.stringify(this.asssets)
+          }
+        });
+        return;
       }
       if (token) {
         this.$router.push({
@@ -68,20 +82,20 @@ export default {
             regId: token.regId
           }
         });
-      } 
+      }
     },
 
     toggleDrawer() {
       this.$refs.drawerLayout.toggle();
     },
-    isRealNum(val){
-      if (typeof val !== 'number'){
-        return false
+    isRealNum(val) {
+      if (typeof val !== "number") {
+        return false;
       }
-      if (!isNaN(val)){
-        return true
-      }else{
-        return false
+      if (!isNaN(val)) {
+        return true;
+      } else {
+        return false;
       }
     }
   },
@@ -89,7 +103,7 @@ export default {
   data() {
     return {
       loading: false,
-
+      asssets: null,
       activeAccountInfo: null,
       transactions: null
     };

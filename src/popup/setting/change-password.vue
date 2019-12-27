@@ -1,5 +1,5 @@
 <template>
-  <nav-layout class="u-full-height">
+  <nav-layout footer-padding="60" class="u-full-height">
     <div class="title">{{$t('setting.password.title')}}</div>
     <wallet-input
         v-model="password"

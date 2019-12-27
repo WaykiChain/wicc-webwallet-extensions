@@ -383,7 +383,6 @@ export default {
           this.$loading.close();
           let tokens = res.tokens;
           localStorage.setItem("srcRegID", res.regid ? res.regid : "");
-          console.log(res);
           if (tokens) {
             this.sortAssets(tokens);
             this.myAssets = tokens;
@@ -396,6 +395,7 @@ export default {
             this.wicc = null;
             this.wgrt = null;
           }
+          this.eventBus.$emit("on-assets-update", this.myAssets)
         },
         error => {
           this.$loading.close();
