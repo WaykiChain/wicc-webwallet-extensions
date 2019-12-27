@@ -129,6 +129,9 @@ export default {
       this.$router.go(-1);
     },
     getIcon(key) {
+      if (!["WICC", "WUSD", "WGRT"].includes(key)) {
+        return require(`../../static/wicclogo.svg`);
+      }
       return require(`../../static/${
         key === "WICC" ? "wicclogo" : key.toLowerCase()
       }.svg`);
@@ -187,7 +190,7 @@ export default {
       });
     },
     handleReceiveClick() {
-      this.$router.push("/account/collect?address=" + this.activeAddress)
+      this.$router.push("/account/collect?address=" + this.activeAddress);
     }
   },
 
