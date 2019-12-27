@@ -117,11 +117,11 @@ export default {
     },
 
     viewMnemonic() {
-      eventBus.$emit("on-viewMnemonic");
+      eventBus.$emit("on-viewMnemonic-click");
     },
 
      viewPrivateKey() {
-      eventBus.$emit("on-viewPrivateKey");
+      eventBus.$emit("on-viewPrivateKey-click");
     },
 
     openQrCode() {

@@ -80,6 +80,7 @@
   width: 74px;
   height: 21px;
   color: #8187A5;
+  padding: 0;
 }
 
 .separator {

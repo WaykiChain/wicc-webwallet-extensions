@@ -134,12 +134,14 @@ export default {
     const myselfNet = JSON.parse(localStorage.getItem("myselfNetWork"));
     this.currentNet = myselfNet ? myselfNet.name : "";
     this.eventBus.$on("header:state:refresh", this.refreshState);
-    this.eventBus.$on("on-viewMnemonic", this.viewMnemonic);
-    this.eventBus.$on("on-viewPrivateKey", this.viewPrivateKey);
+    this.eventBus.$on("on-viewMnemonic-click", this.viewMnemonic);
+    this.eventBus.$on("on-viewPrivateKey-click", this.viewPrivateKey);
   },
 
   destroyed() {
     this.eventBus.$off("header:state:refresh", this.refreshState);
+    this.eventBus.$off("on-viewMnemonic-click", this.viewMnemonic);
+    this.eventBus.$off("on-viewPrivateKey-click", this.viewPrivateKey);
   },
 
   data() {

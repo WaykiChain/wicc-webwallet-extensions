@@ -117,7 +117,7 @@ export default {
       viewMnemonicTitle: '查看助记词',
       viewMnemonicTip: '拥有助记词相当于拥有资产，请一定妥善保管在安全的地方。',
       downloadMnemonicButton: '下载助记词',
-      copyMnemonicButton: '下载助记词',
+      copyMnemonicButton: '复制助记词',
       exportPkTitle: '导出私钥',
       exportPkTip: '私钥未经加密，泄露风险极大，请一定妥善保管在安全的地方。',
       copyPkButton: '复制私钥',
