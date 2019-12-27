@@ -8,7 +8,7 @@
 
       <div class="login-container" v-show="vaultCreated && isLocked">
         <div class="password-wrap">
-          <div class="error" v-if="error">{{ error }}</div>
+          <div class="error-msg" v-if="error">{{ error }}</div>
           <input
             class="display-block"
             :class="{error: error}"
@@ -93,7 +93,7 @@
     position: relative;
     height: 50px;
     margin-bottom: 30px;
-    .error {
+    .error-msg {
       line-height: 18px;
       position: absolute;
       bottom: -18px;
