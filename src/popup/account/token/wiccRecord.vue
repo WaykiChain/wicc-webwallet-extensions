@@ -154,7 +154,6 @@ export default {
       };
       API.getTransHistory({ info: param }).then(
         value => {
-          console.log("==============", value);
           this.$loading.close();
           this.loading = false;
           if (this.currentpage == 1) {
@@ -189,7 +188,8 @@ export default {
         name: "send",
         query: {
           balance: this.number,
-          coinType: this.name
+          coinType: this.name,
+          tokens: this.$route.query.tokens
         }
       });
     },
@@ -206,7 +206,8 @@ export default {
       transactions: null,
       activeAccountInfo: null,
       busy: true,
-      currentpage: 1
+      currentpage: 1,
+      tokens: null
     };
   }
 };

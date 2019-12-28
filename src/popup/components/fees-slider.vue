@@ -76,7 +76,7 @@
 }
 
 .fees-slider-label {
-  width: 218px;
+  width: 210px;
   color: #8187a5;
   font-size: 13px;
   line-height: 20px;
