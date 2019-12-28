@@ -195,16 +195,16 @@ export default {
 
   created() {
     const { query } = this.$router.currentRoute;
-    if (query.balance && !isNaN(parseFloat(query.balance))) {
-      this.balance = parseFloat(query.balance);
-    } else {
-      this.balance = 0;
-    }
+    // if (query.balance && !isNaN(parseFloat(query.balance))) {
+    //   this.balance = parseFloat(query.balance);
+    // } else {
+    //   this.balance = 0;
+    // }
     this.feesName = query.coinType == "WUSD" ? query.coinType : "WICC";
     this.coinType = query.coinType || "WICC";
     this.tokens = query.tokens === "null" ? {} : JSON.parse(query.tokens);
     let keys = Object.keys(this.tokens);
-    [("WICC", "WUSD", "WGRT")].map(item => {
+    ["WICC", "WUSD", "WGRT"].map(item => {
       if (!keys.includes(item)) {
         this.tokens[item] = {
           freeAmount: 0
@@ -218,6 +218,8 @@ export default {
         label: String(this.tokens[item].freeAmount / Math.pow(10, 8))
       });
     }
+    console.log(this.tokens)
+    this.balance = this.tokens[this.coinType].freeAmount / Math.pow(10, 8)
   },
 
   computed: {
