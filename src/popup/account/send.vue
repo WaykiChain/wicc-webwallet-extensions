@@ -283,7 +283,7 @@ export default {
         destAddr: this.destAddr,
         value: this.value,
         fees: this.fees,
-        coinType: this.$route.query.coinType,
+        coinType: this.coinType,
         feeSymbol: this.feesName,
         memo: this.desc
       };
