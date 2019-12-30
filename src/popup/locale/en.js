@@ -270,7 +270,9 @@ export default {
       confirmButton: 'Confirm',
       confirmLoading: 'Loading...',
       createSuccess: 'Successful',
-      createFailure: 'Failed'
+      createFailure: 'Failed',
+      addressLabel: 'From:',
+      destAddressLabel: 'To:'
     },
     vote: {
       title: 'Vote',

@@ -23,6 +23,8 @@ export default {
   margin: auto;
   position: relative;
   background-color: #fff;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 @media (min-width: 550px) {
   .window-container {

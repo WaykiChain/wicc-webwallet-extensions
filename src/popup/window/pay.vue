@@ -1,6 +1,6 @@
 <template>
   <div class="main-wrapper">
-    <main-header @network-change="handleNetworkChange" :hide-menu-toggle="true"></main-header>
+    <!-- <main-header @network-change="handleNetworkChange" :hide-menu-toggle="true"></main-header> -->
     <div class="content">
       <div class="page-title">{{ $t('window.transfer.title') }}</div>
       <div class="value-block">
