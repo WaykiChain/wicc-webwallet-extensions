@@ -26,7 +26,7 @@ import AddToken from './account/token/add'
 import SendToken from './account/token/send'
 import TokenMain from './account/token/main'
 import WiccRecord from './account/token/wiccRecord'
-
+import TransactionDetail from './account/token/transaction-detail'
 
 /**
  * Splash related page
@@ -142,6 +142,10 @@ const router = new VueRouter({
         name: 'WiccRecord',
         path: 'token/WiccRecord',
         component: WiccRecord
+      }, {
+        name: 'transactionDetail',
+        path: 'token/transaction-detail',
+        component: TransactionDetail
       },
        {
         name: 'addToken',

@@ -69,8 +69,9 @@ export default {
     cutMiddleStr: transUtil.cutMiddleStr,
 
     handleClick(trans) {
-      this.transDetailVisible = true;
+      // this.transDetailVisible = true;
       this.currentTrans = trans;
+      this.$router.push({name: 'transactionDetail'})
     },
     showTrandirection(trandirection) {
       if (trandirection == 1) {
