@@ -311,14 +311,11 @@ export default {
   },
 
   created() {
-    this.eventBus.$on("network-change", this.handleNetworkChange);
-    this.eventBus.$on("on-refresh", () => {
-      this.getWiccNum(this.activeAddress);
-    });
+    this.eventBus.$on("on-refresh", this.handleChange);
   },
 
   destroyed() {
-    this.eventBus.$off("network-change", this.handleNetworkChange);
+    this.eventBus.$off("network-change", this.handleChange);
   },
 
   methods: {
@@ -327,13 +324,8 @@ export default {
         key === "WICC" ? "wicclogo" : key.toLowerCase()
       }.svg`);
     },
-    handleNetworkChange(network) {
-      if (network == this.lastNetWork) {
-        console.log("点击切换节点地址：" + this.currentAddr + "Net:" + network);
-        this.getWiccNum(this.currentAddr);
-      }
-      localStorage.setItem("tempNetWork", network);
-      this.lastNetWork = network;
+    handleChange() {
+      this.getWiccNum(this.activeAddress);
     },
     gotoAddToken() {
       this.$router.push({
@@ -395,7 +387,7 @@ export default {
             this.wicc = null;
             this.wgrt = null;
           }
-          this.eventBus.$emit("on-assets-update", this.myAssets)
+          this.eventBus.$emit("on-assets-update", this.myAssets);
         },
         error => {
           this.$loading.close();

@@ -90,9 +90,9 @@ export default {
   formatNewTxType(type){
     const lang = getLanguage()
     if (lang && lang.indexOf('zh') !== -1) {
-      return TYPE_NEWTX_MAP[type] || type
+      return TYPE_NEWTX_MAP[type] || "其他"
     } else {
-      return TYPE_NEWTX_MAP_EN[type] || type
+      return TYPE_NEWTX_MAP_EN[type] || "Other"
     }
   },
   formatType (type) {

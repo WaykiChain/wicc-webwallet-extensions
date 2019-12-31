@@ -232,7 +232,6 @@ export default {
         if (network) {
           this.network = network;
           this.$emit("network-change", network, this);
-          eventBus.$emit("network-change", network);
         }
       });
       this.hideMenu();

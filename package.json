@@ -21,6 +21,7 @@
     "vodal": "^2.4.0",
     "vue": "^2.6.10",
     "vue-click-outside": "^1.0.7",
+    "vue-clipboard2": "^0.3.1",
     "vue-drawer-layout": "^0.3.6",
     "vue-i18n": "^8.12.0",
     "vue-infinite-scroll": "^2.0.2",
