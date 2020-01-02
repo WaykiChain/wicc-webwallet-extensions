@@ -184,23 +184,23 @@
             </li>
             <li>
               <span class="label">代币名称</span>
-              <span class="value">{{info.assetname}}</span>
+              <span class="value">{{info.assetname || assetname}}</span>
             </li>
             <li>
               <span class="label">总发行量</span>
-              <span class="value">{{formatAmount(info.totalsupply, 8)}} {{info.assetsymbol}}</span>
+              <span class="value">{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
               <span class="label">代币持有者</span>
               <span
                 class="value need-copy"
-                v-clipboard:copy="info.owneraddr"
+                v-clipboard:copy="info.owneraddr || owneraddr"
                 v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.owneraddr, 10)}}</span>
+              >{{cutMiddleStr(info.owneraddr || owneraddr, 10)}}</span>
             </li>
             <li>
               <span class="label">是否可修改</span>
-              <span class="value">{{info.mintable ? '是' : '否'}}</span>
+              <span class="value">{{info.mintable || mintable ? '是' : '否'}}</span>
             </li>
           </ul>
         </div>
@@ -222,7 +222,10 @@ export default {
     return {
       trans: JSON.parse(this.$route.query.info),
       info: {},
-      Decimal: Decimal
+      Decimal: Decimal,
+      assetname: "",
+      owneraddr: "",
+      totalsupply: ""
     };
   },
   components: {
@@ -233,6 +236,9 @@ export default {
       res => {
         this.info = res;
         // alert(JSON.stringify(res));
+        if (res.txtype === "ASSET_UPDATE_TX") {
+          this.getAssetInfo(res.assetsymbol)
+        }
       },
       error => {
         console.log(error.message);
@@ -264,6 +270,27 @@ export default {
     },
     onError: function(e) {
       alert("Failed to copy texts");
+    },
+    getAssetInfo(assetSymbol) {
+      let param = {
+        assetSymbol: assetSymbol
+      };
+      API.callRaw("getAssetInfo", { info: param }).then(
+        res => {
+          this.assetname = res.assetname;
+          this.owneraddr = res.owneraddr;
+          this.totalsupply = res.totalsupply / Math.pow(10, 8);
+          this.mintable = res.mintable;
+        },
+        error => {
+          this.$toast(error.message, {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
+          this.$loading.close();
+        }
+      );
     },
     getAmount() {
       let trans = this.info;
