@@ -5,6 +5,7 @@
         <div class="icon"></div>
         <div
           class="amount"
+          v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX'"
         >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.coinsymbol}}</div>
         <div class="status">交易成功</div>
         <div class="info-list">
@@ -21,7 +22,11 @@
             </li>
             <li>
               <span class="label">交易哈希</span>
-              <span class="value need-copy" v-clipboard:copy="info.txid" v-clipboard:success="onCopy">{{cutMiddleStr(info.txid, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.txid"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.txid, 10)}}</span>
             </li>
             <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype)">
               <span
@@ -29,11 +34,19 @@
                 v-if="info.txtype === 'ASSET_ISSUE_TX' || info.txtype === 'ASSET_UPDATE_TX'"
               >资产发行人</span>
               <span class="label" v-else>付款地址</span>
-              <span class="value need-copy" v-clipboard:copy="info.fromaddr" v-clipboard:success="onCopy">{{cutMiddleStr(info.fromaddr, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.fromaddr"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype) && info.toaddr">
               <span class="label">收款地址</span>
-              <span class="value need-copy" v-clipboard:copy="info.toaddr" v-clipboard:success="onCopy">{{cutMiddleStr(info.toaddr, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.toaddr"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.toaddr, 10)}}</span>
             </li>
             <li>
               <span class="label">矿工费</span>
@@ -44,7 +57,11 @@
             <!-- CDP_STAKE_TX -->
             <li v-if="info.txtype === 'CDP_STAKE_TX' && (info.txid !== info.cdptxid)">
               <span class="label">该CDP创建ID</span>
-              <span class="value need-copy" v-clipboard:copy="info.cdptxid" v-clipboard:success="onCopy">{{cutMiddleStr(info.cdptxid, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.cdptxid"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
               <span class="label">{{info.txid === info.cdptxid ? "抵押量" : "追加抵押量"}}</span>
@@ -61,11 +78,19 @@
             <!-- CDP_REDEEM_TX -->
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">该CDP创建者</span>
-              <span class="value need-copy" v-clipboard:copy="info.fromaddr" v-clipboard:success="onCopy">{{cutMiddleStr(info.fromaddr, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.fromaddr"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">该CDP创建ID</span>
-              <span class="value need-copy" v-clipboard:copy="info.cdptxid" v-clipboard:success="onCopy">{{cutMiddleStr(info.cdptxid, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.cdptxid"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">{{"归还量"}}</span>
@@ -82,11 +107,19 @@
             <!-- CDP_LIQUIDATE_TX -->
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">该CDP创建者</span>
-              <span class="value need-copy" v-clipboard:copy="info.fromaddr" v-clipboard:success="onCopy">{{cutMiddleStr(info.fromaddr, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.fromaddr"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">该CDP创建ID</span>
-              <span class="value need-copy" v-clipboard:copy="info.cdptxid" v-clipboard:success="onCopy">{{cutMiddleStr(info.cdptxid, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.cdptxid"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">{{"清算量"}}</span>
@@ -134,7 +167,11 @@
           >
             <li>
               <span class="label">订单号</span>
-              <span class="value need-copy" v-clipboard:copy="info.orderid" v-clipboard:success="onCopy">{{cutMiddleStr(info.orderid, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.orderid"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.orderid, 10)}}</span>
             </li>
           </ul>
           <ul
@@ -142,11 +179,11 @@
             v-if="info.txtype == 'ASSET_UPDATE_TX' || info.txtype == 'ASSET_ISSUE_TX'"
           >
             <li>
-              <span class="label">代币简称</span>
+              <span class="label">代币符号</span>
               <span class="value">{{info.assetsymbol}}</span>
             </li>
             <li>
-              <span class="label">代币全称</span>
+              <span class="label">代币名称</span>
               <span class="value">{{info.assetname}}</span>
             </li>
             <li>
@@ -155,7 +192,11 @@
             </li>
             <li>
               <span class="label">代币持有者</span>
-              <span class="value need-copy" v-clipboard:copy="info.owneraddr" v-clipboard:success="onCopy">{{cutMiddleStr(info.owneraddr, 10)}}</span>
+              <span
+                class="value need-copy"
+                v-clipboard:copy="info.owneraddr"
+                v-clipboard:success="onCopy"
+              >{{cutMiddleStr(info.owneraddr, 10)}}</span>
             </li>
             <li>
               <span class="label">是否可修改</span>
@@ -173,9 +214,9 @@ import NavLayout from "../../components/nav-layout";
 import transUtil from "../components/trans-util";
 import Decimal from "decimal.js";
 import API from "../../api";
-import Vue from 'vue'
-import VueClipboard from 'vue-clipboard2'
-Vue.use(VueClipboard)
+import Vue from "vue";
+import VueClipboard from "vue-clipboard2";
+Vue.use(VueClipboard);
 export default {
   data() {
     return {
@@ -191,7 +232,7 @@ export default {
     API.callRaw("getDetailInfo", { info: { hash: this.trans.txid } }).then(
       res => {
         this.info = res;
-        console.log(res);
+        // alert(JSON.stringify(res));
       },
       error => {
         console.log(error.message);
@@ -221,40 +262,36 @@ export default {
         duration: 1000
       });
     },
-    onError: function (e) {
-      alert('Failed to copy texts')
+    onError: function(e) {
+      alert("Failed to copy texts");
     },
     getAmount() {
       let trans = this.info;
-      if (trans) {
-        if (trans.txtype == "CDP_LIQUIDATE_TX") {
-          return trans.scoinstoliquidate / Math.pow(10, 8);
-        }
-        if (trans.txtype == "CDP_STAKE_TX") {
-          return trans.assetstostake.WICC / Math.pow(10, 8);
-        }
-        if (trans.txtype == "CDP_REDEEM_TX") {
-          return trans.scoinstorepay / Math.pow(10, 8);
-        }
-        if (trans.txtype == "ASSET_UPDATE_TX") {
-          return 110;
-        }
-        if (trans.txtype == "ASSET_ISSUE_TX") {
-          return 550;
-        }
-        if (trans.txtype.indexOf("DEX") > -1) {
-          if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
-            const amount = trans.assetamount
-              ? trans.assetamount
-              : trans.coinamount;
-            return amount / Math.pow(10, 8);
-          }
+      if (trans.txtype == "CDP_LIQUIDATE_TX") {
+        return trans.scoinstoliquidate / Math.pow(10, 8);
+      }
+      if (trans.txtype == "CDP_STAKE_TX") {
+        return trans.assetstostake.WICC / Math.pow(10, 8);
+      }
+      if (trans.txtype == "CDP_REDEEM_TX") {
+        return trans.scoinstorepay / Math.pow(10, 8);
+      }
+      if (trans.txtype == "ASSET_UPDATE_TX") {
+        return 110;
+      }
+      if (trans.txtype == "ASSET_ISSUE_TX") {
+        return 550;
+      }
+      if (trans.txtype.indexOf("DEX") > -1) {
+        if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
           const amount = trans.assetamount
             ? trans.assetamount
             : trans.coinamount;
-          const res = (amount * trans.price) / Math.pow(10, 16);
-          return res;
+          return amount / Math.pow(10, 8);
         }
+        const amount = trans.assetamount ? trans.assetamount : trans.coinamount;
+        const res = (amount * trans.price) / Math.pow(10, 16);
+        return res;
       }
 
       return trans.coinamount / Math.pow(10, 8);

@@ -1,8 +1,6 @@
 <template>
   <div class="trans-history">
     <trans-detail :visible.sync="transDetailVisible" :detail="currentTrans"></trans-detail>
-    <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
-    <div class="line"></div>
     <div class="wrap" v-if="transactions && transactions.length > 0">
       <ul class="trans-list">
         <li
@@ -151,27 +149,6 @@ export default {
 .empty-block {
   text-align: center;
   margin-top: 20px;
-}
-
-.wrap {
-  height: 248px;
-  overflow: auto;
-}
-
-.trans-history-title {
-  font-size: 16px;
-  color: #1d213c;
-  line-height: 21px;
-  margin-bottom: 12px;
-  font-weight: 500;
-  padding: 0 20px;
-}
-
-.line {
-  width: 500%;
-  height: 0;
-  border-bottom: 1px solid #f0f3f7;
-  margin-left: -100%;
 }
 
 .trans-list {

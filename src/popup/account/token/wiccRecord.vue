@@ -11,16 +11,17 @@
       <button class="btn-lighter" @click="gotoSend">{{ $t('account.main.sendButton') }}</button>
       <button class="btn-lighter" @click="handleReceiveClick">{{ $t('account.main.receiveButton') }}</button>
     </div>
-    <template>
+    <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
+    <div class="line"></div>
+    <div class="history-container">
       <trans-history
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
-        infinite-scroll-throttle-delay="1000"
-        infinite-scroll-distance="0"
+        infinite-scroll-distance="100"
         :transactions="transactions"
         :show-empty-block="!loading"
       ></trans-history>
-    </template>
+    </div>
   </nav-layout>
 </template>
 
@@ -38,6 +39,25 @@
 }
 </style>
 <style scoped lang="scss">
+.history-container {
+  height: 248px;
+  overflow: auto;
+}
+.trans-history-title {
+  font-size: 16px;
+  color: #1d213c;
+  line-height: 21px;
+  margin-bottom: 12px;
+  font-weight: 500;
+  padding: 0 20px;
+}
+
+.line {
+  width: 500%;
+  height: 0;
+  border-bottom: 1px solid #f0f3f7;
+  margin-left: -100%;
+}
 .button-wrapper {
   > button {
     flex: 1 0 0;
@@ -141,9 +161,9 @@ export default {
       }.svg`);
     },
     refresh(silence = false) {
-      if (!silence) {
-        this.$loading(this.$t("common.loading"));
-      }
+      // if (!silence) {
+      //   this.$loading(this.$t("common.loading"));
+      // }
       this.busy = true;
       const param = {
         address: this.activeAddress,
