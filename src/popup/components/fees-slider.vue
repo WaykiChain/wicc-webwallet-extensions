@@ -2,7 +2,7 @@
   <div class="fees-slider">
     <div class="fees-slider-label">
       <div>{{ label || $t('common.minerFee') }}</div>
-      <div class="fees-slider-value-tip">{{ inputValue }}</div>
+      <div class="fees-slider-value-tip">{{ inputValue }} <span v-if="showWiccSymbol">WICC</span> </div>
     </div>
     <vue-slider
       v-model="inputValue"
@@ -116,6 +116,10 @@ export default {
     value: {
       type: Number,
       default: 0.0001
+    },
+    showWiccSymbol: {
+      type: Boolean,
+      default: false
     }
   },
 

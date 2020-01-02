@@ -225,6 +225,17 @@ export default {
         //    throw error
       }
     );
+    setTimeout(() => {
+      this.$refs.password1.onkeyup = data => {
+        if (data.keyCode === 13) {
+          this.unlock();
+        }
+      };
+    }, 200);
+  },
+
+  beforeDestroy() {
+    this.$refs.password1.onkeyup = null
   },
 
   watch: {

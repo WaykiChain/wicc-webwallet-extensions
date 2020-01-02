@@ -1,32 +1,33 @@
 <template>
   <div class="main-wrapper">
-    <!-- <main-header @network-change="handleNetworkChange" :hide-menu-toggle="true"></main-header> -->
     <div class="content">
       <div class="page-title">{{ $t('window.transfer.title') }}</div>
       <div class="value-block">
-        <div class="value">{{ value }}</div>
-        <div class="desc" v-if="desc">{{ desc }}</div>
+        <div class="value">-{{ value }} WICC</div>
       </div>
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.transfer.addressLabel') }}</label>
-          <span>{{ address }}</span>
+          <span class="addr">{{ cutMiddleStr(address, 10) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.transfer.destAddressLabel') }}</label>
-          <span>{{ destAddress }}</span>
+          <span class="addr">{{ cutMiddleStr(destAddress, 10) }}</span>
         </div>
-        <div class="cell">
-          <label>{{ $t('window.transfer.valueLabel') }}</label>
-          <span>{{ value }} WICC</span>
+        <div class="cell" v-if="desc">
+          <label>{{ $t('account.transDetail.commentLabel') }}</label>
+          <span>{{ desc }}</span>
         </div>
       </div>
     </div>
     <div class="footer">
-      <fees-slider v-model="fees" type="wiccTx"></fees-slider>
+      <fees-slider v-model="fees" type="wiccTx" :show-wicc-symbol="true"></fees-slider>
       <div class="button-wrapper">
-        <button @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
-        <button class="btn-primary" @click="onlyRaw ? confirmRaw() : confirm()">{{ $t('window.transfer.confirmButton') }}</button>
+        <button class="btn-lighter" @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
+        <button
+          class="btn-primary"
+          @click="onlyRaw ? confirmRaw() : confirm()"
+        >{{ $t('window.transfer.confirmButton') }}</button>
       </div>
     </div>
   </div>
@@ -62,9 +63,8 @@ export default {
 
   methods: {
     confirmRaw() {
-
       this.$loading(this.$t("window.transfer.confirmLoading"));
-      
+
       API.callRaw("sendRaw", {
         network: this.network,
         address: this.address,
@@ -160,27 +160,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./common.scss";
-
-.value-block {
-  padding-bottom: 10px;
-  background-color: #f2f5fc;
-
-  .value {
-    font-size: 38px;
-    color: #3c78ea;
-    margin-top: 10px;
-    text-align: center;
-    background: #fff;
-  }
-
-  .desc {
-    color: #b4bccc;
-    font-size: 15px;
-    text-align: center;
-    background-color: #fff;
-    margin-bottom: 10px;
+.main-wrapper {
+  .value-block {
+    border-bottom: 1px solid #f0f3f7;
+    margin-bottom: 24px;
+    .value {
+      font-size: 18px;
+      color: #1d213c;
+      font-weight: 500;
+      line-height: 24px;
+      padding-bottom: 24px;
+    }
   }
 }
 </style>

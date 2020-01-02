@@ -40,6 +40,13 @@ export default {
   name: "window-login",
 
   created() {
+    setTimeout(() => {
+      this.$refs.password1.onkeyup = data => {
+        if (data.keyCode === 13) {
+          this.unlock();
+        }
+      };
+    }, 200);
     const route = this.$router.currentRoute;
     this.callbackId = route.query.callbackId;
     try {
@@ -55,7 +62,11 @@ export default {
     // }
   },
 
-   watch: {
+  beforeDestroy() {
+    this.$refs.password1.onkeyup = null;
+  },
+
+  watch: {
     password(val) {
       if (val) {
         this.showClear = true;
@@ -136,7 +147,7 @@ export default {
           this.gotoTarget();
         },
         error => {
-          this.error = this.$t("errors.passwordError")
+          this.error = this.$t("errors.passwordError");
           // this.$toast(this.$t("errors.passwordError"), {
           //   type: "center"
           // });

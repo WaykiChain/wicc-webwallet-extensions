@@ -75,7 +75,7 @@ export default {
     },
 
     cutMiddleStr(str,saveNum){
-      if (str.length > 24){
+      if (str&& str.length > 24){
         return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
       }
       return str
