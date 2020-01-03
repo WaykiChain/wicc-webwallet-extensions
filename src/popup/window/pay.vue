@@ -1,5 +1,5 @@
 <template>
-  <div class="main-wrapper">
+  <div class="main-wrapper must-wicc">
     <div class="content">
       <div class="page-title">{{ $t('window.transfer.title') }}</div>
       <div class="value-block">
@@ -8,11 +8,11 @@
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.transfer.addressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(address, 10) }}</span>
+          <span class="addr">{{ cutMiddleStr(address, 6) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.transfer.destAddressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(destAddress, 10) }}</span>
+          <span class="addr">{{ cutMiddleStr(destAddress, 6) }}</span>
         </div>
         <div class="cell" v-if="desc">
           <label>{{ $t('account.transDetail.commentLabel') }}</label>

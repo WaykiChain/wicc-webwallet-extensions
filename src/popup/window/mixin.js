@@ -1,6 +1,14 @@
 import API from '../api'
+import WalletSelect from "../components/select";
+import ClickOutside from "vue-click-outside";
 
 export default {
+  components: {
+    WalletSelect
+  },
+  directives: {
+    ClickOutside
+  },
   created() {
     API.getState().then((state) => {
       if (state.isLocked) {
@@ -30,11 +38,22 @@ export default {
       network: null,
       test: 0,
       onlyRaw: 0,
-      currentWindowId: 0
+      currentWindowId: 0,
+      showFeeType: false
     }
   },
 
   methods: {
+    setTypeShow() {
+      this.showFeeType = !this.showFeeType
+    },
+    setTypeHide() {
+      this.showFeeType = false;
+    },
+    handleFeeTypeChange(option) {
+      this.feesName = option.value
+      this.setTypeHide()
+    },
     getCurrentWindow() {
       const _this = this
       chrome.windows.getCurrent(function (currentWindow) {

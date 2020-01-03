@@ -1,11 +1,11 @@
 <template>
-  <div class="main-wrapper">
+  <div class="main-wrapper must-wicc">
     <div class="content">
       <div class="page-title">{{ $t('window.publishContract.title') }}</div>
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.publishContract.addressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(address, 10) }}</span>
+          <span class="addr">{{ cutMiddleStr(address, 6) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.publishContract.scriptDescLabel') }}</label>

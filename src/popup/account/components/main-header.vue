@@ -83,10 +83,7 @@
           >{{ $t('common.accountLabel') }} {{ account.index + 1 }}</li>
         </ul>
         <div class="menu-separator"></div>
-        <div
-          class="menu-item create"
-          @click="getMnemonic"
-        >{{ $t('account.header.createAccount') }}</div>
+        <div class="menu-item create" @click="getMnemonic">{{ $t('account.header.createAccount') }}</div>
         <div
           class="menu-item import"
           @click="gotoImportAccount"
@@ -266,7 +263,7 @@ export default {
         },
         error => {
           console.log("get mnemonic error:", error.message);
-          this.loading = false
+          this.loading = false;
         }
       );
     },
@@ -321,14 +318,14 @@ export default {
 
     viewMnemonic() {
       // openConfirmPassword().then(() => {
-        openMnemonicDialog(this.network, this.activeAddress);
+      openMnemonicDialog(this.network, this.activeAddress);
       // });
       this.hideMenu();
     },
 
     viewPrivateKey() {
       // openConfirmPassword().then(() => {
-        openPkDialog(this.network, this.activeAddress);
+      openPkDialog(this.network, this.activeAddress);
       // });
       this.hideMenu();
     }
@@ -378,6 +375,17 @@ export default {
   max-height: 500px;
   overflow: auto;
   border-radius: 6px;
+  animation: slide2 300ms ease-out;
+  @keyframes slide2 {
+    0% {
+      opacity: 0.2;
+      transform: translate(0, -5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
 }
 
 .dropdown-toggle {

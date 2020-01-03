@@ -340,10 +340,10 @@ export default {
       noAssets:"You don't have any assets",
     },
     msgSign:{
-      xxqm:'Information Sign',
+      xxqm:'Authorization',
       zh:'Account',
-      appName:'Apply ingress',
-      msgDesc:'Your wallet address information, please confirm the information and sign',
+      appName:'Apply to',
+      msgDesc:'Get your wallet information',
       msgTitle:'What the information is',
     },
     assets:{
@@ -352,7 +352,7 @@ export default {
       dbqc:'Token name',
       zfxl:'Total',
       dbcyz:'Owner',
-      kfzf:'',
+      kfzf:'Modifiable',
       s:'Changeable',
       f:'Unchangeable',
       fwf:'Cost',

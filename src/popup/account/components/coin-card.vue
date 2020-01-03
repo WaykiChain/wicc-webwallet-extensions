@@ -39,29 +39,21 @@
     <div class="dropdown" v-show="showMenu">
       <div class="menu-item vm" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
       <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
-      <a :href="`https://testnet.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-if="address && address[0] === 'w'">Account details</a>
-      <a :href="`https://www.waykiscan.com/#/address/${address}`" target="_blank" class="menu-item ad" v-else>Account details</a>
+      <a
+        :href="`https://testnet.waykiscan.com/#/address/${address}`"
+        target="_blank"
+        class="menu-item ad"
+        v-if="address && address[0] === 'w'"
+      >Account details</a>
+      <a
+        :href="`https://www.waykiscan.com/#/address/${address}`"
+        target="_blank"
+        class="menu-item ad"
+        v-else
+      >Account details</a>
       <!-- <div class="menu-item man">Modify account name</div> -->
       <!-- <div class="menu-item da">Delete account</div> -->
     </div>
-
-    <!-- <div class="coin-card-body">
-      <span class="coin-value">{{ value }}</span>
-      <button
-          v-if="showRegisterButton"
-          @click="openRegisterConfirm"
-          class="btn-account-active btn-text">{{ $t('common.activeAccount') }}</button>
-    </div>
-    <div class="coin-card-footer">
-      <div class="coin-address">{{cutMiddleStr(address,10)}}</div>
-      <div class="coin-card-btn coin-card-copy">
-        <img src="../../static/copy-icon-white.svg" />
-      </div>
-      <div class="coin-separator"></div>
-      <div class="coin-card-btn" @click="openQrCode">
-        <img src="../../static/qrcode-icon-white.svg" />
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -104,15 +96,15 @@ export default {
     };
   },
 
-  created () {
+  created() {
     eventBus.$on("on-assets-update", data => {
-      this.tokens = data
-    })
+      this.tokens = data;
+    });
   },
 
   methods: {
     setRefresh() {
-      if (this.isRefreshing) return
+      if (this.isRefreshing) return;
       this.isRefreshing = true;
       setTimeout(() => {
         this.isRefreshing = false;
@@ -124,7 +116,7 @@ export default {
       eventBus.$emit("on-viewMnemonic-click");
     },
 
-     viewPrivateKey() {
+    viewPrivateKey() {
       eventBus.$emit("on-viewPrivateKey-click");
     },
 
@@ -141,11 +133,11 @@ export default {
     },
 
     send() {
-      this.$router.push("/account/send?tokens=" + JSON.stringify(this.tokens))
+      this.$router.push("/account/send?tokens=" + JSON.stringify(this.tokens));
     },
 
     collect() {
-      this.$router.push("/account/collect?address=" + this.address)
+      this.$router.push("/account/collect?address=" + this.address);
     },
 
     openRegisterConfirm() {
@@ -207,6 +199,17 @@ export default {
   overflow: auto;
   border-radius: 6px;
   font-size: 14px;
+  animation: slide1 300ms ease-out;
+  @keyframes slide1 {
+    0% {
+      opacity: 0.2;
+      transform: translate(0, -5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
   .menu-separator {
     width: 100%;
     height: 0;

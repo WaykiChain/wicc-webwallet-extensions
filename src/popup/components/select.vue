@@ -61,6 +61,17 @@ export default {
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: 6px;
   z-index: 10;
+  animation: slide 300ms ease-in-out;
+}
+@keyframes slide {
+  0% {
+    opacity: 0.5;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .option {
   line-height: 20px;

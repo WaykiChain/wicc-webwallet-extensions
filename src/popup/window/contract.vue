@@ -1,11 +1,11 @@
 <template>
-  <div class="main-wrapper">
+  <div class="main-wrapper must-wicc">
     <div class="content">
       <div class="page-title">{{ $t('window.contract.title') }}</div>
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.contract.addressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(address, 10) }}</span>
+          <span class="addr">{{ cutMiddleStr(address, 6) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.contract.contractRegIdLabel') }}</label>
