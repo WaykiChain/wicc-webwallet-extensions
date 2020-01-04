@@ -123,6 +123,7 @@
     background: url("../static/back-icon-arrow.svg") no-repeat center center;
     position: absolute;
     right: 0px;
+    top: 0;
     width: 20px;
     height: 19px;
     background-size: 6px 11px;

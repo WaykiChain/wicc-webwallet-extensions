@@ -31,6 +31,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
+      if (!this.$refs.password123.$el.querySelector('input')) return
       this.$refs.password123.$el.querySelector('input').focus()
       this.$refs.password123.$el.querySelector('input').onkeyup = data => {
         if (data.keyCode === 13) {

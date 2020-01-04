@@ -238,6 +238,7 @@ export default {
       }
     );
     setTimeout(() => {
+      if (!this.$refs.password1) return
       this.$refs.password1.onkeyup = data => {
         if (data.keyCode === 13) {
           this.unlock();
