@@ -640,6 +640,12 @@ export default {
     return new BaasAPI(network).getAccountInfo(address)
   },
 
+  getExtensionVersion({
+    info
+  }) {
+    return new BaasAPI(network).getExtensionVersion(info)
+  },
+
   getTokenInfo({
     network,
     address,

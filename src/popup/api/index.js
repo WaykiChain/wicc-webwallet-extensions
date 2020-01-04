@@ -174,6 +174,12 @@ export default {
     })
   },
 
+  getExtensionVersion (info) {
+    return callBackend('getExtensionVersion', {
+      info
+    })
+  },
+
   getTokenInfo (network, address, regId) {
     return callBackend('getTokenInfo', {
       network,

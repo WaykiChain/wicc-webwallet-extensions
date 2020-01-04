@@ -91,11 +91,7 @@ export default class {
     return axios.post(this.host + '/asset/getasset', info).then(handleResponse, handleError)
   }
   //获取插件钱包最新版本号
-  getExtensionVersion() {
-    return axios.post(this.host + '/version', info).then(handleResponse, handleError)
-  }
-  //获取资产最新价格
-  getAssetsPrice() {
-    return axios.post(this.host + '/asset/price', info).then(handleResponse, handleError)
+  getExtensionVersion(info) {
+    return axios.post(this.host + '/app/version', info).then(handleResponse, handleError)
   }
 }
