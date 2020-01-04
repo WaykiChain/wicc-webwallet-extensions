@@ -11,7 +11,9 @@ export default {
     copyAddress: 'Copy Address',
     unknownError: 'Unknown Error',
     warning: 'Warning',
-    loading: 'Loading...'
+    loading: 'Loading...',
+    slogin: 'Building, sharing, and sharing Waykichain Ecological platform',
+    success: 'successfully'
   },
 
   errors: {
@@ -58,7 +60,12 @@ export default {
       about: 'Information',
       setting: 'Setting',
       mainnet: 'WICC MainNet',
-      testnet: 'WICC TestNet'
+      testnet: 'WICC TestNet',
+      mine: 'My Accounts',
+      detail: 'Account details',
+      pwdTip: "Please enter your wallet password",
+      keySave: 'Please save the private key properly',
+      mSave: 'Please save the mnemonics properly'
     },
     addToken: {
       title: 'Add Token',
@@ -73,12 +80,12 @@ export default {
       addFailure: 'Failed to add token'
     },
     sendToken: {
-      title: 'Transfer',
+      title: 'Send',
       fromLabel: 'From',
       destLabel: 'To',
       destPlaceHolder: 'Recipient address',
       valueLabel: 'Amount',
-      limit: 'Transfer Limit：',
+      limit: 'Send Limit：',
       valuePlaceHolder: 'Input amount',
       descLabel: 'Comment（Optional）',
       confirmButton: 'Confirm',
@@ -87,7 +94,7 @@ export default {
       sendFailure: 'Failed to submit '
     },
     send: {
-      title: 'Transfer',
+      title: 'Send',
       fromLabel: 'From',
       destLabel: 'To',
       destPlaceHolder: 'Recipient Address',
@@ -106,8 +113,8 @@ export default {
       removeToken: 'Hide token',
       removeTokenSuccess: 'Hide successfully',
       removeTokenFailed: 'Failed to hide',
-      sendButton: 'Transfer',
-      receiveButton: 'Receive',
+      sendButton: 'Send',
+      receiveButton: 'Collect',
       addTokenButton: 'Add token',
       expect: 'Coming soon'
     },
@@ -133,7 +140,7 @@ export default {
       toLabel: 'To',
       feesLabel: 'Fee',
       hashLabel: 'Tx hash',
-      cdpid: 'Created at：',
+      cdpid: 'Created ID：',
       assetamount:'Asset amount',
       price:'Price',
       bcointoredeem:'Redeem amount',
@@ -159,6 +166,13 @@ export default {
 
   wallet: {
     create: {
+      read: 'I have read and agreed',
+      terms: 'Services and Privacy Terms',
+      creating: 'Creating',
+      Switch: 'Switch ',
+      Mnemonic: 'Mnemonic',
+      CHINESE: 'Chinese ',
+      English: 'English ',
       password: {
         title: 'Set Password',
         tip: 'WaykiChain doesn\'t store your wallet password and can\'t help you get it back, so keep it in mind.',
@@ -215,6 +229,7 @@ export default {
       name:'Network Name',
       rpc:'New Baas URL',
       addNet:'Add Network',
+      Currency: 'Currency'
     },
     about: {
       title: 'Information',
@@ -262,7 +277,7 @@ export default {
       createFailure: 'Failed'
     },
     transfer: {
-      title: 'Transfer',
+      title: 'Send',
       fromLabel: 'From',
       toLabel: 'To',
       valueLabel: 'Amount',
@@ -338,6 +353,11 @@ export default {
       zzyzqm:'Verifying Signature...',
       hqzcz:'Loading...',
       noAssets:"You don't have any assets",
+      ownerAddr: "Created By",
+      creator: "Created By",
+      成交量: "Executed",
+      成交价: "Price",
+      成交总额: "Total",
     },
     msgSign:{
       xxqm:'Authorization',

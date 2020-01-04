@@ -67,7 +67,7 @@
       </div>
       <div class="dropdown" v-show="showMenu">
         <div class="dropdown-header">
-          <span>My Accounts</span>
+          <span>{{$t('account.header.mine')}}</span>
           <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
         </div>
         <div class="menu-separator"></div>

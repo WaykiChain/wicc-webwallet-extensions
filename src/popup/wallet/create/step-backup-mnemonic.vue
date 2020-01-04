@@ -11,15 +11,17 @@
 
     <template>
       <div class="jump" @click="switchCode">
-        <span>Switch {{currentLang === "CHINESE" ? "English" : "Chinese"}} Mnemonic</span>
+        <span class="circle" :class="{isRefreshing: isRefreshing}"></span>
+        <span>{{$t('wallet.create.Switch')}}{{currentLang === "CHINESE" ? $t('wallet.create.English') : $t('wallet.create.CHINESE')}}{{$t('wallet.create.Mnemonic')}}</span>
       </div>
       <button
         class="display-block btn-primary"
         @click="validateWalletMnemonic"
       >{{ $t('wallet.create.backup.nextButton') }}</button>
-      <button class="display-block btn-lighter" @click="download">
-        {{ $t('wallet.create.backup.downloadButton') }}
-      </button>
+      <button
+        class="display-block btn-lighter"
+        @click="download"
+      >{{ $t('wallet.create.backup.downloadButton') }}</button>
     </template>
     <warning :text="$t('wallet.create.backup.tip')"></warning>
   </nav-layout>
@@ -35,7 +37,7 @@ import NavLayout from "../../components/nav-layout";
 import download from "../../api/download";
 import eventBus from "../../account/bus";
 import Warning from "../../components/warning";
-import WiccApi from "../../../backend/wallet/wicc-api"
+import WiccApi from "../../../backend/wallet/wicc-api";
 
 export default {
   name: "backup-mnemonic",
@@ -56,8 +58,8 @@ export default {
       this.isCreatingWallet = route.path.indexOf("wallet") !== -1;
     }
 
-    this.wiccApi = new WiccApi()
-    this.currentLang = this.wiccApi.getMnemonicCodeLanguage(this.mnemonic)
+    this.wiccApi = new WiccApi();
+    this.currentLang = this.wiccApi.getMnemonicCodeLanguage(this.mnemonic);
   },
 
   computed: {
@@ -76,12 +78,23 @@ export default {
 
   methods: {
     switchCode() {
+      if (this.isRefreshing) return;
+      this.isRefreshing = true;
+      setTimeout(() => {
+        this.isRefreshing = false;
+      }, 600);
       if (this.currentLang === "ENGLISH") {
-        this.mnemonic = this.wiccApi.switchMnemonicCode(this.mnemonic, "CHINESE")
-        this.currentLang = "CHINESE"
+        this.mnemonic = this.wiccApi.switchMnemonicCode(
+          this.mnemonic,
+          "CHINESE"
+        );
+        this.currentLang = "CHINESE";
       } else {
-        this.mnemonic = this.wiccApi.switchMnemonicCode(this.mnemonic, "ENGLISH")
-        this.currentLang ="ENGLISH"
+        this.mnemonic = this.wiccApi.switchMnemonicCode(
+          this.mnemonic,
+          "ENGLISH"
+        );
+        this.currentLang = "ENGLISH";
       }
     },
 
@@ -115,25 +128,30 @@ export default {
       mnemonic: this.$route.query.mnemonic,
       password: null,
       currentLang: "",
-      wiccApi: null
+      wiccApi: null,
+      isRefreshing: false
     };
   }
 };
 </script>
 <style lang="scss" scoped>
 .jump {
-  display: inline-block;
+  display: flex;
   align-items: center;
   height: 18px;
   font-size: 13px;
-  color: #062DEB;
+  color: #062deb;
   margin-bottom: 30px;
   cursor: pointer;
   .circle {
     width: 14px;
     height: 14px;
-    background: url('../../static/switch.svg');
+    background: url("../../static/switch.svg");
     margin-right: 8px;
+    &.isRefreshing {
+      transform: rotate(360deg);
+      transition: all 500ms linear;
+    }
   }
 }
 .title {

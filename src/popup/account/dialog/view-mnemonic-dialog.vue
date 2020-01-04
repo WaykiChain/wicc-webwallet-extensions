@@ -10,7 +10,7 @@
       <wallet-input
         v-model="mnemonic"
         style="margin-bottom:14px;"
-        label="请妥善保存助记词"
+        :label="$t('account.header.mSave')"
         type="textarea"
         read-only
       ></wallet-input>

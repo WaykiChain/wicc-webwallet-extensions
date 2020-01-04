@@ -20,7 +20,7 @@
               <img src="../../static/collect.svg" alt />
               <div class="shine"></div>
             </div>
-            <div class="title">Collect</div>
+            <div class="title">{{$t('account.main.receiveButton')}}</div>
           </div>
         </div>
         <div class="item send" @click="send">
@@ -29,7 +29,7 @@
               <img src="../../static/send.svg" alt />
               <div class="shine"></div>
             </div>
-            <div class="title">Send</div>
+            <div class="title">{{$t('account.main.sendButton')}}</div>
           </div>
         </div>
         <div class="line"></div>
@@ -44,13 +44,13 @@
         target="_blank"
         class="menu-item ad"
         v-if="address && address[0] === 'w'"
-      >Account details</a>
+      >{{$t('account.header.detail')}}</a>
       <a
         :href="`https://www.waykiscan.com/#/address/${address}`"
         target="_blank"
         class="menu-item ad"
         v-else
-      >Account details</a>
+      >{{$t('account.header.detail')}}</a>
       <!-- <div class="menu-item man">Modify account name</div> -->
       <!-- <div class="menu-item da">Delete account</div> -->
     </div>

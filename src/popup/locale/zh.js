@@ -11,7 +11,9 @@ export default {
     copyAddress: '复制地址',
     unknownError: '发生错误',
     warning: '警告',
-    loading: '加载中...'
+    loading: '加载中...',
+    slogin: '共建、共用、共享维基链大生态大平台',
+    success: '交易成功'
   },
 
   errors: {
@@ -58,7 +60,12 @@ export default {
       about: '关于我们',
       setting: '设置',
       mainnet: 'WICC 主网',
-      testnet: 'WICC 测试网'
+      testnet: 'WICC 测试网',
+      mine: '我的账号',
+      detail: '账号详情',
+      pwdTip: "请输入您的插件钱包密码",
+      keySave: '请妥善保存私钥',
+      mSave: '请妥善保存助记词'
     },
     addToken: {
       title: '添加代币',
@@ -133,7 +140,7 @@ export default {
       toLabel: '收款方',
       feesLabel: '矿工费用',
       hashLabel: '交易哈希',
-      cdpid: '该CDP创建交易hash',
+      cdpid: '该CDP创建ID',
 
       confirmedheight:"确定高度",
       bcointoredeem:'赎回数量',
@@ -146,7 +153,7 @@ export default {
       price:'价格',
       commentLabel: '备注',
       txTypeLabel: '交易类型',
-      confirmedTimeLabel: '交易时间',
+      confirmedTimeLabel: '确认时间',
       assetSymbol:'资产总量',
       costWicc:'花费',
 
@@ -161,6 +168,13 @@ export default {
 
   wallet: {
     create: {
+      read: '我已仔细阅读并同意',
+      terms: '服务与隐私条款',
+      creating: '正在创建...',
+      Switch: '切换',
+      Mnemonic: '助记词',
+      CHINESE: '中文',
+      English: '英文',
       password: {
         title: '设置密码',
         tip: 'WaykiChain 不存储钱包密码，也无法帮您找回，请务必牢记。',
@@ -218,6 +232,7 @@ export default {
       name:'网络名称',
       rpc:'新的Baas URL',
       addNet:'添加网络',
+      Currency: '计价方式'
     },
     about: {
       title: '关于我们',
@@ -337,6 +352,11 @@ export default {
       zzyzqm:'验证签名...',
       hqzcz:'获取资产中...',
       noAssets:"您没有任何资产",
+      ownerAddr: "资产发行人",
+      creator: "该CDP创建者",
+      成交量: "成交量",
+      成交价: "成交价",
+      成交总额: "成交总额",
     },
     msgSign:{
       xxqm:'登录授权',

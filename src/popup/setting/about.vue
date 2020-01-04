@@ -2,7 +2,6 @@
   <div class="wallet-container">
     <nav-layout class="u-full-height">
       <div class="title">{{ $t('setting.about.title') }}</div>
-
       <template>
         <div class="logo-container">
           <div class="name-container">
@@ -30,7 +29,7 @@
               <a href="https://www.wiccdev.org/" target="_blank">{{ $t('setting.about.devCenter') }}</a>
             </li>
             <li>
-              <a href="https://www.wiccdev.org/" target="_blank">{{ "Services and Privacy Terms" }}</a>
+              <router-link to="/wallet/protocol">{{ $t('wallet.create.terms') }}</router-link>
             </li>
           </ul>
         </div>

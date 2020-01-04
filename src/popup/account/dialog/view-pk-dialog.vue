@@ -7,7 +7,7 @@
       @on-confirm="onConfirm"
     ></password>
     <div class="info-content" v-if="showInfoContent">
-      <wallet-input v-model="privateKey" label="请妥善保存私钥" type="textarea" read-only></wallet-input>
+      <wallet-input v-model="privateKey" :label="$t('account.header.keySave')" type="textarea" read-only></wallet-input>
       <div class="btn-wrapper">
         <button @click="download" class="btn-lighter">{{ $t('account.dialog.downloadPkButton') }}</button>
         <button class="privateKey-need-copy btn-primary">{{ $t('account.dialog.copyPkButton') }}</button>

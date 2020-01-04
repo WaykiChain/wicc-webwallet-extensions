@@ -3,7 +3,7 @@
     <div class="welcome-container" v-show="!loading">
       <div class="logo-container">
         <img src="../static/main-logo.png" width="136" />
-        <div class="slogin">Building, sharing, and sharing Waykichain Ecological platform</div>
+        <div class="slogin">{{ $t('common.slogin') }}</div>
       </div>
 
       <div class="login-container" v-show="vaultCreated && isLocked">
@@ -18,7 +18,7 @@
             @blur="blurHandler"
             ref="password1"
           />
-          <div class="holder" :class="{shouldTop: shouldTop}">Password</div>
+          <div class="holder" :class="{shouldTop: shouldTop}">{{$t('wallet.import.password')}}</div>
           <div class="actions" v-if="showClear">
             <div class="action clear" @click="setClear"></div>
             <div class="action line"></div>
@@ -30,7 +30,7 @@
             ></div>
           </div>
         </div>
-        <button class="display-block btn-primary" @click="unlock">{{ $t('splash.unlockButton') }}</button>
+        <button class="display-block btn-primary" :disabled="!password" @click="unlock">{{ $t('splash.unlockButton') }}</button>
         <div class="recover" @click="importWallet">{{ $t('splash.restoreWalletButton') }}</div>
       </div>
 
@@ -110,12 +110,14 @@
       line-height: 20px;
       background-color: #fff;
       z-index: 1;
+      opacity: 0.7;
       transition: all 150ms linear;
       &.shouldTop {
         padding: 0 6px;
         top: -10px;
         z-index: 3;
         font-size: 12px;
+        opacity: 1;
       }
     }
     input {

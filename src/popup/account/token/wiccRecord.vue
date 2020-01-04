@@ -8,8 +8,8 @@
       <p class="value">≈$ {{number}}</p>
     </div>
     <div class="footer">
-      <button class="btn-lighter" @click="gotoSend">{{ $t('account.main.sendButton') }}</button>
       <button class="btn-lighter" @click="handleReceiveClick">{{ $t('account.main.receiveButton') }}</button>
+      <button class="btn-lighter" @click="gotoSend">{{ $t('account.main.sendButton') }}</button>
     </div>
     <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
     <div class="line"></div>

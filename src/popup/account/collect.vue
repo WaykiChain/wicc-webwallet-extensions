@@ -1,5 +1,5 @@
 <template>
-  <nav-layout title="Collect" class="u-full-height">
+  <nav-layout :title="$t('account.main.receiveButton')" class="u-full-height">
     <div class="account-qr-code-dialog">
       <qr-code v-if="address" class="qr-code" level="H" :size="130" :value="address"></qr-code>
       <div class="qr-code-address">{{ address }}</div>

@@ -2,10 +2,17 @@
   <nav-layout footer-padding="60" class="u-full-height">
     <div class="title">{{$t('account.import.title')}}</div>
     <wallet-input :label="$t('account.import.typeLabel')" type="custom">
-      <select v-model="type" class="display-block">
-        <option value="mnemonic">{{ $t('account.import.mnemonicType') }}</option>
-        <option value="privateKey">{{ $t('account.import.privateKeyType') }}</option>
-      </select>
+      <div class="type-wrapper" :class="{hover: show}" @click="setType" v-click-outside="setHide">
+        <span class="value">{{$t(`account.import.${type}Type`)}}</span>
+        <wallet-select
+          :options="[{name: 'mnemonic', value: $t('account.import.mnemonicType')}, {name: 'privateKey', value: $t('account.import.privateKeyType')}]"
+          :value="value"
+          :show="show"
+          @on-change="handleChange"
+        ></wallet-select>
+        <!-- <option value="mnemonic">{{ $t('account.import.mnemonicType') }}</option>
+        <option value="privateKey">{{ $t('account.import.privateKeyType') }}</option>-->
+      </div>
     </wallet-input>
 
     <wallet-input
@@ -39,13 +46,20 @@ import WalletInput from "../components/input";
 import API from "../api";
 import formatError from "../api/format-error";
 import NavLayout from "../components/nav-layout";
+import WalletSelect from "../components/select";
+import ClickOutside from "vue-click-outside";
 
 export default {
   name: "import-account",
 
   components: {
     WalletInput,
-    NavLayout
+    NavLayout,
+    WalletSelect
+  },
+
+  directives: {
+    ClickOutside
   },
 
   computed: {
@@ -65,6 +79,17 @@ export default {
   },
 
   methods: {
+    handleChange(option) {
+      this.type = option.name
+      this.value = option.value
+      this.setHide()
+    },
+    setType() {
+      this.show = !this.show
+    },
+    setHide() {
+      this.show = false
+    },
     checkMnemonicCode() {
       API.checkMnemonicCode(this.mnemonic).then(
         data => {
@@ -133,12 +158,22 @@ export default {
   data() {
     return {
       type: "mnemonic",
+      value: this.$t('account.import.mnemonicType'),
       mnemonic: null,
-      privateKey: null
+      privateKey: null,
+      show: false
     };
   }
 };
 </script>
+
+<style lang="scss">
+.type-wrapper {
+  .wallet-select {
+    top: 48px !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .title {
@@ -148,11 +183,33 @@ export default {
   font-weight: 500;
   margin-bottom: 30px;
 }
-select{
-  margin: 0;
-  border-color: #e4e8ee;
-  &:focus {
+.type-wrapper {
+  width: 100%;
+  height: 48px;
+  padding: 6px 10px;
+  border: 1px solid #e4e8ee;
+  box-sizing: border-box;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  font-size: 14px;
+  line-height: 34px;
+  &:after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 15px;
+    width: 8px;
+    height: 15px;
+    background: url("../static/nextArror.png") no-repeat;
+    background-size: 8px 15px;
+    transition: all 300ms; 
+  }
+  &.hover {
     border-color: #8187a5;
+    &:after {
+      transform: rotate(90deg);
+    }
   }
 }
 </style>

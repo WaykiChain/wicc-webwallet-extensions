@@ -2,7 +2,7 @@
   <div class="warning animated" :class="{fadeInUpBig: show, fadeOutDownBig: !show}">
     <div class="tip">{{ text }}</div>
     <div class="confirm">
-      <div class="inner" @click="setConfirm">Confirm</div>
+      <div class="inner" @click="setConfirm">{{$t('common.confirm')}}</div>
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
   padding: 16px;
   box-sizing: border-box;
   &.fadeInUpBig {
-    animation-delay: 200ms;
+    animation-duration: 0.5s !important;
   }
   .tip {
     padding-left: 30px;

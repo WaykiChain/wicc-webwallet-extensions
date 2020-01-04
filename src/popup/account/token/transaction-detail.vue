@@ -7,21 +7,21 @@
           class="amount"
           v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX'"
         >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.coinsymbol}}</div>
-        <div class="status">交易成功</div>
+        <div class="status">{{$t("common.success")}}</div>
         <div class="info-list">
           <ul class="address-info-list">
             <li>
-              <span class="label">交易类型</span>
+              <span class="label">{{$t('account.transDetail.txTypeLabel')}}</span>
               <span
                 class="value type"
               >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}</span>
             </li>
             <li>
-              <span class="label">确认时间</span>
+              <span class="label">{{$t('account.transDetail.confirmedTimeLabel')}}</span>
               <span class="value">{{formatDate(info.confirmedtime)}}</span>
             </li>
             <li>
-              <span class="label">交易哈希</span>
+              <span class="label">{{$t('account.transDetail.hashLabel')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.txid"
@@ -32,8 +32,8 @@
               <span
                 class="label"
                 v-if="info.txtype === 'ASSET_ISSUE_TX' || info.txtype === 'ASSET_UPDATE_TX'"
-              >资产发行人</span>
-              <span class="label" v-else>付款地址</span>
+              >{{$t('window.cdp.ownerAddr')}}</span>
+              <span class="label" v-else>{{$t('account.sendToken.fromLabel')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.fromaddr"
@@ -41,7 +41,7 @@
               >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype) && info.toaddr">
-              <span class="label">收款地址</span>
+              <span class="label">{{$t('account.sendToken.destLabel')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.toaddr"
@@ -49,14 +49,14 @@
               >{{cutMiddleStr(info.toaddr, 10)}}</span>
             </li>
             <li>
-              <span class="label">矿工费</span>
+              <span class="label">{{$t('account.transDetail.feesLabel')}}</span>
               <span class="value">{{new Decimal(info.fees).dividedBy(100000000)}} {{info.feesymbol}}</span>
             </li>
           </ul>
           <ul class="address-info-list is-cdp" v-if="isCDP(info.txtype)">
             <!-- CDP_STAKE_TX -->
             <li v-if="info.txtype === 'CDP_STAKE_TX' && (info.txid !== info.cdptxid)">
-              <span class="label">该CDP创建ID</span>
+              <span class="label">{{$t('account.transDetail.cdpid')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.cdptxid"
@@ -64,7 +64,7 @@
               >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span class="label">{{info.txid === info.cdptxid ? "抵押量" : "追加抵押量"}}</span>
+              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dyl') : $t('window.cdp.zjdyl') }}</span>
               <span
                 class="value"
                 v-for="key in Object.keys(info.assetstostake)"
@@ -72,12 +72,12 @@
               >{{formatAmount(info.assetstostake[key], 8)}} {{key}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span class="label">{{info.txid === info.cdptxid ? "贷出量" : "追加贷出量"}}</span>
+              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dcl') : $t('window.cdp.zjdcl')}}</span>
               <span class="value">{{formatAmount(info.scoinstomint, 8)}} {{info.scoinsymbol}}</span>
             </li>
             <!-- CDP_REDEEM_TX -->
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
-              <span class="label">该CDP创建者</span>
+              <span class="label">{{$t('window.cdp.creator')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.fromaddr"
@@ -85,7 +85,7 @@
               >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
-              <span class="label">该CDP创建ID</span>
+              <span class="label">{{$t('account.transDetail.cdpid')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.cdptxid"
@@ -93,11 +93,11 @@
               >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
-              <span class="label">{{"归还量"}}</span>
+              <span class="label">{{$t('window.cdp.ghl')}}</span>
               <span class="value">{{formatAmount(info.scoinstorepay, 8)}} WUSD</span>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
-              <span class="label">{{"赎回量"}}</span>
+              <span class="label">{{$t('window.cdp.shl')}}</span>
               <span
                 class="value"
                 v-for="key in Object.keys(info.assetstoredeem)"
@@ -106,7 +106,7 @@
             </li>
             <!-- CDP_LIQUIDATE_TX -->
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
-              <span class="label">该CDP创建者</span>
+              <span class="label">{{$t('window.cdp.creator')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.fromaddr"
@@ -114,7 +114,7 @@
               >{{cutMiddleStr(info.fromaddr, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
-              <span class="label">该CDP创建ID</span>
+              <span class="label">{{$t('account.transDetail.cdpid')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.cdptxid"
@@ -122,7 +122,7 @@
               >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
-              <span class="label">{{"清算量"}}</span>
+              <span class="label">{{$t('window.cdp.qsl')}}</span>
               <span class="value">{{formatAmount(info.scoinstoliquidate, 8)}} WUSD</span>
             </li>
           </ul>
@@ -131,11 +131,11 @@
             v-if="isDEX(info.txtype) && info.txtype !== 'DEX_CANCEL_ORDER_TX'"
           >
             <li>
-              <span class="label">成交量</span>
+              <span class="label">{{$t('window.cdp["成交量"]')}}</span>
               <span class="value">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
-              <span class="label">成交价</span>
+              <span class="label">{{$t('window.cdp["成交价"]')}}</span>
               <span
                 class="value"
                 v-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'"
@@ -150,7 +150,7 @@
               >{{this.$t('window.cdp.sjcjwz')}}</span>
             </li>
             <li>
-              <span class="label">成交总额</span>
+              <span class="label">{{$t('window.cdp["成交总额"]')}}</span>
               <span
                 class="value"
                 v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX' || info.txtype === 'DEX_MARKET_SELL_ORDER_TX'"
@@ -166,7 +166,7 @@
             v-if="isDEX(info.txtype) && info.txtype === 'DEX_CANCEL_ORDER_TX'"
           >
             <li>
-              <span class="label">订单号</span>
+              <span class="label">{{$t('window.cdp.ddh')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.orderid"
@@ -179,19 +179,19 @@
             v-if="info.txtype == 'ASSET_UPDATE_TX' || info.txtype == 'ASSET_ISSUE_TX'"
           >
             <li>
-              <span class="label">代币符号</span>
+              <span class="label">{{$t('window.assets.dbjc')}}</span>
               <span class="value">{{info.assetsymbol}}</span>
             </li>
             <li>
-              <span class="label">代币名称</span>
+              <span class="label">{{$t('window.assets.dbqc')}}</span>
               <span class="value">{{info.assetname || assetname}}</span>
             </li>
             <li>
-              <span class="label">总发行量</span>
+              <span class="label">{{$t('window.assets.zfxl')}}</span>
               <span class="value">{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
-              <span class="label">代币持有者</span>
+              <span class="label">{{$t('window.assets.dbcyz')}}</span>
               <span
                 class="value need-copy"
                 v-clipboard:copy="info.owneraddr || owneraddr"
@@ -199,8 +199,8 @@
               >{{cutMiddleStr(info.owneraddr || owneraddr, 10)}}</span>
             </li>
             <li>
-              <span class="label">是否可修改</span>
-              <span class="value">{{info.mintable || mintable ? '是' : '否'}}</span>
+              <span class="label">{{$t('window.assets.kfzf')}}</span>
+              <span class="value">{{info.mintable || mintable ? $t('window.assets.s') : $t('window.assets.f')}}</span>
             </li>
           </ul>
         </div>

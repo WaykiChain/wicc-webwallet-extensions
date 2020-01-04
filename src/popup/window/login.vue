@@ -29,7 +29,7 @@
           ></div>
         </div>
       </div>
-      <button class="display-block btn-primary" @click="unlock">{{ $t('splash.unlockButton') }}</button>
+      <button class="display-block btn-primary" :disabled="!password" @click="unlock">{{ $t('splash.unlockButton') }}</button>
     </div>
   </div>
 </template>

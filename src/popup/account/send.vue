@@ -1,5 +1,5 @@
 <template>
-  <nav-layout :title="$t('account.send.title')" class="content-wrapper">
+  <nav-layout :title="$t('account.main.sendButton')" class="content-wrapper">
     <div class="content-body">
       <div class="from-title">{{ $t('account.send.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>

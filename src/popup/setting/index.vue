@@ -7,7 +7,7 @@
 
       <template>
         <div class="section-title">
-          <span>设置货币</span>
+          <span>{{$t('setting.index.Currency')}}</span>
           <div class="select-container set-currency" v-click-outside="setShowCurr">
             <span @click="setCurrency" class="select-val" :class="{down: showCurrency}">{{currency}}</span>
             <wallet-select

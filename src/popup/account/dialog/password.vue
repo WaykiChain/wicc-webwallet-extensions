@@ -1,6 +1,6 @@
 <template>
   <div class="password" v-if="show">
-    <wallet-input v-model="password" :message="error" label="请输入您的插件钱包密码" type="password"></wallet-input>
+    <wallet-input ref="password123" v-model="password" :message="error" :label="$t('account.header.pwdTip')" type="password"></wallet-input>
     <div class="warn">{{warnTxt}}</div>
     <div class="btn-wrapper">
       <button class="btn-lighter" @click="cancel">{{ $t('common.cancel') }}</button>
@@ -28,6 +28,23 @@ export default {
   },
   components: {
     WalletInput
+  },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.password123.$el.querySelector('input').focus()
+      this.$refs.password123.$el.querySelector('input').onkeyup = data => {
+        if (data.keyCode === 13) {
+          this.confirm();
+        }
+      };
+    }, 200);
+  },
+  watch: {
+    show(val) {
+      if(!val) {
+        this.$refs.password123.$el.querySelector('input').onkeyup = null
+      }
+    }
   },
   methods: {
     cancel() {

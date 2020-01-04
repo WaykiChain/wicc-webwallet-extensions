@@ -24,6 +24,7 @@
   color: #21274a;
   font-size: 18px;
   font-weight: 500;
+  height: 28px;
   line-height: 28px;
   text-align: center;
   box-sizing: border-box;

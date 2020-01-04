@@ -20,8 +20,8 @@
       <div class="circle" @click="setToggle">
         <div class="inner" v-if="isAgreed"></div>
       </div>
-      <div>I have read and agreed</div>
-      <div class="terms" @click="clickHandler">Services and Privacy Terms</div>
+      <div>{{$t('wallet.create.read')}}</div>
+      <div class="terms" @click="clickHandler">{{$t('wallet.create.terms')}}</div>
     </div>
 
     <template slot="footer">
