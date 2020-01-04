@@ -10,6 +10,9 @@ export default {
 
   created() {
     document.title = "WICC";
+    // if (!sessionStorage.getItem("isActive")) {
+    //   this.$router.push("/wallet/update")
+    // }
   }
 };
 </script>

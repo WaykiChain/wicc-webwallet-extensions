@@ -102,6 +102,13 @@ export default {
       } else {
         this.theType = "password";
       }
+    },
+    value (val) {
+      if (val) {
+        this.showClear = true
+      } else {
+        this.showClear = false
+      }
     }
   },
   methods: {
@@ -128,11 +135,11 @@ export default {
       const type = this.type;
       let value = event.target.value;
 
-      if (value) {
-        this.showClear = true;
-      } else {
-        this.showClear = false;
-      }
+      // if (value) {
+      //   this.showClear = true;
+      // } else {
+      //   this.showClear = false;
+      // }
 
       if (type === "number") {
         const parsed = parseFloat(value);

@@ -37,6 +37,7 @@ import Splash from './main/splash'
  * Setting Related page
  */
 import Setting from './setting/index'
+import Protocol from './setting/protocol'
 
 /**
  * Window Related Page
@@ -106,6 +107,10 @@ const router = new VueRouter({
         name: 'update',
         path: 'update',
         component: Update
+      }, {
+        name: 'protocol',
+        path: 'protocol',
+        component: Protocol
       }, {
         name: 'changeNet',
         path: 'changeNet',

@@ -21,7 +21,7 @@
         <div class="inner" v-if="isAgreed"></div>
       </div>
       <div>I have read and agreed</div>
-      <div class="terms">Services and Privacy Terms</div>
+      <div class="terms" @click="clickHandler">Services and Privacy Terms</div>
     </div>
 
     <template slot="footer">
@@ -140,7 +140,22 @@ export default {
     }
   },
 
+  created() {
+    setTimeout(() => {
+      this.password = sessionStorage.getItem("password") || "";
+      this.password2 = sessionStorage.getItem("password2") || "";
+      this.isAgreed =
+        sessionStorage.getItem("isAgreed") === "true" ? true : false;
+    }, 20);
+  },
+
   methods: {
+    clickHandler() {
+      sessionStorage.setItem("password", this.password);
+      sessionStorage.setItem("password2", this.password2);
+      sessionStorage.setItem("isAgreed", this.isAgreed);
+      this.$router.push({ name: "protocol" });
+    },
     validatePassword() {
       if (this.password !== this.password2) {
         this.$toast(this.$t("errors.passwordInConsistent"), {
@@ -149,7 +164,7 @@ export default {
 
         return;
       }
-      this.loading = true
+      this.loading = true;
       this.generateMnemonicCode();
     },
 
@@ -171,7 +186,7 @@ export default {
         },
         error => {
           console.log("get mnemonic error:", error.message);
-          this.loading = false
+          this.loading = false;
         }
       );
     },
@@ -184,7 +199,7 @@ export default {
 
         promise.then(
           () => {
-            this.loading = false
+            this.loading = false;
             if (!this.isCreatingWallet) {
               eventBus.$emit("header:state:refresh");
             }
@@ -201,7 +216,7 @@ export default {
             });
           },
           error => {
-            this.loading = false
+            this.loading = false;
             console.log("create wallet error:", error);
             this.$toast(
               this.$t("wallet.create.validate.createFailure") +

@@ -7,7 +7,7 @@
       <div class="content-item">2、优化所有页面的功能，让产品更加健壮；</div>
       <div class="content-item">3、修复一些问题，提升流畅度。</div>
       <div class="btn-container">
-        <button>下次再说</button>
+        <button class="btn-lighter" @click="cancel">下次再说</button>
         <button class="btn-primary"><a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>前往更新 </button>
       </div>
     </div>
@@ -77,7 +77,12 @@ export default {
     NavLayout
   },
 
-  methods: {},
+  methods: {
+    cancel() {
+      sessionStorage.setItem("isActive", 1)
+      this.$router.go(-1)
+    }
+  },
 
   data() {
     return {

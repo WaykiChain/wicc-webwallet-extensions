@@ -192,7 +192,17 @@ export default {
     };
   },
 
+  beforeCreate() {
+    sessionStorage.removeItem("password");
+    sessionStorage.removeItem("password2");
+    sessionStorage.removeItem("isAgreed");
+  },
+
   created() {
+    // if (!sessionStorage.getItem("isActive")) {
+    //   this.$router.push("/wallet/update");
+    //   return;
+    // }
     API.getState().then(
       state => {
         this.loading = false;
@@ -235,7 +245,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$refs.password1.onkeyup = null
+    this.$refs.password1.onkeyup = null;
   },
 
   watch: {
