@@ -13,12 +13,12 @@ export default {
     warning: 'Warning',
     loading: 'Loading...',
     slogin: 'Building, sharing, and sharing Waykichain Ecological platform',
-    success: 'successfully'
+    success: 'Successfully'
   },
 
   errors: {
     passwordError: 'Password is incorrect.',
-    passwordInConsistent: 'Passwords do not match.',
+    passwordInConsistent: 'The two passwords were inconsistent.',
     insufficientBalance: 'Insufficient balance',
     amountLessThanLimit: 'The transferred amount should not less than 0.0001',
     accountNotActivated: 'Please register your wallet first',
@@ -38,7 +38,7 @@ export default {
   account: {
     import: {
       title: 'Import Account',
-      typeLabel: 'Type',
+      typeLabel: 'Select Type',
       mnemonicType: 'Mnemonics',
       privateKeyType: 'Private Key',
       mnemonicLabel: 'Mnemonics',
@@ -46,13 +46,13 @@ export default {
       privateKeyLabel: 'Private Key',
       privateKeyPlaceholder: 'Input private key',
       confirmLoading: 'Importing...',
-      importSuccess: 'Import successfully',
-      importFailure: 'Failed to import '
+      importSuccess: 'Successfully',
+      importFailure: 'Failed'
     },
     header: {
       network: 'Networks',
       defaultNetwork: 'The default network is MainNet',
-      logout: 'Logout',
+      logout: 'Log Out',
       viewMnemonic: 'View mnemonics',
       exportPrivateKey: 'Export Private Key',
       createAccount: 'Create Account',
@@ -81,32 +81,32 @@ export default {
     },
     sendToken: {
       title: 'Send',
-      fromLabel: 'From',
-      destLabel: 'To',
-      destPlaceHolder: 'Recipient address',
+      fromLabel: 'Payment Address',
+      destLabel: 'Receive Address',
+      destPlaceHolder: 'Please input receive address',
       valueLabel: 'Amount',
-      limit: 'Send Limit：',
-      valuePlaceHolder: 'Input amount',
-      descLabel: 'Comment（Optional）',
+      limit: 'Balance：',
+      valuePlaceHolder: 'Please input transfer amount',
+      descLabel: 'Memo（Optional）',
       confirmButton: 'Confirm',
       confirmLoading: 'Submitting...',
-      sendSuccess: 'Submit successfully',
-      sendFailure: 'Failed to submit '
+      sendSuccess: 'Successfully',
+      sendFailure: 'Failed'
     },
     send: {
       title: 'Send',
-      fromLabel: 'From',
-      destLabel: 'To',
-      destPlaceHolder: 'Recipient Address',
+      fromLabel: 'Payment Address',
+      destLabel: 'Receive Address',
+      destPlaceHolder: 'Please input receive address',
       valueLabel: 'Amount',
-      valuePlaceHolder: 'Input amount',
-      descLabel: 'Comment（Optional）',
+      valuePlaceHolder: 'Please input transfer amount',
+      descLabel: 'Memo（Optional）',
       addressInvalid: 'Input WICC mainnet address, ',
       testnetAddressInvalid: 'Input WICC testnet address',
       confirmButton: 'Confirm',
       confirmLoading: 'Submitting...',
-      sendSuccess: 'Submit successfully',
-      sendFailure: 'Failed to submit'
+      sendSuccess: 'Successfully',
+      sendFailure: 'Failed'
     },
     main: {
       tokenList: 'Token List',
@@ -132,27 +132,27 @@ export default {
       registerTitle: 'Are you sure to activate the wallet? ',
       registerTip: 'Activating the wallet requires 0.0001 WICC, and the activation uses the WICC in the wallet.',
       registerLoading: 'Activating...',
-      registerSuccess: 'Activate successfully',
-      registerFailed: 'Failed to activate'
+      registerSuccess: 'Successfully',
+      registerFailed: 'Failed'
     },
     transDetail: {
-      fromLabel: 'From',
-      toLabel: 'To',
+      fromLabel: 'Payment Address',
+      toLabel: 'Receive Address',
       feesLabel: 'Fee',
-      hashLabel: 'Tx hash',
-      cdpid: 'Created ID：',
+      hashLabel: 'Txn Hash',
+      cdpid: 'Created At：',
       assetamount:'Asset amount',
       price:'Price',
-      bcointoredeem:'Redeem amount',
-      scoinstorepay:'Destroy coins',
-      coinsymbol:"Coin symbol",
-      scoinstoliquidate:"Liquid amount",
-      bcoinstostake:'Stake amount',
-      scoinstomint:'Generate amount',
-      confirmedheight:"Confirmed height",
+      bcointoredeem:'Redeem Amount',
+      scoinstorepay:'Repay Amount',
+      coinsymbol:"Coin Symbol",
+      scoinstoliquidate:"Liquid Amount",
+      bcoinstostake:'Stake Amount',
+      scoinstomint:'Generate Amount',
+      confirmedheight:"Confirmed Height",
       commentLabel: 'Memo',
       txTypeLabel: 'Type',
-      confirmedTimeLabel: 'Confirmed time',
+      confirmedTimeLabel: 'Confirmed Time',
       assetSymbol:'Total',
       costWicc:'Cost',
     },
@@ -179,9 +179,9 @@ export default {
         password: 'Password',
         passwordPlaceholder: 'Please enter 6~20 characters',
         password2: 'Confirm Password',
-        password2Placeholder: 'Input password again',
-        confirmButton: 'Create',
-        importButton: 'Import'
+        password2Placeholder: 'Please input password again',
+        confirmButton: 'Create Account',
+        importButton: 'Import Account'
       },
       backup: {
         title: 'Backup Mnemonics',
@@ -247,8 +247,8 @@ export default {
       newPassword2: 'Confirm new password',
       newPassword2Placeholder: 'Input new password again',
       confirmLoading: 'Loading...',
-      changeSuccess: 'Password has been changed',
-      changeFailure: 'Failed to change password'
+      changeSuccess: 'Successfully',
+      changeFailure: 'Failed'
     }
   },
 
