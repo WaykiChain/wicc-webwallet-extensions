@@ -174,8 +174,9 @@ export default {
     })
   },
 
-  getExtensionVersion (info) {
+  getExtensionVersion (network, info) {
     return callBackend('getExtensionVersion', {
+      network,
       info
     })
   },

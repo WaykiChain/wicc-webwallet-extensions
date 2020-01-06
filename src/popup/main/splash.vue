@@ -31,7 +31,11 @@
             ></div>
           </div>
         </div>
-        <button class="display-block btn-primary" :disabled="!password" @click="unlock">{{ $t('splash.unlockButton') }}</button>
+        <button
+          class="display-block btn-primary"
+          :disabled="!password"
+          @click="unlock"
+        >{{ $t('splash.unlockButton') }}</button>
         <div class="recover" @click="importWallet">{{ $t('splash.restoreWalletButton') }}</div>
       </div>
 
@@ -179,6 +183,7 @@
 
 <script type="text/jsx">
 import API from "../api";
+const ver = require("../../../package.json").version;
 
 export default {
   data() {
@@ -202,12 +207,21 @@ export default {
   },
 
   created() {
-    // if (!sessionStorage.getItem("isActive")) {
-    //   this.$router.push("/wallet/update");
-    //   return;
-    // }
     API.getState().then(
       state => {
+        if (!sessionStorage.getItem("isActive")) {
+          API.getExtensionVersion(state.network, {
+            appNo: 1,
+            langType: 1,
+            packageType: 1,
+            platformType: "chrome",
+            version: ver
+          }).then(res => {
+            if (+res.upGradeType) {
+              this.$router.push("/wallet/update");
+            }
+          });
+        }
         this.loading = false;
         this.isLocked = state.isLocked;
         this.vaultCreated = state.vaultCreated;
@@ -239,7 +253,7 @@ export default {
       }
     );
     setTimeout(() => {
-      if (!this.$refs.password1) return
+      if (!this.$refs.password1) return;
       this.$refs.password1.onkeyup = data => {
         if (data.keyCode === 13) {
           this.unlock();
@@ -271,7 +285,7 @@ export default {
 
   methods: {
     inputHandler() {
-      this.error = ""
+      this.error = "";
     },
     focusHandler() {
       this.shouldTop = true;
@@ -285,7 +299,7 @@ export default {
     },
     setClear() {
       this.password = "";
-      this.error = ""
+      this.error = "";
       this.setFocus();
       setTimeout(() => {
         this.showClear = false;

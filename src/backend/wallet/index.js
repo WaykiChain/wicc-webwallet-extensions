@@ -641,6 +641,7 @@ export default {
   },
 
   getExtensionVersion({
+    network,
     info
   }) {
     return new BaasAPI(network).getExtensionVersion(info)
