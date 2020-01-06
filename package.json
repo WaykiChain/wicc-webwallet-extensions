@@ -31,7 +31,7 @@
     "vue-slider-component": "^2.8.16",
     "vue2-toast": "^2.0.2",
     "vuex": "^3.1.1",
-    "wicc-wallet-lib": "https://github.com/pengandpeng/wicc-webwallet-utils.git"
+    "wicc-wallet-lib": "^2.0.0"
   },
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
