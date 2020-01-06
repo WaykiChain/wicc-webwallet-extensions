@@ -69,6 +69,7 @@ export default {
           query: {
             coinNum: token.num,
             coinName: token.name,
+            value: token.value,
             tokens: JSON.stringify(this.asssets)
           }
         });

@@ -14,6 +14,10 @@ export default class {
     })
   }
 
+  switchMnemonicCode(mnemonic, targrtLang) {
+    return this.api.switchMnemonicCode(mnemonic, targrtLang)
+  }
+
   createMnemonicCode(language) {
     return this.api.createAllCoinMnemonicCode(language)
   }

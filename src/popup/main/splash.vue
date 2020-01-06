@@ -16,6 +16,7 @@
             v-model="password"
             @focus="focusHandler"
             @blur="blurHandler"
+            @input="inputHandler"
             ref="password1"
           />
           <div class="holder" :class="{shouldTop: shouldTop}">{{$t('wallet.import.password')}}</div>
@@ -269,6 +270,9 @@ export default {
   },
 
   methods: {
+    inputHandler() {
+      this.error = ""
+    },
     focusHandler() {
       this.shouldTop = true;
     },
@@ -281,6 +285,7 @@ export default {
     },
     setClear() {
       this.password = "";
+      this.error = ""
       this.setFocus();
       setTimeout(() => {
         this.showClear = false;

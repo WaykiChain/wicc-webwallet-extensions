@@ -12,6 +12,7 @@
         @input="handleInput"
         @focus="focusHandler"
         @blur="blurHandler"
+        @change="changeHandler"
       ></textarea>
 
       <input
@@ -26,6 +27,7 @@
         @input="handleInput"
         @focus="focusHandler"
         @blur="blurHandler"
+        @change="changeHandler"
       />
 
       <div v-if="postfix" class="wallet-input-postfix">{{ postfix }}</div>
@@ -131,9 +133,13 @@ export default {
     blurHandler() {
       this.hover = false;
     },
+    changeHandler(event) {
+      let value = event.target.value.trim();
+      this.$emit("change", value);
+    },
     handleInput(event) {
       const type = this.type;
-      let value = event.target.value;
+      let value = event.target.value.trim();
 
       // if (value) {
       //   this.showClear = true;

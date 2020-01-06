@@ -23,7 +23,7 @@
           }"
           v-for="tokenKey in ['WICC','WUSD','WGRT']"
           :key="tokenKey"
-          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey})"
+          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: getCurrencyAmount(myAssets[tokenKey])})"
         >
           <img class="token-item-icon" :src="getIcon(tokenKey)" />
           <span class="token-item-name">{{tokenKey}}</span>
@@ -31,7 +31,7 @@
             <div
               class="token-amount-num"
             >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
-            <div class="token-worth">≈$ 128.73</div>
+            <div class="token-worth">{{getCurrencyAmount(myAssets[tokenKey])}}</div>
           </div>
         </li>
 
@@ -50,7 +50,7 @@
             <div
               class="token-amount-num"
             >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
-            <div class="token-worth">≈$ 128.73</div>
+            <div class="token-worth"></div>
           </div>
         </li>
         <li
@@ -259,6 +259,7 @@
 import API from "../../api";
 import axios from "axios";
 import eventBus from "../bus";
+import Decimal from "decimal.js";
 
 export default {
   name: "token-list",
@@ -323,6 +324,28 @@ export default {
       return require(`../../static/${
         key === "WICC" ? "wicclogo" : key.toLowerCase()
       }.svg`);
+    },
+    getCurrencyAmount(asset) {
+      if (!asset) return "0";
+      let prefix = this.currency === "CNY" ? '≈￥' : '≈$'
+      let amount = asset
+        ? asset.freeAmount / Math.pow(10, 8) > 0.000001
+          ? asset.freeAmount / Math.pow(10, 8)
+          : (asset.freeAmount / Math.pow(10, 8)).toFixed(8)
+        : 0;
+      if (this.currency === "CNY") {
+        return prefix + ' ' + new Decimal(amount * asset.rmbPrice)
+          .times(100)
+          .floor()
+          .dividedBy(100)
+          .toString();
+      } else {
+        return prefix + ' ' + new Decimal(amount * asset.usdtPrice)
+          .times(100)
+          .floor()
+          .dividedBy(100)
+          .toString();
+      }
     },
     handleChange() {
       this.getWiccNum(this.activeAddress);
@@ -423,7 +446,8 @@ export default {
       eventBus,
       myAssets: {},
       tokensKeys: [],
-      lastNetWork: localStorage.getItem("tempNetWork")
+      lastNetWork: localStorage.getItem("tempNetWork"),
+      currency: localStorage.getItem("currency") || "CNY"
     };
   }
 };

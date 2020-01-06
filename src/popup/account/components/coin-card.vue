@@ -6,7 +6,7 @@
       </div>
       <div class="account-detail">
         <div class="name">{{ value }}</div>
-        <div class="address">{{cutMiddleStr(address,5)}}</div>
+        <div class="address copy-address-btn"><span>{{cutMiddleStr(address,6)}}</span><img src="../../static/copy-btn.svg" alt /></div>
       </div>
       <div class="account-more" v-click-outside="hideMenu" @click="toggleMenu">
         <img src="../../static/actions.svg" alt />
@@ -63,12 +63,14 @@ import API from "../../api";
 import formatError from "../../api/format-error";
 import { openQrCodeDialog, openRegisterConfirmDialog } from "../dialog";
 import eventBus from "../bus";
+import CopyMixin from "../../components/copy-mixin";
 
 export default {
   name: "coin-card",
   directives: {
     ClickOutside
   },
+  mixins: [CopyMixin],
 
   props: {
     name: {
@@ -92,7 +94,8 @@ export default {
       registerConfirmVisible: false,
       showMenu: false,
       isRefreshing: false,
-      tokens: null
+      tokens: null,
+      clipboardSelector: ".copy-address-btn"
     };
   },
 
@@ -103,6 +106,10 @@ export default {
   },
 
   methods: {
+    getCopyText() {
+      return this.address;
+    },
+
     setRefresh() {
       if (this.isRefreshing) return;
       this.isRefreshing = true;
@@ -276,6 +283,13 @@ export default {
     font-size: 13px;
     line-height: 18px;
     color: #8187a5;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      margin-left: 4px;
+    }
   }
 }
 .account-more {

@@ -18,6 +18,8 @@ const ACCOUNT_ALREADY_EXISTS = 'ACCOUNT_ALREADY_EXISTS'
 const verifyExists = (type, value) => {
   const data = state.data
 
+  const api = new WiccAPI('testnet')
+
   if (type === 'privateKey') {
     const network = getPrivateKeyNetwork(value)
     const wiccApi = new WiccAPI(network)
@@ -35,7 +37,7 @@ const verifyExists = (type, value) => {
 
   for (let item of data) {
     if (item.type === type) {
-      if (type === 'mnemonic' && item.data.mnemonic === value) {
+      if (type === 'mnemonic' && api.switchMnemonicCode(item.data.mnemonic,'ENGLISH') === api.switchMnemonicCode(value, 'ENGLISH')) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)
       } else if (type === 'privateKey' && item.data.privateKey === value) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)

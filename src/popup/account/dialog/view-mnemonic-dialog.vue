@@ -16,7 +16,7 @@
       ></wallet-input>
       <div class="jump" @click="switchCode">
         <span class="circle" :class="{isRefreshing: isRefreshing}"></span>
-        <span>Switch {{currentLang === "CHINESE" ? "English" : "Chinese"}} Mnemonic</span>
+        <span>{{$t('wallet.create.Switch')}}{{currentLang === "CHINESE" ? $t('wallet.create.English') : $t('wallet.create.CHINESE')}}{{$t('wallet.create.Mnemonic')}}</span>
       </div>
       <div class="btn-wrapper">
         <button

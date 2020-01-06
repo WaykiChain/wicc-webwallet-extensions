@@ -5,7 +5,8 @@
         <img :src="getIcon(name)" alt />
       </div>
       <p class="count">{{number}}</p>
-      <p class="value">≈$ {{number}}</p>
+      <p class="value" v-if="value">{{value}}</p>
+      <p class="value" v-else></p>
     </div>
     <div class="footer">
       <button class="btn-lighter" @click="handleReceiveClick">{{ $t('account.main.receiveButton') }}</button>
@@ -108,7 +109,9 @@ p {
   .value {
     font-size: 16px;
     color: #8187a5;
+    height: 21px;
     line-height: 21px;
+    width: 100%;
   }
 }
 .footer {
@@ -147,6 +150,7 @@ export default {
   created() {
     this.number = this.$route.query.coinNum;
     this.name = this.$route.query.coinName;
+    this.value = this.$route.query.value;
   },
   methods: {
     goback() {
@@ -223,6 +227,7 @@ export default {
       loading: false,
       number: null,
       name: null,
+      value: null,
       transactions: null,
       activeAccountInfo: null,
       busy: true,
