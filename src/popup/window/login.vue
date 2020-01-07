@@ -30,7 +30,11 @@
           ></div>
         </div>
       </div>
-      <button class="display-block btn-primary" :disabled="!password" @click="unlock">{{ $t('splash.unlockButton') }}</button>
+      <button
+        class="display-block btn-primary"
+        :disabled="password.length < 6 || password.length > 20"
+        @click="unlock"
+      >{{ $t('splash.unlockButton') }}</button>
     </div>
   </div>
 </template>
@@ -42,7 +46,7 @@ export default {
 
   created() {
     setTimeout(() => {
-      if (!this.$refs.password1) return
+      if (!this.$refs.password1) return;
       this.$refs.password1.onkeyup = data => {
         if (data.keyCode === 13) {
           this.unlock();
@@ -87,7 +91,7 @@ export default {
 
   data() {
     return {
-      password: null,
+      password: "",
       redirectPage: null,
       error: "",
       shouldTop: false,
@@ -99,7 +103,8 @@ export default {
 
   methods: {
     inputHandler() {
-      this.error = ""
+      this.error = "";
+      this.password = this.password.trim();
     },
     focusHandler() {
       this.shouldTop = true;
@@ -113,7 +118,7 @@ export default {
     },
     setClear() {
       this.password = "";
-      this.error = ""
+      this.error = "";
       this.setFocus();
       setTimeout(() => {
         this.showClear = false;

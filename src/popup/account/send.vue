@@ -45,7 +45,7 @@
             @on-change="handleFeeTypeChange"
           ></wallet-select>
         </div>
-        <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
+        <fees-slider v-model="fees" type="wiccTX" :feeName="feesName"></fees-slider>
       </div>
     </div>
 
@@ -226,7 +226,7 @@ export default {
 
   computed: {
     valid() {
-      return this.destAddr && this.value;
+      return this.destAddr && +this.value > 0;
     }
   },
 
@@ -325,7 +325,7 @@ export default {
       destAddr: null,
       value: null,
       desc: null,
-      fees: 0.01,
+      fees: 0.001,
       feesName: "WICC",
       coinType: "",
       tokens: null,

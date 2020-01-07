@@ -71,7 +71,7 @@
           <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
         </div>
         <div class="menu-separator"></div>
-        <ul class="account-list">
+        <ul class="account-list" ref="accountList">
           <li
             v-for="(account,index) in visibleAccounts"
             :key="index"
@@ -173,6 +173,11 @@ export default {
 
     toggleMenu() {
       this.showMenu = !this.showMenu;
+      if (this.showMenu) {
+        setTimeout(() => {
+          this.$refs.accountList.scrollTop = 48 * this.activeAccount.index;
+        }, 20);
+      }
     },
 
     hideNetwork() {
@@ -277,15 +282,19 @@ export default {
 
         promise.then(
           () => {
-            this.$loading.close();
-
             mnemonic.clear();
 
-            this.$router.push({
-              name: "createAccount",
-              query: {
-                mnemonic: this.mnemonic
-              }
+            let id = localStorage.getItem("newId");
+
+            API.setActiveAccount(id).then(res => {
+              localStorage.removeItem("newId");
+              this.$loading.close();
+              this.$router.push({
+                name: "createAccount",
+                query: {
+                  mnemonic: this.mnemonic
+                }
+              });
             });
           },
           error => {
@@ -375,15 +384,16 @@ export default {
   max-height: 500px;
   overflow: auto;
   border-radius: 6px;
-  animation: slide2 300ms ease-out;
+  animation: slide2 100ms ease-out;
+  transform-origin: top right;
   @keyframes slide2 {
     0% {
       opacity: 0.2;
-      transform: translate(0, -5px);
+      transform: scale(0.2);
     }
     100% {
       opacity: 1;
-      transform: translate(0, 0);
+      transform: scale(1);
     }
   }
 }
@@ -484,6 +494,10 @@ export default {
     &:hover {
       border-color: #8187a5;
     }
+  }
+
+  .dropdown {
+    transform-origin: top left;
   }
 
   .dropdown-toggle-label {
@@ -630,6 +644,8 @@ export default {
 .account-list {
   list-style: none;
   margin: 0;
+  max-height: 144px;
+  overflow: auto;
 
   .account-item {
     padding: 12px 44px;

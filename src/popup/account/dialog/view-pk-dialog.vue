@@ -79,7 +79,7 @@ export default {
     },
 
     download() {
-      download("wicc-private-key.txt", this.privateKey);
+      download("WICC-Private-Key.txt", this.privateKey);
     },
 
     onHide() {

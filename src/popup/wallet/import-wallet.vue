@@ -83,7 +83,7 @@ export default {
           error => {
             this.$loading.close();
             this.$toast(
-              this.$t("wallet.import.importFailure") + " " + formatError(error),
+              formatError(error),
               {
                 type: "center",
                 duration: 5000,
@@ -119,7 +119,7 @@ export default {
         error => {
           this.$loading.close();
           this.$toast(
-            this.$t("wallet.import.importFailure") + " " + formatError(error),
+            formatError(error),
             {
               type: "center",
               duration: 5000,

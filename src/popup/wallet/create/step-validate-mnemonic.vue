@@ -131,46 +131,18 @@ export default {
       this.$loading(this.$t("wallet.create.validate.confirmLoading"));
 
       setTimeout(() => {
-        let promise;
+        this.$loading.close();
+        this.$toast(this.$t("wallet.create.validate.createSuccess"), {
+          type: "center"
+        });
 
-        if (this.isCreatingWallet) {
-          promise = API.createWallet(this.password, this.mnemonic);
-        } else {
-          promise = API.createAccount(this.mnemonic);
+        if (!this.isCreatingWallet) {
+          eventBus.$emit("header:state:refresh");
         }
 
-        promise.then(
-          () => {
-            this.$loading.close();
-            this.$toast(this.$t("wallet.create.validate.createSuccess"), {
-              type: "center"
-            });
-
-            if (!this.isCreatingWallet) {
-              eventBus.$emit("header:state:refresh");
-            }
-
-            mnemonic.clear();
-
-            this.$router.push({
-              name: "accountMain"
-            });
-          },
-          error => {
-            console.log("create wallet error:", error);
-            this.$loading.close();
-            this.$toast(
-              this.$t("wallet.create.validate.createFailure") +
-                " " +
-                formatError(error),
-              {
-                type: "center",
-                duration: 5000,
-                wordWrap: true
-              }
-            );
-          }
-        );
+        this.$router.push({
+          name: "accountMain"
+        });
       }, 300);
     },
 

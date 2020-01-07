@@ -8,7 +8,7 @@
             <div class="name">
               <span>WaykiMax</span>
               <span></span>
-              <span>Version</span>
+              <span>{{language === 'zh-CN' ? '版本' : 'Version'}}</span>
             </div>
             <div class="version">v2.2.0</div>
           </div>
@@ -37,10 +37,10 @@
         <div class="separator"></div>
 
         <div class="link-container">
-          <div class="title">{{ $t('setting.about.links') }}</div>
+          <div class="title">{{ language === 'zh-CN' ? '联系我们' : 'Contact Us' }}</div>
           <ul class="link-list">
-            <li>Business contact：biz@waykichainhk.com</li>
-            <li>Media contact：cs@waykichainhk.com</li>
+            <li>{{language === 'zh-CN' ? '商务合作' : 'Business Contact'}}：biz@waykichainhk.com</li>
+            <li>{{language === 'zh-CN' ? '客服联系' : 'Customer Service'}}：cs@waykichainhk.com</li>
           </ul>
         </div>
 
@@ -205,7 +205,7 @@ export default {
   data() {
     return {
       tab: "setting",
-      language: null
+      language: getLanguage()
     };
   }
 };

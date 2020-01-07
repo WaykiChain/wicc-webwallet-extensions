@@ -50,8 +50,11 @@ const createAccountWithMnemonic = (mnemonic) => {
   const testWiccApi = new WiccAPI('testnet')
   const wiccApi = new WiccAPI('mainnet')
 
+  let id = uuidv4()
+  localStorage.setItem('newId', id)
+
   return {
-    id: uuidv4(), //v4是随机生成uuid
+    id: id, //v4是随机生成uuid
     type: 'mnemonic',
     data: {
       mnemonic
@@ -67,8 +70,11 @@ const createAccountWithPrivateKey = (wif) => {
 
   const network = getAddressNetwork(address)
 
+  let id = uuidv4()
+  localStorage.setItem('newId', id)
+
   return {
-    id: uuidv4(),
+    id: id,
     type: 'privateKey',
     network,
     data: {

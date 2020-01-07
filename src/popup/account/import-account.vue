@@ -80,15 +80,15 @@ export default {
 
   methods: {
     handleChange(option) {
-      this.type = option.name
-      this.value = option.value
-      this.setHide()
+      this.type = option.name;
+      this.value = option.value;
+      this.setHide();
     },
     setType() {
-      this.show = !this.show
+      this.show = !this.show;
     },
     setHide() {
-      this.show = false
+      this.show = false;
     },
     checkMnemonicCode() {
       API.checkMnemonicCode(this.mnemonic).then(
@@ -105,14 +105,11 @@ export default {
         },
         error => {
           this.$loading.close();
-          this.$toast(
-            this.$t("wallet.import.importFailure") + " " + formatError(error),
-            {
-              type: "center",
-              duration: 5000,
-              wordWrap: true
-            }
-          );
+          this.$toast(formatError(error), {
+            type: "center",
+            duration: 5000,
+            wordWrap: true
+          });
         }
       );
     },
@@ -121,27 +118,26 @@ export default {
       setTimeout(() => {
         API.importAccount(this.mnemonic, this.privateKey).then(
           () => {
-            this.$loading.close();
-            this.$toast(this.$t("account.import.importSuccess"), {
-              type: "center"
-            });
+            let id = localStorage.getItem("newId");
+            API.setActiveAccount(id).then(() => {
+              localStorage.removeItem("newId");
+              this.$loading.close();
+              this.$toast(this.$t("account.import.importSuccess"), {
+                type: "center"
+              });
 
-            this.$router.push({
-              name: "welcome"
+              this.$router.push({
+                name: "welcome"
+              });
             });
           },
           error => {
             this.$loading.close();
-            this.$toast(
-              this.$t("account.import.importFailure") +
-                " " +
-                formatError(error),
-              {
-                type: "center",
-                duration: 5000,
-                wordWrap: true
-              }
-            );
+            this.$toast(formatError(error), {
+              type: "center",
+              duration: 5000,
+              wordWrap: true
+            });
           }
         );
       }, 300);
@@ -158,7 +154,7 @@ export default {
   data() {
     return {
       type: "mnemonic",
-      value: this.$t('account.import.mnemonicType'),
+      value: this.$t("account.import.mnemonicType"),
       mnemonic: null,
       privateKey: null,
       show: false
@@ -203,7 +199,7 @@ export default {
     height: 15px;
     background: url("../static/nextArror.png") no-repeat;
     background-size: 8px 15px;
-    transition: all 300ms; 
+    transition: all 300ms;
   }
   &.hover {
     border-color: #8187a5;

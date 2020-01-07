@@ -81,7 +81,7 @@ export default {
 
   methods: {
     download() {
-      download("wicc-seed.txt", this.mnemonic);
+      download("WICC-Mnemonic.txt", this.mnemonic);
     },
     handleCopySuccess() {
       this.$toast(this.$t("common.copySuccess"), {

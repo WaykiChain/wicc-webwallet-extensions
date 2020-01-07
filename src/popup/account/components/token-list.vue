@@ -23,15 +23,20 @@
           }"
           v-for="tokenKey in ['WICC','WUSD','WGRT']"
           :key="tokenKey"
-          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: getCurrencyAmount(myAssets[tokenKey])})"
+          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: tokenKey === 'WGRT' ? '' : getCurrencyAmount(myAssets[tokenKey])})"
         >
-          <img class="token-item-icon" :src="getIcon(tokenKey)" />
-          <span class="token-item-name">{{tokenKey}}</span>
-          <div class="token-amount">
-            <div
-              class="token-amount-num"
-            >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
-            <div class="token-worth">{{getCurrencyAmount(myAssets[tokenKey])}}</div>
+          <div class="list-wrap">
+            <img class="token-item-icon" :src="getIcon(tokenKey)" />
+            <span class="token-item-name">{{tokenKey}}</span>
+            <div class="token-amount">
+              <div
+                class="token-amount-num"
+              >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+              <div
+                class="token-worth"
+                v-if="myAssets[tokenKey]"
+              >{{getCurrencyAmount(myAssets[tokenKey])}}</div>
+            </div>
           </div>
         </li>
 
@@ -44,13 +49,15 @@
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
         >
-          <img class="token-item-icon" :src="getIcon('WICC')" />
-          <span class="token-item-name">{{tokenKey}}</span>
-          <div class="token-amount">
-            <div
-              class="token-amount-num"
-            >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
-            <div class="token-worth"></div>
+          <div class="list-wrap">
+            <img class="token-item-icon" :src="getIcon('WICC')" />
+            <span class="token-item-name">{{tokenKey}}</span>
+            <div class="token-amount">
+              <div
+                class="token-amount-num"
+              >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+              <div class="token-worth"></div>
+            </div>
           </div>
         </li>
         <li
@@ -62,14 +69,16 @@
             active: activeRegId === token.regId
           }"
         >
-          <img class="token-item-icon" src="../../static/coin-icon.svg" />
-          <span class="token-item-name">{{ token.name }}</span>
-          <span class="token-item-more-btn">
-            <span
-              class="token-item-remove-btn"
-              @click.stop="handleRemoveToken(token)"
-            >{{ $t('account.main.removeToken') }}</span>
-          </span>
+          <div class="list-wrap">
+            <img class="token-item-icon" src="../../static/coin-icon.svg" />
+            <span class="token-item-name">{{ token.name }}</span>
+            <span class="token-item-more-btn">
+              <span
+                class="token-item-remove-btn"
+                @click.stop="handleRemoveToken(token)"
+              >{{ $t('account.main.removeToken') }}</span>
+            </span>
+          </div>
         </li>
       </ul>
     </div>
@@ -175,18 +184,24 @@
   list-style: none;
   overflow-y: auto;
   flex: 1 0 0;
-  padding: 0 20px;
   margin-bottom: 0;
 }
 
 .token-item {
-  display: flex;
-  padding-bottom: 22px;
-  padding-top: 23px;
-  align-items: center;
-  border-bottom: 1px solid #f0f3f7;
+  padding: 0 20px;
   cursor: pointer;
   margin: 0;
+  &:hover {
+    background-color: #fafbfc;
+  }
+}
+
+.list-wrap {
+  display: flex;
+  align-items: center;
+  padding-bottom: 22px;
+  padding-top: 23px;
+  border-bottom: 1px solid #f0f3f7;
 }
 
 .token-item.active {
@@ -326,26 +341,31 @@ export default {
       }.svg`);
     },
     getCurrencyAmount(asset) {
-      if (!asset) return "0";
-      let prefix = this.currency === "CNY" ? '≈￥' : '≈$'
+      let prefix = this.currency === "CNY" ? "≈￥" : "≈$";
+      if (!asset) return prefix + " 0";
+      let result = "";
       let amount = asset
         ? asset.freeAmount / Math.pow(10, 8) > 0.000001
           ? asset.freeAmount / Math.pow(10, 8)
           : (asset.freeAmount / Math.pow(10, 8)).toFixed(8)
         : 0;
       if (this.currency === "CNY") {
-        return prefix + ' ' + new Decimal(amount * asset.rmbPrice)
+        result = new Decimal(amount * asset.rmbPrice)
           .times(100)
           .floor()
           .dividedBy(100)
           .toString();
       } else {
-        return prefix + ' ' + new Decimal(amount * asset.usdtPrice)
+        result = new Decimal(amount * asset.usdtPrice)
           .times(100)
           .floor()
           .dividedBy(100)
           .toString();
       }
+      if (result.split('.')[1].length < 2) {
+        result += "0"
+      }
+      return prefix + " " + result;
     },
     handleChange() {
       this.getWiccNum(this.activeAddress);

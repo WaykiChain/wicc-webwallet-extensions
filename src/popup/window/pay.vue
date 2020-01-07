@@ -154,7 +154,7 @@ export default {
       destAddress: null,
       desc: null,
       value: 0,
-      fees: 0.01
+      fees: 0.001
     };
   }
 };

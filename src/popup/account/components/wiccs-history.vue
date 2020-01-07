@@ -9,19 +9,21 @@
           v-for="(trans, index) in transactions"
           :key="index"
         >
-          <div class="first-row">
-            <span
-              class="trans-type"
-              v-if="trans.txtype=='CDP_STAKE_TX'"
-            >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
-            <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
-            <span
-              class="trans-amount"
-            >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
-          </div>
-          <div class="second-row">
-            <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
-            <span class="trans-status">{{ formatStatus(trans) }}</span>
+          <div class="list-wrap">
+            <div class="first-row">
+              <span
+                class="trans-type"
+                v-if="trans.txtype=='CDP_STAKE_TX'"
+              >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
+              <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
+              <span
+                class="trans-amount"
+              >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
+            </div>
+            <div class="second-row">
+              <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
+              <span class="trans-status">{{ formatStatus(trans) }}</span>
+            </div>
           </div>
         </li>
       </ul>
@@ -69,9 +71,12 @@ export default {
     handleClick(trans) {
       this.currentTrans = trans;
       // this.transDetailVisible = true;
-      this.$router.push({name: 'transactionDetail', query: {
-        info: JSON.stringify(this.currentTrans)
-      }})
+      this.$router.push({
+        name: "transactionDetail",
+        query: {
+          info: JSON.stringify(this.currentTrans)
+        }
+      });
     },
     showTrandirection(trandirection) {
       if (trandirection == 1) {
@@ -154,15 +159,22 @@ export default {
 .trans-list {
   list-style: none;
   margin: 0;
-  padding: 0 20px;
 }
 
 .trans-item {
   cursor: pointer;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #f0f3f7;
+  padding: 0 20px;
   margin: 0;
+
+  &:hover {
+    background-color: #fafbfc;
+  }
+
+  .list-wrap {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f0f3f7;
+  }
 
   .first-row {
     display: flex;

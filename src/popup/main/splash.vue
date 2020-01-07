@@ -33,7 +33,7 @@
         </div>
         <button
           class="display-block btn-primary"
-          :disabled="!password"
+          :disabled="password.length < 6 || password.length > 20"
           @click="unlock"
         >{{ $t('splash.unlockButton') }}</button>
         <div class="recover" @click="importWallet">{{ $t('splash.restoreWalletButton') }}</div>
@@ -286,6 +286,7 @@ export default {
   methods: {
     inputHandler() {
       this.error = "";
+      this.password = this.password.trim()
     },
     focusHandler() {
       this.shouldTop = true;

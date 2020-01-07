@@ -14,7 +14,7 @@
               <span class="label">{{$t('account.transDetail.txTypeLabel')}}</span>
               <span
                 class="value type"
-              >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}</span>
+              >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}{{info.txtype === 'UCOIN_TRANSFER_TX' ? `-${formatNewTxType(String(trans.trandirection))}` : ''}}</span>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.confirmedTimeLabel')}}</span>
@@ -64,7 +64,9 @@
               >{{cutMiddleStr(info.cdptxid, 10)}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dyl') : $t('window.cdp.zjdyl') }}</span>
+              <span
+                class="label"
+              >{{info.txid === info.cdptxid ? $t('window.cdp.dyl') : $t('window.cdp.zjdyl') }}</span>
               <span
                 class="value"
                 v-for="key in Object.keys(info.assetstostake)"
@@ -72,7 +74,9 @@
               >{{formatAmount(info.assetstostake[key], 8)}} {{key}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dcl') : $t('window.cdp.zjdcl')}}</span>
+              <span
+                class="label"
+              >{{info.txid === info.cdptxid ? $t('window.cdp.dcl') : $t('window.cdp.zjdcl')}}</span>
               <span class="value">{{formatAmount(info.scoinstomint, 8)}} {{info.scoinsymbol}}</span>
             </li>
             <!-- CDP_REDEEM_TX -->
@@ -188,7 +192,9 @@
             </li>
             <li>
               <span class="label">{{$t('window.assets.zfxl')}}</span>
-              <span class="value">{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
+              <span
+                class="value"
+              >{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
               <span class="label">{{$t('window.assets.dbcyz')}}</span>
@@ -200,7 +206,9 @@
             </li>
             <li>
               <span class="label">{{$t('window.assets.kfzf')}}</span>
-              <span class="value">{{info.mintable || mintable ? $t('window.assets.s') : $t('window.assets.f')}}</span>
+              <span
+                class="value"
+              >{{info.mintable || mintable ? $t('window.assets.s') : $t('window.assets.f')}}</span>
             </li>
           </ul>
         </div>
@@ -232,12 +240,13 @@ export default {
     NavLayout
   },
   mounted() {
+    const route = this.$router.currentRoute;
     API.callRaw("getDetailInfo", { info: { hash: this.trans.txid } }).then(
       res => {
         this.info = res;
         // alert(JSON.stringify(res));
         if (res.txtype === "ASSET_UPDATE_TX") {
-          this.getAssetInfo(res.assetsymbol)
+          this.getAssetInfo(res.assetsymbol);
         }
       },
       error => {
@@ -250,6 +259,18 @@ export default {
         });
       }
     );
+
+    window.onunload = () => {
+      localStorage.setItem(
+        "WICC_RESTORE_PATH",
+        JSON.stringify({
+          name: route.name,
+          query: {
+            ...(route.query || {})
+          }
+        })
+      );
+    };
   },
   methods: {
     formatNewTxType: transUtil.formatNewTxType,

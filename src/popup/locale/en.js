@@ -169,8 +169,8 @@ export default {
       read: 'I have read and agreed',
       terms: 'Services and Privacy Terms',
       creating: 'Creating',
-      Switch: 'Switch ',
-      Mnemonic: 'Mnemonic',
+      Switch: '',
+      Mnemonic: '',
       CHINESE: 'Chinese ',
       English: 'English ',
       password: {

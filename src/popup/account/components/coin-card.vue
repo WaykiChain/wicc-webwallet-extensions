@@ -37,7 +37,7 @@
     </div>
 
     <div class="dropdown" v-show="showMenu">
-      <div class="menu-item vm" @click="viewMnemonic">{{ $t('account.header.viewMnemonic') }}</div>
+      <div class="menu-item vm" @click="viewMnemonic" v-if="accountType === 'mnemonic'">{{ $t('account.header.viewMnemonic') }}</div>
       <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
       <a
         :href="`https://testnet.waykiscan.com/#/address/${address}`"
@@ -86,6 +86,10 @@ export default {
     showRegisterButton: {
       type: Boolean,
       default: false
+    },
+    accountType: {
+      type: String,
+      default: ""
     }
   },
 
@@ -206,15 +210,16 @@ export default {
   overflow: auto;
   border-radius: 6px;
   font-size: 14px;
-  animation: slide1 300ms ease-out;
+  animation: slide1 100ms ease-out;
+  transform-origin: top right;
   @keyframes slide1 {
     0% {
       opacity: 0.2;
-      transform: translate(0, -5px);
+      transform: scale(0.2);
     }
     100% {
       opacity: 1;
-      transform: translate(0, 0);
+      transform: scale(1);
     }
   }
   .menu-separator {
