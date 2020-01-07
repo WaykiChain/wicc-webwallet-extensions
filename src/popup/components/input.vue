@@ -1,7 +1,10 @@
 <template>
   <div class="wallet-input">
     <div class="wallet-input--label">{{ label || '' }}</div>
-    <div class="wallet-input-content" :class="{hover: hover, readOnly: readOnly, noBorder: type==='custom', error: message}">
+    <div
+      class="wallet-input-content"
+      :class="{hover: hover, readOnly: readOnly, noBorder: type==='custom', error: message}"
+    >
       <textarea
         v-if="theType === 'textarea'"
         class="wallet-input--textarea display-block"
@@ -80,6 +83,10 @@ export default {
     },
     postfix: {
       type: String
+    },
+    disableSpace: {
+      type: Boolean,
+      default: false
     }
   },
   beforeMount() {
@@ -87,6 +94,25 @@ export default {
       this.showCheck = true;
     }
     this.theType = this.type;
+  },
+  mounted() {
+    if (!this.$refs.input || !this.disableSpace) return;
+    this.$refs.input.onkeydown = ev => {
+      if (ev.keyCode === 32) {
+        ev.preventDefault();
+        return false;
+      }
+    };
+    this.$refs.input.onkeyup = ev => {
+      if (ev.keyCode === 32) {
+        ev.preventDefault();
+        return false;
+      }
+    };
+  },
+  beforeDestroy() {
+    this.$refs.input.onkeydown = null;
+    this.$refs.input.onkeyup = null;
   },
   data() {
     return {
@@ -105,11 +131,11 @@ export default {
         this.theType = "password";
       }
     },
-    value (val) {
+    value(val) {
       if (val) {
-        this.showClear = true
+        this.showClear = true;
       } else {
-        this.showClear = false
+        this.showClear = false;
       }
     }
   },
@@ -134,12 +160,12 @@ export default {
       this.hover = false;
     },
     changeHandler(event) {
-      let value = event.target.value.trim();
+      let value = event.target.value;
       this.$emit("change", value);
     },
     handleInput(event) {
       const type = this.type;
-      let value = event.target.value.trim();
+      let value = event.target.value;
 
       // if (value) {
       //   this.showClear = true;
@@ -165,7 +191,7 @@ export default {
   position: relative;
 }
 .wallet-input--label {
-  color: #8187A5;
+  color: #8187a5;
   font-size: 14px;
   line-height: 16px;
   margin-bottom: 8px;
@@ -186,7 +212,7 @@ export default {
     border: 0 !important;
   }
   &.error {
-    border-color: #F75555 !important;
+    border-color: #f75555 !important;
   }
 }
 
@@ -259,6 +285,6 @@ export default {
   bottom: -18px;
   right: 0;
   font-size: 12px;
-  color: #F75555;
+  color: #f75555;
 }
 </style>

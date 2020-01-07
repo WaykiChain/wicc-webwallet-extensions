@@ -7,6 +7,7 @@
       :placeholder="$t('wallet.import.mnemonicPlaceholder')"
       type="textarea"
       style="margin-bottom: 24px;"
+      :disable-space="true"
     ></wallet-input>
 
     <wallet-input
@@ -15,6 +16,7 @@
       :placeholder="$t('wallet.import.passwordPlaceholder')"
       type="password"
       style="margin-bottom: 24px;"
+      :disable-space="true"
     ></wallet-input>
 
     <wallet-input

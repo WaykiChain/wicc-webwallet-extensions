@@ -272,6 +272,9 @@ export default {
       );
     };
   },
+  destroyed() {
+    window.onunload = null;
+  },
   methods: {
     formatNewTxType: transUtil.formatNewTxType,
     formatAmount: transUtil.formatAmount,

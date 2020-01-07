@@ -10,6 +10,7 @@
       @change="changeHandler1"
       @input="inputHandler1"
       :message="error1"
+      :disable-space="true"
     ></wallet-input>
 
     <wallet-input
@@ -20,6 +21,7 @@
       @change="changeHandler2"
       @input="inputHandler2"
       :message="error2"
+      :disable-space="true"
     ></wallet-input>
 
     <div class="protocol-area">
@@ -35,7 +37,7 @@
         <div class="text" v-if="!loading">{{ $t('wallet.create.password.confirmButton') }}</div>
         <div class="loading-text" v-else>
           <img src="../../static/c-loading.svg" class="load-circle" />
-          <span class="load-text">Creating...</span>
+          <span class="load-text">{{$t('wallet.create.creating')}}</span>
         </div>
       </button>
       <button
@@ -162,7 +164,7 @@ export default {
         this.error1 = this.$t('wallet.create.password.passwordPlaceholder')
       }
     },
-    inputHandler1() {
+    inputHandler1(val) {
       this.error1 = ""
     },
     changeHandler2(val) {
@@ -171,7 +173,7 @@ export default {
         this.error2 = this.$t('wallet.create.password.passwordPlaceholder')
       }
     },
-    inputHandler2() {
+    inputHandler2(val) {
       this.error2 = ""
     },
     clickHandler() {
