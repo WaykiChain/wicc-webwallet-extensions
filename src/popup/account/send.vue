@@ -11,10 +11,11 @@
 
       <wallet-input
         v-model="value"
-        type="number"
+        type="text"
         postfix=" "
         :label="$t('account.send.valueLabel')"
         :placeholder="$t('account.send.valuePlaceHolder')"
+        :pattern="/^(((([1-9][0-9]*)|0)(\.|\.\d{1,8})?)|(\s{0}))$/"
       >
         <div
           class="transfer-coin"

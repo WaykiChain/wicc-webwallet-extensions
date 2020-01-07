@@ -84,9 +84,8 @@ export default {
     postfix: {
       type: String
     },
-    disableSpace: {
-      type: Boolean,
-      default: false
+    pattern: {
+      type: RegExp
     }
   },
   beforeMount() {
@@ -94,25 +93,6 @@ export default {
       this.showCheck = true;
     }
     this.theType = this.type;
-  },
-  mounted() {
-    if (!this.$refs.input || !this.disableSpace) return;
-    this.$refs.input.onkeydown = ev => {
-      if (ev.keyCode === 32) {
-        ev.preventDefault();
-        return false;
-      }
-    };
-    this.$refs.input.onkeyup = ev => {
-      if (ev.keyCode === 32) {
-        ev.preventDefault();
-        return false;
-      }
-    };
-  },
-  beforeDestroy() {
-    this.$refs.input.onkeydown = null;
-    this.$refs.input.onkeyup = null;
   },
   data() {
     return {
@@ -131,7 +111,11 @@ export default {
         this.theType = "password";
       }
     },
-    value(val) {
+    value(val, oldVal) {
+      if (val === oldVal) return
+      if(!this.pattern.test(val)) {
+        this.$emit("input", oldVal);
+      }
       if (val) {
         this.showClear = true;
       } else {
