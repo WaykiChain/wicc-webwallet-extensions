@@ -21,11 +21,13 @@
       :label="$t('account.import.mnemonicLabel')"
       :placeholder="$t('account.import.mnemonicPlaceholder')"
       type="textarea"
+      @change="setChange"
     ></wallet-input>
 
     <wallet-input
       v-else
       v-model="privateKey"
+      @change="setChange"
       :label="$t('account.import.privateKeyLabel')"
       :placeholder="$t('account.import.privateKeyPlaceholder')"
       type="textarea"
@@ -48,6 +50,7 @@ import formatError from "../api/format-error";
 import NavLayout from "../components/nav-layout";
 import WalletSelect from "../components/select";
 import ClickOutside from "vue-click-outside";
+var _ = require('lodash');
 
 export default {
   name: "import-account",
@@ -79,6 +82,13 @@ export default {
   },
 
   methods: {
+    setChange() {
+      if (this.type === "mnemonic") {
+        this.mnemonic = _.trim(this.mnemonic)
+      } else {
+        this.privateKey = _.trim(this.privateKey)
+      }
+    },
     handleChange(option) {
       this.type = option.name;
       this.value = option.value;
