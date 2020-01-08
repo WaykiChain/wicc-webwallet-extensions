@@ -9,6 +9,9 @@ const { styleLoaders } = require('./tools')
 module.exports = merge(baseWebpack, {
   // cheap-module-eval-source-map быстрее для разработки
   watch: true,
+  output: {
+    path: path.join(__dirname, '..', 'build-dev')
+  },
   module: {
     rules: styleLoaders({ sourceMap: false })
   },
