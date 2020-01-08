@@ -12,8 +12,9 @@ export default {
     unknownError: '发生错误',
     warning: '警告',
     loading: '加载中...',
-    slogin: '共建、共用、共享维基链大生态大平台',
-    success: '交易成功'
+    slogin: '打造全球领先公链和去中心化金融生态',
+    success: '交易成功',
+    txDetail: '交易详情'
   },
 
   errors: {

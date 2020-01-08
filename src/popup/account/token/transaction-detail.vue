@@ -1,6 +1,6 @@
 <template>
   <div class="transaction-detail">
-    <nav-layout title="交易详情">
+    <nav-layout :title="$t('common.txDetail')">
       <div class="datail-wrap">
         <div class="icon"></div>
         <div
@@ -14,19 +14,19 @@
               <span class="label">{{$t('account.transDetail.txTypeLabel')}}</span>
               <span
                 class="value type"
-              >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}{{info.txtype === 'UCOIN_TRANSFER_TX' ? `-${formatNewTxType(String(trans.trandirection))}` : ''}}</span>
+              >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}</span>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.confirmedTimeLabel')}}</span>
-              <span class="value">{{formatDate(info.confirmedtime)}}</span>
+              <span class="value">{{formatDate(info.confirmedtime * 1000)}}</span>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.hashLabel')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.txid"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.txid, 10)}}</span>
+                :href="`${scanHost(info.txid)}${info.txid}`"
+                target="_blank"
+              >{{cutMiddleStr(info.txid, 10)}}</a>
             </li>
             <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype)">
               <span
@@ -34,19 +34,19 @@
                 v-if="info.txtype === 'ASSET_ISSUE_TX' || info.txtype === 'ASSET_UPDATE_TX'"
               >{{$t('window.cdp.ownerAddr')}}</span>
               <span class="label" v-else>{{$t('account.sendToken.fromLabel')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.fromaddr"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
+                :href="`${scanHost(info.fromaddr)}${info.fromaddr}`"
+                target="_blank"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</a>
             </li>
             <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype) && info.toaddr">
               <span class="label">{{$t('account.sendToken.destLabel')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.toaddr"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.toaddr, 10)}}</span>
+                :href="`${scanHost(info.toaddr)}${info.toaddr}`"
+                target="_blank"
+              >{{cutMiddleStr(info.toaddr, 10)}}</a>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.feesLabel')}}</span>
@@ -233,7 +233,9 @@ export default {
       Decimal: Decimal,
       assetname: "",
       owneraddr: "",
-      totalsupply: ""
+      totalsupply: "",
+      network: localStorage.getItem('network'),
+      myselfNetWork: localStorage.getItem('myselfNetWork')
     };
   },
   components: {
@@ -278,6 +280,27 @@ export default {
   methods: {
     formatNewTxType: transUtil.formatNewTxType,
     formatAmount: transUtil.formatAmount,
+    formatDate: transUtil.formatTime,
+    scanHost(str) {
+      //https://testnet.waykiscan.com/#/address/
+      //https://www.waykiscan.com/#/address/
+      //https://testnet.waykiscan.com/#/txhash/
+      //https://www.waykiscan.com/#/txhash/
+      if (this.network === 'testnet' || this.myselfNetWork) {
+        if (str.length === 34) {
+          return 'https://testnet.waykiscan.com/#/address/'
+        } else {
+          return 'https://testnet.waykiscan.com/#/txhash/'
+        }
+      }
+      if (this.network === 'mainnet' || (!this.network && !this.myselfNetWork)) {
+        if (str.length === 34) {
+          return 'https://www.waykiscan.com/#/address/'
+        } else {
+          return 'https://www.waykiscan.com/#/txhash/'
+        }
+      }
+    },
     isDEX(type) {
       type = type.toLowerCase();
       return type.indexOf("dex") > -1;
@@ -357,18 +380,6 @@ export default {
         );
       }
       return "";
-    },
-    formatDate(ts) {
-      ts = String(ts).length < 13 ? ts * 1000 : Number(ts);
-      let dateStr = new Date(ts),
-        y = dateStr.getFullYear(),
-        m = dateStr.getMonth() + 1,
-        d = dateStr.getDate(),
-        hh = dateStr.getHours(),
-        mm = dateStr.getMinutes(),
-        ss = dateStr.getSeconds();
-
-      return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
     }
   }
 };

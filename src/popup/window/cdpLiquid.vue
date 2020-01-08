@@ -5,7 +5,7 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.qsrdz')}}</label>
-          <span class="addr">{{cutMiddleStr(address,6)}}</span>
+          <span class="">{{cutMiddleStr(address,6)}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.gcdpCjjyid')}}</label>

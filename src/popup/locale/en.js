@@ -12,8 +12,9 @@ export default {
     unknownError: 'Unknown Error',
     warning: 'Warning',
     loading: 'Loading...',
-    slogin: 'World-leading Blockchain Technology and Ecosystem. Built,Used and Shared with You. ',
-    success: 'Successfully'
+    slogin: 'A world leading public blockchain and decentralized finance eco-system',
+    success: 'Successfully',
+    txDetail: 'Details'
   },
 
   errors: {

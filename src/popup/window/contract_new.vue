@@ -8,7 +8,7 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{$t('window.contract.addressLabel')}}</label>
-          <span class="addr">{{address ? cutMiddleStr(address,6) : ""}}</span>
+          <span class="">{{address ? cutMiddleStr(address,6) : ""}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.contract.contractRegIdLabel')}}</label>

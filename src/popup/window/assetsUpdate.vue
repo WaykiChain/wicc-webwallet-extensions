@@ -30,9 +30,9 @@
         </div>
         <div class="cell update-direction" style="display: block;" v-if="updateType == '1'">
           <span class="cellValue">
-            <span class="addr">{{cutMiddleStr(oldAssetOwnerId,6)}}</span>
+            <span class="">{{cutMiddleStr(oldAssetOwnerId,6)}}</span>
             <span style="color: #8187A5;margin: 0 14px;">→</span>
-            <span class="addr">{{cutMiddleStr(updateContent,6)}}</span>
+            <span class="">{{cutMiddleStr(updateContent,6)}}</span>
           </span>
         </div>
 
@@ -68,7 +68,7 @@
             >({{$t('window.assets.n')}})</span>
           </label>
           <span
-            class="addr"
+            class=""
           >{{updateType == '1' ? cutMiddleStr(updateContent,6):cutMiddleStr(oldAssetOwnerId,6)}}</span>
         </div>
         <div class="cell">

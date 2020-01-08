@@ -12,7 +12,7 @@
       <div class="cells">
         <div class="cell">
           <label>授权账号</label>
-          <span class="addr">{{cutMiddleStr(address,6)}}</span>
+          <span class="">{{cutMiddleStr(address,6)}}</span>
         </div>
         <div class="cell">
           <label>消息</label>

@@ -17,7 +17,7 @@
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.assets.dbcyz')}}</label>
-          <span class="cellValue addr">{{cutMiddleStr(assetOwnerId,6)}}</span>
+          <span class="cellValue ">{{cutMiddleStr(assetOwnerId,6)}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.assets.kfzf')}}</label>

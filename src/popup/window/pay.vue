@@ -8,11 +8,11 @@
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.transfer.addressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(address, 6) }}</span>
+          <span class="">{{ cutMiddleStr(address, 6) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.transfer.destAddressLabel') }}</label>
-          <span class="addr">{{ cutMiddleStr(destAddress, 6) }}</span>
+          <span class="">{{ cutMiddleStr(destAddress, 6) }}</span>
         </div>
         <div class="cell" v-if="desc">
           <label>{{ $t('account.transDetail.commentLabel') }}</label>

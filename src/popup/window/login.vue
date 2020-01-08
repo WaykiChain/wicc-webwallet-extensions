@@ -2,7 +2,7 @@
   <div>
     <div class="logo-container">
       <img src="../static/main-logo.png" width="136" />
-      <div class="slogin">Building, sharing, and sharing Waykichain Ecological platform</div>
+      <!-- <div class="slogin">{{ $t('common.slogin') }}</div> -->
     </div>
 
     <div class="login-container">
@@ -172,7 +172,7 @@ export default {
 
 <style scoped lang="scss">
 .logo-container {
-  padding-top: 80px;
+  padding-top: 90px;
   text-align: center;
   .slogin {
     margin-top: 50px;

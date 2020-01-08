@@ -131,6 +131,7 @@ export default {
       }
       this.netList.splice(index, 1);
       localStorage.setItem("netList", JSON.stringify(this.netList));
+      // localStorage.setItem("network", this.netList[0].name);
     }
   },
 
