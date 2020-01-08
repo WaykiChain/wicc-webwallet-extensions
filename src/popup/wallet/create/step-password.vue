@@ -10,7 +10,7 @@
       @change="changeHandler1"
       @input="inputHandler1"
       :message="error1"
-      :pattern="/^[0-9a-zA-Z_]{0,}$/"
+      :pattern="/^\S{0,}$/"
     ></wallet-input>
 
     <wallet-input
@@ -21,7 +21,7 @@
       @change="changeHandler2"
       @input="inputHandler2"
       :message="error2"
-      :pattern="/^[0-9a-zA-Z_]{0,}$/"
+      :pattern="/^\S{0,}$/"
     ></wallet-input>
 
     <div class="protocol-area">

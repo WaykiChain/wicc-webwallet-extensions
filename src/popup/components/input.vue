@@ -112,9 +112,10 @@ export default {
       }
     },
     value(val, oldVal) {
-      if (val === oldVal) return
-      if(!this.pattern.test(val)) {
-        this.$emit("input", oldVal);
+      if (val && val !== oldVal) {
+        if (this.pattern && !this.pattern.test(val)) {
+          this.$emit("input", oldVal);
+        }
       }
       if (val) {
         this.showClear = true;

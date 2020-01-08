@@ -15,7 +15,7 @@
       :placeholder="$t('wallet.import.passwordPlaceholder')"
       type="password"
       style="margin-bottom: 24px;"
-      :pattern="/^[0-9a-zA-Z_]{0,}$/"
+      :pattern="/^\S{0,}$/"
     ></wallet-input>
 
     <wallet-input
@@ -24,7 +24,7 @@
       :placeholder="$t('wallet.import.password2Placeholder')"
       type="password"
       style="margin-bottom: 0;"
-      :pattern="/^[0-9a-zA-Z_]{0,}$/"
+      :pattern="/^\S{0,}$/"
     ></wallet-input>
 
     <template slot="footer">
