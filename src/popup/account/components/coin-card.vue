@@ -233,6 +233,9 @@ export default {
     padding: 12px 0 12px 42px;
     color: #fff;
     display: block;
+    &:hover {
+      background-color: rgba(255,255,255,0.05) !important;
+    }
     &.vm {
       background: url("../../static/vm.svg") no-repeat 14px center;
       background-size: 18px;

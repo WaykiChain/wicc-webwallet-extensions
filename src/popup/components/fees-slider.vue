@@ -27,7 +27,7 @@
 }
 
 .fees-slider .vue-slider-component {
-  margin: 0 -6px;
+  // margin: 0 -6px;
 
   .vue-slider {
     background-color: #E4E8EE;

@@ -569,6 +569,9 @@ export default {
   cursor: pointer;
   padding: 14px 44px;
   color: #fff;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
   &.create {
     background: url("../../static/ca.svg") no-repeat 16px center;
     background-size: 18px;
@@ -655,6 +658,9 @@ export default {
     color: rgba(255, 255, 255, 0.5);
     font-size: 15px;
     font-weight: 500;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
   }
 
   .account-item.active {

@@ -1,7 +1,7 @@
 <template>
   <nav-layout :title="name" class="wicc-record">
     <div class="tokenCount">
-      <div class="logo animated wobble">
+      <div class="logo">
         <img :src="getIcon(name)" alt />
       </div>
       <p class="count">{{number}}</p>
@@ -76,7 +76,23 @@ p {
   height: 60px;
   margin: auto;
   margin-bottom: 12px;
-  animation-duration: 800ms;
+  transform: rotate(-40deg);
+  animation-delay: 0.1s;
+  animation: roll 300ms ease-out forwards;
+  @keyframes roll {
+    0% {
+      transform: rotate(-45deg)
+    }
+    85% {
+      transform: rotate(0deg)
+    }
+    92% {
+      transform: rotate(-10deg)
+    }
+    100% {
+      transform: rotate(0deg)
+    }
+  }
   img {
     width: 60px;
   }

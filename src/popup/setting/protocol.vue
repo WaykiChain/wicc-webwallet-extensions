@@ -1,7 +1,7 @@
 <template>
   <div class="protocol">
     <nav-layout title="服务与隐私条款"></nav-layout>
-    <div class="wrapper" v-if="!isEN">
+    <div class="wrapper" v-if="isCN">
       <p style="margin-top:0;">尊敬的用户:</p>
       <p>感谢您选择由深圳市天杭科技有限公司开发并运营的维基时代服务。《维基时代服务协议》 (以下简称“本协议”)由维基链和用户(以下简称“您”或“用户”)签订，本协议在您与 维基链之间具有合同上的法律效力。 维基链在此特别提醒您在使用维基时代(以下简称“维基时代” 或“本软件”)之前，请认 真阅读《维基时代服务协议》及后文提到的相关协议，尤其是本协议规定的“免责及责任限 制”等条款将以加粗的形式体现，确保您充分理解本协议中各条款，并自主考虑风险。</p>
       <h3>一、 关于本协议的确认与接纳</h3>
@@ -202,8 +202,8 @@ import NavLayout from "../components/nav-layout";
 export default {
   data() {
     return {
-      isEN:
-        localStorage.getItem("WICC_WALLET_LANGUAGE") === "en-US" ? true : false
+      isCN:
+        localStorage.getItem("WICC_WALLET_LANGUAGE") === "zh-CN" ? true : false
     };
   },
   components: {

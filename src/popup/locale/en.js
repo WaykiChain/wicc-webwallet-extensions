@@ -12,7 +12,7 @@ export default {
     unknownError: 'Unknown Error',
     warning: 'Warning',
     loading: 'Loading...',
-    slogin: 'Building, sharing, and sharing Waykichain Ecological platform',
+    slogin: 'World-leading Blockchain Technology and Ecosystem. Built,Used and Shared with You. ',
     success: 'Successfully'
   },
 
@@ -23,7 +23,7 @@ export default {
     amountLessThanLimit: 'The transferred amount should not less than 0.0001',
     accountNotActivated: 'Please register your wallet first',
     accountAlreadyExists: 'Account already exists',
-    passwordInvalid: 'The input current password is incorrect',
+    passwordInvalid: 'The enter current password is incorrect',
     inActivating: 'Registering, please wait'
   },
 
@@ -42,9 +42,9 @@ export default {
       mnemonicType: 'Mnemonics',
       privateKeyType: 'Private Key',
       mnemonicLabel: 'Mnemonics',
-      mnemonicPlaceholder: 'Input mnemonics',
+      mnemonicPlaceholder: 'Please enter mnemonics',
       privateKeyLabel: 'Private Key',
-      privateKeyPlaceholder: 'Input private key',
+      privateKeyPlaceholder: 'Please enter private key',
       confirmLoading: 'Importing...',
       importSuccess: 'Successfully',
       importFailure: 'Failed'
@@ -83,10 +83,10 @@ export default {
       title: 'Send',
       fromLabel: 'Payment Address',
       destLabel: 'Receive Address',
-      destPlaceHolder: 'Please input receive address',
+      destPlaceHolder: 'Please enter/paste receive address',
       valueLabel: 'Amount',
       limit: 'Balance：',
-      valuePlaceHolder: 'Please input transfer amount',
+      valuePlaceHolder: 'Please enter transfer amount',
       descLabel: 'Memo（Optional）',
       confirmButton: 'Confirm',
       confirmLoading: 'Submitting...',
@@ -97,9 +97,9 @@ export default {
       title: 'Send',
       fromLabel: 'Payment Address',
       destLabel: 'Receive Address',
-      destPlaceHolder: 'Please input receive address',
+      destPlaceHolder: 'Please enter/paste receive address',
       valueLabel: 'Amount',
-      valuePlaceHolder: 'Please input transfer amount',
+      valuePlaceHolder: 'Please enter transfer amount',
       descLabel: 'Memo（Optional）',
       addressInvalid: 'Input WICC mainnet address, ',
       testnetAddressInvalid: 'Input WICC testnet address',
@@ -119,7 +119,7 @@ export default {
       expect: 'Coming soon'
     },
     dialog: {
-      passwordTitle: 'Input Password',
+      passwordTitle: 'Enter Password',
       passwordPlaceHolder: 'Please enter 6~20 characters',
       viewMnemonicTitle: 'View mnemonics',
       viewMnemonicTip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
@@ -136,8 +136,8 @@ export default {
       registerFailed: 'Failed'
     },
     transDetail: {
-      fromLabel: 'Payment Address',
-      toLabel: 'Receive Address',
+      fromLabel: 'From',
+      toLabel: 'To',
       feesLabel: 'Fee',
       hashLabel: 'Txn Hash',
       cdpid: 'Created At：',
@@ -169,8 +169,8 @@ export default {
       read: 'I have read and agreed',
       terms: 'Services and Privacy Terms',
       creating: 'Creating',
-      Switch: '',
-      Mnemonic: '',
+      Switch: 'Switch ',
+      Mnemonic: 'Mnemonic',
       CHINESE: 'Chinese ',
       English: 'English ',
       password: {
@@ -179,19 +179,19 @@ export default {
         password: 'Password',
         passwordPlaceholder: 'Please enter 6~20 characters',
         password2: 'Confirm Password',
-        password2Placeholder: 'Please input password again',
+        password2Placeholder: 'Please enter password again',
         confirmButton: 'Create Account',
         importButton: 'Import Account'
       },
       backup: {
         title: 'Backup Mnemonics',
         tip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
-        mnemonicLabel: 'Please copy the following mnemonics. You will verify them in the next step.',
+        mnemonicLabel: 'Mnemonic is used for recover Wallet password.Please accurately copy it and keep it properly.',
         nextButton: 'Next',
         downloadButton: 'Download'
       },
       validate: {
-        title: 'Verify Mnemonics',
+        title: 'Confirm',
         mnemonicLabel: 'Please click on the mnemonics in order to verify that if your backup is correct.',
         validateErrorTip: 'The mnemonics inputted are incorrect, please check!',
         confirmLoading: 'Creating...',
@@ -203,11 +203,11 @@ export default {
       title: 'Import Wallet',
       tip: 'This action will overwrite all account info in wallet, please use with caution!',
       mnemonic: 'Mnemonics',
-      mnemonicPlaceholder: 'Input mnemonics',
+      mnemonicPlaceholder: 'Enter mnemonics',
       password: 'Password',
       passwordPlaceholder: 'Please enter 6~20 characters',
       password2: 'Confirm Password',
-      password2Placeholder: 'Input password again',
+      password2Placeholder: 'Please enter password again',
       confirmLoading: 'Importing...',
       importSuccess: 'Import successfully',
       importFailure: 'Failed to import',
@@ -241,11 +241,11 @@ export default {
     password: {
       title: 'Change Password',
       currentPassword: 'Current password',
-      currentPasswordPlaceholder: 'Input current password',
+      currentPasswordPlaceholder: 'Enter current password',
       newPassword: 'New password',
       newPasswordPlaceholder: 'Please enter 6~20 characters',
       newPassword2: 'Confirm new password',
-      newPassword2Placeholder: 'Input new password again',
+      newPassword2Placeholder: 'Enter new password again',
       confirmLoading: 'Loading...',
       changeSuccess: 'Successfully',
       changeFailure: 'Failed'

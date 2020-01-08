@@ -193,7 +193,7 @@ export default {
         downloadButton: '下载到本地'
       },
       validate: {
-        title: '验证助记词',
+        title: '确认助记词',
         tip: '拥有助记词相当于拥有资产，请一定妥善保管在安全的地方。',
         mnemonicLabel: '请按顺序点击助记词，以确认您备份正确',
         validateErrorTip: '助记词输入有误，请检查!',

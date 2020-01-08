@@ -144,7 +144,7 @@ export default {
     };
   },
   created() {
-    this.netList = JSON.parse(localStorage.getItem("netList"));
+    this.netList = localStorage.getItem("netList") ? JSON.parse(localStorage.getItem("netList")) : [];
   }
 };
 </script>
