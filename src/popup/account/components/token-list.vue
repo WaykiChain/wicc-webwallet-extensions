@@ -362,8 +362,11 @@ export default {
           .dividedBy(100)
           .toString();
       }
-      if (result.split('.')[1].length < 2) {
-        result += "0"
+      if (!result.split(".")[1]) {
+        result += ".00";
+      }
+      if (result.split(".")[1].length < 2) {
+        result += "0";
       }
       return prefix + " " + result;
     },

@@ -118,7 +118,7 @@ export default {
     },
 
     download() {
-      download("wicc-seed.txt", this.mnemonic);
+      download("WICC-Mnemonic.txt", this.mnemonic);
     }
   },
 
