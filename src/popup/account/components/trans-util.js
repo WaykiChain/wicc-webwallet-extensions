@@ -136,7 +136,7 @@ export default {
   formatTime (time) {
     if (!time) return ''
     const date = new Date(time)
-    return fecha.format(date, 'YYYY/MM/DD  HH:mm:ss')
+    return fecha.format(date, 'YYYY-MM-DD  HH:mm:ss')
   },
 
   formatAmount (amount, precision = 4) {

@@ -21,7 +21,7 @@
           :class="{
             active: activeRegId === null
           }"
-          v-for="tokenKey in ['WICC','WUSD','WGRT']"
+          v-for="tokenKey in ['WICC','WGRT','WUSD']"
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: tokenKey === 'WGRT' ? '' : getCurrencyAmount(myAssets[tokenKey])})"
         >

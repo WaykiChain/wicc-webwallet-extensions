@@ -13,18 +13,18 @@
           <span class="cellValue">{{formatNewTxType(dexType)}}</span>
         </div>
         <div class="cell">
-          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[1]}}({{danweiStr1}})</label>
-          <span class="cellValue">{{wiccNum}}</span>
+          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[1]}}</label>
+          <span class="cellValue">{{wiccNum}} ({{danweiStr1}})</span>
         </div>
         <div class="cell">
-          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}({{danweiStr2}})</label>
-          <span class="cellValue">{{price}}</span>
+          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}</label>
+          <span class="cellValue">{{price}} ({{danweiStr2}})</span>
         </div>
         <div v-if="dexType.indexOf('MARKET')==-1" class="cell">
-          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[3]}}({{danweiStr3}})</label>
+          <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[3]}}</label>
           <span
             class="cellValue"
-          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (wiccNum * price).toFixed(8)}}</span>
+          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (wiccNum * price).toFixed(8)}} ({{danweiStr3}})</span>
         </div>
       </div>
     </div>
