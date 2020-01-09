@@ -13,7 +13,8 @@ export default {
     warning: '警告',
     loading: '加载中...',
     slogin: '共建、共用、共享维基链大生态大平台',
-    success: '交易成功'
+    success: '交易成功',
+    txDetail: '交易详情'
   },
 
   errors: {

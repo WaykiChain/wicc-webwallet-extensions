@@ -5,19 +5,19 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{confirmType()[1]}}</label>
-          <span class="cellValue">{{amount/100000000}} ({{danweiStr1}})</span>
+          <span class="cellValue">{{amount/100000000}} {{danweiStr1}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[2]}}</label>
           <span
             class="cellValue"
-          >{{price == $t('window.cdp.sjcjwz') ? price : (price / Math.pow(10,8)).toFixed(8)}} ({{danweiStr2}})</span>
+          >{{price == $t('window.cdp.sjcjwz') ? price : (price / Math.pow(10,8)).toFixed(8)}} {{danweiStr2}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[3]}}</label>
           <span
             class="cellValue"
-          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') : (amount * price / Math.pow(10,16)).toFixed(8)}} ({{danweiStr3}})</span>
+          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') + ' (' + danweiStr3 +')' : (amount * price / Math.pow(10,16)).toFixed(8) + ' ' + danweiStr3}}</span>
         </div>
       </div>
       <!-- <p

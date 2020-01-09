@@ -13,7 +13,8 @@ export default {
     warning: 'Warning',
     loading: 'Loading...',
     slogin: 'World-leading Blockchain Technology and Ecosystem. Built,Used and Shared with You. ',
-    success: 'Successful'
+    success: 'Successful',
+    txDetail: 'Details'
   },
 
   errors: {

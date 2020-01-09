@@ -57,11 +57,11 @@
             <!-- CDP_STAKE_TX -->
             <li v-if="info.txtype === 'CDP_STAKE_TX' && (info.txid !== info.cdptxid)">
               <span class="label">{{$t('account.transDetail.cdpid')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.cdptxid"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
+                :href="`${scanHost(info.cdptxid)}${info.cdptxid}`"
+                target="_blank"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
               <span
@@ -82,19 +82,19 @@
             <!-- CDP_REDEEM_TX -->
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">{{$t('window.cdp.creator')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.fromaddr"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
+                :href="`${scanHost(info.fromaddr)}${info.fromaddr}`"
+                target="_blank"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">{{$t('account.transDetail.cdpid')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.cdptxid"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
+                :href="`${scanHost(info.cdptxid)}${info.cdptxid}`"
+                target="_blank"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_REDEEM_TX'">
               <span class="label">{{$t('window.cdp.ghl')}}</span>
@@ -111,19 +111,19 @@
             <!-- CDP_LIQUIDATE_TX -->
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">{{$t('window.cdp.creator')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.fromaddr"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.fromaddr, 10)}}</span>
+                :href="`${scanHost(info.fromaddr)}${info.fromaddr}`"
+                target="_blank"
+              >{{cutMiddleStr(info.fromaddr, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">{{$t('account.transDetail.cdpid')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.cdptxid"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.cdptxid, 10)}}</span>
+                :href="`${scanHost(info.cdptxid)}${info.cdptxid}`"
+                target="_blank"
+              >{{cutMiddleStr(info.cdptxid, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_LIQUIDATE_TX'">
               <span class="label">{{$t('window.cdp.qsl')}}</span>
@@ -171,11 +171,11 @@
           >
             <li>
               <span class="label">{{$t('window.cdp.ddh')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.orderid"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.orderid, 10)}}</span>
+                :href="`${scanHost(info.orderid)}${info.orderid}`"
+                target="_blank"
+              >{{cutMiddleStr(info.orderid, 10)}}</a>
             </li>
           </ul>
           <ul
@@ -198,11 +198,11 @@
             </li>
             <li>
               <span class="label">{{$t('window.assets.dbcyz')}}</span>
-              <span
+              <a
                 class="value need-copy"
-                v-clipboard:copy="info.owneraddr || owneraddr"
-                v-clipboard:success="onCopy"
-              >{{cutMiddleStr(info.owneraddr || owneraddr, 10)}}</span>
+                :href="`${scanHost(info.owneraddr)}${info.owneraddr}`"
+                target="_blank"
+              >{{cutMiddleStr(info.owneraddr || owneraddr, 10)}}</a>
             </li>
             <li>
               <span class="label">{{$t('window.assets.kfzf')}}</span>
