@@ -90,18 +90,18 @@ export default {
       this.isCreatingWallet = route.path.indexOf("wallet") !== -1;
     }
 
-    window.onunload = () => {
-      localStorage.setItem(
-        "WICC_RESTORE_PATH",
-        JSON.stringify({
-          name: route.name,
-          query: {
-            ...(route.query || {}),
-            currentMnemonic: this.currentMnemonic
-          }
-        })
-      );
-    };
+    // window.onunload = () => {
+    //   localStorage.setItem(
+    //     "WICC_RESTORE_PATH",
+    //     JSON.stringify({
+    //       name: route.name,
+    //       query: {
+    //         ...(route.query || {}),
+    //         currentMnemonic: this.currentMnemonic
+    //       }
+    //     })
+    //   );
+    // };
   },
 
   destroyed() {

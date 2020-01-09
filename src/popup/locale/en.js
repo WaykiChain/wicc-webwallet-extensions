@@ -329,7 +329,7 @@ export default {
       cdpzjjy:"CDP-Further stake",
       cdpqsjy:"CDP-Liquidate",
       cdpshjy:"CDP-Redeem",
-      cjcdpdz:"Created by：",
+      cjcdpdz:"Created by",
       dyl:"Stake amount",
       dcl:"Generate amount",
       gcdpCjjyid:"Created at",

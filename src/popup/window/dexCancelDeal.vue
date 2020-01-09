@@ -5,7 +5,7 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{$t('account.transDetail.hashLabel')}}</label>
-          <span class="addr coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(dealNum,12)}}</span>
+          <span class="coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(dealNum,12)}}</span>
         </div>
         <div class="line"></div>
         <div class="cell">

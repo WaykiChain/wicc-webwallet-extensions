@@ -9,7 +9,7 @@
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.gcdpCjjyid')}}</label>
-          <span class="addr coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(cdpTxId,6)}}</span>
+          <span class="coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(cdpTxId,6)}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.qsl')}}</label>

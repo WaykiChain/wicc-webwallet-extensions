@@ -23,7 +23,7 @@
           }"
           v-for="tokenKey in ['WICC','WGRT','WUSD']"
           :key="tokenKey"
-          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: tokenKey === 'WGRT' ? '' : getCurrencyAmount(myAssets[tokenKey])})"
+          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: getCurrencyAmount(myAssets[tokenKey])})"
         >
           <div class="list-wrap">
             <img class="token-item-icon" :src="getIcon(tokenKey)" />

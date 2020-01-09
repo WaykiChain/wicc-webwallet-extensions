@@ -5,11 +5,11 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.cjcdpdz')}}</label>
-          <span class="addr cellValue">{{cutMiddleStr(address,6)}}</span>
+          <span class="cellValue">{{cutMiddleStr(address,6)}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.gcdpCjjyid')}}</label>
-          <span class="addr coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(cdpTxId,6)}}</span>
+          <span class="coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(cdpTxId,6)}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.cdp.ghl')}}</label>
