@@ -318,10 +318,10 @@ export default class {
   assetsPub(info) {
     var assetData = {
       assetSymbol: info.assetSymbol,   //asset Symbol Capital letter A-Z 1-7 digits [A_Z]
-      ownerAddress: info.assetOwnerId,  //asset owner
+      ownerRegid: info.assetOwnerId,  //asset owner
       assetName: info.assetName,  //asset token name
       totalSupply: parseInt(info.assetSupply),// total Supply 10^8
-      minTable: info.assetMintable == "true" ? true : false    //Whether to increase the number
+      modifiAble: info.assetMintable == "true" ? true : false    //Whether to increase the number
     }
     var assetCreateInfo = {
       nTxType: 9,

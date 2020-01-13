@@ -138,7 +138,7 @@
               <span class="label">{{$t('window.cdp["成交量"]')}}</span>
               <span class="value" v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
               <span class="value" v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{fixed(formatAmount(info.assetamount, 8) / formatAmount(info.price, 8), 8)}} {{info.coinsymbol}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{fixed(formatAmount(info.assetamount, 8) * formatAmount(info.price, 8), 8)}} {{info.coinsymbol}}</span>
               <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>

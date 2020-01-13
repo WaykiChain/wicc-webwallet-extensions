@@ -1,5 +1,5 @@
 <template>
-  <nav-layout :path="backPath" class="u-full-height">
+  <nav-layout back-type="close" :path="backPath" class="u-full-height">
     <div class="title">{{$t('wallet.create.validate.title')}}</div>
     <wallet-input
       style="margin-top: 16px;"

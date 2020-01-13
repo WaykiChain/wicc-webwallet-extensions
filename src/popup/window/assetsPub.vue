@@ -13,18 +13,18 @@
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.assets.zfxl')}}</label>
-          <span class="cellValue">{{assetSupply / Math.pow(10,8)}}</span>
+          <span class="cellValue">{{amountFormat(assetSupply / Math.pow(10,8))}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{$t('window.assets.dbcyz')}}</label>
-          <span class="cellValue ">{{cutMiddleStr(assetOwnerId,6)}}</span>
+          <span class="cellValue">{{cutMiddleStr(assetOwnerId,6)}}</span>
         </div>
-        <div class="cell">
+        <!-- <div class="cell">
           <label class="cellName">{{$t('window.assets.kfzf')}}</label>
           <span
             class="cellValue"
           >{{assetMintable == 'true' ? $t('window.assets.s') : $t('window.assets.f')}}</span>
-        </div>
+        </div>-->
         <div class="cell">
           <label class="cellName">{{$t('window.assets.fwf')}}</label>
           <span class="cellValue">550 WICC</span>
@@ -88,6 +88,20 @@ export default {
     console.log(query);
   },
   methods: {
+    amountFormat(money) {
+      money = String(money)
+      var integerArr = money
+        .split(".")[0]
+        .split("")
+        .reverse(),
+      tempArr = "";
+      for (var i = 0, k = integerArr.length; i < k; i++) {
+        var cammaTag = (i + 1) % 3 == 0 && i + 1 != k ? "," : "";
+        tempArr += integerArr[i] + cammaTag;
+      }
+      money = tempArr.split("").reverse().join("")
+      return money;
+    },
     sureCreateCDP() {
       let net = localStorage.getItem("network");
       API.getAccountInfo(net, this.assetOwnerId).then(
@@ -108,6 +122,7 @@ export default {
             address: this.address,
             feesName: this.feesName
           };
+          alert("txData12:" + JSON.stringify(param));
           API.callRaw("assetsPub", { info: param }).then(
             res => {
               this.$loading.close();

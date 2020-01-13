@@ -274,7 +274,7 @@ export default {
     },
     publishContract: {
       title: '合约发布',
-      addressLabel: '调用地址',
+      addressLabel: '地址',
       scriptLabel: '合约内容',
       scriptDescLabel: '合约描述',
       closeButton: '取消',
