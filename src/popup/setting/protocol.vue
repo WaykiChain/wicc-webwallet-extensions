@@ -203,7 +203,7 @@ export default {
   data() {
     return {
       isCN:
-        localStorage.getItem("WICC_WALLET_LANGUAGE") === "zh-CN" ? true : false
+        localStorage.getItem("WICC_WALLET_LANGUAGE") === "zh-CN" || navigator.language.indexOf('zh') > -1 ? true : false
     };
   },
   components: {

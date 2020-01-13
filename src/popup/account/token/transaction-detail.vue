@@ -5,8 +5,8 @@
         <div class="icon"></div>
         <div
           class="amount"
-          v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX'"
-        >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.coinsymbol}}</div>
+          v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX' && info.txtype !== 'DEX_MARKET_BUY_ORDER_TX' && info.txtype !== 'DEX_MARKET_SELL_ORDER_TX'"
+        >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.txtype.indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol}}</div>
         <div class="status">{{$t("common.success")}}</div>
         <div class="info-list">
           <ul class="address-info-list">
@@ -363,6 +363,7 @@ export default {
             : trans.coinamount;
           return amount / Math.pow(10, 8);
         }
+        if (trans.txtype.indexOf("DEX_MARKET") > -1) {;return 0}
         const amount = trans.assetamount ? trans.assetamount : trans.coinamount;
         const res = (amount * trans.price) / Math.pow(10, 16);
         return res;
@@ -399,12 +400,12 @@ export default {
     margin: auto;
     margin-top: 28px;
     overflow: hidden;
+    margin-bottom: 12px;
   }
   .amount {
     line-height: 32px;
     color: #1d213c;
     font-size: 24px;
-    margin-top: 12px;
     text-align: center;
     font-weight: 500;
   }

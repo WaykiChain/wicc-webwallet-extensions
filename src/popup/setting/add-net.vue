@@ -9,14 +9,14 @@
         <wallet-input
           v-model="name"
           :label="$t('setting.index.name')"
-          :placeholder="'输入1～50位字符'"
+          :placeholder="$t('setting.index.holderName')"
           type="text"
         ></wallet-input>
         
         <wallet-input
           v-model="url"
           :label="$t('setting.index.rpc')"
-          :placeholder="'URL以http/https开头'"
+          :placeholder="$t('setting.index.holderUrl')"
           type="text"
         ></wallet-input>
 

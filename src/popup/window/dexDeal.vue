@@ -11,7 +11,7 @@
           <label class="cellName">{{confirmType()[2]}}</label>
           <span
             class="cellValue"
-          >{{price == $t('window.cdp.sjcjwz') ? price : (price / Math.pow(10,8)).toFixed(8)}} {{danweiStr2}}</span>
+          >{{price == $t('window.cdp.sjcjwz') ? price + ` (${danweiStr2})`: (price / Math.pow(10,8)).toFixed(8) + ` ${danweiStr2}`}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[3]}}</label>

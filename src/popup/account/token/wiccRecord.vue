@@ -181,9 +181,9 @@ export default {
       }.svg`);
     },
     refresh(silence = false) {
-      // if (!silence) {
-      //   this.$loading(this.$t("common.loading"));
-      // }
+      if (this.currentpage === 1) {
+        this.$loading(this.$t("common.loading"));
+      }
       this.busy = true;
       const param = {
         address: this.activeAddress,

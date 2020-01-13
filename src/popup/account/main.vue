@@ -57,6 +57,7 @@ export default {
   },
 
   created() {
+    localStorage.removeItem("WICC_RESTORE_PATH");
     eventBus.$on("on-assets-update", data => {
       this.asssets = data;
     });

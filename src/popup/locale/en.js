@@ -212,7 +212,8 @@ export default {
       confirmLoading: 'Importing...',
       importSuccess: 'Successful',
       importFailure: 'Failed',
-      correctMnemonic: 'Please enter correct mnemonic'
+      correctMnemonic: 'Please enter correct mnemonic',
+      correctPK: 'Please enter correct private key'
     }
   },
 
@@ -230,7 +231,9 @@ export default {
       name:'Network Name',
       rpc:'New Baas URL',
       addNet:'Add Network',
-      Currency: 'Currency'
+      Currency: 'Currency',
+      holderName: 'Input 1-50 characters',
+      holderUrl: 'URL starts with HTTP / HTTPS'
     },
     about: {
       title: 'Information',
@@ -307,11 +310,11 @@ export default {
       xjmc:"DEX-Limit Sell Order",
       sjmc:"DEX-Market Sell Order",
       sjmr:"DEX-Market Buy Order",
-      slwicc:"Amount",
+      slwicc:"Cost",
       jgwusd:"Price",
       hdslwusd:"Amount receive",
-      slwusd:"Amount",
-      hdslwicc:"Cost",
+      slwusd:"Cost",
+      hdslwicc:"Amount Receive",
       dqscjg:"Price",
       yjhdwusd:"Amount receive",
       yjhdwicc:"Amount receive",
@@ -339,7 +342,7 @@ export default {
       qsl:"Liquidation amount",
       ghl:"Repay amount",
       shl:"Redemption amount",
-      sjcjwz:'The actual transaction prevails',
+      sjcjwz:'Based on pratice',
       addtional:'CDP-Further stake',
       zzfbzc:'Creat',
 
@@ -356,9 +359,9 @@ export default {
       noAssets:"You don't have any assets",
       ownerAddr: "Created by",
       creator: "Created by",
-      成交量: "Executed",
+      成交量: "Amount",
       成交价: "Price",
-      成交总额: "Total",
+      成交总额: "Cost",
     },
     msgSign:{
       xxqm:'Authorization',

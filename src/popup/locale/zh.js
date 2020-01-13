@@ -215,7 +215,8 @@ export default {
       confirmLoading: '导入中...',
       importSuccess: '导入成功',
       importFailure: '导入失败',
-      correctMnemonic: '请输入正确的助记词'
+      correctMnemonic: '请输入正确的助记词',
+      correctPK: '请输入正确的私钥'
     }
   },
 
@@ -233,7 +234,9 @@ export default {
       name:'网络名称',
       rpc:'新的Baas URL',
       addNet:'添加网络',
-      Currency: '计价方式'
+      Currency: '计价方式',
+      holderName: '输入1～50位字符',
+      holderUrl: 'URL以http/https开头'
     },
     about: {
       title: '关于我们',
@@ -304,15 +307,15 @@ export default {
       createFailure: '调用失败'
     },
     cdp:{
-      xjmr:"DEX-限价买单",
-      xjmc:"DEX-限价卖单",
-      sjmc:"DEX-市价卖单",
-      sjmr:"DEX-市价买单",
-      slwicc:"预计获得",
+      xjmr:"DEX限价买单",
+      xjmc:"DEX限价卖单",
+      sjmc:"DEX市价卖单",
+      sjmr:"DEX市价买单",
+      slwicc:"预计花费",
       hdslwusd:"预计获得",
       slwusd:"预计花费",
       jgwusd:"当前价格",
-      hdslwicc:"预计花费",
+      hdslwicc:"预计获得",
       dqscjg:"当前市场价格",
       yjhdwusd:"预计获得",
       yjhdwicc:"预计获得",
@@ -355,9 +358,9 @@ export default {
       noAssets:"您没有任何资产",
       ownerAddr: "资产发行人",
       creator: "创建者",
-      成交量: "成交量",
-      成交价: "成交价",
-      成交总额: "成交总额",
+      成交量: "预计获得",
+      成交价: "当前价格",
+      成交总额: "预计花费",
     },
     msgSign:{
       xxqm:'登录授权',

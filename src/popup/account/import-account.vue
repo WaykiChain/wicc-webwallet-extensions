@@ -143,7 +143,7 @@ export default {
           },
           error => {
             this.$loading.close();
-            this.$toast(formatError(error), {
+            this.$toast(this.$t("wallet.import.correctPK"), {
               type: "center",
               duration: 5000,
               wordWrap: true
