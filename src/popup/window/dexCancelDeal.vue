@@ -5,7 +5,7 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{$t('account.transDetail.hashLabel')}}</label>
-          <span class="coin-card-copy" style="cursor: pointer;">{{cutMiddleStr(dealNum,12)}}</span>
+          <span class="" style="cursor: pointer;">{{cutMiddleStr(dealNum,12)}}</span>
         </div>
         <div class="line"></div>
         <div class="cell">
@@ -14,7 +14,7 @@
         </div>
         <div class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[1]}}</label>
-          <span class="cellValue">{{wiccNum}} {{danweiStr1}}</span>
+          <span class="cellValue">{{dexType.indexOf('SELL') > -1 ? wiccNum : (wiccNum * price).toFixed(8)}} {{danweiStr1}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}</label>
@@ -25,7 +25,9 @@
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[3]}}</label>
           <span
             class="cellValue"
+            v-if="dexType.indexOf('SELL') > -1"
           >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') + ' (' + danweiStr3 +')' : (wiccNum * price).toFixed(8) + ' ' + danweiStr3}}</span>
+          <span class="cellValue" v-else>{{ wiccNum }} {{danweiStr3}}</span>
         </div>
       </div>
     </div>

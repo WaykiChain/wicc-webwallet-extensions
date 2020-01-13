@@ -1,6 +1,6 @@
 <template>
   <div class="password" v-if="show">
-    <wallet-input ref="password123" v-model="password" :message="error" :label="$t('account.header.pwdTip')" type="password"></wallet-input>
+    <wallet-input ref="password123" v-model="password" :message="error" :pattern="/^\S{0,}$/" :label="$t('account.header.pwdTip')" type="password"></wallet-input>
     <div class="warn">{{warnTxt}}</div>
     <div class="btn-wrapper">
       <button class="btn-lighter" @click="cancel">{{ $t('common.cancel') }}</button>

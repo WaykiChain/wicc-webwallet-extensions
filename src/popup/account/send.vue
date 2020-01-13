@@ -264,14 +264,14 @@ export default {
         return;
       }
       if (this.feesName == this.coinType) {
-        if (this.balance && this.value > this.balance - this.fees - 0.00001) {
+        if (this.value > this.balance - this.fees - 0.00001) {
           this.$toast(this.$t("errors.insufficientBalance"), {
             type: "center"
           });
           return;
         }
       } else {
-        if (this.balance && this.value > this.balance) {
+        if (this.value > this.balance) {
           this.$toast(this.$t("errors.insufficientBalance"), {
             type: "center"
           });

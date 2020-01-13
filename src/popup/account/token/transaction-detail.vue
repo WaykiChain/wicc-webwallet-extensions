@@ -6,7 +6,7 @@
         <div
           class="amount"
           v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX' && info.txtype !== 'DEX_MARKET_BUY_ORDER_TX' && info.txtype !== 'DEX_MARKET_SELL_ORDER_TX'"
-        >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.txtype.indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol}}</div>
+        >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.txtype && info.txtype.indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol}}</div>
         <div class="status">{{$t("common.success")}}</div>
         <div class="info-list">
           <ul class="address-info-list">
@@ -136,7 +136,10 @@
           >
             <li>
               <span class="label">{{$t('window.cdp["成交量"]')}}</span>
-              <span class="value">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span class="value" v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{fixed(formatAmount(info.assetamount, 8) / formatAmount(info.price, 8), 8)}} {{info.coinsymbol}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
               <span class="label">{{$t('window.cdp["成交价"]')}}</span>
@@ -155,14 +158,10 @@
             </li>
             <li>
               <span class="label">{{$t('window.cdp["成交总额"]')}}</span>
-              <span
-                class="value"
-                v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX' || info.txtype === 'DEX_MARKET_SELL_ORDER_TX'"
-              >{{this.$t('window.cdp.sjcjwz')}}</span>
-              <span
-                class="value"
-                v-else
-              >{{formatAmount(new Decimal(info.price).times(formatAmount(info.assetamount, 8)),8)}} {{info.coinsymbol}}</span>
+              <span class="value" v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'">{{formatAmount(info.coinamount,8)}} {{info.coinsymbol}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'">{{formatAmount(new Decimal(info.price).times(formatAmount(info.assetamount, 8)),8)}} {{info.coinsymbol}}</span>
             </li>
           </ul>
           <ul
@@ -222,6 +221,7 @@ import NavLayout from "../../components/nav-layout";
 import transUtil from "../components/trans-util";
 import Decimal from "decimal.js";
 import API from "../../api";
+import fixed from '../../api/fixed'
 import Vue from "vue";
 import VueClipboard from "vue-clipboard2";
 Vue.use(VueClipboard);
@@ -246,7 +246,7 @@ export default {
     API.callRaw("getDetailInfo", { info: { hash: this.trans.txid } }).then(
       res => {
         this.info = res;
-        // alert(JSON.stringify(res));
+        alert(JSON.stringify(res));
         if (res.txtype === "ASSET_UPDATE_TX") {
           this.getAssetInfo(res.assetsymbol);
         }
@@ -281,6 +281,7 @@ export default {
     formatNewTxType: transUtil.formatNewTxType,
     formatAmount: transUtil.formatAmount,
     formatDate: transUtil.formatTime,
+    fixed: fixed,
     scanHost(str) {
       //https://testnet.waykiscan.com/#/address/
       //https://www.waykiscan.com/#/address/
@@ -342,13 +343,13 @@ export default {
     getAmount() {
       let trans = this.info;
       if (trans.txtype == "CDP_LIQUIDATE_TX") {
-        return trans.scoinstoliquidate / Math.pow(10, 8);
+        return fixed(trans.scoinstoliquidate / Math.pow(10, 8),8);
       }
       if (trans.txtype == "CDP_STAKE_TX") {
-        return trans.assetstostake.WICC / Math.pow(10, 8);
+        return fixed(trans.assetstostake.WICC / Math.pow(10, 8),8);
       }
       if (trans.txtype == "CDP_REDEEM_TX") {
-        return trans.scoinstorepay / Math.pow(10, 8);
+        return fixed(trans.scoinstorepay / Math.pow(10, 8),8);
       }
       if (trans.txtype == "ASSET_UPDATE_TX") {
         return 110;
@@ -361,11 +362,11 @@ export default {
           const amount = trans.assetamount
             ? trans.assetamount
             : trans.coinamount;
-          return amount / Math.pow(10, 8);
+          return fixed(amount / Math.pow(10, 8),8);
         }
-        if (trans.txtype.indexOf("DEX_MARKET") > -1) {;return 0}
+        if (trans.txtype.indexOf("DEX_MARKET") > -1) {return 0}
         const amount = trans.assetamount ? trans.assetamount : trans.coinamount;
-        const res = (amount * trans.price) / Math.pow(10, 16);
+        const res = fixed((amount * trans.price) / Math.pow(10, 16),8);
         return res;
       }
 

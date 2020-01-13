@@ -62,6 +62,8 @@ export default {
   border-radius: 6px;
   z-index: 10;
   animation: slide 300ms ease-in-out;
+  max-height: 176px;
+  overflow: auto;
 }
 @keyframes slide {
   0% {

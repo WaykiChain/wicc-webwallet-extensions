@@ -143,7 +143,7 @@ export default {
           },
           error => {
             this.$loading.close();
-            this.$toast(this.$t("wallet.import.correctPK"), {
+            this.$toast(error.message === 'ACCOUNT_ALREADY_EXISTS' ? formatError(error) : this.$t("wallet.import.correctPK"), {
               type: "center",
               duration: 5000,
               wordWrap: true

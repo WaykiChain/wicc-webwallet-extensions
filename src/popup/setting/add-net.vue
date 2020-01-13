@@ -11,6 +11,7 @@
           :label="$t('setting.index.name')"
           :placeholder="$t('setting.index.holderName')"
           type="text"
+          :pattern="/^\S{0,}$/"
         ></wallet-input>
         
         <wallet-input
@@ -18,6 +19,7 @@
           :label="$t('setting.index.rpc')"
           :placeholder="$t('setting.index.holderUrl')"
           type="text"
+          :pattern="/^\S{0,}$/"
         ></wallet-input>
 
         <div class="btnView">
@@ -96,11 +98,11 @@ export default {
     },
     checkUrl() {
       if (this.name.trim().length > 50) {
-        this.$toast("Maximum length is 50 characters");
+        this.$toast(this.lang === 'zh' ? '不超过50个字符' : "Maximum length is 50 characters");
         return;
       }
       if (this.netList.find(item => item.name === this.name.trim())) {
-        this.$toast("Exist already");
+        this.$toast(this.lang === 'zh' ? '已存在' : "Exist already");
         return;
       }
       this.$loading("Checking...");
@@ -117,7 +119,7 @@ export default {
         })
         .catch(err => {
           this.$loading.close();
-          this.$toast("Invalid url");
+          this.$toast(this.lang === 'zh' ? 'url不正确' : "Invalid url");
         });
     },
     add(network) {
@@ -140,10 +142,12 @@ export default {
     return {
       netList: [],
       name: "",
-      url: ""
+      url: "",
+      lang: this.$i18n.locale.indexOf('zh') > -1 ? 'zh' : 'en'
     };
   },
   created() {
+    console.log(this.$i18n.locale)
     this.netList = localStorage.getItem("netList") ? JSON.parse(localStorage.getItem("netList")) : [];
   }
 };
