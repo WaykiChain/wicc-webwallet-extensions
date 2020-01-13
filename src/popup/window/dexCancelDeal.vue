@@ -18,7 +18,8 @@
         </div>
         <div class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}</label>
-          <span class="cellValue">{{price}} {{danweiStr2}}</span>
+          <span class="cellValue" v-if="price == $t('window.cdp.sjcjwz')">{{price}} ({{danweiStr2}})</span>
+          <span class="cellValue" v-else>{{price}} {{danweiStr2}}</span>
         </div>
         <div v-if="dexType.indexOf('MARKET')==-1" class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[3]}}</label>
@@ -127,9 +128,9 @@ export default {
         return this.Tiles.limitTitle1;
       }
       if (dexType == "DEX_LIMIT_BUY_ORDER_TX") {
-        this.danweiStr1 = this.assetType;
+        this.danweiStr1 = this.coinType;
         this.danweiStr2 = this.coinType;
-        this.danweiStr3 = this.coinType;
+        this.danweiStr3 = this.assetType;
         return this.Tiles.limitTitle2;
       }
       if (dexType == "DEX_MARKET_SELL_ORDER_TX") {

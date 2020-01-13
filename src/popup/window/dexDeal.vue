@@ -5,7 +5,7 @@
       <div class="cells">
         <div class="cell">
           <label class="cellName">{{confirmType()[1]}}</label>
-          <span class="cellValue">{{amount/100000000}} {{danweiStr1}}</span>
+          <span class="cellValue">{{dexType.indexOf('SELL') > -1 ? amount/100000000:(amount * price / Math.pow(10,16)).toFixed(8)}} {{danweiStr1}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[2]}}</label>
@@ -17,13 +17,11 @@
           <label class="cellName">{{confirmType()[3]}}</label>
           <span
             class="cellValue"
+            v-if="dexType.indexOf('SELL') > -1 "
           >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') + ' (' + danweiStr3 +')' : (amount * price / Math.pow(10,16)).toFixed(8) + ' ' + danweiStr3}}</span>
+          <span class="cellValue" v-else>{{amount/100000000}} {{danweiStr3}}</span>
         </div>
       </div>
-      <!-- <p
-        v-if="dexType.indexOf('Market') > -1"
-        class="tips"
-      >{{ dexType == "Market_SELL" ? $t('window.cdp.tipsmc') : $t('window.cdp.tipsmr')}}</p>-->
     </div>
 
     <div class="footer">
@@ -122,9 +120,9 @@ export default {
         return this.Tiles.limitTitle1;
       }
       if (this.dexType == "Limit_BUY") {
-        this.danweiStr1 = this.assetType;
+        this.danweiStr1 = this.coinType;
         this.danweiStr2 = this.coinType;
-        this.danweiStr3 = this.coinType;
+        this.danweiStr3 = this.assetType;
         return this.Tiles.limitTitle2;
       }
       if (this.dexType == "Market_SELL") {
