@@ -246,7 +246,7 @@ export default {
     API.callRaw("getDetailInfo", { info: { hash: this.trans.txid } }).then(
       res => {
         this.info = res;
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if (res.txtype === "ASSET_UPDATE_TX") {
           this.getAssetInfo(res.assetsymbol);
         }

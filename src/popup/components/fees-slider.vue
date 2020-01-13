@@ -151,10 +151,10 @@ export default {
       };
     } else if (type === "wiccTx") {
       return {
-        inputValue: 0.001,
-        min: 0.001,
-        max: 0.01,
-        interval: 0.0001
+        inputValue: 0.1,
+        min: 0.1,
+        max: 1,
+        interval: 0.01
       };
     } else {
       return {
