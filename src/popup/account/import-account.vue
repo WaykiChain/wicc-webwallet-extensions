@@ -131,6 +131,11 @@ export default {
             let id = localStorage.getItem("newId");
             API.setActiveAccount(id).then(() => {
               localStorage.removeItem("newId");
+              if(this.privateKey[0] === 'Y') {
+                localStorage.setItem('network', 'testnet')
+              } else if (this.privateKey[0] === 'P') {
+                localStorage.setItem('network', 'mainnet')
+              }
               this.$loading.close();
               this.$toast(this.$t("account.import.importSuccess"), {
                 type: "center"
