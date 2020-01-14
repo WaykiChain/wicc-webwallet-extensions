@@ -15,6 +15,7 @@
         :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword')"
         :placeholder="$t('setting.password.newPasswordPlaceholder')"
+        @change="changehandler"
         type="password"></wallet-input>
 
     <wallet-input
@@ -23,6 +24,7 @@
         :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword2')"
         :placeholder="$t('setting.password.newPassword2Placeholder')"
+        @change="changehandler1"
         type="password"></wallet-input>
 
     <template slot="footer">
@@ -77,18 +79,36 @@
     },
 
     methods: {
+      changehandler() {
+        if (this.newPassword.length < 6 || this.newPassword.length > 20) {
+          this.error1 = this.$t('setting.password.newPasswordPlaceholder')
+        }
+        this.changehandler1()
+      },
+      changehandler1() {
+        if (!this.newPassword2) return
+        if (this.newPassword2.length < 6 || this.newPassword2.length > 20) {
+          this.error2 = this.$t('setting.password.newPasswordPlaceholder')
+          return
+        }
+        if (this.newPassword !== this.newPassword2) {
+          this.error2 = this.$t('errors.passwordInConsistent')
+          return
+        } 
+        this.error2 = ""
+      },
       validatePassword() {
         API.validatePassword(this.password).then(res => {
           if (res) {
             this.changePassword()
           } else {
-            this.error = "当前密码不正确"
+            this.error = this.$t('setting.password.error')
           }
         })
       },
       changePassword () {
         if (this.password === this.newPassword) {
-          return this.error1 = "不能为当前密码"
+          return this.error1 = this.$t('setting.password.error1')
         }
         if (this.newPassword !== this.newPassword2) {
           return this.error2 = this.$t('errors.passwordInConsistent')

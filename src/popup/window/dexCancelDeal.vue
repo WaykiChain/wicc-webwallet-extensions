@@ -14,7 +14,7 @@
         </div>
         <div class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[1]}}</label>
-          <span class="cellValue">{{dexType.indexOf('SELL') > -1 ? wiccNum : (wiccNum * price).toFixed(8)}} {{danweiStr1}}</span>
+          <span class="cellValue">{{dexType.indexOf('SELL') > -1 ? wiccNum : fixed(price !== $t("window.cdp.sjcjwz") ? wiccNum * price : wiccNum, 8)}} {{danweiStr1}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{dexType == "" ? '' : confirmType(dexType)[2]}}</label>
@@ -26,7 +26,7 @@
           <span
             class="cellValue"
             v-if="dexType.indexOf('SELL') > -1"
-          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') + ' (' + danweiStr3 +')' : (wiccNum * price).toFixed(8) + ' ' + danweiStr3}}</span>
+          >{{dexType.indexOf('Market') > -1 ? $t('window.cdp.sjcjwz') + ' (' + danweiStr3 +')' : fixed(wiccNum * price, 8) + ' ' + danweiStr3}}</span>
           <span class="cellValue" v-else>{{ wiccNum }} {{danweiStr3}}</span>
         </div>
       </div>
@@ -62,6 +62,7 @@ import transUtil from "../account/components/trans-util";
 import CopyMixin from "../components/copy-mixin";
 import FeesSlider from "../components/fees-slider";
 import API from "../api";
+import fixed from '../api/fixed'
 import WindowMixin from "./mixin";
 import formatError from "../api/format-error";
 export default {
@@ -122,6 +123,7 @@ export default {
   },
   methods: {
     formatNewTxType: transUtil.formatNewTxType,
+    fixed: fixed,
     confirmType(dexType) {
       if (dexType == "DEX_LIMIT_SELL_ORDER_TX") {
         this.danweiStr1 = this.assetType;

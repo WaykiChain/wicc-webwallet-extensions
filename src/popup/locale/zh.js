@@ -255,7 +255,9 @@ export default {
       newPassword2Placeholder: '请重新输入新密码',
       confirmLoading: '正在修改密码...',
       changeSuccess: '修改密码成功',
-      changeFailure: '修改密码失败'
+      changeFailure: '修改密码失败',
+      error: '当前密码不正确',
+      error1: '不能为当前密码'
     }
   },
 

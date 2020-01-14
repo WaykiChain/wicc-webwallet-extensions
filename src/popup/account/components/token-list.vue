@@ -328,10 +328,12 @@ export default {
 
   created() {
     this.eventBus.$on("on-refresh", this.handleChange);
+    this.eventBus.$on("myself-network-change", this.handleChange);
   },
 
-  destroyed() {
+  beforeDestroy() {
     this.eventBus.$off("network-change", this.handleChange);
+    this.eventBus.$off("myself-network-change", this.handleChange);
   },
 
   methods: {

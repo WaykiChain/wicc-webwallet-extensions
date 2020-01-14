@@ -203,12 +203,12 @@
                 target="_blank"
               >{{cutMiddleStr(info.owneraddr || owneraddr, 10)}}</a>
             </li>
-            <li>
+            <!-- <li>
               <span class="label">{{$t('window.assets.kfzf')}}</span>
               <span
                 class="value"
               >{{info.mintable || mintable ? $t('window.assets.s') : $t('window.assets.f')}}</span>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>

@@ -201,21 +201,31 @@ export default {
     setNetwork(network) {
       localStorage.removeItem("srcRegID");
       var net = "";
+      var isMySelfNetwork = false
       if (network.name) {
         net = network.network;
         localStorage.setItem("network", network.network);
         this.currentNet = network.name;
         localStorage.setItem("myselfNetWork", JSON.stringify(network));
+        isMySelfNetwork = true
       } else {
         net = network;
         localStorage.setItem("network", network);
         this.currentNet = network;
+        if (localStorage.getItem("myselfNetWork")) {
+          isMySelfNetwork = true
+        } else {
+          isMySelfNetwork = false
+        }
         localStorage.removeItem("myselfNetWork");
       }
       API.setNetwork(net).then(({ network, account }) => {
         this.network = network;
         this.$emit("network-change", network, this);
         eventBus.$emit("network-change", network);
+        if(isMySelfNetwork) {
+          eventBus.$emit("myself-network-change", network);
+        }
         if (account) {
           this.activeAccount = account;
           eventBus.$emit("active-account-change", account);

@@ -6,19 +6,19 @@
         <div class="cell">
           <label class="cellName">{{confirmType()[1]}}</label>
           <span class="cellValue" v-if="dexType === 'Limit_SELL'">{{ amount/100000000}} {{danweiStr1}}</span>
-          <span class="cellValue" v-if="dexType === 'Limit_BUY'">{{ (amount * price / Math.pow(10,16)).toFixed(8)}} {{danweiStr1}}</span>
-          <span class="cellValue" v-if="dexType === 'Market_SELL'">{{dexType.indexOf('SELL') > -1 ? amount/100000000:(amount * price / Math.pow(10,16)).toFixed(8)}} {{danweiStr1}}</span>
+          <span class="cellValue" v-if="dexType === 'Limit_BUY'">{{ fixed(amount * price / Math.pow(10,16), 8)}} {{danweiStr1}}</span>
+          <span class="cellValue" v-if="dexType === 'Market_SELL'">{{dexType.indexOf('SELL') > -1 ? amount/100000000:fixed(amount * price / Math.pow(10,16), 8)}} {{danweiStr1}}</span>
           <span class="cellValue" v-if="dexType === 'Market_BUY'">{{ amount/100000000}} {{danweiStr1}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[2]}}</label>
           <span
             class="cellValue"
-          >{{price == $t('window.cdp.sjcjwz') ? price + ` (${danweiStr2})`: (price / Math.pow(10,8)).toFixed(8) + ` ${danweiStr2}`}}</span>
+          >{{price == $t('window.cdp.sjcjwz') ? price + ` (${danweiStr2})`: fixed(price / Math.pow(10,8), 8) + ` ${danweiStr2}`}}</span>
         </div>
         <div class="cell">
           <label class="cellName">{{confirmType()[3]}}</label>
-          <span class="cellValue" v-if="dexType === 'Limit_SELL'">{{(amount * price / Math.pow(10,16)).toFixed(8)}} {{danweiStr3}}</span>
+          <span class="cellValue" v-if="dexType === 'Limit_SELL'">{{fixed(amount * price / Math.pow(10,16), 8)}} {{danweiStr3}}</span>
           <span class="cellValue" v-if="dexType === 'Limit_BUY'">{{amount/100000000}} {{danweiStr3}}</span>
           <span class="cellValue" v-if="dexType === 'Market_SELL'">{{$t('window.cdp.sjcjwz')}} ({{danweiStr3}})</span>
           <span class="cellValue" v-if="dexType === 'Market_BUY'">{{$t('window.cdp.sjcjwz')}} ({{danweiStr3}})</span>
@@ -54,6 +54,7 @@
 <script>
 import FeesSlider from "../components/fees-slider";
 import API from "../api";
+import fixed from '../api/fixed'
 import WindowMixin from "./mixin";
 import formatError from "../api/format-error";
 export default {
@@ -113,6 +114,7 @@ export default {
     console.log(query);
   },
   methods: {
+    fixed: fixed,
     ///type : 0 限价卖出，1 限价买入， 2 市价卖出，3市价买入
     confirmType() {
       if (this.dexType == "Limit_SELL") {

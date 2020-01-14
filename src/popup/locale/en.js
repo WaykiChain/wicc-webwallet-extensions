@@ -252,7 +252,9 @@ export default {
       newPassword2Placeholder: 'Enter new password again',
       confirmLoading: 'Loading...',
       changeSuccess: 'Successful',
-      changeFailure: 'Failed'
+      changeFailure: 'Failed',
+      error: 'The current password is incorrect',
+      error1: 'Cannot be current password'
     }
   },
 
