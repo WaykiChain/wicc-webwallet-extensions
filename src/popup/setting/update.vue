@@ -1,14 +1,13 @@
 <template>
   <div class="wallet-container">
     <div class="u-full-height">
-      <div class="title">更新提示（v2.2.0）</div>
-      <div class="content-title">WaykiMax已更新以下内容</div>
-      <div class="content-item">1、整体页面优化；</div>
-      <div class="content-item">2、优化所有页面的功能，让产品更加健壮；</div>
-      <div class="content-item">3、修复一些问题，提升流畅度。</div>
+      <div class="title">{{language === 'cn' ? '更新提示' : 'Update Notes'}}（v2.2.0）</div>
+      <div class="content-title" v-if="language === 'cn'">WaykiMax已更新以下内容</div>
+      <div class="content-title" v-else>The following has been updated</div>
+      <div class="content-item" v-html="content"></div>
       <div class="btn-container">
-        <button class="btn-lighter" @click="cancel">下次再说</button>
-        <button class="btn-primary"><a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>前往更新 </button>
+        <button class="btn-lighter" @click="cancel">{{language === 'cn' ? '下次再说' : 'Ignore'}}</button>
+        <button class="btn-primary"><a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>{{language === 'cn' ? '前往更新' : 'Update'}} </button>
       </div>
     </div>
   </div>
@@ -42,7 +41,9 @@
   line-height: 18px;
   font-size: 13px;
   color: #8187A5;
-  margin-bottom: 6px;
+  p {
+    margin-bottom: 6px;
+  }
 }
 
 .btn-container {
@@ -68,7 +69,6 @@
 
 <script type="text/jsx">
 import NavLayout from "../components/nav-layout";
-import { getLanguage, setLanguage } from "../locale";
 
 export default {
   name: "setting",
@@ -87,7 +87,8 @@ export default {
   data() {
     return {
       tab: "setting",
-      language: null
+      language: this.$i18n.locale.indexOf('zh') > -1 ? 'cn' : 'en',
+      content: this.$route.query.content
     };
   }
 };

@@ -37,9 +37,15 @@ const verifyExists = (type, value) => {
 
   for (let item of data) {
     if (item.type === type) {
-      if (type === 'mnemonic' && api.switchMnemonicCode(item.data.mnemonic,'ENGLISH') === api.switchMnemonicCode(value, 'ENGLISH')) {
+      if (type === 'mnemonic' && api.switchMnemonicCode(item.data.mnemonic, 'ENGLISH') === api.switchMnemonicCode(value, 'ENGLISH')) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)
       } else if (type === 'privateKey' && item.data.privateKey === value) {
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
+      }
+    } else {
+      if (type === 'mnemonic' && api.getPrivateKeyWIFFromMnemonic(value) === item.data.privateKey) {
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
+      } else if (type === 'privateKey' && api.getPrivateKeyWIFFromMnemonic(item.data.mnemonic) === value) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)
       }
     }
@@ -86,11 +92,11 @@ const createAccountWithPrivateKey = (wif) => {
 }
 
 export default {
-  isLogin () {
+  isLogin() {
     return !!state.password
   },
 
-  async importAccountWithMnemonic (mnemonic) {
+  async importAccountWithMnemonic(mnemonic) {
     verifyExists('mnemonic', mnemonic)
     const account = createAccountWithMnemonic(mnemonic)
     const data = state.data || []
@@ -105,7 +111,7 @@ export default {
     })
   },
 
-  async importAccountWithPrivateKey (privateKey) {
+  async importAccountWithPrivateKey(privateKey) {
     verifyExists('privateKey', privateKey)
     const account = createAccountWithPrivateKey(privateKey)
     const data = state.data || []
@@ -120,7 +126,7 @@ export default {
     })
   },
 
-  getAccounts () {
+  getAccounts() {
     const data = state.data
     if (!data) return null
 
@@ -136,7 +142,7 @@ export default {
     })
   },
 
-  getActiveAccount () {
+  getActiveAccount() {
     const data = state.data
     if (!data) return null
 
@@ -168,7 +174,7 @@ export default {
     }
   },
 
-  async switchActiveAccount () {
+  async switchActiveAccount() {
     const data = state.data
     if (!data) return null
 
@@ -181,7 +187,7 @@ export default {
     return null
   },
 
-  async setActiveAccount (id) {
+  async setActiveAccount(id) {
     const data = state.data
     if (!data) return null
     let success = false
@@ -205,7 +211,7 @@ export default {
     return state.activeAccount
   },
 
-  getMnemonic (address) {
+  getMnemonic(address) {
     const data = state.data
     if (!data) return null
     for (let item of data) {
@@ -217,7 +223,7 @@ export default {
     return null
   },
 
-  getPrivateKey (address) {
+  getPrivateKey(address) {
     if (privateKeyMap[address]) return privateKeyMap[address]
     const data = state.data
     if (!data) return null
@@ -241,7 +247,7 @@ export default {
     return null
   },
 
-  async createWallet (password, mnemonic) {
+  async createWallet(password, mnemonic) {
     const account = createAccountWithMnemonic(mnemonic) //createAccountWithMnemonic 验证是正式环境还是测试环境
     state.data = [account]
 
@@ -254,7 +260,7 @@ export default {
     })
   },
 
-  async unlock (password, vaultBlob) {
+  async unlock(password, vaultBlob) {
     state.vaultBlob = vaultBlob
     return passworder.decrypt(password, vaultBlob).then((value) => {
       state.password = password
@@ -264,14 +270,14 @@ export default {
     })
   },
 
-  async logout () {
+  async logout() {
     state.password = null
     state.data = null
     state.vaultBlob = null
     state.activeAccount = null
   },
 
-  async changePassword (password, newPassword) {
+  async changePassword(password, newPassword) {
     const valid = await this.validatePassword(password, state.vaultBlob)
     if (!valid) {
       throw new Error('PASSWORD_INVALID')
@@ -292,7 +298,7 @@ export default {
     }
   },
 
-  async validatePassword (password, vaultBlob) {
+  async validatePassword(password, vaultBlob) {
     return passworder.decrypt(password, vaultBlob).then(() => {
       return true
     }, () => {

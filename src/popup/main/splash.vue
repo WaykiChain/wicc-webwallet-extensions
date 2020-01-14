@@ -215,11 +215,13 @@ export default {
             appNo: 1,
             langType: 1,
             packageType: 1,
-            platformType: "chrome",
+            platformType: "360safe",
             version: ver
           }).then(res => {
             if (+res.upGradeType) {
-              this.$router.push("/wallet/update");
+              this.$router.push({path: "/wallet/update", query: {
+                content: this.$i18n.locale.indexOf('zh') > -1 ? res.releaseNoteZh : res.releaseNoteEn
+              }});
             }
           });
         }
