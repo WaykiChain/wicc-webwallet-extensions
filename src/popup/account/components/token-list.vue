@@ -15,7 +15,7 @@
     <div class="token-list-container">
       <p class="myzichan">{{$t('window.cdp.wdzc')}}</p>
       <div class="line"></div>
-      <ul class="token-list">
+      <ul class="token-list no-scrollbar">
         <li
           class="token-item"
           :class="{

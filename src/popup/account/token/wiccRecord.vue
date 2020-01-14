@@ -14,7 +14,7 @@
     </div>
     <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
     <div class="line"></div>
-    <div class="history-container">
+    <div class="history-container no-scrollbar">
       <trans-history
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"

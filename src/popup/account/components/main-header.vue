@@ -71,7 +71,7 @@
           <span class="logout-btn" @click="logout">{{ $t('account.header.logout') }}</span>
         </div>
         <div class="menu-separator"></div>
-        <ul class="account-list" ref="accountList">
+        <ul class="account-list no-scrollbar" ref="accountList">
           <li
             v-for="(account,index) in visibleAccounts"
             :key="index"

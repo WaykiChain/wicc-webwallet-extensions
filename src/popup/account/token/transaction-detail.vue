@@ -8,7 +8,7 @@
           v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX' && info.txtype !== 'DEX_MARKET_BUY_ORDER_TX' && info.txtype !== 'DEX_MARKET_SELL_ORDER_TX'"
         >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.txtype && info.txtype.indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol}}</div>
         <div class="status">{{$t("common.success")}}</div>
-        <div class="info-list">
+        <div class="info-list no-scrollbar">
           <ul class="address-info-list">
             <li>
               <span class="label">{{$t('account.transDetail.txTypeLabel')}}</span>
