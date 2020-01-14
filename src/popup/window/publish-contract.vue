@@ -23,7 +23,7 @@
         <button class="btn-lighter" @click="cancel">{{ $t('window.publishContract.closeButton') }}</button>
         <button
           class="btn-primary"
-          @click="onlyRaw ? confirmRaw() : confirm()"
+          @click="raw ? confirmRaw() : confirm()"
         >{{ $t('window.publishContract.confirmButton') }}</button>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
     //const par = location.hash.split('?')[1].split('&');
     this.script = decodeURI(query.script);
     this.scriptDesc = query.scriptDesc;
-    (this.callbackId = query.callbackId), (this.onlyRaw = query.onlyRaw);
+    (this.callbackId = query.callbackId), (this.raw = query.raw);
     console.log(this.script);
   },
 

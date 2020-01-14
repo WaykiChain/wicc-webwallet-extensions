@@ -26,7 +26,7 @@
         <button class="btn-lighter" @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
         <button
           class="btn-primary"
-          @click="onlyRaw ? confirmRaw() : confirm()"
+          @click="raw ? confirmRaw() : confirm()"
         >{{ $t('window.transfer.confirmButton') }}</button>
       </div>
     </div>
@@ -58,7 +58,7 @@ export default {
     this.desc = query.desc;
     this.callbackId = query.callbackId;
     this.value = parseFloat(query.value) || 0;
-    this.onlyRaw = query.onlyRaw;
+    this.raw = query.raw;
   },
 
   methods: {

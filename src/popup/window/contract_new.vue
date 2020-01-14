@@ -63,7 +63,7 @@ export default {
       coinSymbol: "",
       contract: "",
       memo: "Message",
-      onlyRaw: ""
+      raw: ""
     };
   },
   created() {
@@ -79,7 +79,7 @@ export default {
     this.contract = query.contract;
     this.memo = query.memo;
     this.callbackId = query.callbackId;
-    this.onlyRaw = query.onlyRaw;
+    this.raw = query.raw;
     console.log(query);
   },
   methods: {
@@ -95,7 +95,7 @@ export default {
         contract: this.contract,
         memo: this.memo
       };
-      if (this.onlyRaw == "1") {
+      if (this.raw == "1") {
         this.call("variousCoinsContractRaw", param);
       } else {
         this.call("variousCoinsContractTx", param);

@@ -37,7 +37,7 @@ export default {
       address: null,
       network: null,
       test: 0,
-      onlyRaw: 0,
+      raw: 0,
       currentWindowId: 0,
       showFeeType: false
     }

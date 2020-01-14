@@ -23,7 +23,7 @@
       <fees-slider v-model="fees"></fees-slider>
       <div class="button-wrapper">
         <button @click="cancel">{{ $t('window.vote.closeButton') }}</button>
-        <button class="btn-primary" @click="onlyRaw ? confirmRaw() : confirm()">{{ $t('window.vote.confirmButton') }}</button>
+        <button class="btn-primary" @click="raw ? confirmRaw() : confirm()">{{ $t('window.vote.confirmButton') }}</button>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
     }
 
     this.callbackId = query.callbackId;
-    this.onlyRaw = query.onlyRaw;
+    this.raw = query.raw;
   },
 
   methods: {

@@ -94,7 +94,7 @@ export default {
     this.desc = query.memo;
     this.value = this.value / Math.pow(10, 8);
     this.callbackId = query.callbackId;
-    this.onlyRaw = query.onlyRaw;
+    this.raw = query.raw;
     console.log(query);
   },
   watch: {
@@ -139,7 +139,7 @@ export default {
         feeSymbol: this.feesName,
         memo: this.desc
       };
-      if (this.onlyRaw == "1") {
+      if (this.raw == "1") {
         this.callRaw("variousCoinsRaw", param);
       } else {
         this.callRaw("variousCoinsTx", param);
@@ -221,7 +221,7 @@ export default {
       fees: 0.01,
       feesName: "WICC",
       coinType: "",
-      onlyRaw: ""
+      raw: ""
     };
   }
 };

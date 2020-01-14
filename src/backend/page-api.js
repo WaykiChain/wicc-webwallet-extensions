@@ -138,13 +138,13 @@ export default {
     script,
     scriptDesc,
     callbackId,
-    onlyRaw
+    raw
   }) {
     return openWindow('publicContract', {
       script,
       scriptDesc,
       callbackId,
-      onlyRaw
+      raw
     })
   },
 
@@ -221,15 +221,15 @@ export default {
   },
   
 
-  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId,onlyRaw}) {
+  async walletPluginUContractInvoke({ amount,coinSymbol,regId,contract,memo,callbackId,raw}) {
     return openWindow('UContractInvoke', {
-      amount,coinSymbol,regId,contract,memo,callbackId,onlyRaw
+      amount,coinSymbol,regId,contract,memo,callbackId,raw
     })
   },
 
-  async UCoinTransfer({ assetMap,memo,callbackId,onlyRaw }) {
+  async UCoinTransfer({ assetMap,memo,callbackId,raw }) {
     return openWindow('UCoinTransfer', {
-      assetMap,memo,callbackId,onlyRaw
+      assetMap,memo,callbackId,raw
     })
   },
 
@@ -245,14 +245,14 @@ export default {
     value,
     desc,
     callbackId,
-    onlyRaw
+    raw
   }) {
     return openWindow('requestPay', {
       destAddress,
       value,
       desc,
       callbackId,
-      onlyRaw
+      raw
     })
   },
 
@@ -269,12 +269,12 @@ export default {
   async requestVoteRaw({
     votes,
     callbackId,
-    onlyRaw
+    raw
   }) {
     return openWindow('requestVote', {
       votes,
       callbackId,
-      onlyRaw
+      raw
     })
   },
   handleMessage(action, data) {
