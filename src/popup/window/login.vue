@@ -41,6 +41,7 @@
 
 <script>
 import API from "../api";
+let _ = require("lodash")
 export default {
   name: "window-login",
 
@@ -104,7 +105,7 @@ export default {
   methods: {
     inputHandler() {
       this.error = "";
-      this.password = this.password.trim();
+      this.password = _.trim(this.password);
     },
     focusHandler() {
       this.shouldTop = true;

@@ -184,6 +184,7 @@
 <script type="text/jsx">
 import API from "../api";
 const ver = require("../../../package.json").version;
+let _ = require("lodash")
 
 export default {
   data() {
@@ -286,7 +287,7 @@ export default {
   methods: {
     inputHandler() {
       this.error = "";
-      this.password = this.password.trim()
+      this.password = _.trim(this.password);
     },
     focusHandler() {
       this.shouldTop = true;
