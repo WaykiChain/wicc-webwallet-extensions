@@ -34,7 +34,6 @@
               >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
               <div
                 class="token-worth"
-                v-if="myAssets[tokenKey]"
               >{{getCurrencyAmount(myAssets[tokenKey])}}</div>
             </div>
           </div>
@@ -373,7 +372,9 @@ export default {
       return prefix + " " + result;
     },
     handleChange() {
-      this.getWiccNum(this.activeAddress);
+      setTimeout(() => {
+        this.getWiccNum(this.activeAddress);
+      }, 20)
     },
     gotoAddToken() {
       this.$router.push({
