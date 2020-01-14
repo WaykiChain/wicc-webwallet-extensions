@@ -36,7 +36,7 @@
             @on-change="handleFeeTypeChange"
           ></wallet-select>
         </div>
-        <fees-slider v-model="fees" type="call-cdp"></fees-slider>
+        <fees-slider v-model="fees" type="wiccTX"></fees-slider>
       </div>
       <div class="button-wrapper">
         <button class="btn-lighter" @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
@@ -218,7 +218,7 @@ export default {
       destAddr: null,
       value: null,
       desc: null,
-      fees: 0.01,
+      fees: 0.001,
       feesName: "WICC",
       coinType: "",
       raw: ""
