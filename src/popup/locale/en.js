@@ -19,7 +19,7 @@ export default {
 
   errors: {
     passwordError: 'Password is incorrect.',
-    passwordInConsistent: 'The two passwords were inconsistent.',
+    passwordInConsistent: 'Passwords do not match',
     insufficientBalance: 'Insufficient balance',
     amountLessThanLimit: 'The transferred amount should not less than 0.0001',
     accountNotActivated: 'Please register your wallet first',

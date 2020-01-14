@@ -3,18 +3,24 @@
     <div class="title">{{$t('setting.password.title')}}</div>
     <wallet-input
         v-model="password"
+        :message="error"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.currentPassword')"
         :placeholder="$t('setting.password.currentPasswordPlaceholder')"
         type="password"></wallet-input>
 
     <wallet-input
         v-model="newPassword"
+        :message="error1"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword')"
         :placeholder="$t('setting.password.newPasswordPlaceholder')"
         type="password"></wallet-input>
 
     <wallet-input
         v-model="newPassword2"
+        :message="error2"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword2')"
         :placeholder="$t('setting.password.newPassword2Placeholder')"
         type="password"></wallet-input>
@@ -23,7 +29,7 @@
       <button
           :disabled="!isValid"
           class="display-block btn-primary"
-          @click="changePassword">{{ $t('common.confirm') }}</button>
+          @click="validatePassword">{{ $t('common.confirm') }}</button>
     </template>
   </nav-layout>
 </template>
@@ -51,6 +57,18 @@
       NavLayout,
       WalletInput
     },
+
+    watch: {
+      password() {
+        this.error = ""
+      },
+      newPassword() {
+        this.error1 = ""
+      },
+      newPassword2() {
+        this.error2 = ""
+      }
+    },
   
     computed: {
       isValid () {
@@ -59,13 +77,21 @@
     },
 
     methods: {
+      validatePassword() {
+        API.validatePassword(this.password).then(res => {
+          if (res) {
+            this.changePassword()
+          } else {
+            this.error = "当前密码不正确"
+          }
+        })
+      },
       changePassword () {
+        if (this.password === this.newPassword) {
+          return this.error1 = "不能为当前密码"
+        }
         if (this.newPassword !== this.newPassword2) {
-          this.$toast(this.$t('errors.passwordInConsistent'), {
-            type: 'center'
-          })
-
-          return
+          return this.error2 = this.$t('errors.passwordInConsistent')
         }
 
         this.$loading(this.$t('setting.password.confirmLoading'))
@@ -97,7 +123,10 @@
       return {
         password: null,
         newPassword: null,
-        newPassword2: null
+        newPassword2: null,
+        error: '',
+        error1: '',
+        error2: '',
       }
     }
   }

@@ -122,7 +122,6 @@ export default {
             address: this.address,
             feesName: this.feesName
           };
-          alert("txData12:" + JSON.stringify(param));
           API.callRaw("assetsPub", { info: param }).then(
             res => {
               this.$loading.close();

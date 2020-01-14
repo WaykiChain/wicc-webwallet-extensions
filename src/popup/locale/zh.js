@@ -19,7 +19,7 @@ export default {
 
   errors: {
     passwordError: '密码错误',
-    passwordInConsistent: '两次输入的密码不一致，请检查',
+    passwordInConsistent: '两次输入的密码不一致',
     insufficientBalance: '余额不足',
     amountLessThanLimit: '转账金额不能小于 0.0001',
     accountNotActivated: '请先激活钱包',

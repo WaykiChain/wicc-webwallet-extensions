@@ -105,7 +105,7 @@ export default {
   methods: {
     inputHandler() {
       this.error = "";
-      this.password = _.trim(this.password);
+      this.password = this.password.replace(/\s+/ig, item=>"")
     },
     focusHandler() {
       this.shouldTop = true;
