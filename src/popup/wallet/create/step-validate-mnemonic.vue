@@ -1,14 +1,9 @@
 <template>
   <nav-layout back-type="close" :path="backPath" class="u-full-height">
     <div class="title">{{$t('wallet.create.validate.title')}}</div>
-    <wallet-input
-      style="margin-top: 16px;"
-      v-model="currentMnemonic"
-      :label="$t('wallet.create.validate.mnemonicLabel')"
-      color="#062DEB"
-      type="textarea"
-      read-only
-    ></wallet-input>
+    <div
+    class="mnemonic-word"
+      style="margin-top: 16px;">{{currentMnemonic}}</div>
 
     <div class="mnemonic-wrap">
       <mnemonic-tags
@@ -39,6 +34,17 @@
   line-height: 28px;
   font-weight: 500;
   margin-bottom: 30px;
+}
+.mnemonic-word {
+  background: #f5f7fa;
+  padding: 14px;
+  padding-bottom: 22px;
+  line-height: 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: rgb(6, 45, 235);
+  min-height: 76px;
+  box-sizing: border-box;
 }
 </style>
 

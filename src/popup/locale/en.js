@@ -33,7 +33,8 @@ export default {
     unlockButton: 'Log in',
     restoreWalletButton: 'Recover your wallet with mnemonics',
     createWalletButton: 'Create Wallet',
-    importWalletButton: 'Import Wallet'
+    importWalletButton: 'Import Wallet',
+    created: 'Having a wallet already'
   },
 
   account: {

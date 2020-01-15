@@ -314,7 +314,7 @@ export default {
   padding: 16px 4px 0;
   .inner {
     padding: 18px 0 12px;
-    background-color: #f5f7fa;
+    // background-color: #f5f7fa;
     border-radius: 10px;
     display: flex;
     position: relative;

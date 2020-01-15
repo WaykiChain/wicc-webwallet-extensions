@@ -1,13 +1,7 @@
 <template>
   <nav-layout back-type="close" :path="backPath" class="u-full-height">
     <div class="title">{{$t('wallet.create.backup.title')}}</div>
-    <wallet-input
-      v-model="mnemonic"
-      :label="$t('wallet.create.backup.mnemonicLabel')"
-      type="textarea"
-      read-only
-      style="margin-bottom:16px;"
-    ></wallet-input>
+    <div class="mnemonic-word" style="margin-bottom:16px;">{{mnemonic}}</div>
 
     <template>
       <div class="jump" @click="switchCode">
@@ -141,7 +135,7 @@ export default {
   height: 18px;
   font-size: 13px;
   color: #062deb;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   cursor: pointer;
   .circle {
     width: 14px;
@@ -154,11 +148,22 @@ export default {
     }
   }
 }
+.mnemonic-word {
+  background: #f5f7fa;
+  padding: 14px;
+  padding-bottom: 22px;
+  line-height: 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #21294A;
+  min-height: 76px;
+  box-sizing: border-box;
+}
 .title {
   font-size: 20px;
   color: #21274a;
   line-height: 28px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 36px;
 }
 </style>

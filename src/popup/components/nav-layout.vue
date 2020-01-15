@@ -54,7 +54,7 @@
 
   .layout-body {
     flex: 1 0 0;
-    padding: 30px 24px 0;
+    padding: 20px 24px 0;
   }
 
   .layout-footer {

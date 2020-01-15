@@ -1,6 +1,15 @@
 <template>
-  <nav-layout back-type="close" footer-padding="60" :path="backPath" class="u-full-height">
+  <nav-layout
+    back-type="close"
+    footer-padding="60"
+    :path="backPath"
+    class="u-full-height set-password"
+  >
     <div class="title">{{$t('splash.createWalletButton')}}</div>
+    <div class="import-w">
+      <span style="color:#8187A5;">{{$t('splash.created')}}?</span>
+      <span @click="gotoImportWallet">{{ $t('wallet.import.title') }}</span>
+    </div>
     <wallet-input
       v-model="password"
       class="set-password"
@@ -24,26 +33,22 @@
       :pattern="/^\S{0,}$/"
     ></wallet-input>
 
-    <div class="protocol-area">
-      <div class="circle" @click="setToggle">
-        <div class="inner" v-if="isAgreed"></div>
-      </div>
-      <div>{{$t('wallet.create.read')}}</div>
-      <div class="terms" @click="clickHandler">{{$t('wallet.create.terms')}}</div>
-    </div>
-
     <template slot="footer">
       <button :disabled="!isValid" class="display-block btn-primary" @click="validatePassword">
-        <div class="text" v-if="!loading">{{ $t('wallet.create.password.confirmButton') }}</div>
+        <div class="text" v-if="!loading">{{$t('splash.createWalletButton')}}</div>
         <div class="loading-text" v-else>
           <img src="../../static/c-loading.svg" class="load-circle" />
           <span class="load-text">{{$t('wallet.create.creating')}}</span>
         </div>
       </button>
-      <button
-        class="display-block btn-text"
-        @click="gotoImportWallet"
-      >{{ $t('wallet.create.password.importButton') }}</button>
+
+      <div class="protocol-area">
+        <div class="circle" :class="{isAgreed: isAgreed}" @click="setToggle">
+          <div class="inner" v-if="isAgreed"></div>
+        </div>
+        <div>{{$t('wallet.create.read')}}</div>
+        <div class="terms" @click="clickHandler">{{$t('wallet.create.terms')}}</div>
+      </div>
     </template>
     <warning :text="$t('wallet.create.password.tip')"></warning>
   </nav-layout>
@@ -53,35 +58,55 @@
 .set-password {
   margin-bottom: 24px;
 }
+.import-w {
+  margin-bottom: 36px;
+  font-size:13px;
+  display: flex;
+  line-height: 18px;
+  span:last-of-type {
+    color: #062DEB;
+    margin-left: 6px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
 .protocol-area {
   margin-top: 12px;
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: 12px;
   color: #c0c3d2;
   .circle {
     margin-right: 4px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
     border: 1px solid #c0c3d2;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    &.isAgreed {
+      background-color: #0B23EB;
+      border-color: #0B23EB;
+    }
     .inner {
       width: 10px;
       height: 10px;
-      background-color: #21264a;
-      border-radius: 50%;
+      background: url("../../static/agree.svg") no-repeat center center;
     }
   }
   .terms {
     margin-left: 4px;
     color: #062deb;
-    text-decoration: underline;
     cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 .loading-text {
@@ -109,7 +134,14 @@
   color: #21274a;
   line-height: 28px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 6px;
+}
+</style>
+<style lang="scss">
+.set-password {
+  .layout-footer {
+    padding-top: 34px !important;
+  }
 }
 </style>
 
@@ -161,20 +193,20 @@ export default {
     changeHandler1(val) {
       let len = val.length;
       if (len < 6 || len > 20) {
-        this.error1 = this.$t('wallet.create.password.passwordPlaceholder')
+        this.error1 = this.$t("wallet.create.password.passwordPlaceholder");
       }
     },
     inputHandler1(val) {
-      this.error1 = ""
+      this.error1 = "";
     },
     changeHandler2(val) {
       let len = val.length;
       if (len < 6 || len > 20) {
-        this.error2 = this.$t('wallet.create.password.passwordPlaceholder')
+        this.error2 = this.$t("wallet.create.password.passwordPlaceholder");
       }
     },
     inputHandler2(val) {
-      this.error2 = ""
+      this.error2 = "";
     },
     clickHandler() {
       sessionStorage.setItem("password", this.password);

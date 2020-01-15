@@ -6,7 +6,7 @@
       <div class="content-title" v-else>The following has been updated</div>
       <div class="content-item" v-html="content"></div>
       <div class="btn-container">
-        <button class="btn-lighter" @click="cancel">{{language === 'cn' ? '下次再说' : 'Ignore'}}</button>
+        <button class="btn-lighter" @click="cancel">{{language === 'cn' ? '下次再说' : 'Cancel'}}</button>
         <button class="btn-primary"><a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>{{language === 'cn' ? '前往更新' : 'Update'}} </button>
       </div>
     </div>

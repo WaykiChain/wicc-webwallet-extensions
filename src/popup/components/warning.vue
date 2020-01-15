@@ -55,11 +55,11 @@ export default {
     overflow: hidden;
     .inner {
       float: right;
-      width: 74px;
       height: 30px;
+      padding: 0 15px;
       border: 2px solid rgba(255, 255, 255, 0.5);
       font-size: 17px;
-      font-size: 450;
+      font-weight: 450;
       color: #fff;
       text-align: center;
       line-height: 30px;

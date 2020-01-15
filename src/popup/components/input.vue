@@ -172,14 +172,14 @@ export default {
 
 <style lang="scss" scoped>
 .wallet-input {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   position: relative;
 }
 .wallet-input--label {
   color: #8187a5;
   font-size: 14px;
   line-height: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .wallet-input-content {
@@ -208,7 +208,7 @@ export default {
 }
 
 .wallet-input--input {
-  height: 48px;
+  height: 46px;
   margin: 0;
   border: 0;
   flex: 1;
@@ -265,11 +265,34 @@ export default {
 }
 
 .wallet-input--message {
-  line-height: 18px;
+  white-space: nowrap;
+  line-height: 52px;
   position: absolute;
-  bottom: -18px;
-  right: 0;
-  font-size: 12px;
-  color: #f75555;
+  left: 0;
+  bottom: -59px;
+  font-size: 24px;
+  padding: 0 16px;
+  color: #ED4B4D;
+  background-color: #FFE6E5;
+  border-radius: 6px;
+  z-index: 10;
+  border: 1px solid #E74B4D;
+  transform: scale(0.5);
+  transform-origin: left top;
+  &:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -15%;
+    width: 14px;
+    height: 14px;
+    border-left: 1px solid rgb(226, 66, 68);
+    border-top: 1px solid rgb(226, 66, 68);
+    background-color: #FFE6E5;
+    transform: rotate(45deg);
+    z-index: 0;
+    box-sizing: border-box;
+    border-top-left-radius: 4px;
+  }
 }
 </style>
