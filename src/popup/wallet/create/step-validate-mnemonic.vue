@@ -1,6 +1,7 @@
 <template>
   <nav-layout back-type="close" :path="backPath" class="u-full-height">
     <div class="title">{{$t('wallet.create.validate.title')}}</div>
+    <div class="sub-title">{{$t('wallet.create.validate.mnemonicLabel')}}</div>
     <div
     class="mnemonic-word"
       style="margin-top: 16px;">{{currentMnemonic}}</div>
@@ -45,6 +46,12 @@
   color: rgb(6, 45, 235);
   min-height: 76px;
   box-sizing: border-box;
+}
+.sub-title {
+  color: #8187A5;
+  line-height: 20px;
+  margin-bottom: 6px;
+  font-size: 13px;
 }
 </style>
 

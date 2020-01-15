@@ -188,7 +188,7 @@ export default {
       backup: {
         title: 'Backup Mnemonics',
         tip: 'Keeping mnemonics is equivalent to owning an asset, so be sure to keep it in a safe place.',
-        mnemonicLabel: 'Mnemonic is used for recover Wallet password.Please accurately copy it and keep it properly.',
+        mnemonicLabel: 'Please accurately copy it and keep it properly.',
         nextButton: 'Next',
         downloadButton: 'Download'
       },

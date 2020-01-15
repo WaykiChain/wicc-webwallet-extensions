@@ -1,6 +1,7 @@
 <template>
   <nav-layout back-type="close" :path="backPath" class="u-full-height">
     <div class="title">{{$t('wallet.create.backup.title')}}</div>
+    <div class="sub-title">{{$t('wallet.create.backup.mnemonicLabel')}}</div>
     <div class="mnemonic-word" style="margin-bottom:16px;">{{mnemonic}}</div>
 
     <template>
@@ -23,6 +24,12 @@
 
 <style scoped>
 @import "../warning.scss";
+.sub-title {
+  color: #8187A5;
+  line-height: 20px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
 </style>
 
 <script type="text/jsx">

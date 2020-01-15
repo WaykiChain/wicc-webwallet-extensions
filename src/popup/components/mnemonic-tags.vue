@@ -76,7 +76,7 @@
     color: #21274A;
     font-size: 14px;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 6px 12px;
     margin-right: 16px;
     margin-bottom: 10px;
     cursor: pointer;
