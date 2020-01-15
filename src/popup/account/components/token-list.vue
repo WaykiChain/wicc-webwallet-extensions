@@ -101,7 +101,7 @@
   margin-bottom: 12px;
   font-size: 16px;
   color: #1d213c;
-  line-height: 24px;
+  line-height: 22px;
   font-weight: 500;
   padding: 0 20px;
 }

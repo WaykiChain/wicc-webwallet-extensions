@@ -18,7 +18,7 @@
           @input="inputHandler"
           ref="password1"
         />
-        <div class="holder" :class="{shouldTop: shouldTop}">Password</div>
+        <div class="holder" :class="{shouldTop: shouldTop, deep: error}">Password</div>
         <div class="actions" v-if="showClear">
           <div class="action clear" @click="setClear"></div>
           <div class="action line"></div>
@@ -41,7 +41,7 @@
 
 <script>
 import API from "../api";
-let _ = require("lodash")
+let _ = require("lodash");
 export default {
   name: "window-login",
 
@@ -105,7 +105,7 @@ export default {
   methods: {
     inputHandler() {
       this.error = "";
-      this.password = this.password.replace(/\s+/ig, item=>"")
+      this.password = this.password.replace(/\s+/gi, item => "");
     },
     focusHandler() {
       this.shouldTop = true;
@@ -202,14 +202,37 @@ export default {
   .password-wrap {
     position: relative;
     height: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     .error-msg {
-      line-height: 18px;
+      white-space: nowrap;
+      line-height: 52px;
       position: absolute;
-      bottom: -18px;
-      right: 0;
-      font-size: 12px;
-      color: #f75555;
+      left: 0;
+      bottom: -59px;
+      font-size: 24px;
+      padding: 0 16px;
+      color: #ed4b4d;
+      background-color: #ffe6e5;
+      border-radius: 6px;
+      z-index: 10;
+      border: 1px solid #e74b4d;
+      transform: scale(0.5);
+      transform-origin: left top;
+      &:after {
+        content: "";
+        position: absolute;
+        left: 20px;
+        top: -15%;
+        width: 14px;
+        height: 14px;
+        border-left: 1px solid rgb(226, 66, 68);
+        border-top: 1px solid rgb(226, 66, 68);
+        background-color: #ffe6e5;
+        transform: rotate(45deg);
+        z-index: 0;
+        box-sizing: border-box;
+        border-top-left-radius: 4px;
+      }
     }
     .holder {
       position: absolute;
@@ -221,6 +244,9 @@ export default {
       background-color: #fff;
       z-index: 1;
       transition: all 150ms linear;
+      &.deep {
+        color:  #f75555;
+      }
       &.shouldTop {
         padding: 0 6px;
         top: -10px;

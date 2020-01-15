@@ -176,7 +176,7 @@ export default {
   position: relative;
 }
 .wallet-input--label {
-  color: #8187a5;
+  color: #21264A;
   font-size: 14px;
   line-height: 16px;
   margin-bottom: 6px;
@@ -249,11 +249,11 @@ export default {
 }
 
 .wallet-input--textarea {
-  padding: 16px;
+  padding: 14px 16px;
   resize: none;
   font-size: 14px;
-  line-height: 30px;
-  height: 120px;
+  line-height: 20px;
+  height: 88px;
   margin: 0;
   border: 0;
 }

@@ -77,8 +77,8 @@
     font-size: 14px;
     border-radius: 6px;
     padding: 6px 12px;
-    margin-right: 16px;
-    margin-bottom: 10px;
+    margin-right: 12px;
+    margin-bottom: 8px;
     cursor: pointer;
     border: 1px solid #E4E8EE;
 

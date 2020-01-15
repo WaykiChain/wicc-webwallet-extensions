@@ -194,7 +194,7 @@ export default {
 .coin-card {
   position: relative;
   color: #fff;
-  padding: 14px 20px 30px;
+  padding: 15px 20px 26px;
   box-sizing: border-box;
   border-radius: 4px;
 }
@@ -358,7 +358,7 @@ export default {
     }
   }
   .title {
-    margin-top: 6px;
+    margin-top: 4px;
     line-height: 20px;
     text-align: center;
   }

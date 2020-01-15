@@ -7,7 +7,10 @@
       <div class="content-item" v-html="content"></div>
       <div class="btn-container">
         <button class="btn-lighter" @click="cancel">{{language === 'cn' ? '下次再说' : 'Cancel'}}</button>
-        <button class="btn-primary"><a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>{{language === 'cn' ? '前往更新' : 'Update'}} </button>
+        <button class="btn-primary">
+          <a href="https://wiccdev.org/tool/WaykiMax/index.html" target="_blank"></a>
+          {{language === 'cn' ? '前往更新' : 'Update'}}
+        </button>
       </div>
     </div>
   </div>
@@ -40,7 +43,7 @@
 .content-item {
   line-height: 18px;
   font-size: 13px;
-  color: #8187A5;
+  color: #8187a5;
   p {
     margin-bottom: 6px;
   }
@@ -67,6 +70,15 @@
 }
 </style>
 
+<style lang="scss">
+.content-item {
+  color: #8187a5;
+  p {
+    margin-bottom: 6px;
+  }
+}
+</style>
+
 <script type="text/jsx">
 import NavLayout from "../components/nav-layout";
 
@@ -79,15 +91,15 @@ export default {
 
   methods: {
     cancel() {
-      sessionStorage.setItem("isActive", 1)
-      this.$router.go(-1)
+      sessionStorage.setItem("isActive", 1);
+      this.$router.go(-1);
     }
   },
 
   data() {
     return {
       tab: "setting",
-      language: this.$i18n.locale.indexOf('zh') > -1 ? 'cn' : 'en',
+      language: this.$i18n.locale.indexOf("zh") > -1 ? "cn" : "en",
       content: this.$route.query.content
     };
   }

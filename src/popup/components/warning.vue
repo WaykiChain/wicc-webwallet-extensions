@@ -58,7 +58,7 @@ export default {
       height: 30px;
       padding: 0 15px;
       border: 2px solid rgba(255, 255, 255, 0.5);
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 450;
       color: #fff;
       text-align: center;

@@ -34,7 +34,8 @@ export default {
     restoreWalletButton: 'Recover your wallet with mnemonics',
     createWalletButton: 'Create Wallet',
     importWalletButton: 'Import Wallet',
-    created: 'Having a wallet already'
+    created: 'Having a wallet already',
+    noWallet: 'No wallet yet'
   },
 
   account: {

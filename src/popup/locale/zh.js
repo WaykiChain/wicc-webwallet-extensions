@@ -34,7 +34,8 @@ export default {
     restoreWalletButton: '使用助记词恢复钱包',
     createWalletButton: '创建钱包',
     importWalletButton: '导入钱包',
-    created: '已有钱包'
+    created: '已有钱包',
+    noWallet: '还没有钱包'
   },
 
   account: {

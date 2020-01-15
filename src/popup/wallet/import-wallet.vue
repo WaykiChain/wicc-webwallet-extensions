@@ -1,6 +1,10 @@
 <template>
-  <nav-layout footer-padding="60" back-type="close" class="u-full-height">
+  <nav-layout footer-padding="60" back-type="close" class="u-full-height set-password">
     <div class="title">{{$t('wallet.import.title')}}</div>
+     <div class="import-w">
+      <span style="color:#8187A5;">{{$t('splash.noWallet')}}?</span>
+      <span @click="gotoImportWallet">{{ $t('splash.createWalletButton') }}</span>
+    </div>
     <wallet-input
       v-model="mnemonic"
       :label="$t('wallet.import.mnemonic')"
@@ -82,6 +86,11 @@ export default {
       if (len < 6 || len > 20) {
         this.error1 = this.$t('wallet.create.password.passwordPlaceholder')
       }
+    },
+    gotoImportWallet() {
+      this.$router.push({
+        name: "createWallet"
+      });
     },
     inputHandler1(val) {
       this.error1 = ""
@@ -175,6 +184,28 @@ export default {
   color: #21274a;
   line-height: 28px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 6px;
+}
+.import-w {
+  margin-bottom: 36px;
+  font-size:13px;
+  display: flex;
+  line-height: 18px;
+  span:last-of-type {
+    color: #062DEB;
+    margin-left: 6px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.set-password {
+  .layout-footer {
+    padding-top: 50px !important;
+  }
 }
 </style>
