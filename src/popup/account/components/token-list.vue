@@ -32,9 +32,7 @@
               <div
                 class="token-amount-num"
               >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
-              <div
-                class="token-worth"
-              >{{getCurrencyAmount(myAssets[tokenKey])}}</div>
+              <div class="token-worth">{{getCurrencyAmount(myAssets[tokenKey])}}</div>
             </div>
           </div>
         </li>
@@ -351,13 +349,15 @@ export default {
           : (asset.freeAmount / Math.pow(10, 8)).toFixed(8)
         : 0;
       if (this.currency === "CNY") {
-        result = new Decimal(amount * asset.rmbPrice)
+        result = new Decimal(amount)
+          .times(asset.rmbPrice)
           .times(100)
           .floor()
           .dividedBy(100)
           .toString();
       } else {
-        result = new Decimal(amount * asset.usdtPrice)
+        result = new Decimal(amount)
+          .times(asset.usdtPrice)
           .times(100)
           .floor()
           .dividedBy(100)
@@ -374,7 +374,7 @@ export default {
     handleChange() {
       setTimeout(() => {
         this.getWiccNum(this.activeAddress);
-      }, 20)
+      }, 20);
     },
     gotoAddToken() {
       this.$router.push({

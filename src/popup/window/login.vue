@@ -7,7 +7,6 @@
 
     <div class="login-container">
       <div class="password-wrap">
-        <div class="error-msg" v-if="error">{{ error }}</div>
         <input
           class="display-block"
           :class="{error: error}"
@@ -19,6 +18,7 @@
           ref="password1"
         />
         <div class="holder" :class="{shouldTop: shouldTop, deep: error}">Password</div>
+        <div class="error-msg" v-if="error">{{ error }}</div>
         <div class="actions" v-if="showClear">
           <div class="action clear" @click="setClear"></div>
           <div class="action line"></div>

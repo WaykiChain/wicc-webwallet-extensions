@@ -8,7 +8,6 @@
 
       <div class="login-container" v-show="vaultCreated && isLocked">
         <div class="password-wrap">
-          <div class="error-msg" v-if="error">{{ error }}</div>
           <input
             class="display-block"
             :class="{error: error}"
@@ -20,6 +19,7 @@
             ref="password1"
           />
           <div class="holder" :class="{shouldTop: shouldTop, deep: error}">{{$t('wallet.import.password')}}</div>
+          <div class="error-msg" v-if="error">{{ error }}</div>
           <div class="actions" v-if="showClear">
             <div class="action clear" @click="setClear"></div>
             <div class="action line"></div>
@@ -104,6 +104,7 @@
       white-space: nowrap;
       line-height: 52px;
       position: absolute;
+      z-index: 10;
       left: 0;
       bottom: -59px;
       font-size: 24px;
