@@ -157,7 +157,7 @@ export default {
 }
 .mnemonic-word {
   background: #f5f7fa;
-  padding: 14px;
+  padding: 14px 16px;
   padding-bottom: 22px;
   line-height: 20px;
   border-radius: 6px;
