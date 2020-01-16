@@ -51,14 +51,14 @@
       <a href="https://cdp.waykichain.com/" target="_blank" class="link">
         <img src="../../static/cdp.svg" alt />
         <div class="link-title">
-          <span>CDP</span>
+          <span>WaykiCDP</span>
           <i></i>
         </div>
       </a>
       <a href="https://dex.waykichain.com/" target="_blank" class="link">
         <img src="../../static/dex.svg" alt />
         <div class="link-title">
-          <span>DEX</span>
+          <span>WaykiDEX</span>
           <i></i>
         </div>
       </a>
