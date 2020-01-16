@@ -3,7 +3,7 @@
     <wallet-input ref="password123" v-model="password" :message="error" :pattern="/^\S{0,}$/" :label="$t('account.header.pwdTip')" type="password"></wallet-input>
     <div class="warn">{{warnTxt}}</div>
     <div class="btn-wrapper">
-      <button class="btn-lighter" @click="cancel">{{ $t('common.cancel') }}</button>
+      <!-- <button class="btn-lighter" @click="cancel">{{ $t('common.cancel') }}</button> -->
       <button class="btn-primary coin-card-copy" @click="confirm">{{ $t('common.confirm') }}</button>
     </div>
   </div>
@@ -87,7 +87,8 @@ export default {
   button {
     margin: 0;
     padding: 0;
-    width: 124px;
+    width: 100%;
+    height: 50px;
   }
 }
 </style>

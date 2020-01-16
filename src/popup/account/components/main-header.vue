@@ -455,8 +455,8 @@ export default {
       position: absolute;
       bottom: -37px;
       left: 50%;
-      margin-left: -21px;
-      width: 42px;
+      transform: translateX(-50%);
+      padding: 2px 8px;
       height: 22px;
       background-color: rgba(0, 0, 0, 0.85);
       border-radius: 6px;

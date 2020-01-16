@@ -236,6 +236,7 @@
   line-height: 18px;
   font-size: 13px;
   color: #8187a5;
+  font-weight: normal;
 }
 
 .token-item-more-btn {

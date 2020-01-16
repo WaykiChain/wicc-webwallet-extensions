@@ -6,7 +6,7 @@
       :show-register-button="false"
       name="wicc"
       :address="activeAddress"
-      :value="$t('common.accountLabel') + `${activeAccount ? activeAccount.index + 1 : 1}`"
+      :value="$t('common.accountLabel')+ ' ' + `${activeAccount ? activeAccount.index + 1 : 1}`"
       :account-type="activeAccount ? activeAccount.type : ''"
     ></coin-card>
 

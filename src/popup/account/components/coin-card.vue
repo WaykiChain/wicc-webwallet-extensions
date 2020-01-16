@@ -314,7 +314,7 @@ export default {
   padding: 16px 4px 0;
   .inner {
     padding: 18px 0 12px;
-    // background-color: #f5f7fa;
+    background-color: #F5F7FA;
     border-radius: 10px;
     display: flex;
     position: relative;
@@ -322,7 +322,6 @@ export default {
   .item {
     width: 50%;
     height: 70px;
-    font-size: 15px;
     color: #091340;
     font-weight: 500;
     display: flex;
