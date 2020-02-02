@@ -85,6 +85,7 @@ export default {
     const query = this.$router.currentRoute.query;
     const assetMap = JSON.parse(query.assetMap)[0];
     this.coinType = assetMap.coinSymbol;
+    this.feesName = this.coinType === 'WUSD' ? 'WUSD' : 'WICC';
     this.destAddr = assetMap.destAddr;
     this.value = assetMap.amount;
     if (isNaN(parseInt(this.value))) {
