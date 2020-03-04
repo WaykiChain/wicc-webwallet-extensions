@@ -1,18 +1,17 @@
 <template>
   <div class="wallet-container">
     <nav-layout class="u-full-height">
-      <template slot="title">
-        <span>{{ $t('setting.about.title') }}</span>
-      </template>
-
+      <div class="title">{{ $t('setting.about.title') }}</div>
       <template>
         <div class="logo-container">
-          <img src="../static/about-logo.svg" />
-        </div>
-
-        <div class="name-container">
-          <div class="name">{{ $t('setting.about.name') }}</div>
-          <div class="version">2.1.3</div>
+          <div class="name-container">
+            <div class="name">
+              <span>WaykiMax</span>
+              <span></span>
+              <span>{{language === 'zh-CN' ? '版本' : 'Version'}}</span>
+            </div>
+            <div class="version">v2.2.0</div>
+          </div>
         </div>
 
         <div class="separator"></div>
@@ -29,7 +28,28 @@
             <li>
               <a href="https://www.wiccdev.org/" target="_blank">{{ $t('setting.about.devCenter') }}</a>
             </li>
+            <li>
+              <router-link to="/wallet/protocol">{{ $t('wallet.create.terms') }}</router-link>
+            </li>
           </ul>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="link-container">
+          <div class="title">{{ language === 'zh-CN' ? '联系我们' : 'Contact Us' }}</div>
+          <ul class="link-list">
+            <li>{{language === 'zh-CN' ? '商务合作' : 'Business Contact'}}：biz@waykichainhk.com</li>
+            <li>{{language === 'zh-CN' ? '客服联系' : 'Customer Service'}}：cs@waykichainhk.com</li>
+          </ul>
+        </div>
+
+        <div class="social-icon-container">
+          <a class="wechat-link" href="JavaScript: void(0)">
+            <img class="wechat-img" src="https://wiccdev.org/images/index/wechat_kf.png" />
+          </a>
+          <a href="https://t.me/wiccofficial" class="social-icon" target="_blank"></a>
+          <a href="https://twitter.com/wayki_chain" class="social-icon twitter" target="_blank"></a>
         </div>
       </template>
     </nav-layout>
@@ -38,56 +58,132 @@
 
 <style lang="scss" scoped>
 @import "./header-tab.scss";
-
+.u-full-height {
+  background: url("../static/about-logo.png") no-repeat 190px top;
+  background-size: 224px 168px;
+}
 .section-content {
   margin-bottom: 16px;
 }
 
-.logo-container {
-  height: 122px;
-  background: #f7f7f7;
-  margin: 0 -16px;
-  text-align: center;
-
-  > img {
-    margin-top: 21px;
-  }
+.title {
+  font-size: 20px;
+  color: #21274a;
+  line-height: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
 }
 
 .separator {
-  border-bottom: 1px solid rgba(180, 188, 204, 0.3);
+  border-bottom: 1px solid #f0f3f7;
+  margin: 30px 0;
 }
 
 .name-container {
-  margin: 20px 0;
-
+  padding-top: 10px;
   .name {
-    font-size: 20px;
-    color: #5b5f67;
-    font-weight: bold;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    span:first-of-type {
+      font-size: 18px;
+      color: #1d213c;
+      font-weight: 500;
+    }
+    span:nth-of-type(2) {
+      width: 1px;
+      height: 12px;
+      background-color: #8187A5;
+      margin: 0 12px;
+    }
+    span:last-of-type {
+      font-size: 15px;
+      color: #21264A;
+    }
   }
   .version {
-    color: #b4bccc;
-    font-size: 14px;
+    color: #8187a5;
+    font-size: 13px;
+    left: 18px;
+    margin-top: 14px;
   }
 }
 
 .link-container {
-  margin-top: 20px;
-
   .title {
-    font-size: 20px;
-    color: #5b5f67;
-    font-weight: bold;
-    margin-bottom: 6px;
+    font-size: 15px;
+    color: #1d213c;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 8px;
   }
 
   .link-list {
     list-style: none;
     margin: 0;
+    overflow: hidden;
 
     li {
       padding: 0;
+      margin-top: 6px;
+      margin-bottom: 0;
+      font-size: 13px;
+      line-height: 18px;
+      color: #8187a5;
+      a {
+        color: #062deb;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.social-icon-container {
+  margin-top: 56px;
+  display: flex;
+
+  .social-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 12px;
+    background: url("../static/telicom.svg");
+    &:hover {
+      background-image: url("../static/telicom-light.svg");
+      &.twitter {
+        background-image: url("../static/twitter-light.svg");
+      }
+    }
+    &.twitter {
+      background: url("../static/twitter.svg");
+    }
+  }
+
+  .wechat-link {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    background: url("../static/wechat.svg");
+    margin-right: 12px;
+    &:hover {
+      background-image: url("../static/wechat-light.svg");
+    }
+
+    .wechat-img {
+      display: none;
+      width: 120px;
+      height: 120px;
+    }
+
+    &:hover .wechat-img {
+      display: inline-block;
+      position: absolute;
+      top: -128px;
+      left: 0;
+      width: 124px;
+      height: 124px;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.16);
+      border-radius: 10px;
     }
   }
 }
@@ -104,13 +200,12 @@ export default {
     NavLayout
   },
 
-  methods: {
-  },
+  methods: {},
 
   data() {
     return {
       tab: "setting",
-      language: null
+      language: getLanguage()
     };
   }
 };

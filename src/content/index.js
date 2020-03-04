@@ -140,7 +140,7 @@ window.WiccWallet = {
       script,
       scriptDesc,
       callbackId,
-      onlyRaw: 1
+      raw: 1
     })
   },
 
@@ -264,18 +264,18 @@ window.WiccWallet = {
   },
 
     ///多币种合约调用
-    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback,onlyRaw){
+    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback,raw){
       const callbackId = saveCallback(callback)
       return send('walletPluginUContractInvoke',{
-        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId,onlyRaw
+        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId,raw
       })
     },
 
     ///多币种转账
-    UCoinTransfer(assetMap,memo,callback,onlyRaw){
+    UCoinTransfer(assetMap,memo,callback,raw){
       const callbackId = saveCallback(callback)
       return send('UCoinTransfer',{
-        assetMap,memo,callbackId,onlyRaw
+        assetMap,memo,callbackId,raw
       })
     },
 
@@ -306,7 +306,7 @@ window.WiccWallet = {
       value: formatValue(value),
       desc,
       callbackId,
-      onlyRaw: 1
+      raw: 1
     })
   },
 
@@ -325,7 +325,7 @@ window.WiccWallet = {
     return send('requestVote', {
       votes,
       callbackId,
-      onlyRaw: 1
+      raw: 1
     })
   }
 }

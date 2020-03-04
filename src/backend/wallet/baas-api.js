@@ -90,4 +90,8 @@ export default class {
   getAssetInfo(info){
     return axios.post(this.host + '/asset/getasset', info).then(handleResponse, handleError)
   }
+  //获取插件钱包最新版本号
+  getExtensionVersion(info) {
+    return axios.post(this.host + '/app/version', info).then(handleResponse, handleError)
+  }
 }

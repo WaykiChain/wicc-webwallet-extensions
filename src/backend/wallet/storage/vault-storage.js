@@ -1,7 +1,7 @@
 import * as passworder from 'browser-passworder'
 import WiccAPI from '../wicc-api'
 import * as uuidv4 from 'uuid/v4'
-import * as bitcore from 'bitcore-lib'
+import WiccWalletLib from 'wicc-wallet-lib'
 import { getAddressNetwork, getPrivateKeyNetwork } from '../util/index'
 
 const privateKeyMap = {}
@@ -17,6 +17,8 @@ const ACCOUNT_ALREADY_EXISTS = 'ACCOUNT_ALREADY_EXISTS'
 
 const verifyExists = (type, value) => {
   const data = state.data
+
+  const api = new WiccAPI('testnet')
 
   if (type === 'privateKey') {
     const network = getPrivateKeyNetwork(value)
@@ -35,9 +37,15 @@ const verifyExists = (type, value) => {
 
   for (let item of data) {
     if (item.type === type) {
-      if (type === 'mnemonic' && item.data.mnemonic === value) {
+      if (type === 'mnemonic' && api.switchMnemonicCode(item.data.mnemonic, 'ENGLISH') === api.switchMnemonicCode(value, 'ENGLISH')) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)
       } else if (type === 'privateKey' && item.data.privateKey === value) {
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
+      }
+    } else {
+      if (type === 'mnemonic' && api.getPrivateKeyWIFFromMnemonic(value) === item.data.privateKey) {
+        throw new Error(ACCOUNT_ALREADY_EXISTS)
+      } else if (type === 'privateKey' && api.getPrivateKeyWIFFromMnemonic(item.data.mnemonic) === value) {
         throw new Error(ACCOUNT_ALREADY_EXISTS)
       }
     }
@@ -48,8 +56,11 @@ const createAccountWithMnemonic = (mnemonic) => {
   const testWiccApi = new WiccAPI('testnet')
   const wiccApi = new WiccAPI('mainnet')
 
+  let id = uuidv4()
+  localStorage.setItem('newId', id)
+
   return {
-    id: uuidv4(), //v4是随机生成uuid
+    id: id, //v4是随机生成uuid
     type: 'mnemonic',
     data: {
       mnemonic
@@ -60,13 +71,16 @@ const createAccountWithMnemonic = (mnemonic) => {
 }
 
 const createAccountWithPrivateKey = (wif) => {
-  const privateKey = bitcore.PrivateKey.fromWIF(wif)
+  const privateKey = WiccWalletLib.bitcore.PrivateKey.fromWIF(wif)
   const address = privateKey.toAddress().toString()
 
   const network = getAddressNetwork(address)
 
+  let id = uuidv4()
+  localStorage.setItem('newId', id)
+
   return {
-    id: uuidv4(),
+    id: id,
     type: 'privateKey',
     network,
     data: {
@@ -78,11 +92,11 @@ const createAccountWithPrivateKey = (wif) => {
 }
 
 export default {
-  isLogin () {
+  isLogin() {
     return !!state.password
   },
 
-  async importAccountWithMnemonic (mnemonic) {
+  async importAccountWithMnemonic(mnemonic) {
     verifyExists('mnemonic', mnemonic)
     const account = createAccountWithMnemonic(mnemonic)
     const data = state.data || []
@@ -97,7 +111,7 @@ export default {
     })
   },
 
-  async importAccountWithPrivateKey (privateKey) {
+  async importAccountWithPrivateKey(privateKey) {
     verifyExists('privateKey', privateKey)
     const account = createAccountWithPrivateKey(privateKey)
     const data = state.data || []
@@ -112,7 +126,7 @@ export default {
     })
   },
 
-  getAccounts () {
+  getAccounts() {
     const data = state.data
     if (!data) return null
 
@@ -128,7 +142,7 @@ export default {
     })
   },
 
-  getActiveAccount () {
+  getActiveAccount() {
     const data = state.data
     if (!data) return null
 
@@ -160,7 +174,7 @@ export default {
     }
   },
 
-  async switchActiveAccount () {
+  async switchActiveAccount() {
     const data = state.data
     if (!data) return null
 
@@ -173,7 +187,7 @@ export default {
     return null
   },
 
-  async setActiveAccount (id) {
+  async setActiveAccount(id) {
     const data = state.data
     if (!data) return null
     let success = false
@@ -197,7 +211,7 @@ export default {
     return state.activeAccount
   },
 
-  getMnemonic (address) {
+  getMnemonic(address) {
     const data = state.data
     if (!data) return null
     for (let item of data) {
@@ -209,7 +223,7 @@ export default {
     return null
   },
 
-  getPrivateKey (address) {
+  getPrivateKey(address) {
     if (privateKeyMap[address]) return privateKeyMap[address]
     const data = state.data
     if (!data) return null
@@ -217,7 +231,7 @@ export default {
     for (let item of data) {
       if (address === item.address || address === item.testnetAddress) {
         if (item.type === 'privateKey') {
-          const pk = bitcore.PrivateKey.fromWIF(item.data.privateKey)
+          const pk = WiccWalletLib.bitcore.PrivateKey.fromWIF(item.data.privateKey)
           privateKeyMap[address] = pk
           return pk
         } else if (item.type === 'mnemonic') {
@@ -233,7 +247,7 @@ export default {
     return null
   },
 
-  async createWallet (password, mnemonic) {
+  async createWallet(password, mnemonic) {
     const account = createAccountWithMnemonic(mnemonic) //createAccountWithMnemonic 验证是正式环境还是测试环境
     state.data = [account]
 
@@ -246,7 +260,7 @@ export default {
     })
   },
 
-  async unlock (password, vaultBlob) {
+  async unlock(password, vaultBlob) {
     state.vaultBlob = vaultBlob
     return passworder.decrypt(password, vaultBlob).then((value) => {
       state.password = password
@@ -256,14 +270,14 @@ export default {
     })
   },
 
-  async logout () {
+  async logout() {
     state.password = null
     state.data = null
     state.vaultBlob = null
     state.activeAccount = null
   },
 
-  async changePassword (password, newPassword) {
+  async changePassword(password, newPassword) {
     const valid = await this.validatePassword(password, state.vaultBlob)
     if (!valid) {
       throw new Error('PASSWORD_INVALID')
@@ -284,7 +298,7 @@ export default {
     }
   },
 
-  async validatePassword (password, vaultBlob) {
+  async validatePassword(password, vaultBlob) {
     return passworder.decrypt(password, vaultBlob).then(() => {
       return true
     }, () => {

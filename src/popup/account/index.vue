@@ -19,11 +19,15 @@
 </style>
 
 <script type="text/jsx">
- 
+ import API from "../api";
 
   export default {
 
     created () {
+       API.getState().then(
+      state => {
+        console.log(state)
+      })
     },
 
     methods: {

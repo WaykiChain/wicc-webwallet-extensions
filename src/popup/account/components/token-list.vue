@@ -14,7 +14,8 @@
     </div>
     <div class="token-list-container">
       <p class="myzichan">{{$t('window.cdp.wdzc')}}</p>
-      <ul class="token-list">
+      <div class="line"></div>
+      <ul class="token-list no-scrollbar">
         <li
           class="token-item"
           :class="{
@@ -22,11 +23,18 @@
           }"
           v-for="tokenKey in ['WICC','WGRT','WUSD']"
           :key="tokenKey"
-          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey})"
+          @click="handleItemClick({num:myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : 0,name:tokenKey, value: getCurrencyAmount(myAssets[tokenKey])})"
         >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
+          <div class="list-wrap">
+            <img class="token-item-icon" :src="getIcon(tokenKey)" />
+            <span class="token-item-name">{{tokenKey}}</span>
+            <div class="token-amount">
+              <div
+                class="token-amount-num"
+              >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+              <div class="token-worth">{{getCurrencyAmount(myAssets[tokenKey])}}</div>
+            </div>
+          </div>
         </li>
 
         <li
@@ -38,46 +46,17 @@
           :key="tokenKey"
           @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
         >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">{{tokenKey}}</span>
-          <span>{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</span>
+          <div class="list-wrap">
+            <img class="token-item-icon" :src="getIcon('WICC')" />
+            <span class="token-item-name">{{tokenKey}}</span>
+            <div class="token-amount">
+              <div
+                class="token-amount-num"
+              >{{myAssets[tokenKey] ? myAssets[tokenKey].freeAmount/Math.pow(10,8) > 0.000001 ? myAssets[tokenKey].freeAmount/Math.pow(10,8) : (myAssets[tokenKey].freeAmount/Math.pow(10,8)).toFixed(8) : 0}}</div>
+              <div class="token-worth"></div>
+            </div>
+          </div>
         </li>
-        <!-- <li v-if="Object.keys(myAssets).length == 0 && visibleTokens.length == 0" class="token-item">
-            <p style="margin:0;text-align:center;color:#8e8e8e;font-size:12px">{{$t('window.cdp.noAssets')}}</p>
-        </li>-->
-        <!-- <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wicc?wicc.freeAmount/100000000:0,name:'WICC'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WICC</span>
-          <span>{{wicc ? wicc.freeAmount/100000000 : 0}}</span>
-        </li>
-        <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wusd ?wusd.freeAmount/100000000:0,name:'WUSD'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WUSD</span>
-          <span>{{wusd ? wusd.freeAmount/100000000 : 0}}</span>
-        </li>
-        <li
-          class="token-item"
-          :class="{
-            active: activeRegId === null
-          }"
-          @click="handleItemClick({num:wgrt?wgrt.freeAmount/100000000:0,name:'WGRT'})"
-        >
-          <img class="token-item-icon" src="../../static/wicclogo.svg" />
-          <span class="token-item-name">WGRT</span>
-          <span>{{wgrt ? wgrt.freeAmount/100000000 : 0}}</span>
-        </li>-->
         <li
           class="token-item"
           v-for="(token, index) in visibleTokens"
@@ -87,23 +66,19 @@
             active: activeRegId === token.regId
           }"
         >
-          <img class="token-item-icon" src="../../static/coin-icon.svg" />
-          <span class="token-item-name">{{ token.name }}</span>
-          <span class="token-item-more-btn">
-            <span
-              class="token-item-remove-btn"
-              @click.stop="handleRemoveToken(token)"
-            >{{ $t('account.main.removeToken') }}</span>
-          </span>
+          <div class="list-wrap">
+            <img class="token-item-icon" src="../../static/coin-icon.svg" />
+            <span class="token-item-name">{{ token.name }}</span>
+            <span class="token-item-more-btn">
+              <span
+                class="token-item-remove-btn"
+                @click.stop="handleRemoveToken(token)"
+              >{{ $t('account.main.removeToken') }}</span>
+            </span>
+          </div>
         </li>
       </ul>
     </div>
-    <!-- <div class="token-list-bottom">
-      <button class="token-list-btn-add" @click="gotoAddToken">
-        <img src="../../static/coin-add-icon.svg" />
-        {{ $t('account.main.addTokenButton') }}
-      </button>
-    </div>-->
   </div>
 </template>
 
@@ -113,16 +88,26 @@
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
-  padding-top: 20px;
 }
 
 .token-list-container {
   flex: 1 0 0;
-  overflow-y: auto;
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 .myzichan {
-  margin-bottom: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #1d213c;
+  line-height: 22px;
+  font-weight: 500;
+  padding: 0 20px;
+}
+.line {
+  width: 500%;
+  height: 0;
+  border-bottom: 1px solid #f0f3f7;
+  margin-left: -100%;
 }
 .account-info-basic {
   text-align: center;
@@ -194,15 +179,26 @@
 
 .token-list {
   list-style: none;
+  overflow-y: auto;
+  flex: 1 0 0;
+  margin-bottom: 0;
 }
 
 .token-item {
-  display: flex;
-  flex-direction: row;
-  padding: 16px 0;
-  align-items: center;
-  border-bottom: 1px solid rgba(180, 188, 204, 0.3);
+  padding: 0 20px;
   cursor: pointer;
+  margin: 0;
+  &:hover {
+    background-color: #fafbfc;
+  }
+}
+
+.list-wrap {
+  display: flex;
+  align-items: center;
+  padding-bottom: 22px;
+  padding-top: 23px;
+  border-bottom: 1px solid #f0f3f7;
 }
 
 .token-item.active {
@@ -211,15 +207,36 @@
 }
 
 .token-item-icon {
-  width: 30px;
-  margin-right: 8px;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
 }
 
 .token-item-name {
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 17px;
+  color: #8187a5;
+  width: 86px;
+}
+
+.token-amount {
+  flex: 1;
+  text-align: right;
+}
+
+.token-amount-num {
+  line-height: 21px;
   font-size: 16px;
-  margin-right: 8px;
-  flex: 1 0 0;
+  color: #1d213c;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.token-worth {
+  line-height: 18px;
+  font-size: 13px;
+  color: #8187a5;
+  font-weight: normal;
 }
 
 .token-item-more-btn {
@@ -251,15 +268,16 @@
 </style>
 
 <script type="text/jsx">
-import CopyMixin from "../../components/copy-mixin";
+// import CopyMixin from "../../components/copy-mixin";
 import API from "../../api";
 import axios from "axios";
 import eventBus from "../bus";
+import Decimal from "decimal.js";
 
 export default {
   name: "token-list",
 
-  mixins: [CopyMixin],
+  // mixins: [CopyMixin],
 
   props: {
     activeRegId: {
@@ -307,21 +325,57 @@ export default {
   },
 
   created() {
-    this.eventBus.$on("network-change", this.handleNetworkChange);
+    this.eventBus.$on("on-refresh", this.handleChange);
+    this.eventBus.$on("myself-network-change", this.handleChange);
   },
 
-  destroyed() {
-    this.eventBus.$off("network-change", this.handleNetworkChange);
+  beforeDestroy() {
+    this.eventBus.$off("network-change", this.handleChange);
+    this.eventBus.$off("myself-network-change", this.handleChange);
   },
 
   methods: {
-    handleNetworkChange(network) {
-      if (network == this.lastNetWork) {
-        console.log("点击切换节点地址：" + this.currentAddr + "Net:" + network);
-        this.getWiccNum(this.currentAddr);
+    getIcon(key) {
+      return require(`../../static/${
+        key === "WICC" ? "wicclogo" : key.toLowerCase()
+      }.svg`);
+    },
+    getCurrencyAmount(asset) {
+      let prefix = this.currency === "CNY" ? "≈￥" : "≈$";
+      if (!asset) return prefix + " 0";
+      let result = "";
+      let amount = asset
+        ? asset.freeAmount / Math.pow(10, 8) > 0.000001
+          ? asset.freeAmount / Math.pow(10, 8)
+          : (asset.freeAmount / Math.pow(10, 8)).toFixed(8)
+        : 0;
+      if (this.currency === "CNY") {
+        result = new Decimal(amount)
+          .times(asset.rmbPrice)
+          .times(100)
+          .floor()
+          .dividedBy(100)
+          .toString();
+      } else {
+        result = new Decimal(amount)
+          .times(asset.usdtPrice)
+          .times(100)
+          .floor()
+          .dividedBy(100)
+          .toString();
       }
-      localStorage.setItem("tempNetWork", network);
-      this.lastNetWork = network;
+      if (!result.split(".")[1]) {
+        result += ".00";
+      }
+      if (result.split(".")[1].length < 2) {
+        result += "0";
+      }
+      return prefix + " " + result;
+    },
+    handleChange() {
+      setTimeout(() => {
+        this.getWiccNum(this.activeAddress);
+      }, 20);
     },
     gotoAddToken() {
       this.$router.push({
@@ -371,7 +425,6 @@ export default {
           this.$loading.close();
           let tokens = res.tokens;
           localStorage.setItem("srcRegID", res.regid ? res.regid : "");
-          console.log(res);
           if (tokens) {
             this.sortAssets(tokens);
             this.myAssets = tokens;
@@ -384,6 +437,7 @@ export default {
             this.wicc = null;
             this.wgrt = null;
           }
+          this.eventBus.$emit("on-assets-update", this.myAssets);
         },
         error => {
           this.$loading.close();
@@ -419,7 +473,8 @@ export default {
       eventBus,
       myAssets: {},
       tokensKeys: [],
-      lastNetWork: localStorage.getItem("tempNetWork")
+      lastNetWork: localStorage.getItem("tempNetWork"),
+      currency: localStorage.getItem("currency") || "CNY"
     };
   }
 };

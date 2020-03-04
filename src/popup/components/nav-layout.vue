@@ -2,13 +2,14 @@
   <div class="layout">
     <nav-bar
         :title.sync="title"
+        :back-type="backType"
         :path="path">
       <slot name="title"></slot>
     </nav-bar>
     <div class="layout-body">
       <slot></slot>
     </div>
-    <div class="layout-footer">
+    <div class="layout-footer" :style="{paddingTop: `${footerPadding}px`}">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -30,6 +31,14 @@
       },
       path: {
         type: Object
+      },
+      backType: {
+        type: String,
+        default: "arrow"
+      },
+      footerPadding: {
+        type: [Number, String],
+        default: 0
       }
     }
   }
@@ -39,18 +48,16 @@
   .layout {
     position: relative;
     box-sizing: border-box;
-    display: flex;
     flex-direction: column;
-    overflow: auto;
+    padding-top: 16px;
   }
 
   .layout-body {
     flex: 1 0 0;
-    padding: 0 16px 16px;
+    padding: 20px 24px 0;
   }
 
   .layout-footer {
-    padding: 0 16px;
-    margin-top: 12px;
+    padding: 0 24px;
   }
 </style>

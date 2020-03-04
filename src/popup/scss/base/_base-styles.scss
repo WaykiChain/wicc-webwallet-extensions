@@ -9,11 +9,14 @@ html {
 }
 
 body {
-  font-size: 1.5em; // currently ems cause chrome bug misinterpreting rems on body element
-  line-height: 1.6;
+  font-size: 14px;
   font-weight: 400;
   font-family: $font-family;
   color: $font-color;
+}
+
+ul, li {
+  list-style: none;
 }
 
 // Links

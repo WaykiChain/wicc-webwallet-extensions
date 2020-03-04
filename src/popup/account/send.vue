@@ -1,12 +1,8 @@
 <template>
-  <div class="content-wrapper">
-    <nav-bar :title="$t('account.send.title')"></nav-bar>
+  <nav-layout :title="$t('account.main.sendButton')" class="content-wrapper">
     <div class="content-body">
       <div class="from-title">{{ $t('account.send.fromLabel') }}</div>
       <div class="from-address">{{ activeAddress }}</div>
-      <label
-        class="transfer-limit"
-      >{{$t('account.sendToken.limit')}}&nbsp;{{balance}} &nbsp;{{coinType}}</label>
       <wallet-input
         v-model="destAddr"
         :label="$t('account.send.destLabel')"
@@ -15,20 +11,42 @@
 
       <wallet-input
         v-model="value"
-        type="number"
-        :postfix="coinType"
+        type="text"
+        postfix=" "
         :label="$t('account.send.valueLabel')"
         :placeholder="$t('account.send.valuePlaceHolder')"
-      ></wallet-input>
+        :pattern="/^(((([1-9][0-9]*)|0)(\.|\.\d{1,8})?)|(\s{0}))$/"
+      >
+        <div
+          class="transfer-coin"
+          :class="{down: showTokens}"
+          @click="setTokensShow"
+          v-click-outside="setHIde"
+        >
+          <span>{{coinType}}</span>
+          <wallet-select
+            :options="tokenArr"
+            :value="coinType"
+            :show="showTokens"
+            @on-change="handleTokenChange"
+            width="250"
+          ></wallet-select>
+        </div>
+      </wallet-input>
 
-      <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input>
+      <!-- <wallet-input v-model="desc" :label="$t('account.send.descLabel')"></wallet-input> -->
 
       <div class="feesView">
-        <select class="feesName" name="WICC" id v-model="feesName">
-          <option value="WICC">WICC</option>
-          <option value="WUSD">WUSD</option>
-        </select>
-        <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
+        <div class="feesName" :class="{down: showFeeType}" @click="setTypeShow" v-click-outside="setTypeHide">
+          <span>{{feesName}}</span>
+           <wallet-select
+            :options="[{value: 'WICC'}, {value: 'WUSD'}]"
+            :value="feesName"
+            :show="showFeeType"
+            @on-change="handleFeeTypeChange"
+          ></wallet-select>
+        </div>
+        <fees-slider v-model="fees" type="wiccTX" :feeName="feesName"></fees-slider>
       </div>
     </div>
 
@@ -39,7 +57,7 @@
         @click="confirmSend"
       >{{ $t('account.send.confirmButton') }}</button>
     </div>
-  </div>
+  </nav-layout>
 </template>
 
 <style lang="scss" scoped>
@@ -52,9 +70,7 @@
 }
 
 .content-body {
-  margin-top: 20px;
   flex: 1 0 0;
-  padding: 0 16px 7px;
   position: relative;
 }
 .transfer-limit {
@@ -69,66 +85,174 @@
   color: rgba(165, 174, 193, 1);
 }
 .content-footer {
-  padding: 0 16px;
+  padding-top: 42px;
 }
 
-.from-title,
-.from-address {
-  color: #717680;
+.from-title {
+  color: #8187a5;
   font-size: 14px;
-  padding: 2px;
+  line-height: 20px;
+  margin-bottom: 8px;
 }
 
 .from-address {
-  margin-bottom: 10px;
+  margin-bottom: 24px;
+  height: 50px;
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  color: rgba(33, 36, 74, 0.5);
+  padding-left: 10px;
+  line-height: 50px;
+}
+.transfer-coin {
+  position: absolute;
+  z-index: 100;
+  right: 1px;
+  border: none;
+  margin: 0;
+  padding-right: 24px;
+  font-size: 14px;
+  line-height: 19px;
+  color: #21244a;
+  font-weight: 500;
+  cursor: pointer;
+  &.down:after {
+    transform: rotate(270deg);
+  }
+  &:after {
+    content: "";
+    background: url("../static/back-icon-arrow.svg") no-repeat center center;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    width: 20px;
+    height: 19px;
+    background-size: 6px 11px;
+    transform-origin: center center;
+    transition: all 0.2s;
+    transform: rotate(180deg);
+  }
 }
 .feesView {
-  padding-top: 47px;
+  padding-top: 20px;
   position: relative;
   .feesName {
-    border: none;
+    border: 1.5px solid #d9dbde;
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 0px;
+    padding-left: 14px;
+    padding-right: 34px;
+    border-radius: 18px;
+    height: 28px;
+    margin: 0;
+    z-index: 10;
+    line-height: 28px;
+    font-size: 13px;
+    color: #21254a;
+    font-weight: 500;
+    cursor: pointer;
+    &.down:after {
+      transform: rotate(270deg);
+    }
+    &:after {
+      content: "";
+      background: url("../static/back-icon-arrow.svg") no-repeat center center;
+      position: absolute;
+      right: 6px;
+      top: 0;
+      width: 20px;
+      height: 28px;
+      background-size: 6px 11px;
+      transform-origin: center center;
+      transition: all 0.2s;
+      transform: rotate(180deg);
+    }
   }
 }
 </style>
 
 <script type="text/jsx">
 import WalletInput from "../components/input";
-import NavBar from "../components/nav-bar";
+import NavLayout from "../components/nav-layout";
 import FeesSlider from "../components/fees-slider";
 import API from "../api";
 import formatError from "../api/format-error";
 import StateWatcher from "./state-watcher";
+import WalletSelect from "../components/select";
+import ClickOutside from "vue-click-outside";
 
 export default {
   components: {
     WalletInput,
     FeesSlider,
-    NavBar
+    NavLayout,
+    WalletSelect
+  },
+
+  directives: {
+    ClickOutside
   },
 
   mixins: [StateWatcher],
 
   created() {
     const { query } = this.$router.currentRoute;
-    if (query.balance && !isNaN(parseFloat(query.balance))) {
-      this.balance = parseFloat(query.balance);
-    } else {
-      this.balance = 0;
+    // if (query.balance && !isNaN(parseFloat(query.balance))) {
+    //   this.balance = parseFloat(query.balance);
+    // } else {
+    //   this.balance = 0;
+    // }
+    this.feesName = query.coinType == "WUSD" ? query.coinType : "WICC";
+    this.coinType = query.coinType || "WICC";
+    this.tokens = query.tokens === "null" ? {} : JSON.parse(query.tokens);
+    let keys = Object.keys(this.tokens);
+    ["WICC", "WUSD", "WGRT"].map(item => {
+      if (!keys.includes(item)) {
+        this.tokens[item] = {
+          freeAmount: 0
+        };
+      }
+    });
+
+    for (let item in this.tokens) {
+      this.tokenArr.push({
+        value: item,
+        label: String(this.tokens[item].freeAmount / Math.pow(10, 8))
+      });
     }
-    this.feesName = query.coinType == "WUSD" ?  query.coinType : 'WICC'
-    this.coinType = query.coinType
+    console.log(this.tokens)
+    this.balance = this.tokens[this.coinType].freeAmount / Math.pow(10, 8)
   },
 
   computed: {
     valid() {
-      return this.destAddr && this.value;
+      return this.destAddr && +this.value > 0;
     }
   },
 
   methods: {
+    handleFeeTypeChange(option) {
+      this.feesName = option.value
+      this.setTypeHide()
+    },
+    handleTokenChange(option) {
+      this.coinType = option.value;
+      this.balance = +option.label;
+      this.showTokens = false;
+    },
+    setTypeShow() {
+      this.showFeeType = !this.showFeeType
+    },
+    setTypeHide() {
+      this.showFeeType = false;
+    },
+    setHIde() {
+      this.showTokens = false;
+    },
+    setTokensShow() {
+      this.showTokens = !this.showTokens;
+    },
     confirmSend() {
       if (!this.validateAddress(this.destAddr)) return;
 
@@ -139,22 +263,21 @@ export default {
 
         return;
       }
-      if (this.feesName == this.coinType){
-        if (this.balance && this.value > (this.balance - this.fees - 0.00001)) {
+      if (this.feesName == this.coinType) {
+        if (this.value > this.balance - this.fees - 0.00001) {
           this.$toast(this.$t("errors.insufficientBalance"), {
             type: "center"
           });
           return;
         }
-      }else{
-        if (this.balance && this.value > this.balance) {
+      } else {
+        if (this.value > this.balance) {
           this.$toast(this.$t("errors.insufficientBalance"), {
             type: "center"
           });
           return;
         }
       }
-      
 
       this.$loading(this.$t("account.send.confirmLoading"));
 
@@ -163,13 +286,13 @@ export default {
         destAddr: this.destAddr,
         value: this.value,
         fees: this.fees,
-        coinType: this.$route.query.coinType,
+        coinType: this.coinType,
         feeSymbol: this.feesName,
-        memo:this.desc,
+        memo: this.desc
       };
       this.callRaw("variousCoinsTx", param);
     },
-    
+
     callRaw(method, param) {
       API.callRaw(method, { info: param }).then(
         res => {
@@ -179,9 +302,8 @@ export default {
             type: "center"
           });
           setTimeout(() => {
-              window.history.go(-2);
+            window.history.go(-2);
           }, 1000);
-          
         },
         error => {
           this.$loading.close();
@@ -204,9 +326,13 @@ export default {
       destAddr: null,
       value: null,
       desc: null,
-      fees: 0.01,
-      feesName:'WICC',
-      coinType:'',
+      fees: 0.001,
+      feesName: "WICC",
+      coinType: "",
+      tokens: null,
+      tokenArr: [],
+      showTokens: false,
+      showFeeType: false
     };
   }
 };

@@ -52,7 +52,7 @@ export default {
 
     refreshState () {
       return API.getState().then((state) => {
-        if (state.isLocked && this.forceLogin) {
+        if (state.isLocked && this.forceLogin && this.$route.path.indexOf('window') < 0) {
           return this.gotoWelcome()
         }
         this.network = state.network

@@ -1,12 +1,11 @@
 <template>
-  <div class="main-wrapper">
-    <main-header @network-change="handleNetworkChange" :hide-menu-toggle="true"></main-header>
+  <div class="main-wrapper must-wicc">
     <div class="content">
       <div class="page-title">{{ $t('window.contract.title') }}</div>
       <div class="cells">
         <div class="cell">
           <label>{{ $t('window.contract.addressLabel') }}</label>
-          <span>{{ address }}</span>
+          <span class="">{{ cutMiddleStr(address, 6) }}</span>
         </div>
         <div class="cell">
           <label>{{ $t('window.contract.contractRegIdLabel') }}</label>
@@ -23,9 +22,9 @@
       </div>
     </div>
     <div class="footer">
-      <fees-slider type="call-cdp" v-model="fees"></fees-slider>
+      <fees-slider type="call-cdp" v-model="fees" :show-wicc-symbol="true"></fees-slider>
       <div class="button-wrapper">
-        <button @click="cancel">{{ $t('window.contract.closeButton') }}</button>
+        <button class="btn-lighter" @click="cancel">{{ $t('window.contract.closeButton') }}</button>
         <button
           class="btn-primary"
           @click="test ? testConfirm() : confirm()"
@@ -166,6 +165,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./common.scss";
 </style>

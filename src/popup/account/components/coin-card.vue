@@ -1,189 +1,376 @@
 <template>
   <div class="coin-card">
-    <!-- <div class="coin-name-wrapper">
-      <img src="../../static/coin-card-logo-wicc.svg" v-if="name === 'wicc'" />
-      <div v-else class="coin-name">{{ name }}</div>
-    </div> -->
-    <div class="coin-card-body">
-      <!-- <span class="coin-value">{{ value | fixed(8) }}</span> -->
-      <span class="coin-value">{{ value }}</span>
-      <button
-          v-if="showRegisterButton"
-          @click="openRegisterConfirm"
-          class="btn-account-active btn-text">{{ $t('common.activeAccount') }}</button>
+    <div class="account-info">
+      <div class="account-refresh" :class="{isRefreshing: isRefreshing}" @click="setRefresh">
+        <img src="../../static/refresh.svg" alt />
+      </div>
+      <div class="account-detail">
+        <div class="name">{{ value }}</div>
+        <div class="address copy-address-btn"><span>{{cutMiddleStr(address,6)}}</span><img src="../../static/copy-btn.svg" alt /></div>
+      </div>
+      <div class="account-more" v-click-outside="hideMenu" @click="toggleMenu">
+        <img src="../../static/actions.svg" alt />
+      </div>
     </div>
-    <div class="coin-card-footer">
-      <div class="coin-address">{{cutMiddleStr(address,10)}}</div>
-      <div class="coin-card-btn coin-card-copy">
-        <img src="../../static/copy-icon-white.svg" />
+    <div class="account-action">
+      <div class="inner">
+        <div class="item collect" @click="collect">
+          <div class="wrap">
+            <div class="icon">
+              <img src="../../static/collect.svg" alt />
+              <div class="shine"></div>
+            </div>
+            <div class="title">{{$t('account.main.receiveButton')}}</div>
+          </div>
+        </div>
+        <div class="item send" @click="send">
+          <div class="wrap">
+            <div class="icon">
+              <img src="../../static/send.svg" alt />
+              <div class="shine"></div>
+            </div>
+            <div class="title">{{$t('account.main.sendButton')}}</div>
+          </div>
+        </div>
+        <div class="line"></div>
       </div>
-      <div class="coin-separator"></div>
-      <div class="coin-card-btn" @click="openQrCode">
-        <img src="../../static/qrcode-icon-white.svg" />
-      </div>
+    </div>
+
+    <div class="dropdown" v-show="showMenu">
+      <div class="menu-item vm" @click="viewMnemonic" v-if="accountType === 'mnemonic'">{{ $t('account.header.viewMnemonic') }}</div>
+      <div class="menu-item ep" @click="viewPrivateKey">{{ $t('account.header.exportPrivateKey') }}</div>
+      <a
+        :href="`https://testnet.waykiscan.com/#/address/${address}`"
+        target="_blank"
+        class="menu-item ad"
+        v-if="address && address[0] === 'w'"
+      >{{$t('account.header.detail')}}</a>
+      <a
+        :href="`https://www.waykiscan.com/#/address/${address}`"
+        target="_blank"
+        class="menu-item ad"
+        v-else
+      >{{$t('account.header.detail')}}</a>
+      <!-- <div class="menu-item man">Modify account name</div> -->
+      <!-- <div class="menu-item da">Delete account</div> -->
     </div>
   </div>
 </template>
 
 <script>
-  import CopyMixin from '../../components/copy-mixin'
-  import API from '../../api'
-  import formatError from '../../api/format-error'
-  import { openQrCodeDialog, openRegisterConfirmDialog } from '../dialog'
+import ClickOutside from "vue-click-outside";
+import API from "../../api";
+import formatError from "../../api/format-error";
+import { openQrCodeDialog, openRegisterConfirmDialog } from "../dialog";
+import eventBus from "../bus";
+import CopyMixin from "../../components/copy-mixin";
 
-  export default {
-    name: 'coin-card',
-    mixins: [CopyMixin],
+export default {
+  name: "coin-card",
+  directives: {
+    ClickOutside
+  },
+  mixins: [CopyMixin],
 
-    props: {
-      name: {
-        type: String,
-        required: true
-      },
-      address: {
-        type: String
-      },
-      value: {
-        required: true
-      },
-      showRegisterButton: {
-        type: Boolean,
-        default: false
-      }
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    address: {
+      type: String
+    },
+    value: {
+      required: true
+    },
+    showRegisterButton: {
+      type: Boolean,
+      default: false
+    },
+    accountType: {
+      type: String,
+      default: ""
+    }
+  },
+
+  data() {
+    return {
+      registerConfirmVisible: false,
+      showMenu: false,
+      isRefreshing: false,
+      tokens: null,
+      clipboardSelector: ".copy-address-btn"
+    };
+  },
+
+  created() {
+    eventBus.$on("on-assets-update", data => {
+      this.tokens = data;
+    });
+  },
+
+  methods: {
+    getCopyText() {
+      return this.address;
     },
 
-    data () {
-      return {
-        registerConfirmVisible: false,
-        clipboardSelector: '.coin-card-copy'
-      }
+    setRefresh() {
+      if (this.isRefreshing) return;
+      this.isRefreshing = true;
+      setTimeout(() => {
+        this.isRefreshing = false;
+      }, 600);
+      eventBus.$emit("on-refresh");
     },
 
-    methods: {
-      openQrCode () {
-        openQrCodeDialog(this.address)
-      },
+    viewMnemonic() {
+      eventBus.$emit("on-viewMnemonic-click");
+    },
 
-      openRegisterConfirm () {
-        if (this.value === 0) {
-          this.$toast(this.$t('errors.insufficientBalance'), {
-            type: 'center'
-          })
-          return
-        }
+    viewPrivateKey() {
+      eventBus.$emit("on-viewPrivateKey-click");
+    },
 
-        API.validateRegisterAccount(this.address).then(() => {
-          openRegisterConfirmDialog(this.address)
-        }, (error) => {
+    openQrCode() {
+      openQrCodeDialog(this.address);
+    },
+
+    hideMenu() {
+      this.showMenu = false;
+    },
+
+    toggleMenu() {
+      this.showMenu = !this.showMenu;
+    },
+
+    send() {
+      this.$router.push("/account/send?tokens=" + JSON.stringify(this.tokens));
+    },
+
+    collect() {
+      this.$router.push("/account/collect?address=" + this.address);
+    },
+
+    openRegisterConfirm() {
+      if (this.value === 0) {
+        this.$toast(this.$t("errors.insufficientBalance"), {
+          type: "center"
+        });
+        return;
+      }
+
+      API.validateRegisterAccount(this.address).then(
+        () => {
+          openRegisterConfirmDialog(this.address);
+        },
+        error => {
           this.$toast(formatError(error), {
-            type: 'center',
+            type: "center",
             duration: 5000,
             wordWrap: true
-          })
-        })
-      },
+          });
+        }
+      );
+    },
 
-      getCopyText () {
-        return this.address
-      },
-      cutMiddleStr(str,saveNum){
-      if (str){
-        return str.substr(0,saveNum)+'...'+str.substring(str.length,str.length-saveNum)
+    getCopyText() {
+      return this.address;
+    },
+    cutMiddleStr(str, saveNum) {
+      if (str) {
+        return (
+          str.substr(0, saveNum) +
+          "..." +
+          str.substring(str.length, str.length - saveNum)
+        );
       }
-      return ''
-    }
+      return "";
     }
   }
+};
 </script>
 
 <style lang="scss" scoped>
-  .coin-card {
-    position: relative;
-    background: url('../../static/coin-card-bg.svg') 0 0 no-repeat;
-    // background-size: 100% 100%;
-    width: 344px;
-    height: 83px;
+.coin-card {
+  position: relative;
+  color: #fff;
+  padding: 15px 20px 26px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 999;
+  right: 10px;
+  top: 55px;
+  background: rgba(0, 0, 0, 0.8);
+  width: 200px;
+  max-height: 500px;
+  overflow: auto;
+  border-radius: 6px;
+  font-size: 14px;
+  animation: slide1 100ms ease-out;
+  transform-origin: top right;
+  @keyframes slide1 {
+    0% {
+      opacity: 0.2;
+      transform: scale(0.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .menu-separator {
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-item {
+    cursor: pointer;
+    padding: 12px 0 12px 42px;
     color: #fff;
-    padding: 16px;
-    box-sizing: border-box;
-    border-radius: 4px;
-  }
-
-  .coin-name-wrapper {
-    img {
-      margin-left: -7px;
+    display: block;
+    &:hover {
+      background-color: rgba(255,255,255,0.05) !important;
     }
-
-    .coin-name {
-      font-size: 10px;
-      background: #fff;
-      color: #4270DA;
-      display: inline-block;
-      padding: 1px 2px;
-      font-weight: bold;
-      font-style: italic;
+    &.vm {
+      background: url("../../static/vm.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.ep {
+      background: url("../../static/epk.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.ad {
+      background: url("../../static/ad.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.man {
+      background: url("../../static/man.svg") no-repeat 14px center;
+      background-size: 18px;
+    }
+    &.da {
+      background: url("../../static/da.svg") no-repeat 14px center;
+      background-size: 18px;
     }
   }
+}
 
-  .coin-value {
-    font-family: Garamond, Helvetica, Verdana, serif;
-    font-size: 17px;
-    font-weight: bold;
+.account-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account-refresh {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  &.isRefreshing {
+    transform: rotate(360deg);
+    transition: all 500ms linear;
   }
-
-  .coin-card-body {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    top: 16px;
+  img {
+    float: left;
+    width: 100%;
   }
-
-  .btn-account-active {
-    color: white;
-    text-decoration: underline;
+}
+.account-detail {
+  text-align: center;
+  .name {
+    height: 24px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #1d213c;
+  }
+  .address {
+    height: 18px;
     font-size: 13px;
-  }
-
-  .coin-card-footer {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    line-height: 18px;
+    color: #8187a5;
+    cursor: pointer;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-
-    .coin-address {
-      cursor: default;
-      color: #CBDBFA;
-      font-size: 12px;
-      flex: 1 0 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .coin-separator {
-      border-left: 1px solid #fff;
-      height: 16px;
-      margin: 0 4px;
-    }
-
-    .coin-card-btn {
-      margin-left: 6px;
-      margin-right: 6px;
-      line-height: 0;
-      cursor: pointer;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-
-    .coin-card-copy {
-      img {
-        width: 16px;
-        height: 17px;
-      }
+    img {
+      margin-left: 4px;
     }
   }
+}
+.account-more {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 100%;
+  }
+}
+.account-action {
+  padding: 16px 4px 0;
+  .inner {
+    padding: 18px 0 12px;
+    background-color: #F5F7FA;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+  }
+  .item {
+    width: 50%;
+    height: 70px;
+    color: #091340;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+  }
+  .wrap {
+    cursor: pointer;
+  }
+  .icon {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &:hover {
+      .shine {
+        left: 100px;
+        transition: left 200ms linear;
+      }
+    }
+    .shine {
+      width: 66px;
+      height: 1000px;
+      background-color: rgba(255, 255, 255, 0.2);
+      position: absolute;
+      left: -100px;
+      transform: rotate(45deg);
+      box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    }
+    img {
+      width: 44px;
+      height: 44px;
+    }
+  }
+  .title {
+    margin-top: 4px;
+    line-height: 20px;
+    text-align: center;
+  }
+  .line {
+    width: 1px;
+    height: 28px;
+    background: #d9dbde;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+}
 </style>

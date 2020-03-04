@@ -1,122 +1,64 @@
 <template>
-  <div class="content-wrapper">
-    <nav-bar :title="$t('account.send.title')"></nav-bar>
-    <div class="content-body">
-      <div class="from-title">{{ $t('account.send.fromLabel') }}</div>
-      <div class="from-address">{{ activeAddress }}</div>
-      <label
-        class="transfer-limit"
-      >{{$t('account.sendToken.limit')}}&nbsp;{{balance ? balance : 0}} &nbsp;{{coinType}}</label>
-      <wallet-input
-        v-model="destAddr"
-        :label="$t('account.send.destLabel')"
-        :placeholder="$t('account.send.destPlaceHolder')"
-        :readOnly = "true"
-      ></wallet-input>
-
-      <wallet-input
-        v-model="value"
-        type="number"
-        :postfix="coinType"
-        :label="$t('account.send.valueLabel')"
-        :placeholder="$t('account.send.valuePlaceHolder')"
-        :readOnly = "true"
-      ></wallet-input>
-
-      <wallet-input v-model="desc" :label="$t('account.send.descLabel')" :readOnly = "true"></wallet-input>
-
-      <div class="feesView">
-        <select class="feesName" name="WICC" id v-model="feesName">
-          <option value="WICC">WICC</option>
-          <option value="WUSD">WUSD</option>
-        </select>
-        <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
+  <div class="main-wrapper">
+    <div class="content">
+      <div class="page-title">{{ $t('account.send.title') }}</div>
+      <div class="value-block">
+        <div class="value">-{{ value }} {{coinType}}</div>
+      </div>
+      <div class="cells">
+        <div class="cell">
+          <label>{{ $t('window.transfer.addressLabel') }}</label>
+          <span class="">{{ cutMiddleStr(address, 6) }}</span>
+        </div>
+        <div class="cell">
+          <label>{{ $t('window.transfer.destAddressLabel') }}</label>
+          <span class="">{{ cutMiddleStr(destAddr, 6) }}</span>
+        </div>
+        <div class="cell" v-if="desc">
+          <label>{{ $t('account.transDetail.commentLabel') }}</label>
+          <span>{{ desc }}</span>
+        </div>
       </div>
     </div>
-
-    <div class="content-footer">
-      <div class="bottom_btn">
-        <div class="btn" @click="cancel">{{$t('window.cdp.qx')}}</div>
-        <div class="btn sure" @click="confirmSend">{{$t('window.cdp.qd')}}</div>
+    <div class="footer">
+      <div class="feesView">
+        <div
+          class="feesName"
+          :class="{down: showFeeType}"
+          @click="setTypeShow"
+          v-click-outside="setTypeHide"
+        >
+          <span>{{feesName}}</span>
+          <wallet-select
+            :options="[{value: 'WICC'}, {value: 'WUSD'}]"
+            :value="feesName"
+            :show="showFeeType"
+            @on-change="handleFeeTypeChange"
+          ></wallet-select>
+        </div>
+        <fees-slider v-model="fees" type="wiccTX"></fees-slider>
+      </div>
+      <div class="button-wrapper">
+        <button class="btn-lighter" @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
+        <button class="btn-primary" @click="confirmSend">{{ $t('window.transfer.confirmButton') }}</button>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.content-wrapper {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.content-body {
-  margin-top: 20px;
-  flex: 1 0 0;
-  padding: 0 16px 7px;
-  position: relative;
-}
-.transfer-limit {
-  position: absolute;
-  display: inline-block;
-  top: 158px;
-  right: 17px;
-  z-index: 0;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 22px;
-  color: rgba(165, 174, 193, 1);
-}
-.content-footer {
-  padding: 0 16px;
-}
-
-.from-title,
-.from-address {
-  color: #717680;
-  font-size: 14px;
-  padding: 2px;
-}
-
-.from-address {
-  margin-bottom: 10px;
-}
-.feesView {
-  padding-top: 47px;
-  position: relative;
-  .feesName {
-    border: none;
-    position: absolute;
-    top: 10px;
-    right: 0px;
-  }
-}
-.bottom_btn {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 16px;
-  .btn {
-    width: calc(50% - 24px);
-    margin-left: 16px;
-    text-align: center;
-    font-size: 16px;
-    line-height: 48px;
-    border-radius: 4px;
-    border: 1px #b4bccc solid;
-    cursor: pointer;
-  }
-  .sure {
-    background: -webkit-linear-gradient(
-      #3c78ea,
-      #004eec
-    ); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(#3c78ea, #004eec); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(#3c78ea, #004eec); /* Firefox 3.6 - 15 */
-    background: linear-gradient(#3c78ea, #004eec); /* 标准的语法 */
-    color: white;
-    border: none;
+<style lang="scss">
+@import "./common.scss";
+.main-wrapper {
+  .value-block {
+    border-bottom: 1px solid #f0f3f7;
+    margin-bottom: 24px;
+    .value {
+      font-size: 18px;
+      color: #1d213c;
+      font-weight: 500;
+      line-height: 24px;
+      padding-bottom: 24px;
+    }
   }
 }
 </style>
@@ -143,21 +85,17 @@ export default {
     const query = this.$router.currentRoute.query;
     const assetMap = JSON.parse(query.assetMap)[0];
     this.coinType = assetMap.coinSymbol;
+    this.feesName = this.coinType === 'WUSD' ? 'WUSD' : 'WICC';
     this.destAddr = assetMap.destAddr;
     this.value = assetMap.amount;
     if (isNaN(parseInt(this.value))) {
       this.$toast("Invalid Amount");
       this.value = 0;
     }
-    if (assetMap.coinSymbol == "WUSD"){
-      this.feesName = "WUSD"
-    }else{
-      this.feesName = "WICC"
-    }
     this.desc = query.memo;
     this.value = this.value / Math.pow(10, 8);
     this.callbackId = query.callbackId;
-    this.onlyRaw = query.onlyRaw;
+    this.raw = query.raw;
     console.log(query);
   },
   watch: {
@@ -202,12 +140,11 @@ export default {
         feeSymbol: this.feesName,
         memo: this.desc
       };
-      if (this.onlyRaw == "1"){
-        this.callRaw("variousCoinsRaw",param)
-      }else{
+      if (this.raw == "1") {
+        this.callRaw("variousCoinsRaw", param);
+      } else {
         this.callRaw("variousCoinsTx", param);
       }
-      
     },
 
     callRaw(method, param) {
@@ -282,10 +219,10 @@ export default {
       destAddr: null,
       value: null,
       desc: null,
-      fees: 0.01,
+      fees: 0.001,
       feesName: "WICC",
       coinType: "",
-      onlyRaw:"",
+      raw: ""
     };
   }
 };

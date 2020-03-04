@@ -12,7 +12,7 @@ const TYPE_NEWTX_MAP = {
   'PRICE_MEDIAN_TX': '喂价中位数交易',
   'PRICE_FEED_TX':	'喂价',
   'FCOIN_STAKE_TX':	'抵押交易',
-  'UCOIN_TRANSFER_TX': '转账交易',
+  'UCOIN_TRANSFER_TX': '转账',
   'CDP_LIQUIDATE_TX':	'CDP清算',
   'CDP_REDEEM_TX':	'CDP赎回',
   'CDP_STAKE_TX':	'CDP创建',
@@ -27,6 +27,8 @@ const TYPE_NEWTX_MAP = {
   'ASSET_UPDATE_TX' : '资产更新',
   'ASSET_ISSUE_TX' : '资产发布',
   'UCONTRACT_INVOKE_TX' : '多币种合约调用',
+  '1': '付款',
+  '2': '收款'
 }
 
 const TYPE_NEWTX_MAP_EN = {
@@ -39,10 +41,10 @@ const TYPE_NEWTX_MAP_EN = {
   'PRICE_MEDIAN_TX': 'Median Txn',
   'PRICE_FEED_TX': 'Feed Txn',
   'FCOIN_STAKE_TX': 'Stakecoin Txn',
-  'UCOIN_TRANSFER_TX': 'Transfer Txn',
-  'CDP_LIQUIDATE_TX': 'CDP Liquidation',
-  'CDP_REDEEM_TX': 'CDP Redemption',
-  'CDP_STAKE_TX': 'CDP Generated',
+  'UCOIN_TRANSFER_TX': 'Transfer',
+  'CDP_LIQUIDATE_TX': 'CDP-Liquidate',
+  'CDP_REDEEM_TX': 'CDP-Redeem',
+  'CDP_STAKE_TX': 'CDP-First Stake',
   'DELEGATE_VOTE_TX': 'Vote Txn',
   'LCONTRACT_INVOKE_TX': 'Invoke Contract',
   'LCONTRACT_DEPLOY_TX': 'Publish Contract',
@@ -54,6 +56,8 @@ const TYPE_NEWTX_MAP_EN = {
   'ASSET_UPDATE_TX' : 'Asset update',
   'ASSET_ISSUE_TX' : 'Asset release',
   'UCONTRACT_INVOKE_TX' : 'Contract Invoke',
+  '1': 'Send',
+  '2': 'Collect'
 }
 
 const TYPE_MAP = {
@@ -82,7 +86,7 @@ const STATUS_MAP = {
 
 const STATUS_MAP_EN = {
   'pending': 'Pending',
-  'confirmed': 'Successfull',
+  'confirmed': 'Successful',
   'failed': 'Failed'
 }
 
@@ -90,9 +94,9 @@ export default {
   formatNewTxType(type){
     const lang = getLanguage()
     if (lang && lang.indexOf('zh') !== -1) {
-      return TYPE_NEWTX_MAP[type] || type
+      return TYPE_NEWTX_MAP[type] || "其他"
     } else {
-      return TYPE_NEWTX_MAP_EN[type] || type
+      return TYPE_NEWTX_MAP_EN[type] || "Other"
     }
   },
   formatType (type) {
@@ -132,7 +136,7 @@ export default {
   formatTime (time) {
     if (!time) return ''
     const date = new Date(time)
-    return fecha.format(date, 'YYYY/MM/DD  HH:mm:ss')
+    return fecha.format(date, 'YYYY-MM-DD  HH:mm:ss')
   },
 
   formatAmount (amount, precision = 4) {

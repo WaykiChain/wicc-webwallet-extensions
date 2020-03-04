@@ -1,40 +1,80 @@
 .wallet-container {
-  position: relative;
-  width: 375px;
-  height: 600px;
-  box-sizing: border-box;
+  position        : relative;
+  width           : 360px;
+  height          : 600px;
+  box-sizing      : border-box;
+  margin          : auto;
+  background-color: #fff;
+  overflow        : hidden;
 }
 
 .display-block {
-  display: block;
-  width: 100%;
+  display   : block;
+  width     : 100%;
   box-sizing: border-box;
 }
 
 button.btn-primary {
-  background: linear-gradient(to right, #3c78ea 0%, #004eec 100%);
-  border: none;
-  color: #fff;
+  background: linear-gradient(to right, #062DEB 0%, #062DEB 100%);
+  border    : none;
+  color     : #fff;
 
-  &:hover, &:active {
-    color: #fff;
+  &:hover,
+  &:active {
+    background: #0022C7;
   }
 
   &[disabled] {
-    background: linear-gradient(to right, rgba(0, 78, 236, .38) 0%, rgba(60, 120, 234, .38) 100%);
+    background: rgba(6, 45, 235, 0.1);
   }
+}
+
+button.btn-higher {
+  height: 60px;
+}
+
+button.btn-lighter {
+  color: #062DEB;
 }
 
 button.btn-text {
   border: none;
-  height: 24px;
-  line-height: 24px;
+  height: 54px;
+  color : rgba(33, 39, 74, 0.6);
 }
 
 @media (min-width: 550px) {
   .wallet-container {
-    width: 375px;
-    border: 1px dashed #ccc;
-    margin: 0 auto;
+    box-shadow: 0 5px 10px #ccc;
   }
+}
+
+.animated {
+  animation-duration: .3s;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/*定义最上方和最下方的按钮*/
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-color          : transparent transparent;
+  scrollbar-track-color    : transparent;
+  -ms-scrollbar-track-color: transparent;
+  scrollbar-width          : none;
 }

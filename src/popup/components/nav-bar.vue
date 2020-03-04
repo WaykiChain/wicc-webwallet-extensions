@@ -1,69 +1,82 @@
 <template>
   <div class="navbar">
+    <div class="navbar-btn" @click="goBack">
+      <img v-if="backType === 'arrow'" class="arrow" src="../static/back-icon-arrow.svg" />
+      <img v-else src="../static/back-icon-close.svg" />
+    </div>
     <div class="navbar-title">
       <slot></slot>
       {{ title }}
     </div>
-    <button class="navbar-btn" @click="goBack">
-      <img src="../static/back-icon.svg" />
-    </button>
   </div>
 </template>
 
 <style scoped>
-  .navbar {
-    position: relative;
-    padding-top: 12px;
-    border-bottom: 1px solid #ededed;
-  }
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
 
-  .navbar-title {
-    color: #2f2f2f;
-    font-size: 16px;
-    font-weight: 400;
-    padding-bottom: 8px;
-    text-align: center;
-  }
+.navbar-title {
+  flex: 1;
+  overflow: hidden;
+  color: #21274a;
+  font-size: 18px;
+  font-weight: 500;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  box-sizing: border-box;
+  padding-right: 20px;
+}
 
-  .navbar-btn {
-    position: absolute;
-    line-height: 16px;
-    padding: 0 6px;
-    height: 16px;
-    bottom: 8px;
-    border: none;
-  }
+.navbar-btn {
+  width: 20px;
+  cursor: pointer;
+}
 
-  .navbar-btn img {
-    width: 24px;
-  }
+.navbar-btn img {
+  width: 18px;
+  float: left;
+}
+.navbar-btn .arrow {
+  width: 13px;
+}
 </style>
 
 <script type="text/jsx">
-  export default {
-    props: {
-      title: {
-        type: String
-      },
-
-      path: {
-        type: Object
-      }
+export default {
+  props: {
+    title: {
+      type: String
     },
 
-    data () {
-      return {
-      }
+    path: {
+      type: Object
     },
+    backType: {
+      type: String,
+      default: "arrow"
+    }
+  },
 
-    methods: {
-      goBack () {
+  data() {
+    return {};
+  },
+
+  methods: {
+    goBack() {
+      if (this.backType === "close") {
+        this.$router.replace("/");
+      } else {
         if (this.path) {
-          this.$router.push(this.path)
+          this.$router.push(this.path);
         } else {
-          history.go(-1)
+          history.go(-1);
         }
       }
     }
   }
+};
 </script>

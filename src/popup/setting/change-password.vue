@@ -1,33 +1,49 @@
 <template>
-  <nav-layout :title="$t('setting.password.title')" class="u-full-height">
+  <nav-layout footer-padding="60" class="u-full-height">
+    <div class="title">{{$t('setting.password.title')}}</div>
     <wallet-input
         v-model="password"
+        :message="error"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.currentPassword')"
         :placeholder="$t('setting.password.currentPasswordPlaceholder')"
         type="password"></wallet-input>
 
     <wallet-input
         v-model="newPassword"
+        :message="error1"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword')"
         :placeholder="$t('setting.password.newPasswordPlaceholder')"
+        @change="changehandler"
         type="password"></wallet-input>
 
     <wallet-input
         v-model="newPassword2"
+        :message="error2"
+        :pattern="/^\S{0,}$/"
         :label="$t('setting.password.newPassword2')"
         :placeholder="$t('setting.password.newPassword2Placeholder')"
+        @change="changehandler1"
         type="password"></wallet-input>
 
     <template slot="footer">
       <button
           :disabled="!isValid"
           class="display-block btn-primary"
-          @click="changePassword">{{ $t('common.confirm') }}</button>
+          @click="validatePassword">{{ $t('common.confirm') }}</button>
     </template>
   </nav-layout>
 </template>
 
-<style>
+<style lang="scss" scoped>
+.title {
+  font-size: 20px;
+  color: #21274a;
+  line-height: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
 </style>
 
 <script type="text/jsx">
@@ -43,6 +59,18 @@
       NavLayout,
       WalletInput
     },
+
+    watch: {
+      password() {
+        this.error = ""
+      },
+      newPassword() {
+        this.error1 = ""
+      },
+      newPassword2() {
+        this.error2 = ""
+      }
+    },
   
     computed: {
       isValid () {
@@ -51,13 +79,39 @@
     },
 
     methods: {
-      changePassword () {
-        if (this.newPassword !== this.newPassword2) {
-          this.$toast(this.$t('errors.passwordInConsistent'), {
-            type: 'center'
-          })
-
+      changehandler() {
+        if (this.newPassword.length < 6 || this.newPassword.length > 20) {
+          this.error1 = this.$t('setting.password.newPasswordPlaceholder')
+        }
+        this.changehandler1()
+      },
+      changehandler1() {
+        if (!this.newPassword2) return
+        if (this.newPassword2.length < 6 || this.newPassword2.length > 20) {
+          this.error2 = this.$t('setting.password.newPasswordPlaceholder')
           return
+        }
+        if (this.newPassword !== this.newPassword2) {
+          this.error2 = this.$t('errors.passwordInConsistent')
+          return
+        } 
+        this.error2 = ""
+      },
+      validatePassword() {
+        API.validatePassword(this.password).then(res => {
+          if (res) {
+            this.changePassword()
+          } else {
+            this.error = this.$t('setting.password.error')
+          }
+        })
+      },
+      changePassword () {
+        if (this.password === this.newPassword) {
+          return this.error1 = this.$t('setting.password.error1')
+        }
+        if (this.newPassword !== this.newPassword2) {
+          return this.error2 = this.$t('errors.passwordInConsistent')
         }
 
         this.$loading(this.$t('setting.password.confirmLoading'))
@@ -89,7 +143,10 @@
       return {
         password: null,
         newPassword: null,
-        newPassword2: null
+        newPassword2: null,
+        error: '',
+        error1: '',
+        error2: '',
       }
     }
   }

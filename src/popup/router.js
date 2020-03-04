@@ -11,6 +11,7 @@ import ChangePassword from './setting/change-password'
 import AddNet from './setting/add-net'   
 import ChangeNet from './setting/change-net'
 import About from './setting/about'
+import Update from './setting/update'
 import ImportWallet from './wallet/import-wallet'
 
 /**
@@ -19,12 +20,13 @@ import ImportWallet from './wallet/import-wallet'
 import Account from './account/index'
 import AccountMain from './account/main'
 import Send from './account/send'
+import Collect from './account/collect'
 import ImportAccount from './account/import-account'
 import AddToken from './account/token/add'
 import SendToken from './account/token/send'
 import TokenMain from './account/token/main'
 import WiccRecord from './account/token/wiccRecord'
-
+import TransactionDetail from './account/token/transaction-detail'
 
 /**
  * Splash related page
@@ -35,6 +37,7 @@ import Splash from './main/splash'
  * Setting Related page
  */
 import Setting from './setting/index'
+import Protocol from './setting/protocol'
 
 /**
  * Window Related Page
@@ -101,6 +104,14 @@ const router = new VueRouter({
         path: 'about',
         component: About
       }, {
+        name: 'update',
+        path: 'update',
+        component: Update
+      }, {
+        name: 'protocol',
+        path: 'protocol',
+        component: Protocol
+      }, {
         name: 'changeNet',
         path: 'changeNet',
         component: ChangeNet
@@ -124,6 +135,10 @@ const router = new VueRouter({
         path: 'send',
         component: Send
       }, {
+        name: 'collect',
+        path: 'collect',
+        component: Collect
+      }, {
         name: 'tokenMain',
         path: 'token/main',
         component: TokenMain
@@ -132,6 +147,10 @@ const router = new VueRouter({
         name: 'WiccRecord',
         path: 'token/WiccRecord',
         component: WiccRecord
+      }, {
+        name: 'transactionDetail',
+        path: 'token/transaction-detail',
+        component: TransactionDetail
       },
        {
         name: 'addToken',

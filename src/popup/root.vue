@@ -3,24 +3,25 @@
 </template>
 
 <script>
-  import './scss/skeleton.scss'
-  import './scss/base.scss'
+import "./scss/skeleton.scss";
+import "./scss/base.scss";
 
-  export default {
-    data: () => {
-      return {}
-    },
+export default {
+  data: () => {
+    return {};
+  },
 
-    methods: {
-    }
-  }
+  methods: {},
+};
 </script>
 
 <style lang="scss">
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    box-sizing: border-box;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgba(247, 247, 247, 1);
+}
 </style>

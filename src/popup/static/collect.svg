@@ -1,0 +1,114 @@
+<svg id="组件_15_4" data-name="组件 15 – 4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+  <defs>
+    <style>
+      .cls-1, .cls-9 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        stroke: #707070;
+      }
+
+      .cls-1, .cls-3 {
+        stroke-width: 1.5px;
+      }
+
+      .cls-2 {
+        fill: #1d203c;
+      }
+
+      .cls-11, .cls-3 {
+        fill: none;
+      }
+
+      .cls-3 {
+        stroke: #fff;
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-5 {
+        clip-path: url(#clip-path-2);
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path-3);
+      }
+
+      .cls-7 {
+        clip-path: url(#clip-path-4);
+      }
+
+      .cls-8 {
+        clip-path: url(#clip-path-5);
+      }
+
+      .cls-9 {
+        opacity: 0.2;
+      }
+
+      .cls-10 {
+        stroke: none;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="矩形_27863" data-name="矩形 27863" class="cls-1" width="4" height="5" transform="translate(105 174)"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="矩形_27865" data-name="矩形 27865" class="cls-1" width="3" height="6" transform="translate(106 174)"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <rect id="矩形_27869" data-name="矩形 27869" class="cls-1" width="2" height="5" transform="translate(107 175)"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <rect id="矩形_27871" data-name="矩形 27871" class="cls-1" width="2" height="2" transform="translate(107 176)"/>
+    </clipPath>
+    <clipPath id="clip-path-5">
+      <rect id="矩形_27875" data-name="矩形 27875" class="cls-2" width="44" height="44" rx="14" transform="translate(59 41)"/>
+    </clipPath>
+  </defs>
+  <rect id="矩形_27454" data-name="矩形 27454" class="cls-2" width="44" height="44" rx="14"/>
+  <g id="组_27786" data-name="组 27786" transform="translate(-81 -150)">
+    <g id="矩形_12986" data-name="矩形 12986" class="cls-3" transform="translate(92 161)">
+      <rect class="cls-10" width="9" height="9" rx="3"/>
+      <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="2.25"/>
+    </g>
+    <g id="矩形_27861" data-name="矩形 27861" class="cls-3" transform="translate(92 174)">
+      <rect class="cls-10" width="9" height="9" rx="3"/>
+      <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="2.25"/>
+    </g>
+    <g id="矩形_27860" data-name="矩形 27860" class="cls-3" transform="translate(105 161)">
+      <rect class="cls-10" width="9" height="9" rx="3"/>
+      <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="2.25"/>
+    </g>
+    <g id="蒙版组_2523" data-name="蒙版组 2523" class="cls-4">
+      <g id="矩形_27862" data-name="矩形 27862" class="cls-3" transform="translate(100 174)">
+        <rect class="cls-10" width="9" height="9" rx="2"/>
+        <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="1.25"/>
+      </g>
+    </g>
+    <g id="蒙版组_2524" data-name="蒙版组 2524" class="cls-5" transform="translate(220 354) rotate(180)">
+      <g id="矩形_27864" data-name="矩形 27864" class="cls-3" transform="translate(100 175)">
+        <rect class="cls-10" width="9" height="9" rx="2"/>
+        <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="1.25"/>
+      </g>
+    </g>
+    <g id="蒙版组_2526" data-name="蒙版组 2526" class="cls-6" transform="translate(285 74) rotate(90)">
+      <g id="矩形_27868" data-name="矩形 27868" class="cls-3" transform="translate(100 173)">
+        <rect class="cls-10" width="9" height="9" rx="2"/>
+        <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="1.25"/>
+      </g>
+    </g>
+    <g id="蒙版组_2527" data-name="蒙版组 2527" class="cls-7" transform="translate(290 74) rotate(90)">
+      <g id="矩形_27870" data-name="矩形 27870" class="cls-3" transform="translate(100 174)">
+        <rect class="cls-10" width="9" height="9" rx="2"/>
+        <rect class="cls-11" x="0.75" y="0.75" width="7.5" height="7.5" rx="1.25"/>
+      </g>
+    </g>
+  </g>
+  <g id="蒙版组_2530" data-name="蒙版组 2530" class="cls-8" transform="translate(-59 -41)">
+    <path id="路径_97174" data-name="路径 97174" class="cls-9" d="M0,0H67V32.027H0Z" transform="translate(13.711 50.087) rotate(-45)"/>
+  </g>
+</svg>
