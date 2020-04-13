@@ -1,7 +1,7 @@
 const path = require('path')
 const {cssLoaders, htmlPage} = require('./tools')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-//const uglify = require('uglifyjs-webpack-plugin');
+const uglify = require('uglifyjs-webpack-plugin');
 
 let resolve = dir => path.join(__dirname, '..', 'src', dir)
 module.exports = {
@@ -92,7 +92,8 @@ module.exports = {
     htmlPage('panel', 'panel', ['panel']),
     htmlPage('options', 'options', ['options']),
     htmlPage('background', 'background', ['background']),
-    new CopyWebpackPlugin([{ from: path.join(__dirname, '..', 'static') }])
+    new CopyWebpackPlugin([{ from: path.join(__dirname, '..', 'static') }]),
+    new uglify()
   ],
   performance: { hints: false },
 }
