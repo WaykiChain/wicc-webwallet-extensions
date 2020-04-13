@@ -169,7 +169,7 @@ export default class {
 
 
   cdpStake(info) {
-
+    
     var map = new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC', info.bcoinsToStake]])
     var cdpStakeTxinfo = {
       nTxType: 21,
@@ -248,6 +248,7 @@ export default class {
   }
 
   dexPriceBuy(info) {
+    
     var dexBuyLimitTxinfo = {
       nTxType: 84,
       nVersion: 1,
@@ -284,6 +285,7 @@ export default class {
     return this.api.createSignTransaction(info.privateKey, dexSellMarketTxinfo)
   }
   dexMarketBuy(info) {
+
     var dexBuyMarketTxinfo = {
       nTxType: 86,
       nVersion: 1,
@@ -306,7 +308,7 @@ export default class {
       nVersion: 1,
       nValidHeight: info.nValidHeight,
       fees: info.fees,
-      feeSymbol: info.feeType ? info.feeType : 'WICC',
+      feeSymbol: info.feeSymbol ? info.feeSymbol : 'WICC',
       srcRegId: info.srcRegId,
       publicKey: info.privateKey.toPublicKey().toString(),
       orderId: info.orderId,
