@@ -71,7 +71,7 @@ export default class {
   ///获取wicc，wusd，wgrt交易记录
   getTransHistory(info) {
     if (!info.address) throw new Error('address is required.')
-    return axios.post(this.host + '/transaction/gettranscationsbyaddressplus', {
+    return axios.post(this.host + '/transaction/getwallettranscationsbyaddressplus', {
       "address": info.address,
       "currentpage": info.currentpage,
       "pagesize": info.pagesize,
