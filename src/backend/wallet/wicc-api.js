@@ -1,5 +1,6 @@
 import WiccWalletLib from 'wicc-wallet-lib'
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
+import ucointransfertx from './lib/transaction/ucointransfertx';
 const DEFAULT_PASSWORD = '12345678'
 var Hash = WiccWalletLib.bitcore.crypto.Hash
 var ECDSA = WiccWalletLib.bitcore.crypto.ECDSA
@@ -75,7 +76,7 @@ export default class {
   }
 
   createRegisterAppSign(privateKey, height, regAcctId, fees, script, scriptDesc) {
-    
+
     const v = this.handelNum(fees)
     const txInfo = {
       nTxType: 5,
@@ -91,13 +92,13 @@ export default class {
   }
 
   createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract) {
-    
+
     const v = this.handelNum(value)
     const txInfo = {
       nTxType: 4,
       nVersion: 1,
       nValidHeight: height,
-      fees:this.handelNum(fees) + Math.round(Math.random() * 10),
+      fees: this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       destRegId,
       value: v,
@@ -136,7 +137,7 @@ export default class {
       "value": v,
     }
     ]
-    
+
     const txInfo = {
       nTxType: 11,
       nVersion: 1,
@@ -149,8 +150,9 @@ export default class {
       publicKey: privateKey.toPublicKey().toString(),
       feesCoinType: feeSymbol,
     }
-
-    return this.api.createSignTransaction(privateKey, txInfo)
+    const txBody = new ucointransfertx(txInfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, txInfo)
   }
 
   createDelegateTxSign(privateKey, height, srcRegId, delegateData, fees) {
@@ -169,7 +171,7 @@ export default class {
 
 
   cdpStake(info) {
-    
+
     var map = new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC', info.bcoinsToStake]])
     var cdpStakeTxinfo = {
       nTxType: 21,
@@ -185,7 +187,7 @@ export default class {
       network: info.network,
       scoin_symbol: info.scoin_symbol ? info.scoin_symbol : 'WUSD',
     };
-  
+
     return this.api.createSignTransaction(info.privateKey, cdpStakeTxinfo)
 
   }
@@ -248,7 +250,7 @@ export default class {
   }
 
   dexPriceBuy(info) {
-    
+
     var dexBuyLimitTxinfo = {
       nTxType: 84,
       nVersion: 1,
@@ -407,7 +409,7 @@ export default class {
     return rawtx
 
   }
-  handelNum(x){
+  handelNum(x) {
     const a = new Decimal(x)
     const b = new Decimal(100000000)
     const v = a.mul(b)
