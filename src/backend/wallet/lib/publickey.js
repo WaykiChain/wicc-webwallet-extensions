@@ -7,6 +7,8 @@ import JSUtil from './util/js';
 import Network from './networks';
 import _ from 'lodash';
 import $ from './util/preconditions';
+import address from './address';
+import Privatekey from './privatekey';
 
 /**
  * Instantiate a PublicKey from a {@link PrivateKey}, {@link Point}, `string`, or `Buffer`.
@@ -100,8 +102,7 @@ PublicKey.prototype._classifyArgs = function (data, extra) {
  * @private
  */
 PublicKey._isPrivateKey = function (param) {
-  var PrivateKey = import('./privatekey');
-  return param instanceof PrivateKey;
+  return param instanceof Privatekey;
 };
 
 /**
@@ -366,7 +367,7 @@ PublicKey.prototype._getID = function _getID() {
  * @returns {Address} An address generated from the public key
  */
 PublicKey.prototype.toAddress = function (network) {
-  var Address = import('./address');
+  var Address = address
   return Address.fromPublicKey(this, network || this.network);
 };
 

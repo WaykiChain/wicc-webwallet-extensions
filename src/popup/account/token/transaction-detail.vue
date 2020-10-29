@@ -3,18 +3,13 @@
     <nav-layout :title="$t('common.txDetail')">
       <div class="datail-wrap">
         <div class="icon"></div>
-        <div
-          class="amount"
-          v-if="info.txtype !== 'DEX_CANCEL_ORDER_TX' && info.txtype !== 'DEX_MARKET_BUY_ORDER_TX' && info.txtype !== 'DEX_MARKET_SELL_ORDER_TX'"
-        >{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{info.txtype && info.txtype.indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol}}</div>
+        <div class="amount">{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{ this.$route.query.symbol ? this.$route.query.symbol : (info.txtype && String(info.txtype).indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol)}}</div>
         <div class="status">{{$t("common.success")}}</div>
         <div class="info-list no-scrollbar">
           <ul class="address-info-list">
             <li>
               <span class="label">{{$t('account.transDetail.txTypeLabel')}}</span>
-              <span
-                class="value type"
-              >{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}</span>
+              <span class="value type">{{info.txtype === "CDP_STAKE_TX" ? info.txid === info.cdptxid ? formatNewTxType(info.txtype) : $t('window.cdp.addtional') : formatNewTxType(info.txtype)}}</span>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.confirmedTimeLabel')}}</span>
@@ -33,7 +28,10 @@
                 class="label"
                 v-if="info.txtype === 'ASSET_ISSUE_TX' || info.txtype === 'ASSET_UPDATE_TX'"
               >{{$t('window.cdp.ownerAddr')}}</span>
-              <span class="label" v-else>{{$t('account.sendToken.fromLabel')}}</span>
+              <span
+                class="label"
+                v-else
+              >{{$t('account.sendToken.fromLabel')}}</span>
               <a
                 class="value need-copy"
                 :href="`${scanHost(info.fromaddr)}${info.fromaddr}`"
@@ -50,10 +48,13 @@
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.feesLabel')}}</span>
-              <span class="value">{{new Decimal(info.fees).dividedBy(100000000)}} {{info.feesymbol}}</span>
+              <span class="value">{{new Decimal(info.fees || 0).dividedBy(100000000)}} {{info.feesymbol}}</span>
             </li>
           </ul>
-          <ul class="address-info-list is-cdp" v-if="isCDP(info.txtype)">
+          <ul
+            class="address-info-list is-cdp"
+            v-if="isCDP(info.txtype)"
+          >
             <!-- CDP_STAKE_TX -->
             <li v-if="info.txtype === 'CDP_STAKE_TX' && (info.txid !== info.cdptxid)">
               <span class="label">{{$t('account.transDetail.cdpid')}}</span>
@@ -64,9 +65,7 @@
               >{{cutMiddleStr(info.cdptxid, 10)}}</a>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span
-                class="label"
-              >{{info.txid === info.cdptxid ? $t('window.cdp.dyl') : $t('window.cdp.zjdyl') }}</span>
+              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dyl') : $t('window.cdp.zjdyl') }}</span>
               <span
                 class="value"
                 v-for="key in Object.keys(info.assetstostake)"
@@ -74,9 +73,7 @@
               >{{formatAmount(info.assetstostake[key], 8)}} {{key}}</span>
             </li>
             <li v-if="info.txtype === 'CDP_STAKE_TX'">
-              <span
-                class="label"
-              >{{info.txid === info.cdptxid ? $t('window.cdp.dcl') : $t('window.cdp.zjdcl')}}</span>
+              <span class="label">{{info.txid === info.cdptxid ? $t('window.cdp.dcl') : $t('window.cdp.zjdcl')}}</span>
               <span class="value">{{formatAmount(info.scoinstomint, 8)}} {{info.scoinsymbol}}</span>
             </li>
             <!-- CDP_REDEEM_TX -->
@@ -136,10 +133,22 @@
           >
             <li>
               <span class="label">{{$t('window.cdp["成交量"]')}}</span>
-              <span class="value" v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'">{{this.$t('window.cdp.sjcjwz')}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{fixed(formatAmount(info.assetamount, 8) * formatAmount(info.price, 8), 8)}} {{info.coinsymbol}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span
+                class="value"
+                v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'"
+              >{{this.$t('window.cdp.sjcjwz')}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'"
+              >{{this.$t('window.cdp.sjcjwz')}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'"
+              >{{fixed(formatAmount(info.assetamount, 8) * formatAmount(info.price, 8), 8)}} {{info.coinsymbol}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'"
+              >{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
               <span class="label">{{$t('window.cdp["成交价"]')}}</span>
@@ -158,10 +167,22 @@
             </li>
             <li>
               <span class="label">{{$t('window.cdp["成交总额"]')}}</span>
-              <span class="value" v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'">{{formatAmount(info.coinamount,8)}} {{info.coinsymbol}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'">{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
-              <span class="value" v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'">{{formatAmount(new Decimal(info.price).times(formatAmount(info.assetamount, 8)),8)}} {{info.coinsymbol}}</span>
+              <span
+                class="value"
+                v-if="info.txtype === 'DEX_MARKET_BUY_ORDER_TX'"
+              >{{formatAmount(info.coinamount,8)}} {{info.coinsymbol}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_MARKET_SELL_ORDER_TX'"
+              >{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_LIMIT_SELL_ORDER_TX'"
+              >{{formatAmount(info.assetamount, 8)}} {{info.assetsymbol}}</span>
+              <span
+                class="value"
+                v-else-if="info.txtype === 'DEX_LIMIT_BUY_ORDER_TX'"
+              >{{formatAmount(new Decimal(info.price || 0).times(formatAmount(info.assetamount, 8)),8)}} {{info.coinsymbol}}</span>
             </li>
           </ul>
           <ul
@@ -191,9 +212,7 @@
             </li>
             <li>
               <span class="label">{{$t('window.assets.zfxl')}}</span>
-              <span
-                class="value"
-              >{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
+              <span class="value">{{formatAmount(info.totalsupply || totalsupply, 8)}} {{info.assetsymbol}}</span>
             </li>
             <li>
               <span class="label">{{$t('window.assets.dbcyz')}}</span>
@@ -221,43 +240,43 @@ import NavLayout from "../../components/nav-layout";
 import transUtil from "../components/trans-util";
 import Decimal from "decimal.js";
 import API from "../../api";
-import fixed from '../../api/fixed'
+import fixed from "../../api/fixed";
 import Vue from "vue";
 import VueClipboard from "vue-clipboard2";
 Vue.use(VueClipboard);
 export default {
   data() {
     return {
-      trans: JSON.parse(this.$route.query.info),
+      trans: JSON.parse(this.$route.query.info) || {},
       info: {},
       Decimal: Decimal,
       assetname: "",
       owneraddr: "",
       totalsupply: "",
-      network: localStorage.getItem('network'),
-      myselfNetWork: localStorage.getItem('myselfNetWork')
+      network: localStorage.getItem("network"),
+      myselfNetWork: localStorage.getItem("myselfNetWork"),
     };
   },
   components: {
-    NavLayout
+    NavLayout,
   },
   mounted() {
     const route = this.$router.currentRoute;
     API.callRaw("getDetailInfo", { info: { hash: this.trans.txid } }).then(
-      res => {
+      (res) => {
         this.info = res;
         // alert(JSON.stringify(res));
         if (res.txtype === "ASSET_UPDATE_TX") {
           this.getAssetInfo(res.assetsymbol);
         }
       },
-      error => {
+      (error) => {
         console.log(error.message);
         this.$loading.close();
         this.$toast(this.$t(error.message), {
           type: "center",
           duration: 5000,
-          wordWrap: true
+          wordWrap: true,
         });
       }
     );
@@ -268,8 +287,8 @@ export default {
         JSON.stringify({
           name: route.name,
           query: {
-            ...(route.query || {})
-          }
+            ...(route.query || {}),
+          },
         })
       );
     };
@@ -283,98 +302,138 @@ export default {
     formatDate: transUtil.formatTime,
     fixed: fixed,
     scanHost(str) {
+      if (!str) {
+        str = "";
+      }
       //https://testnet.waykiscan.com/#/address/
       //https://www.waykiscan.com/#/address/
       //https://testnet.waykiscan.com/#/txhash/
       //https://www.waykiscan.com/#/txhash/
-      if (this.network === 'testnet' || this.myselfNetWork) {
+      if (this.network === "testnet" || this.myselfNetWork) {
         if (str.length === 34) {
-          return 'https://testnet.waykiscan.com/#/address/'
+          return "https://testnet.waykiscan.com/#/address/";
         } else {
-          return 'https://testnet.waykiscan.com/#/txhash/'
+          return "https://testnet.waykiscan.com/#/txhash/";
         }
       }
-      if (this.network === 'mainnet' || (!this.network && !this.myselfNetWork)) {
+      if (
+        this.network === "mainnet" ||
+        (!this.network && !this.myselfNetWork)
+      ) {
         if (str.length === 34) {
-          return 'https://www.waykiscan.com/#/address/'
+          return "https://www.waykiscan.com/#/address/";
         } else {
-          return 'https://www.waykiscan.com/#/txhash/'
+          return "https://www.waykiscan.com/#/txhash/";
         }
       }
     },
     isDEX(type) {
+      if (typeof type !== "string") {
+        return false;
+      }
       type = type.toLowerCase();
-      return type.indexOf("dex") > -1;
+      return type && type.indexOf("dex") > -1;
     },
     isCDP(type) {
+      if (typeof type !== "string") {
+        return false;
+      }
       type = type.toLowerCase();
       return type.indexOf("cdp") > -1;
     },
     onCopy() {
       this.$toast(this.$t("common.copySuccess"), {
         type: "center",
-        duration: 1000
+        duration: 1000,
       });
     },
-    onError: function(e) {
+    onError: function (e) {
       alert("Failed to copy texts");
     },
     getAssetInfo(assetSymbol) {
       let param = {
-        assetSymbol: assetSymbol
+        assetSymbol: assetSymbol,
       };
       API.callRaw("getAssetInfo", { info: param }).then(
-        res => {
+        (res) => {
           this.assetname = res.assetname;
           this.owneraddr = res.owneraddr;
           this.totalsupply = res.totalsupply / Math.pow(10, 8);
           this.mintable = res.mintable;
         },
-        error => {
+        (error) => {
           this.$toast(error.message, {
             type: "center",
             duration: 5000,
-            wordWrap: true
+            wordWrap: true,
           });
           this.$loading.close();
         }
       );
     },
     getAmount() {
-      let trans = this.info;
+      let trans = this.info,
+        res = 0;
       if (trans.txtype == "CDP_LIQUIDATE_TX") {
-        return fixed(trans.scoinstoliquidate / Math.pow(10, 8),8);
-      }
-      if (trans.txtype == "CDP_STAKE_TX") {
-        return fixed(trans.assetstostake.WICC / Math.pow(10, 8),8);
-      }
-      if (trans.txtype == "CDP_REDEEM_TX") {
-        return fixed(trans.scoinstorepay / Math.pow(10, 8),8);
-      }
-      if (trans.txtype == "ASSET_UPDATE_TX") {
-        return 110;
-      }
-      if (trans.txtype == "ASSET_ISSUE_TX") {
-        return 550;
-      }
-      if (trans.txtype.indexOf("DEX") > -1) {
-        if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
-          const amount = trans.assetamount
-            ? trans.assetamount
-            : trans.coinamount;
-          return fixed(amount / Math.pow(10, 8),8);
-        }
-        if (trans.txtype.indexOf("DEX_MARKET") > -1) {return 0}
-        const amount = trans.assetamount ? trans.assetamount : trans.coinamount;
-        const res = fixed((amount * trans.price) / Math.pow(10, 16),8);
+        res = fixed(trans.scoinstoliquidate / Math.pow(10, 8), 8);
         return res;
       }
+      if (trans.txtype == "CDP_REDEEM_TX") {
+        res = fixed(trans.scoinstorepay / Math.pow(10, 8), 8);
+        return res;
+      }
+      if (trans.txtype == "ASSET_UPDATE_TX") {
+        res = 110;
+        return res;
+      }
+      if (trans.txtype == "ASSET_ISSUE_TX") {
+        res = 550;
+        return res;
+      }
+      if (trans.txtype === "UCOIN_BLOCK_REWARD_TX" || trans.txtype === 'CDP_STAKE_TX') {
+        if (
+          trans.receiptlist instanceof Array &&
+          trans.receiptlist.length >= 3
+        ) {
+          res = trans.receiptlist[2].coinamount / Math.pow(10, 8);
+          res = isNaN(res) ? 0 : res;
+        }
+        return res;
+      }
+      if (trans.receiptlist instanceof Array && trans.receiptlist.length >= 2) {
+        res = trans.receiptlist[1].coinamount / Math.pow(10, 8);
+        res = isNaN(res) ? 0 : res;
+      }
+      return res;
 
-      return trans.coinamount / Math.pow(10, 8);
+      if (typeof trans.txtype !== "string") {
+        return 0;
+      }
+      // if (trans.txtype.indexOf("DEX") > -1) {
+      //   if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
+      //     const amount = trans.assetamount
+      //       ? trans.assetamount
+      //       : trans.coinamount;
+      //     res = fixed(amount / Math.pow(10, 8), 8);
+      //   }
+      //   if (trans.txtype.indexOf("DEX_MARKET") > -1) {
+      //     res = 0;
+      //   }
+      //   if (trans.txtype === "DEX_TRADE_SETTLE_TX") {
+      //     res = trans.coinamount;
+      //   }
+      //   const amount = trans.assetamount ? trans.assetamount : trans.coinamount;
+      //   const _res = fixed((amount * trans.price) / Math.pow(10, 16), 8);
+      //   res = _res;
+      // }
+
+      res = trans.coinamount / Math.pow(10, 8);
+      res = isNaN(res) ? 0 : res;
+      return res;
     },
     getSymbol() {},
     cutMiddleStr(str, saveNum) {
-      if (str) {
+      if (str && typeof str === "string") {
         return (
           str.substr(0, saveNum) +
           "..." +
@@ -382,8 +441,8 @@ export default {
         );
       }
       return "";
-    }
-  }
+    },
+  },
 };
 </script>
 

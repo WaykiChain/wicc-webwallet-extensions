@@ -1,8 +1,15 @@
+import chinese from './chinese';
+import english from './english';
+import french from './french';
+import italian from './italian';
+import japanese from './japanese';
+import spanish from './spanish';
+
 export default {
-  'CHINESE': import('./chinese'),
-  'ENGLISH': import('./english'),
-  'FRENCH': import('./french'),
-  'ITALIAN': import('./italian'),
-  'JAPANESE': import('./japanese'),
-  'SPANISH': import('./spanish')
+  'CHINESE': chinese,
+  'ENGLISH': english,
+  'FRENCH': french,
+  'ITALIAN': italian,
+  'JAPANESE': japanese,
+  'SPANISH': spanish
 };

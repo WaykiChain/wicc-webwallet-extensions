@@ -762,7 +762,9 @@ export default {
         coinType: info.coinType,
         assetType: info.assetType
       };
+      console.log('will get dexPriceBuy hex');
       let hex = wiccApi.dexPriceBuy(dexBuyLimitTxinfo)
+      console.log('hex', hex);
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },

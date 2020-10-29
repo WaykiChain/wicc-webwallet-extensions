@@ -60,7 +60,6 @@ const myBuffer = {
    */
   isBuffer: function isBuffer(arg) {
 
-    console.log('buffer.Buffer=>', buffer.Buffer);
     if (!buffer.Buffer) {
       return
     }

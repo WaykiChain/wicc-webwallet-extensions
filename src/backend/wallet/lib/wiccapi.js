@@ -12,76 +12,93 @@ import aes from './aes-cbc'
 import CryptoJS from 'crypto-js'
 import HDPrivateKey from './hdprivatekey'
 import CustomBuffer from './util/buffer'
+import registeraccounttx from './lib/transaction/registeraccounttx'
+import commontx from './lib/transaction/commontx'
+import contracttx from './lib/transaction/contracttx'
+import registerapptx from './lib/transaction/registerapptx'
+import delegatetx from './lib/transaction/delegatetx'
+import assetcreatetx from './lib/transaction/assetcreatetx'
+import assetupdatetx from './lib/transaction/assetupdatetx'
+import ucointransfertx from './lib/transaction/ucointransfertx'
+import ucontractinvoketx from './lib/transaction/ucontractinvoketx'
+import cdpstaketx from './lib/transaction/cdpstaketx'
+import cdpredeemtx from './lib/transaction/cdpredeemtx'
+import cdpliquidatetx from './lib/transaction/cdpliquidatetx'
+import dexbuylimitordertx from './lib/transaction/dexbuylimitordertx'
+import dexselllimitordertx from './lib/transaction/dexselllimitordertx'
+import dexbuymarketordertx from './lib/transaction/dexbuymarketordertx'
+import dexsellmarketordertx from './lib/transaction/dexsellmarketordertx'
+import dexcancelordertx from './lib/transaction/dexcancelordertx'
 
 var txMap = {
   2: {
     txName: 'ACCOUNT_REGISTER_TX',
-    txAction: import('./transaction/registeraccounttx')
+    txAction: registeraccounttx
   },
   3: {
     txName: 'BCOIN_TRANSFER_TX',
-    txAction: import('./transaction/commontx')
+    txAction: commontx
   },
   4: {
     txName: 'LCONTRACT_INVOKE_TX',
-    txAction: import('./transaction/contracttx')
+    txAction: contracttx
   },
   5: {
     txName: 'LCONTRACT_DEPLOY_TX',
-    txAction: import('./transaction/registerapptx')
+    txAction: registerapptx
   },
   6: {
     txName: 'DELEGATE_VOTE_TX',
-    txAction: import('./transaction/delegatetx')
+    txAction: delegatetx
   },
   9: {
     txName: 'ASSET_ISSUE_TX',
-    txAction: import('./transaction/assetcreatetx')
+    txAction: assetcreatetx
   },
   10: {
     txName: 'ASSET_UPDATE_TX',
-    txAction: import('./transaction/assetupdatetx')
+    txAction: assetupdatetx
   },
 
   11: {
     txName: 'UCOIN_TRANSFER_TX',
-    txAction: import('./transaction/ucointransfertx')
+    txAction: ucointransfertx //ucointransfertx
   },
   15: {
     txName: 'UCOIN_CONTRACT_INVOKE_TX',
-    txAction: import('./transaction/ucontractinvoketx')
+    txAction: ucontractinvoketx
   },
   21: {
     txName: 'CDP_STAKE_TX',
-    txAction: import('./transaction/cdpstaketx')
+    txAction: cdpstaketx
   },
   22: {
     txName: 'CDP_REDEEMP_TX',
-    txAction: import('./transaction/cdpredeemtx')
+    txAction: cdpredeemtx
   },
   23: {
     txName: 'CDP_LIQUIDATE_TX',
-    txAction: import('./transaction/cdpliquidatetx')
+    txAction: cdpliquidatetx
   },
   84: {
     txName: 'DEX_LIMIT_BUY_ORDER_TX',
-    txAction: import('./transaction/dexbuylimitordertx')
+    txAction: dexbuylimitordertx
   },
   85: {
     txName: ' DEX_LIMIT_SELL_ORDER_TX',
-    txAction: import('./transaction/dexselllimitordertx')
+    txAction: dexselllimitordertx
   },
   86: {
     txName: 'DEX_MARKET_BUY_ORDER_TX',
-    txAction: import('./transaction/dexbuymarketordertx')
+    txAction: dexbuymarketordertx
   },
   87: {
     txName: 'DEX_MARKET_SELL_ORDER_TX',
-    txAction: import('./transaction/dexsellmarketordertx')
+    txAction: dexsellmarketordertx
   },
   88: {
     txName: 'DEX_CANCEL_ORDER_TX',
-    txAction: import('./transaction/dexcancelordertx')
+    txAction: dexcancelordertx
   }
 }
 

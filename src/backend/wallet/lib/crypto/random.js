@@ -1,5 +1,5 @@
 'use strict';
-
+import crypto from 'crypto';
 function Random() {
 }
 
@@ -12,7 +12,6 @@ Random.getRandomBuffer = function (size) {
 };
 
 Random.getRandomBufferNode = function (size) {
-  var crypto = import('crypto');
   return crypto.randomBytes(size);
 };
 

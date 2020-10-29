@@ -14,7 +14,10 @@
           <label>{{ $t('window.transfer.destAddressLabel') }}</label>
           <span class="">{{ cutMiddleStr(destAddr, 6) }}</span>
         </div>
-        <div class="cell" v-if="desc">
+        <div
+          class="cell"
+          v-if="desc"
+        >
           <label>{{ $t('account.transDetail.commentLabel') }}</label>
           <span>{{ desc }}</span>
         </div>
@@ -36,11 +39,20 @@
             @on-change="handleFeeTypeChange"
           ></wallet-select>
         </div>
-        <fees-slider v-model="fees" type="wiccTX"></fees-slider>
+        <fees-slider
+          v-model="fees"
+          type="wiccTX"
+        ></fees-slider>
       </div>
       <div class="button-wrapper">
-        <button class="btn-lighter" @click="cancel">{{ $t('window.transfer.closeButton') }}</button>
-        <button class="btn-primary" @click="confirmSend">{{ $t('window.transfer.confirmButton') }}</button>
+        <button
+          class="btn-lighter"
+          @click="cancel"
+        >{{ $t('window.transfer.closeButton') }}</button>
+        <button
+          class="btn-primary"
+          @click="confirmSend"
+        >{{ $t('window.transfer.confirmButton') }}</button>
       </div>
     </div>
   </div>
@@ -76,7 +88,7 @@ export default {
   components: {
     WalletInput,
     FeesSlider,
-    NavBar
+    NavBar,
   },
 
   mixins: [StateWatcher, WindowMixin],
@@ -85,7 +97,7 @@ export default {
     const query = this.$router.currentRoute.query;
     const assetMap = JSON.parse(query.assetMap)[0];
     this.coinType = assetMap.coinSymbol;
-    this.feesName = this.coinType === 'WUSD' ? 'WUSD' : 'WICC';
+    this.feesName = this.coinType === "WUSD" ? "WUSD" : "WICC";
     this.destAddr = assetMap.destAddr;
     this.value = assetMap.amount;
     if (isNaN(parseInt(this.value))) {
@@ -101,13 +113,13 @@ export default {
   watch: {
     activeAddress(val) {
       this.getWiccNum(val);
-    }
+    },
   },
 
   computed: {
     valid() {
       return this.destAddr && this.value;
-    }
+    },
   },
 
   methods: {
@@ -116,7 +128,7 @@ export default {
 
       if (this.value < 0.0001) {
         this.$toast(this.$t("errors.amountLessThanLimit"), {
-          type: "center"
+          type: "center",
         });
 
         return;
@@ -124,7 +136,7 @@ export default {
 
       if (this.balance && this.value > this.balance - this.fees - 0.00001) {
         this.$toast(this.$t("errors.insufficientBalance"), {
-          type: "center"
+          type: "center",
         });
         return;
       }
@@ -138,7 +150,7 @@ export default {
         fees: this.fees,
         coinType: this.coinType,
         feeSymbol: this.feesName,
-        memo: this.desc
+        memo: this.desc,
       };
       if (this.raw == "1") {
         this.callRaw("variousCoinsRaw", param);
@@ -149,32 +161,32 @@ export default {
 
     callRaw(method, param) {
       API.callRaw(method, { info: param }).then(
-        res => {
+        (res) => {
           console.log(res);
           this.$loading.close();
           this.$toast(this.$t("account.send.sendSuccess"), {
-            type: "center"
+            type: "center",
           });
           if (this.callbackId) {
             API.callPageCallback(this.callbackId, null, res);
             this.$toast("Success", {
               type: "center",
               duration: 1000,
-              wordWrap: true
+              wordWrap: true,
             });
             setTimeout(() => {
               window.close();
             }, 300);
           }
         },
-        error => {
+        (error) => {
           this.$loading.close();
           this.$toast(
             this.$t("window.transfer.createFailure") + " " + formatError(error),
             {
               type: "center",
               duration: 5000,
-              wordWrap: true
+              wordWrap: true,
             }
           );
           // if (this.callbackId) {
@@ -186,7 +198,7 @@ export default {
     getWiccNum(address) {
       let net = localStorage.getItem("network");
       API.getAccountInfo(net, address).then(
-        res => {
+        (res) => {
           console.log(res);
           let tokens = res.tokens;
           if (Object.keys(tokens).length > 0) {
@@ -202,14 +214,14 @@ export default {
             this.tokens = null;
           }
         },
-        error => {
+        (error) => {
           console.log(error);
           this.$toast(error.message, {
-            type: "center"
+            type: "center",
           });
         }
       );
-    }
+    },
   },
 
   data() {
@@ -222,8 +234,8 @@ export default {
       fees: 0.001,
       feesName: "WICC",
       coinType: "",
-      raw: ""
+      raw: "",
     };
-  }
+  },
 };
 </script>

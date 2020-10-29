@@ -12,6 +12,8 @@ import Hash from '../crypto/hash';
 import ECDSA from '../crypto/ecdsa';
 import $ from '../util/preconditions';
 import _ from 'lodash';
+import Transaction from './transaction';
+import input from './input';
 
 var SIGHASH_SINGLE_BUG = '0000000000000000000000000000000000000000000000000000000000000001';
 var BITS_64_ON = 'ffffffffffffffff';
@@ -27,8 +29,8 @@ var BITS_64_ON = 'ffffffffffffffff';
  * @param {Script} subscript the script that will be signed
  */
 var sighash = function sighash(transaction, sighashType, inputNumber, subscript) {
-  var Transaction = import('./transaction');
-  var Input = import('./input');
+  var Transaction = Transaction;
+  var Input = input;
 
   var i;
   // Copy transaction

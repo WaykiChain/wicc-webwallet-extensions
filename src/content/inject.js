@@ -4,7 +4,7 @@ script.setAttribute('type', 'text/javascript')
 script.setAttribute('src', content)
 document.body.appendChild(script)
 
-const PostMessageStream = require('post-message-stream')
+import PostMessageStream from 'post-message-stream'
 
 const messageStream = new PostMessageStream({
   name: 'contentscript',

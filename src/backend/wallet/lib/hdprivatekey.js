@@ -433,8 +433,10 @@ HDPrivateKey.fromSeed = function (hexa, network) {
 
 HDPrivateKey.prototype._calcHDPublicKey = function () {
   if (!this._hdPublicKey) {
-    var HDPublicKey = import('./hdpublickey');
-    this._hdPublicKey = new HDPublicKey(this);
+    import('./hdpublickey').then((HDPublicKey) => {
+      this._hdPublicKey = new HDPublicKey(this);
+    });
+
   }
 };
 

@@ -24,7 +24,7 @@
       <button
         class="btn-lighter"
         @click="handleReceiveClick"
-      >{{ $t('account.main.receiveButton') }}</button>
+      >{{ $t('account.main.receiveButton')}}</button>
       <button
         class="btn-lighter"
         @click="gotoSend"
@@ -34,6 +34,7 @@
     <div class="line"></div>
     <div class="history-container no-scrollbar">
       <trans-history
+        :symbol="name"
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="100"
@@ -191,7 +192,11 @@ export default {
       this.$router.go(-1);
     },
     getIcon(key) {
-      if (!["WICC", "WUSD", "WGRT"].includes(key)) {
+      if (
+        !["WICC", "WUSD", "WGRT", "ROG", "XUSD"].includes(
+          String(key).toUpperCase()
+        )
+      ) {
         return require(`../../static/wicclogo.svg`);
       }
       return require(`../../static/${

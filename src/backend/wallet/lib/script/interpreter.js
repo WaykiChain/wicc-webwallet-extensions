@@ -8,7 +8,7 @@ import BN from '../crypto/bn';
 import Hash from '../crypto/hash';
 import Signature from '../crypto/signature';
 import PublicKey from '../publickey';
-
+import transaction from '../transaction';
 /**
  * Bitcoin transactions contain scripts. Each input has a script called the
  * scriptSig, and each output has a script called the scriptPubkey. To validate
@@ -122,7 +122,7 @@ Interpreter.prototype.verifyWitnessProgram = function (version, program, witness
  */
 Interpreter.prototype.verify = function (scriptSig, scriptPubkey, tx, nin, flags, witness, satoshis) {
 
-  const Transaction = import('../transaction');
+  const Transaction = transaction;
   if (_.isUndefined(tx)) {
     tx = new Transaction();
   }

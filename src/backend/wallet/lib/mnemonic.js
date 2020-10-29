@@ -8,6 +8,8 @@ import unorm from 'unorm';
 import pbkdf2 from './pbkdf2';
 import errors from './errors';
 
+import words from './words';
+
 var _ = bitcore.deps._;
 
 var BN = bitcore.crypto.BN;
@@ -97,7 +99,7 @@ var Mnemonic = function (data, wordlist) {
   });
 };
 
-Mnemonic.Words = import('./words');
+Mnemonic.Words = words;
 
 /**
  * Will return a boolean if the mnemonic is valid

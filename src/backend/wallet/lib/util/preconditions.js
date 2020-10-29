@@ -2,6 +2,7 @@
 
 import errors from '../errors';
 import _ from 'lodash';
+import _buffer from 'buffer';
 
 export default {
   checkState: function (condition, message) {
@@ -18,7 +19,8 @@ export default {
     argumentName = argumentName || '(unknown name)';
     if (_.isString(type)) {
       if (type === 'Buffer') {
-        var buffer = import('buffer'); // './buffer' fails on cordova & RN
+        var buffer = _buffer; // './buffer' fails on cordova & RN
+
         if (!buffer.Buffer) {
           return
         }

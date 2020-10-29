@@ -25,7 +25,7 @@
                 class="trans-type"
                 v-else
               >{{formatNewTxType(trans.txtype)}}</span>
-              <span class="trans-amount">{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
+              <span class="trans-amount">{{showTrandirection(trans.trandirection)}} {{getCount(trans)}} {{ trans.coinsymbol }}</span>
             </div>
             <div class="second-row">
               <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
@@ -51,6 +51,9 @@ export default {
   name: "account-trans-history",
 
   props: {
+    symbol: {
+      type: String,
+    },
     transactions: {
       type: Array,
     },
@@ -82,6 +85,7 @@ export default {
         name: "transactionDetail",
         query: {
           info: JSON.stringify(this.currentTrans),
+          symbol: this.symbol,
         },
       });
     },
@@ -101,12 +105,6 @@ export default {
       return false;
     },
     showCell(trans) {
-      if (
-        trans.txtype.indexOf("DEX_MARKET") > -1 ||
-        trans.txtype == "DEX_CANCEL_ORDER_TX"
-      ) {
-        return false;
-      }
       return true;
     },
     getCount(trans) {
@@ -128,25 +126,26 @@ export default {
         if (trans.txtype == "ASSET_ISSUE_TX") {
           return 550;
         }
-        if (trans.txtype.indexOf("DEX") > -1) {
-          if (this.showMoney(trans)) {
-            if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
-              const amount = trans.assetamount
-                ? trans.assetamount
-                : trans.coinamount;
-              return amount / Math.pow(10, 8);
-            }
-            const amount = trans.assetamount
-              ? trans.assetamount
-              : trans.coinamount;
-            const res = (amount * trans.price) / Math.pow(10, 16);
-            return res;
-          }
-          return "";
-        }
+        // if (trans.txtype.indexOf("DEX") > -1) {
+        //   if (this.showMoney(trans)) {
+        //     if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
+        //       const amount = trans.assetamount
+        //         ? trans.assetamount
+        //         : trans.coinamount;
+        //       return amount / Math.pow(10, 8);
+        //     }
+        //     const amount = trans.assetamount
+        //       ? trans.assetamount
+        //       : trans.coinamount;
+        //     const res = (amount * trans.price) / Math.pow(10, 16);
+        //     return isNaN(res) ? 0 : res;
+        //   }
+        //   return "";
+        // }
+        let num = trans.coinamount / Math.pow(10, 8);
+        return isNaN(num) ? 0 : num;
       }
-
-      return trans.coinamount / Math.pow(10, 8);
+      return 0;
     },
   },
 

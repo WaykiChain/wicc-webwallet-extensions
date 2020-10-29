@@ -3,7 +3,8 @@
 import _ from 'lodash';
 import $ from '../util/preconditions';
 import buffer from 'buffer';
-var compare = Buffer.compare || import('buffer-compare');
+import _compare from 'buffer-compare';
+var compare = Buffer.compare || _compare;
 
 import errors from '../errors';
 import BufferUtil from '../util/buffer';
