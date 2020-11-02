@@ -3,7 +3,7 @@
     <nav-layout :title="$t('common.txDetail')">
       <div class="datail-wrap">
         <div class="icon"></div>
-        <div class="amount">{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{getAmount()}} {{ this.$route.query.symbol ? this.$route.query.symbol : (info.txtype && String(info.txtype).indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol)}}</div>
+        <div class="amount">{{+trans.trandirection === 1 ? "-" : +trans.trandirection === 2 ? "+" : ""}}{{this.$route.query.amount }} {{ this.$route.query.symbol ? this.$route.query.symbol : (info.txtype && String(info.txtype).indexOf('SELL_ORDER') > -1 ? info.assetsymbol : info.coinsymbol)}}</div>
         <div class="status">{{$t("common.success")}}</div>
         <div class="info-list no-scrollbar">
           <ul class="address-info-list">
@@ -34,17 +34,17 @@
               >{{$t('account.sendToken.fromLabel')}}</span>
               <a
                 class="value need-copy"
-                :href="`${scanHost(info.fromaddr)}${info.fromaddr}`"
+                :href="`${scanHost(info.fromaddr?info.fromaddr:computedAddress(info, 'from'))}${info.fromaddr?info.fromaddr:computedAddress(info, 'from')}`"
                 target="_blank"
-              >{{cutMiddleStr(info.fromaddr, 10)}}</a>
+              >{{cutMiddleStr(info.fromaddr, 10)  ? cutMiddleStr(info.fromaddr, 10) : computedAddress(info, 'from', true) }}</a>
             </li>
-            <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype) && info.toaddr">
+            <li v-if="!isDEX(info.txtype) && !isCDP(info.txtype)">
               <span class="label">{{$t('account.sendToken.destLabel')}}</span>
               <a
                 class="value need-copy"
-                :href="`${scanHost(info.toaddr)}${info.toaddr}`"
+                :href="`${scanHost(info.toaddr?info.toaddr:computedAddress(info, 'to'))}${info.toaddr?info.toaddr:computedAddress(info, 'to')}`"
                 target="_blank"
-              >{{cutMiddleStr(info.toaddr, 10)}}</a>
+              >{{cutMiddleStr(info.toaddr, 10) ? cutMiddleStr(info.toaddr, 10) : computedAddress(info, 'to', true)}}</a>
             </li>
             <li>
               <span class="label">{{$t('account.transDetail.feesLabel')}}</span>
@@ -301,6 +301,16 @@ export default {
     formatAmount: transUtil.formatAmount,
     formatDate: transUtil.formatTime,
     fixed: fixed,
+    computedAddress(info, attr ,short){
+      let addr = ''
+      if(info.txtype === 'UNIVERSAL_TX'){
+        if(info.receiptlist instanceof Array && info.receiptlist.length >=2){
+          const addr = info.receiptlist[1][`${attr}addr`]
+          return short ? `${String(addr).substr(0,8)}...${String(addr).substr(addr.length-8,8)}` : addr;
+        }
+      }
+      return addr
+    },
     scanHost(str) {
       if (!str) {
         str = "";
@@ -390,7 +400,7 @@ export default {
         res = 550;
         return res;
       }
-      if (trans.txtype === "UCOIN_BLOCK_REWARD_TX" || trans.txtype === 'CDP_STAKE_TX') {
+      if (trans.txtype === "UCOIN_BLOCK_REWARD_TX") {
         if (
           trans.receiptlist instanceof Array &&
           trans.receiptlist.length >= 3
@@ -405,7 +415,14 @@ export default {
         res = isNaN(res) ? 0 : res;
       }
       return res;
-
+      if(trans.txtype === 'CDP_STAKE_TX'){
+        if(String(this.$route.query.symbol).toUpperCase()==='WICC'&&trans.assetstostake&&trans.assetstostake.WICC){
+          res = trans.assetstostake.WICC / Math.pow(10,8)
+        } else {
+          res = trans.scoinstomint / Math.pow(10,8)
+        }
+        return isNaN(res) ? 0 : res;
+      }
       if (typeof trans.txtype !== "string") {
         return 0;
       }

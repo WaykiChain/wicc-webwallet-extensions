@@ -22,6 +22,12 @@
                 v-if="trans.txtype=='CDP_STAKE_TX'"
               >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
               <span
+              class="trans-type"
+              v-else-if="trans.txtype=='CDP_FORCE_SETTLE_INTEREST_TX'"
+              >
+                {{ $t('window.cdp.cdpjx')  }}
+              </span>
+              <span
                 class="trans-type"
                 v-else
               >{{formatNewTxType(trans.txtype)}}</span>
@@ -86,6 +92,7 @@ export default {
         query: {
           info: JSON.stringify(this.currentTrans),
           symbol: this.symbol,
+          amount:this.getCount(trans)
         },
       });
     },

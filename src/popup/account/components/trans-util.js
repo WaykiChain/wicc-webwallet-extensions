@@ -20,7 +20,7 @@ const TYPE_NEWTX_MAP = {
   'DELEGATE_VOTE_TX': '投票交易',
   'LCONTRACT_INVOKE_TX': '合约调用',
   'LCONTRACT_DEPLOY_TX': '合约发布',
-  'BCOIN_TRANSFER_TX': 'WICC交易',
+  'BCOIN_TRANSFER_TX': 'WICC转账',
   'ACCOUNT_REGISTER_TX': '账户激活',
   'UCOIN_REWARD_TX': '初始化交易（WICC WGRT）',
   'UCOIN_BLOCK_REWARD_TX': '矿工奖励(新版)',
