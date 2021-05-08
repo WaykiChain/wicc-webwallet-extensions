@@ -11,7 +11,7 @@
     "clipboard": "^2.0.4",
     "decimal.js": "^10.2.0",
     "fecha": "^3.0.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "obs-store": "^3.0.2",
     "post-message-stream": "^3.0.0",
     "pump": "^3.0.0",
