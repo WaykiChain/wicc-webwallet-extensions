@@ -47,11 +47,21 @@
             @on-change="handleFeeTypeChange"
           ></wallet-select>
         </div>
-        <fees-slider v-model="fees" type="call-cdp" :feeName="feesName"></fees-slider>
+        <fees-slider
+          v-model="fees"
+          type="call-cdp"
+          :feeName="feesName"
+        ></fees-slider>
       </div>
       <div class="button-wrapper">
-        <button class="btn-lighter" @click="cancel">{{$t('window.cdp.qx')}}</button>
-        <button class="btn-primary" @click="sureCreateCDP">{{$t('window.cdp.qd')}}</button>
+        <button
+          class="btn-lighter"
+          @click="cancel"
+        >{{$t('window.cdp.qx')}}</button>
+        <button
+          class="btn-primary"
+          @click="sureCreateCDP"
+        >{{$t('window.cdp.qd')}}</button>
       </div>
     </div>
   </div>
@@ -74,7 +84,7 @@ export default {
       assetSupply: "",
       assetSymbol: "",
       callbackId: "",
-      feesName: "WICC"
+      feesName: "WICC",
     };
   },
   created() {
@@ -89,23 +99,20 @@ export default {
   },
   methods: {
     amountFormat(money) {
-      money = String(money)
-      var integerArr = money
-        .split(".")[0]
-        .split("")
-        .reverse(),
-      tempArr = "";
+      money = String(money);
+      var integerArr = money.split(".")[0].split("").reverse(),
+        tempArr = "";
       for (var i = 0, k = integerArr.length; i < k; i++) {
         var cammaTag = (i + 1) % 3 == 0 && i + 1 != k ? "," : "";
         tempArr += integerArr[i] + cammaTag;
       }
-      money = tempArr.split("").reverse().join("")
+      money = tempArr.split("").reverse().join("");
       return money;
     },
     sureCreateCDP() {
       let net = localStorage.getItem("network");
       API.getAccountInfo(net, this.assetOwnerId).then(
-        res => {
+        (res) => {
           console.log("Chenggong===>", res);
           if (res.regid == "") {
             this.$toast("regid is null");
@@ -120,29 +127,29 @@ export default {
             assetMintable: this.assetMintable,
             assetSupply: parseInt(this.assetSupply),
             address: this.address,
-            feesName: this.feesName
+            feesName: this.feesName,
           };
           API.callRaw("assetsPub", { info: param }).then(
-            res => {
+            (res) => {
               this.$loading.close();
               this.$toast(this.$t("window.transfer.createSuccess"), {
                 type: "center",
                 duration: 5000,
-                wordWrap: true
+                wordWrap: true,
               });
               if (this.callbackId) {
                 API.callPageCallback(this.callbackId, null, res);
                 this.$toast("Success", {
                   type: "center",
                   duration: 1000,
-                  wordWrap: true
+                  wordWrap: true,
                 });
                 setTimeout(() => {
                   window.close();
                 }, 300);
               }
             },
-            error => {
+            (error) => {
               this.$loading.close();
               this.$toast(
                 this.$t("window.transfer.createFailure") +
@@ -151,7 +158,7 @@ export default {
                 {
                   type: "center",
                   duration: 5000,
-                  wordWrap: true
+                  wordWrap: true,
                 }
               );
               // if (this.callbackId) {
@@ -160,16 +167,16 @@ export default {
             }
           );
         },
-        error => {
+        (error) => {
           this.$toast(this.$t("window.assets.owidError"), {
             type: "center",
             duration: 5000,
-            wordWrap: true
+            wordWrap: true,
           });
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">

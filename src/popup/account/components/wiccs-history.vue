@@ -1,7 +1,13 @@
 <template>
   <div class="trans-history">
-    <trans-detail :visible.sync="transDetailVisible" :detail="currentTrans"></trans-detail>
-    <div class="wrap" v-if="transactions && transactions.length > 0">
+    <trans-detail
+      :visible.sync="transDetailVisible"
+      :detail="currentTrans"
+    ></trans-detail>
+    <div
+      class="wrap"
+      v-if="transactions && transactions.length > 0"
+    >
       <ul class="trans-list">
         <li
           class="trans-item"
@@ -15,10 +21,17 @@
                 class="trans-type"
                 v-if="trans.txtype=='CDP_STAKE_TX'"
               >{{trans.txid === trans.cdptxid ? formatNewTxType(trans.txtype) : $t('window.cdp.addtional') }}</span>
-              <span class="trans-type" v-else>{{formatNewTxType(trans.txtype)}}</span>
               <span
-                class="trans-amount"
-              >{{showCell(trans) ? showTrandirection(trans.trandirection) : ''}} {{getCount(trans)}} {{showCell(trans)? trans.coinsymbol : ''}}</span>
+              class="trans-type"
+              v-else-if="trans.txtype=='CDP_FORCE_SETTLE_INTEREST_TX'"
+              >
+                {{ $t('window.cdp.cdpjx')  }}
+              </span>
+              <span
+                class="trans-type"
+                v-else
+              >{{formatNewTxType(trans.txtype)}}</span>
+              <span class="trans-amount">{{showTrandirection(trans.trandirection)}} {{getCount(trans)}} {{ trans.coinsymbol }}</span>
             </div>
             <div class="second-row">
               <span class="trans-time">{{ formatTime(trans.confirmedtime * 1000) }}</span>
@@ -44,17 +57,20 @@ export default {
   name: "account-trans-history",
 
   props: {
+    symbol: {
+      type: String,
+    },
     transactions: {
-      type: Array
+      type: Array,
     },
     showEmptyBlock: {
       type: Boolean,
-      defaultValue: true
-    }
+      defaultValue: true,
+    },
   },
 
   components: {
-    TransDetail
+    TransDetail,
   },
 
   methods: {
@@ -74,8 +90,10 @@ export default {
       this.$router.push({
         name: "transactionDetail",
         query: {
-          info: JSON.stringify(this.currentTrans)
-        }
+          info: JSON.stringify(this.currentTrans),
+          symbol: this.symbol,
+          amount:this.getCount(trans)
+        },
       });
     },
     showTrandirection(trandirection) {
@@ -94,59 +112,56 @@ export default {
       return false;
     },
     showCell(trans) {
-      if (
-        trans.txtype.indexOf("DEX_MARKET") > -1 ||
-        trans.txtype == "DEX_CANCEL_ORDER_TX"
-      ) {
-        return false;
-      }
       return true;
     },
     getCount(trans) {
       if (trans) {
-        if (trans.txtype == "CDP_LIQUIDATE_TX") {
-          return trans.scoinstoliquidate / Math.pow(10, 8);
-        }
-        if (trans.txtype == "CDP_STAKE_TX") {
-          return trans.assetstostake.WICC / Math.pow(10, 8);
-        }
-        if (trans.txtype == "CDP_REDEEM_TX") {
-          return trans.scoinstorepay / Math.pow(10, 8);
-        }
+        // if (trans.txtype == "CDP_LIQUIDATE_TX") {
+        //   return trans.scoinstoliquidate / Math.pow(10, 8);
+        // }
+        // if (trans.txtype == "CDP_STAKE_TX") {
+        //   if (trans.assetstostake instanceof Object) {
+        //     return trans.assetstostake.WICC / Math.pow(10, 8);
+        //   }
+        // }
+        // if (trans.txtype == "CDP_REDEEM_TX") {
+        //   return trans.scoinstorepay / Math.pow(10, 8);
+        // }
         if (trans.txtype == "ASSET_UPDATE_TX") {
           return 110;
         }
         if (trans.txtype == "ASSET_ISSUE_TX") {
           return 550;
         }
-        if (trans.txtype.indexOf("DEX") > -1) {
-          if (this.showMoney(trans)) {
-            if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
-              const amount = trans.assetamount
-                ? trans.assetamount
-                : trans.coinamount;
-              return amount / Math.pow(10, 8);
-            }
-            const amount = trans.assetamount
-              ? trans.assetamount
-              : trans.coinamount;
-            const res = (amount * trans.price) / Math.pow(10, 16);
-            return res;
-          }
-          return "";
-        }
+        // if (trans.txtype.indexOf("DEX") > -1) {
+        //   if (this.showMoney(trans)) {
+        //     if (trans.txtype.indexOf("DEX_LIMIT_SELL") > -1) {
+        //       const amount = trans.assetamount
+        //         ? trans.assetamount
+        //         : trans.coinamount;
+        //       return amount / Math.pow(10, 8);
+        //     }
+        //     const amount = trans.assetamount
+        //       ? trans.assetamount
+        //       : trans.coinamount;
+        //     const res = (amount * trans.price) / Math.pow(10, 16);
+        //     return isNaN(res) ? 0 : res;
+        //   }
+        //   return "";
+        // }
+        let num = trans.coinamount / Math.pow(10, 8);
+        return isNaN(num) ? 0 : num;
       }
-
-      return trans.coinamount / Math.pow(10, 8);
-    }
+      return 0;
+    },
   },
 
   data() {
     return {
       transDetailVisible: false,
-      currentTrans: {}
+      currentTrans: {},
     };
-  }
+  },
 };
 </script>
 

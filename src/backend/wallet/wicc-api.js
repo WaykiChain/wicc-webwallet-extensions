@@ -1,10 +1,99 @@
 import WiccWalletLib from 'wicc-wallet-lib'
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
+import registeraccounttx from './lib/transaction/registeraccounttx'
+import commontx from './lib/transaction/commontx'
+import contracttx from './lib/transaction/contracttx'
+import registerapptx from './lib/transaction/registerapptx'
+import delegatetx from './lib/transaction/delegatetx'
+import assetcreatetx from './lib/transaction/assetcreatetx'
+import assetupdatetx from './lib/transaction/assetupdatetx'
+import ucointransfertx from './lib/transaction/ucointransfertx'
+import ucontractinvoketx from './lib/transaction/ucontractinvoketx'
+import cdpstaketx from './lib/transaction/cdpstaketx'
+import cdpredeemtx from './lib/transaction/cdpredeemtx'
+import cdpliquidatetx from './lib/transaction/cdpliquidatetx'
+import dexbuylimitordertx from './lib/transaction/dexbuylimitordertx'
+import dexselllimitordertx from './lib/transaction/dexselllimitordertx'
+import dexbuymarketordertx from './lib/transaction/dexbuymarketordertx'
+import dexsellmarketordertx from './lib/transaction/dexsellmarketordertx'
+import dexcancelordertx from './lib/transaction/dexcancelordertx'
 const DEFAULT_PASSWORD = '12345678'
 var Hash = WiccWalletLib.bitcore.crypto.Hash
 var ECDSA = WiccWalletLib.bitcore.crypto.ECDSA
 var WriterHelper = WiccWalletLib.bitcore.util.WriterHelper
 var bitcore = WiccWalletLib.bitcore
+
+var txMap = {
+  2: {
+    txName: 'ACCOUNT_REGISTER_TX',
+    txAction: registeraccounttx
+  },
+  3: {
+    txName: 'BCOIN_TRANSFER_TX',
+    txAction: commontx
+  },
+  4: {
+    txName: 'LCONTRACT_INVOKE_TX',
+    txAction: contracttx
+  },
+  5: {
+    txName: 'LCONTRACT_DEPLOY_TX',
+    txAction: registerapptx
+  },
+  6: {
+    txName: 'DELEGATE_VOTE_TX',
+    txAction: delegatetx
+  },
+  9: {
+    txName: 'ASSET_ISSUE_TX',
+    txAction: assetcreatetx
+  },
+  10: {
+    txName: 'ASSET_UPDATE_TX',
+    txAction: assetupdatetx
+  },
+
+  11: {
+    txName: 'UCOIN_TRANSFER_TX',
+    txAction: ucointransfertx //ucointransfertx
+  },
+  15: {
+    txName: 'UCOIN_CONTRACT_INVOKE_TX',
+    txAction: ucontractinvoketx
+  },
+  21: {
+    txName: 'CDP_STAKE_TX',
+    txAction: cdpstaketx
+  },
+  22: {
+    txName: 'CDP_REDEEMP_TX',
+    txAction: cdpredeemtx
+  },
+  23: {
+    txName: 'CDP_LIQUIDATE_TX',
+    txAction: cdpliquidatetx
+  },
+  84: {
+    txName: 'DEX_LIMIT_BUY_ORDER_TX',
+    txAction: dexbuylimitordertx
+  },
+  85: {
+    txName: ' DEX_LIMIT_SELL_ORDER_TX',
+    txAction: dexselllimitordertx
+  },
+  86: {
+    txName: 'DEX_MARKET_BUY_ORDER_TX',
+    txAction: dexbuymarketordertx
+  },
+  87: {
+    txName: 'DEX_MARKET_SELL_ORDER_TX',
+    txAction: dexsellmarketordertx
+  },
+  88: {
+    txName: 'DEX_CANCEL_ORDER_TX',
+    txAction: dexcancelordertx
+  }
+}
 
 export default class {
   constructor(network) {
@@ -75,7 +164,7 @@ export default class {
   }
 
   createRegisterAppSign(privateKey, height, regAcctId, fees, script, scriptDesc) {
-    
+
     const v = this.handelNum(fees)
     const txInfo = {
       nTxType: 5,
@@ -87,25 +176,30 @@ export default class {
       scriptDesc,
       publicKey: privateKey.toPublicKey().toString(),
     }
-    return this.api.createSignTransaction(privateKey, txInfo)
+    var txConstructor = txMap[txInfo.nTxType].txAction
+    var txBody = new txConstructor(txInfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, txInfo)
   }
 
   createContractSign(privateKey, height, srcRegId, destRegId, value, fees, contract) {
-    
+
     const v = this.handelNum(value)
     const txInfo = {
       nTxType: 4,
       nVersion: 1,
       nValidHeight: height,
-      fees:this.handelNum(fees) + Math.round(Math.random() * 10),
+      fees: this.handelNum(fees) + Math.round(Math.random() * 10),
       srcRegId,
       destRegId,
       value: v,
       vContract: contract,
       publicKey: privateKey.toPublicKey().toString(),
     }
-
-    return this.api.createSignTransaction(privateKey, txInfo)
+    var txConstructor = txMap[txInfo.nTxType].txAction
+    var txBody = new txConstructor(txInfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, txInfo)
   }
 
   createTxSign(privateKey, height, srcRegId, destAddr, value, fees) {
@@ -121,8 +215,10 @@ export default class {
       memo: "memo",
       publicKey: privateKey.toPublicKey().toString(),
     }
-
-    return this.api.createSignTransaction(privateKey, commonTxinfo)
+    var txConstructor = txMap[commonTxinfo.nTxType].txAction
+    var txBody = new txConstructor(commonTxinfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, commonTxinfo)
   }
 
   /**
@@ -136,7 +232,7 @@ export default class {
       "value": v,
     }
     ]
-    
+
     const txInfo = {
       nTxType: 11,
       nVersion: 1,
@@ -149,8 +245,10 @@ export default class {
       publicKey: privateKey.toPublicKey().toString(),
       feesCoinType: feeSymbol,
     }
-
-    return this.api.createSignTransaction(privateKey, txInfo)
+    var txConstructor = txMap[txInfo.nTxType].txAction
+    var txBody = new txConstructor(txInfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, txInfo)
   }
 
   createDelegateTxSign(privateKey, height, srcRegId, delegateData, fees) {
@@ -163,13 +261,15 @@ export default class {
       delegateData,
       publicKey: privateKey.toPublicKey().toString(),
     }
-
-    return this.api.createSignTransaction(privateKey, txInfo)
+    var txConstructor = txMap[txInfo.nTxType].txAction
+    var txBody = new txConstructor(txInfo);
+    return txBody.SerializeTx(privateKey)
+    // return this.api.createSignTransaction(privateKey, txInfo)
   }
 
 
   cdpStake(info) {
-    
+
     var map = new Map([[info.bcoin_symbol ? info.bcoin_symbol : 'WICC', info.bcoinsToStake]])
     var cdpStakeTxinfo = {
       nTxType: 21,
@@ -185,8 +285,10 @@ export default class {
       network: info.network,
       scoin_symbol: info.scoin_symbol ? info.scoin_symbol : 'WUSD',
     };
-  
-    return this.api.createSignTransaction(info.privateKey, cdpStakeTxinfo)
+    var txConstructor = txMap[cdpStakeTxinfo.nTxType].txAction
+    var txBody = new txConstructor(cdpStakeTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, cdpStakeTxinfo)
 
   }
   cdpliquidate(info) {
@@ -203,8 +305,10 @@ export default class {
       scoinsToLiquidate: info.scoinsToLiquidate,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, cdpliquidateTxinfo)
+    var txConstructor = txMap[cdpliquidateTxinfo.nTxType].txAction
+    var txBody = new txConstructor(cdpliquidateTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, cdpliquidateTxinfo)
   }
   cdpRedeem(info) {
     var map = new Map([[info.bcoins_symbol ? info.bcoins_symbol : "WICC", info.bcoins_to_redeem]])
@@ -221,8 +325,10 @@ export default class {
       assetMap: map,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, cdpRedeemTxinfo)
+    var txConstructor = txMap[cdpRedeemTxinfo.nTxType].txAction
+    var txBody = new txConstructor(cdpRedeemTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, cdpRedeemTxinfo)
 
   }
 
@@ -243,12 +349,14 @@ export default class {
       askPrice: info.askPrice,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, newInfo)
+    var txConstructor = txMap[newInfo.nTxType].txAction
+    var txBody = new txConstructor(newInfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, newInfo)
   }
 
   dexPriceBuy(info) {
-    
+
     var dexBuyLimitTxinfo = {
       nTxType: 84,
       nVersion: 1,
@@ -263,8 +371,10 @@ export default class {
       bidPrice: info.bidPrice,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, dexBuyLimitTxinfo)
+    var txConstructor = txMap[dexBuyLimitTxinfo.nTxType].txAction
+    var txBody = new txConstructor(dexBuyLimitTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, dexBuyLimitTxinfo)
   }
 
   dexMarketSell(info) {
@@ -281,8 +391,10 @@ export default class {
       assetAmount: info.assetAmount,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, dexSellMarketTxinfo)
+    var txConstructor = txMap[dexSellMarketTxinfo.nTxType].txAction
+    var txBody = new txConstructor(dexSellMarketTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, dexSellMarketTxinfo)
   }
   dexMarketBuy(info) {
 
@@ -299,8 +411,10 @@ export default class {
       coinAmount: info.coinAmount,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, dexBuyMarketTxinfo)
+    var txConstructor = txMap[dexBuyMarketTxinfo.nTxType].txAction
+    var txBody = new txConstructor(dexBuyMarketTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, dexBuyMarketTxinfo)
   }
   dexCancel(info) {
     var dexCancelTxinfo = {
@@ -314,8 +428,10 @@ export default class {
       orderId: info.orderId,
       network: info.network
     };
-
-    return this.api.createSignTransaction(info.privateKey, dexCancelTxinfo)
+    var txConstructor = txMap[dexCancelTxinfo.nTxType].txAction
+    var txBody = new txConstructor(dexCancelTxinfo);
+    return txBody.SerializeTx(info.privateKey)
+    // return this.api.createSignTransaction(info.privateKey, dexCancelTxinfo)
   }
   assetsPub(info) {
     var assetData = {
@@ -335,8 +451,11 @@ export default class {
       // publicKey: info.privateKey.toPublicKey().toString(),
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
-    const rawtx = this.api.createSignTransaction(info.privateKey, assetCreateInfo)
-    return rawtx
+    var txConstructor = txMap[assetCreateInfo.nTxType].txAction
+    var txBody = new txConstructor(assetCreateInfo);
+    return txBody.SerializeTx(info.privateKey)
+    // const rawtx = this.api.createSignTransaction(info.privateKey, assetCreateInfo)
+    // return rawtx
   }
 
   assetsUpdate(info) {
@@ -363,8 +482,11 @@ export default class {
       fees: parseInt(info.fees), // fees pay for miner min 500 wicc
     };
     // alert(JSON.stringify(assetCreateInfo))
-    const rawtx = this.api.createSignTransaction(info.privateKey, assetCreateInfo)
-    return rawtx
+    var txConstructor = txMap[assetCreateInfo.nTxType].txAction
+    var txBody = new txConstructor(assetCreateInfo);
+    return txBody.SerializeTx(info.privateKey)
+    // const rawtx = this.api.createSignTransaction(info.privateKey, assetCreateInfo)
+    // return rawtx
 
   }
   messageSign(msg, privateKey) {
@@ -402,12 +524,15 @@ export default class {
       vContract: contract      // contract method, hex format string
     };
     // alert(JSON.stringify(invokeAppInfo))
-    var rawtx = this.api.createSignTransaction(privateKey, invokeAppInfo)
-    // alert(rawtx)
-    return rawtx
+    var txConstructor = txMap[invokeAppInfo.nTxType].txAction
+    var txBody = new txConstructor(invokeAppInfo);
+    return txBody.SerializeTx(privateKey)
+    // var rawtx = this.api.createSignTransaction(privateKey, invokeAppInfo)
+    // // alert(rawtx)
+    // return rawtx
 
   }
-  handelNum(x){
+  handelNum(x) {
     const a = new Decimal(x)
     const b = new Decimal(100000000)
     const v = a.mul(b)

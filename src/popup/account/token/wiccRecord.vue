@@ -1,21 +1,40 @@
 <template>
-  <nav-layout :title="name" class="wicc-record">
+  <nav-layout
+    :title="name"
+    class="wicc-record"
+  >
     <div class="tokenCount">
       <div class="logo">
-        <img :src="getIcon(name)" alt />
+        <img
+          :src="getIcon(name)"
+          alt
+        />
       </div>
       <p class="count">{{number}}</p>
-      <p class="value" v-if="value">{{value}}</p>
-      <p class="value" v-else></p>
+      <p
+        class="value"
+        v-if="value"
+      >{{value}}</p>
+      <p
+        class="value"
+        v-else
+      ></p>
     </div>
     <div class="footer">
-      <button class="btn-lighter" @click="handleReceiveClick">{{ $t('account.main.receiveButton') }}</button>
-      <button class="btn-lighter" @click="gotoSend">{{ $t('account.main.sendButton') }}</button>
+      <button
+        class="btn-lighter"
+        @click="handleReceiveClick"
+      >{{ $t('account.main.receiveButton')}}</button>
+      <button
+        class="btn-lighter"
+        @click="gotoSend"
+      >{{ $t('account.main.sendButton') }}</button>
     </div>
     <div class="trans-history-title">{{ $t('account.transHistory.title') }}</div>
     <div class="line"></div>
     <div class="history-container no-scrollbar">
       <trans-history
+        :symbol="name"
         v-infinite-scroll="loadMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="100"
@@ -81,16 +100,16 @@ p {
   animation: roll 300ms ease-out forwards;
   @keyframes roll {
     0% {
-      transform: rotate(-45deg)
+      transform: rotate(-45deg);
     }
     85% {
-      transform: rotate(0deg)
+      transform: rotate(0deg);
     }
     92% {
-      transform: rotate(-10deg)
+      transform: rotate(-10deg);
     }
     100% {
-      transform: rotate(0deg)
+      transform: rotate(0deg);
     }
   }
   img {
@@ -156,12 +175,12 @@ export default {
 
   components: {
     TransHistory,
-    NavLayout
+    NavLayout,
   },
   watch: {
     activeAddress(val) {
       this.refresh();
-    }
+    },
   },
   created() {
     this.number = this.$route.query.coinNum;
@@ -173,7 +192,11 @@ export default {
       this.$router.go(-1);
     },
     getIcon(key) {
-      if (!["WICC", "WUSD", "WGRT"].includes(key)) {
+      if (
+        !["WICC", "WUSD", "WGRT", "ROG", "XUSD"].includes(
+          String(key).toUpperCase()
+        )
+      ) {
         return require(`../../static/wicclogo.svg`);
       }
       return require(`../../static/${
@@ -182,18 +205,18 @@ export default {
     },
     refresh(silence = false) {
       // if (this.currentpage === 1) {
-        this.$loading(this.$t("common.loading"));
+      this.$loading(this.$t("common.loading"));
       // }
       this.busy = true;
       const param = {
         address: this.activeAddress,
         currentpage: this.currentpage,
         pagesize: 10,
-        coinsymbol: this.name
+        coinsymbol: this.name,
         // txtype:'BCOIN_TRANSFER_TX'
       };
       API.getTransHistory({ info: param }).then(
-        value => {
+        (value) => {
           this.$loading.close();
           this.loading = false;
           if (this.currentpage == 1) {
@@ -211,7 +234,7 @@ export default {
             }
           }
         },
-        err => {
+        (err) => {
           console.log(err);
           this.$loading.close();
           this.$toast(err.message);
@@ -229,13 +252,13 @@ export default {
         query: {
           balance: this.number,
           coinType: this.name,
-          tokens: this.$route.query.tokens
-        }
+          tokens: this.$route.query.tokens,
+        },
       });
     },
     handleReceiveClick() {
       this.$router.push("/account/collect?address=" + this.activeAddress);
-    }
+    },
   },
 
   data() {
@@ -248,8 +271,8 @@ export default {
       activeAccountInfo: null,
       busy: true,
       currentpage: 1,
-      tokens: null
+      tokens: null,
     };
-  }
+  },
 };
 </script>

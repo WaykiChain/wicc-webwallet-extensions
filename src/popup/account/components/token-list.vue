@@ -47,7 +47,7 @@
           @click="handleItemClick({num:myAssets[tokenKey].freeAmount/Math.pow(10,8),name:tokenKey})"
         >
           <div class="list-wrap">
-            <img class="token-item-icon" :src="getIcon('WICC')" />
+            <img class="token-item-icon" :src="getIcon(tokenKey)" />
             <span class="token-item-name">{{tokenKey}}</span>
             <div class="token-amount">
               <div
@@ -336,9 +336,12 @@ export default {
 
   methods: {
     getIcon(key) {
-      return require(`../../static/${
-        key === "WICC" ? "wicclogo" : key.toLowerCase()
-      }.svg`);
+      const icon = this.iconMap[String(key).toUpperCase()]
+      if(icon){
+        return icon
+      } else {
+        return this.defaultIcon
+      }
     },
     getCurrencyAmount(asset) {
       let prefix = this.currency === "CNY" ? "≈￥" : "≈$";
@@ -463,6 +466,14 @@ export default {
   },
 
   data() {
+    const defaultIcon = require('../../static/wicclogo.svg')
+    const iconMap = {
+      WICC:defaultIcon,
+      WGRT:require('../../static/wgrt.svg'),
+      WUSD:require('../../static/wusd.svg'),
+      XUSD:require('../../static/xusd.svg'),
+      ROG:require('../../static/rog.svg'),
+    }
     return {
       currentAddr: "",
       activeToken: null,
@@ -474,7 +485,9 @@ export default {
       myAssets: {},
       tokensKeys: [],
       lastNetWork: localStorage.getItem("tempNetWork"),
-      currency: localStorage.getItem("currency") || "CNY"
+      currency: localStorage.getItem("currency") || "CNY",
+      iconMap,
+      defaultIcon,
     };
   }
 };

@@ -1,5 +1,5 @@
-const PostMessageStream = require('post-message-stream')
-const uuidv4 = require('uuid/v4')
+import PostMessageStream from 'post-message-stream';
+import uuidv4 from 'uuid/v4';
 const pageStream = new PostMessageStream({
   name: 'inpage',
   target: 'contentscript'
@@ -156,85 +156,85 @@ window.WiccWallet = {
   },
 
   ///创建
-  CdpStake(assetMap,sCoinSymbol,scoinNum,cdpTxID,callback){
+  CdpStake(assetMap, sCoinSymbol, scoinNum, cdpTxID, callback) {
     const callbackId = saveCallback(callback)
-    if (cdpTxID){
+    if (cdpTxID) {
       return send('additionalCdpView', {
-        wiccNum:assetMap[0].bCoinToStake,
-        wusdNum:scoinNum,
-        cdpTxId:cdpTxID,
-        bcoinSymbol:assetMap[0].coinSymbol,
-        scoinSymbol:sCoinSymbol,
+        wiccNum: assetMap[0].bCoinToStake,
+        wusdNum: scoinNum,
+        cdpTxId: cdpTxID,
+        bcoinSymbol: assetMap[0].coinSymbol,
+        scoinSymbol: sCoinSymbol,
         callbackId
       })
     }
     return send('createCdpView', {
-      wiccNum:assetMap[0].bCoinToStake,
-      wusdNum:scoinNum,
-      bcoinSymbol:assetMap[0].coinSymbol,
-      scoinSymbol:sCoinSymbol,
+      wiccNum: assetMap[0].bCoinToStake,
+      wusdNum: scoinNum,
+      bcoinSymbol: assetMap[0].coinSymbol,
+      scoinSymbol: sCoinSymbol,
       callbackId
     })
   },
   ///清算
-  CdpLiquidate(liquidateAssetSymbol,scoinsToLiquidate,cdpTxId,callback){
+  CdpLiquidate(liquidateAssetSymbol, scoinsToLiquidate, cdpTxId, callback) {
     const callbackId = saveCallback(callback)
     return send('liquidCdpView', {
-      assetSymbol:liquidateAssetSymbol,
-      wusdNum:scoinsToLiquidate,
+      assetSymbol: liquidateAssetSymbol,
+      wusdNum: scoinsToLiquidate,
       cdpTxId,
       callbackId
     })
   },
   ///赎回
-  CdpRedeem(assetMap,repayNum,cdpTxId,callback){
+  CdpRedeem(assetMap, repayNum, cdpTxId, callback) {
     const callbackId = saveCallback(callback)
     return send('redeemCdpView', {
-      wusdNum:repayNum,
-      wiccNum:assetMap[0].redeemCoinNum,
-      redeemSymbol:assetMap[0].coinSymbol,
+      wusdNum: repayNum,
+      wiccNum: assetMap[0].redeemCoinNum,
+      redeemSymbol: assetMap[0].coinSymbol,
       cdpTxId,
       callbackId
     })
   },
-  
+
 
   ///限价交易  dealType : Limit_BUY / Limit_SELL
-  DexLimit(dexTxType,coinType,assetType,amount,price,callback){
+  DexLimit(dexTxType, coinType, assetType, amount, price, callback) {
     const callbackId = saveCallback(callback)
-    return send('dexView',{
-      dealType:dexTxType,
+    return send('dexView', {
+      dealType: dexTxType,
       amount,
-      limitPrice:price,
-      coinType,assetType,
+      limitPrice: price,
+      coinType, assetType,
       callbackId
     })
   },
 
   ///市价交易    dealType : Market_BUY / Market_SELL
-  DexMarket(dexTxType,coinType,assetType,amount,callback){
+  DexMarket(dexTxType, coinType, assetType, amount, callback) {
     const callbackId = saveCallback(callback)
-    return send('dexView',{
-      dealType:dexTxType,
+    return send('dexView', {
+      dealType: dexTxType,
       amount,
-      limitPrice:0,
-      coinType,assetType,
+      limitPrice: 0,
+      coinType, assetType,
       callbackId
     })
   },
 
-  DexCancelOrder(dexTxNum,callback){
+  DexCancelOrder(dexTxNum, callback) {
     const callbackId = saveCallback(callback)
-    return send('dexCancelView',{
-      dealNum:dexTxNum,
+    return send('dexCancelView', {
+      dealNum: dexTxNum,
       callbackId
     })
   },
 
   ///发布资产
-  AssetIssue(assetSymbol,assetName,assetSupply,assetOwnerId,assetMintable,callback){
+  AssetIssue(assetSymbol, assetName, assetSupply, assetOwnerId, assetMintable, callback) {
     const callbackId = saveCallback(callback)
-    return send('AssetPub',{
+    return send('AssetPub', {
       assetSymbol,
       assetName,
       assetSupply,
@@ -244,40 +244,40 @@ window.WiccWallet = {
     })
   },
 
-   ///资产更新
-   AssetUpdate(tokenSymbol,updateType,updateValue,callback){
+  ///资产更新
+  AssetUpdate(tokenSymbol, updateType, updateValue, callback) {
     const callbackId = saveCallback(callback)
-    return send('AssetUpadte',{
-      assetSymbol:tokenSymbol,
+    return send('AssetUpadte', {
+      assetSymbol: tokenSymbol,
       updateType,
-      updateContent:updateValue,
+      updateContent: updateValue,
       callbackId
     })
   },
 
   ///请求签名
-  SignMessage(imgUrl,appName,message,callback){
+  SignMessage(imgUrl, appName, message, callback) {
     const callbackId = saveCallback(callback)
-    return send('signMessage',{
-      imgUrl,appName,message,callbackId
+    return send('signMessage', {
+      imgUrl, appName, message, callbackId
     })
   },
 
-    ///多币种合约调用
-    UCoinContractInvoke(amount,coinSymbol,appid,contractMethod,memo,callback,raw){
-      const callbackId = saveCallback(callback)
-      return send('walletPluginUContractInvoke',{
-        amount,coinSymbol,regId:appid,contract:contractMethod,memo,callbackId,raw
-      })
-    },
+  ///多币种合约调用
+  UCoinContractInvoke(amount, coinSymbol, appid, contractMethod, memo, callback, raw) {
+    const callbackId = saveCallback(callback)
+    return send('walletPluginUContractInvoke', {
+      amount, coinSymbol, regId: appid, contract: contractMethod, memo, callbackId, raw
+    })
+  },
 
-    ///多币种转账
-    UCoinTransfer(assetMap,memo,callback,raw){
-      const callbackId = saveCallback(callback)
-      return send('UCoinTransfer',{
-        assetMap,memo,callbackId,raw
-      })
-    },
+  ///多币种转账
+  UCoinTransfer(assetMap, memo, callback, raw) {
+    const callbackId = saveCallback(callback)
+    return send('UCoinTransfer', {
+      assetMap, memo, callbackId, raw
+    })
+  },
 
 
 

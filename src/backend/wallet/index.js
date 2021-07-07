@@ -29,7 +29,7 @@ const getSignInfo = (network, address) => {
   let srcRegId = ""
   const localRegid = localStorage.getItem('srcRegID')
   srcRegId = localRegid ? localRegid : ""
-  if (srcRegId!="") {
+  if (srcRegId != "") {
     return baasApi.getblockcount().then((data) => {
       const height = data
       const privateKey = vaultStorage.getPrivateKey(address)
@@ -42,7 +42,7 @@ const getSignInfo = (network, address) => {
   }
   return baasApi.getAccountInfo(address).then((data) => {
     srcRegId = data.regid ? data.regid : ""
-    localStorage.setItem('srcRegID',srcRegId)
+    localStorage.setItem('srcRegID', srcRegId)
     return baasApi.getblockcount()
   }).then((data) => {
     const height = data
@@ -341,7 +341,7 @@ export default {
     return {
       network,
       address: activeAddress,
-      regid:localRegid?localRegid:"", 
+      regid: localRegid ? localRegid : "",
     }
   },
   getTransHistory({
@@ -762,7 +762,9 @@ export default {
         coinType: info.coinType,
         assetType: info.assetType
       };
+      console.log('will get dexPriceBuy hex');
       let hex = wiccApi.dexPriceBuy(dexBuyLimitTxinfo)
+      console.log('hex', hex);
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },
@@ -862,7 +864,7 @@ export default {
         throw new Error('INVALID_VALUE')
       }
       let hex = wiccApi.createVariousCoinsTx(privateKey, height, srcRegId, info.destAddr, info.value, info.fees, info.coinType, info.feeSymbol, localNetWork, info.memo)
-      return {rawtx:hex}
+      return { rawtx: hex }
     })
   },
 
@@ -914,13 +916,13 @@ export default {
         feesName: info.feesName,
 
       };
-      
-      if (srcRegId){
+
+      if (srcRegId) {
         let hex = wiccApi.assetsPub(assestInfo)
         return new BaasAPI(localNetWork).submitOfflineTrans(hex)
-      }else{
+      } else {
         return new Promise((resolve, reject) => {
-            reject("qianbaoweijihuo")
+          reject("qianbaoweijihuo")
         })
       }
     })
@@ -952,12 +954,12 @@ export default {
         feesName: info.feesName,
 
       };
-      if (srcRegId){
+      if (srcRegId) {
         let hex = wiccApi.assetsUpdate(assestInfo)
         return new BaasAPI(localNetWork).submitOfflineTrans(hex)
-      }else{
+      } else {
         return new Promise((resolve, reject) => {
-            reject("qianbaoweijihuo")
+          reject("qianbaoweijihuo")
         })
       }
     })
@@ -991,14 +993,14 @@ export default {
       if (isNaN(parseFloat(info.amount))) {
         throw new Error('INVALID_VALUE')
       }
-      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
+      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol, info.fees, info.feesName, info.contract, localNetWork, info.memo)
       return new BaasAPI(localNetWork).submitOfflineTrans(hex)
     })
   },
 
-    /**
-   * 多币种合约调用(仅仅签名)
-   */
+  /**
+ * 多币种合约调用(仅仅签名)
+ */
   variousCoinsContractRaw({ info }) {
     const localNetWork = localStorage.getItem('network')
     const wiccApi = getWiccApi(localNetWork)
@@ -1010,8 +1012,8 @@ export default {
       if (isNaN(parseFloat(info.amount))) {
         throw new Error('INVALID_VALUE')
       }
-      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol,info.fees, info.feesName, info.contract, localNetWork, info.memo)
-      return {rawtx:hex}
+      let hex = wiccApi.uContractInvoke(privateKey, height, srcRegId, info.regId, info.amount, info.coinSymbol, info.fees, info.feesName, info.contract, localNetWork, info.memo)
+      return { rawtx: hex }
     })
   },
 

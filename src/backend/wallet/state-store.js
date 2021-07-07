@@ -1,5 +1,5 @@
 import localStorage from './util/local-storage'
-const ObservableStore = require('obs-store')
+import ObservableStore from 'obs-store'
 
 export const CONFIG_STORAGE_KEY = 'wicc-wallet-config'
 

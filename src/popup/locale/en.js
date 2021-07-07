@@ -334,6 +334,7 @@ export default {
       wdzc:"My assets",
       cdpcjjy:"CDP-First stake",
       cdpzjjy:"CDP-Further stake",
+      cdpjx:'CDP-Auto settlement',
       cdpqsjy:"CDP-Liquidate",
       cdpshjy:"CDP-Redeem",
       cjcdpdz:"Created by",
@@ -347,7 +348,7 @@ export default {
       ghl:"Repay amount",
       shl:"Redemption amount",
       sjcjwz:'Based on pratice',
-      addtional:'CDP-Further stake',
+      addtional:'CDP-Stake & Loan',
       zzfbzc:'Creat',
 
       zzfbzc:'Releasing Asset...',

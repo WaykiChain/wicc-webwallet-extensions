@@ -1,6 +1,6 @@
 {
   "name": "wayki-max",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Wicc web wallet for chrome and firefox.",
   "author": "coredev@waykichainhk.com",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "vue-slider-component": "^2.8.16",
     "vue2-toast": "^2.0.2",
     "vuex": "^3.1.1",
-    "wicc-wallet-lib": "^2.0.0"
+    "wicc-wallet-lib": "^2.1.0"
   },
   "scripts": {
     "lint": "eslint --ext .js,.vue src",

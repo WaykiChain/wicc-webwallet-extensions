@@ -19,12 +19,12 @@ const handleError = (error) => {
 export default class {
   constructor(network) {
     this.network = network || 'testnet'
-    if (localStorage.getItem('myselfNetWork')){
+    if (localStorage.getItem('myselfNetWork')) {
       this.host = JSON.parse(localStorage.getItem('myselfNetWork')).url
-    }else{
+    } else {
       if (this.network === 'mainnet') {
         this.host = BAAS_MAINNET
-      }else if (this.network === 'testnet') {
+      } else if (this.network === 'testnet') {
         this.host = BAAS_TESTNET
       }
     }
@@ -39,7 +39,7 @@ export default class {
   }
 
   getAccountInfo(address) {
-    return axios.post(this.host + '/account/getaccountinfo',{'address':address}).then(handleResponse, handleError)
+    return axios.post(this.host + '/account/getaccountinfo', { 'address': address }).then(handleResponse, handleError)
   }
 
   getTxDetail(tx) {
@@ -52,7 +52,7 @@ export default class {
   ///查询ERC20代币详情
   getTokenInfo(regId, address) {
     // alert(this.host + '/contract/getcontractaccountinfo'+address+regId)
-    return axios.post(this.host + '/contract/getcontractaccountinfo',{
+    return axios.post(this.host + '/contract/getcontractaccountinfo', {
       'address': address,
       'contractregid': regId.trim()
     })
@@ -71,23 +71,23 @@ export default class {
   ///获取wicc，wusd，wgrt交易记录
   getTransHistory(info) {
     if (!info.address) throw new Error('address is required.')
-    return axios.post(this.host + '/transaction/gettranscationsbyaddressplus', {
-        "address": info.address,
-        "currentpage": info.currentpage,
-        "pagesize": info.pagesize,
-        "startheight": 1,
-        "trandirection": 0,
-        "txtype": "",
-        "coinsymbol":info.coinsymbol,
+    return axios.post(this.host + '/transaction/getwallettranscationsbyaddressplus', {
+      "address": info.address,
+      "currentpage": info.currentpage,
+      "pagesize": info.pagesize,
+      "startheight": 1,
+      "trandirection": 0,
+      "txtype": "",
+      "coinsymbol": info.coinsymbol,
     }).then(handleResponse, handleError)
   }
   ///获取
-  getDetailInfo(info){
+  getDetailInfo(info) {
     return axios.post(this.host + '/transaction/gettxdetailplus', info).then(handleResponse, handleError)
   }
 
   ///根据代号查询发型资产详情
-  getAssetInfo(info){
+  getAssetInfo(info) {
     return axios.post(this.host + '/asset/getasset', info).then(handleResponse, handleError)
   }
   //获取插件钱包最新版本号
